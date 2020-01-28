@@ -66,9 +66,9 @@
             </ul>
           </li>
           @endif
-          @if(\Route::is(['config.index','position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','coaCat.index','assetCat.index']))
+          @if(\Route::is(['application.index','config.index','position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','coaCat.index','assetCat.index']))
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{{ route('application.index') }}" class="nav-link {{set_active('application.index') }}">
               <i class="nav-icon fas fa-cog"></i>
               <p>
                 Application

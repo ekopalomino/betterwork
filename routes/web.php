@@ -24,6 +24,7 @@ Route::group(['prefix' => 'apps'], function() {
 	Route::get('grievance','Apps\GrievanceController@index')->name('grievance.index');
 	Route::get('accounting','Apps\AccountingController@index')->name('accounting.index');
 
+	Route::get('configuration/application','Apps\ConfigurationController@applicationIndex')->name('application.index');
 	Route::get('configuration/employee-position','Apps\ConfigurationController@positionIndex')->name('position.index');
 	Route::get('configuration/leave-type','Apps\ConfigurationController@leaveTypeIndex')->name('leaveType.index');
 	Route::get('configuration/reimburstment-type','Apps\ConfigurationController@reimbursTypeIndex')->name('reimbursType.index');
