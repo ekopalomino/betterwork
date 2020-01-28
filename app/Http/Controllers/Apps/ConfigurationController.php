@@ -36,8 +36,19 @@ class ConfigurationController extends Controller
     {
     	return view('apps.pages.documentCategory');
     }
+
     public function grievanceCategoryIndex()
     {
     	return view('apps.pages.grievanceCategory');
+    }
+
+    public function coaCategoryIndex()
+    {
+    	return view('apps.pages.coaCategory');
+    }
+
+    public function assetCategoryIndex()
+    {
+    	return view('apps.pages.assetCategory');
     }
 }

@@ -66,7 +66,7 @@
             </ul>
           </li>
           @endif
-          @if(\Route::is(['config.index','position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index']))
+          @if(\Route::is(['config.index','position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','coaCat.index','assetCat.index']))
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-cog"></i>
@@ -116,8 +116,8 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
+          <li class="nav-item has-treeview {{set_open(['coaCat.index','assetCat.index']) }}">
+            <a href="#" class="nav-link {{set_active(['coaCat.index','assetCat.index']) }}">
               <i class="nav-icon fas fa-calculator"></i>
               <p>
                 Accounting
@@ -126,13 +126,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{ route('coaCat.index') }}" class="nav-link {{set_active('coaCat.index') }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Chart of Account</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{ route('assetCat.index') }}" class="nav-link {{set_active('assetCat.index') }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Asset Category</p>
                 </a>
