@@ -1,0 +1,341 @@
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+	<a href="index3.html" class="brand-link">
+      <img src="{{ asset('public/bower_components/admin-lte/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+           style="opacity: .8">
+      <span class="brand-text font-weight-light">AdminLTE 3</span>
+    </a>
+    <div class="sidebar">
+    	<div class="user-panel mt-3 pb-3 mb-3 d-flex">
+	        <div class="image">
+	           <img src="{{ asset('public/bower_components/admin-lte/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
+	        </div>
+	        <div class="info">
+	           <a href="{{ route('home.index') }}" class="d-block">Alexander Pierce</a>
+	        </div>
+	    </div>
+	    <nav class="mt-2">
+	    	<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <li class="nav-item {{set_open('dashboard.index') }}">
+	    			<a href="{{ route('dashboard.index') }}" class="nav-link {{set_active('dashboard.index') }}">
+            	<i class="nav-icon fas fa-tachometer-alt"></i>
+            	<p>
+            		Dashboard
+            	</p>
+            </a>
+          </li>
+          @if(\Route::current()->getName() == 'home.index')
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-user"></i>
+              <p>
+                My Menu
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Update Data</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Leave Request</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Grievance</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Appraisal</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Reimbursment</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          @endif
+          @if(\Route::is(['config.index','position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index']))
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-cog"></i>
+              <p>
+                Application
+              </p>
+            </a>
+          </li>
+          <li class="nav-item has-treeview {{set_open(['position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index']) }}">
+            <a href="#" class="nav-link {{set_active(['position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index']) }}">
+              <i class="nav-icon fas fa-users"></i>
+              <p>
+                Human Resources
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('position.index') }}" class="nav-link {{set_active('position.index') }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Employee Position</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('leaveType.index') }}" class="nav-link {{set_active('leaveType.index') }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Leave Type</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('reimbursType.index') }}" class="nav-link {{set_active('reimbursType.index') }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Reimbursment Type</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('docCat.index') }}" class="nav-link {{set_active('docCat.index') }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Document Category</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('grievCat.index') }}" class="nav-link {{set_active('grievCat.index') }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Grievance Category</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-calculator"></i>
+              <p>
+                Accounting
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Chart of Account</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Asset Category</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          @endif
+          @if(\Route::current()->getName() == 'hr.index')
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-users-cog"></i>
+              <p>
+                Employee Database
+              </p>
+            </a>
+          </li>
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-user-clock"></i>
+              <p>
+                Attendance
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Employee Attendance</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Request Approval</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-certificate"></i>
+              <p>
+                Training
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-clipboard-check"></i>
+              <p>
+                Appraisal
+              </p>
+            </a>
+          </li>
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-file-alt"></i>
+              <p>
+                Bulletin Board
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Employee Bulletin</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Knowledge Base</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-chart-line"></i>
+              <p>
+                Reports
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Employee Bulletin</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Knowledge Base</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          @endif
+          @if(\Route::current()->getName() == 'grievance.index')
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-edit"></i>
+              <p>
+                Manual Input
+              </p>
+            </a>
+          </li>
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-user-shield"></i>
+              <p>
+                Grievance Process
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Database</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Management Respond</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-chart-line"></i>
+              <p>
+                Reports
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Employee Bulletin</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Knowledge Base</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          @endif
+          @if(\Route::current()->getName() == 'accounting.index')
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-money-check-alt"></i>
+              <p>
+                Bank Statement
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-wallet"></i>
+              <p>
+                Transaction
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-clipboard-list"></i>
+              <p>
+                Asset Management
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-file-invoice"></i>
+              <p>
+                Budget Manager
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-chart-line"></i>
+              <p>
+                Reports
+              </p>
+            </a>
+          </li>
+          @endif
+        </ul>
+      </nav>
+    </div>
+</aside>
+
+            	

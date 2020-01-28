@@ -33,11 +33,14 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "app/"
+            "iteos\\": "app/"
         },
         "classmap": [
             "database/seeds",
             "database/factories"
+        ],
+        "files": [
+            "app/Helpers/ActivateMenu.php"
         ]
     },
     "autoload-dev": {
