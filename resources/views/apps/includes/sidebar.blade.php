@@ -60,6 +60,12 @@
               <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
+                  <p>Training</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
                   <p>Reimbursment</p>
                 </a>
               </li>
@@ -74,6 +80,35 @@
                 Application
               </p>
             </a>
+          </li>
+          <li class="nav-item has-treeview ">
+            <a href="#" class="nav-link ">
+              <i class="nav-icon fas fa-users"></i>
+              <p>
+                User Management
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="" class="nav-link ">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>User Database</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="" class="nav-link ">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Access Roles</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="" class="nav-link ">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Activity Log</p>
+                </a>
+              </li>
+            </ul>
           </li>
           <li class="nav-item has-treeview {{set_open(['position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index']) }}">
             <a href="#" class="nav-link {{set_active(['position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index']) }}">
