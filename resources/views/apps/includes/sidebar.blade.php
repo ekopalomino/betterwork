@@ -140,17 +140,17 @@
             </ul>
           </li>
           @endif
-          @if(\Route::current()->getName() == 'hr.index')
-          <li class="nav-item">
-            <a href="#" class="nav-link">
+          @if(\Route::is(['hr.index','employee.index','attendance.index','request.index']))
+          <li class="nav-item {{set_open(['employee.index']) }}">
+            <a href="{{ route('employee.index') }}" class="nav-link {{set_active('employee.index') }}">
               <i class="nav-icon fas fa-users-cog"></i>
               <p>
                 Employee Database
               </p>
             </a>
           </li>
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
+          <li class="nav-item has-treeview {{set_open(['attendance.index','request.index']) }}">
+            <a href="#" class="nav-link {{set_active(['attendance.index','request.index']) }}">
               <i class="nav-icon fas fa-user-clock"></i>
               <p>
                 Attendance
@@ -158,14 +158,14 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="#" class="nav-link">
+              <li class="nav-item {{set_open(['attendance.index']) }}">
+                <a href="{{ route('attendance.index') }}" class="nav-link {{set_active('attendance.index') }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Employee Attendance</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
+              <li class="nav-item {{set_open(['request.index']) }}">
+                <a href="{{ route('request.index') }}" class="nav-link {{set_active('request.index') }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Request Approval</p>
                 </a>
