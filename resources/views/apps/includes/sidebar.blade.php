@@ -72,7 +72,7 @@
             </ul>
           </li>
           @endif
-          @if(\Route::is(['application.index','config.index','position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','coaCat.index','assetCat.index']))
+          @if(\Route::is(['application.index','config.index','position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','coaCat.index','assetCat.index','user.index']))
           <li class="nav-item">
             <a href="{{ route('application.index') }}" class="nav-link {{set_active('application.index') }}">
               <i class="nav-icon fas fa-cog"></i>
@@ -81,8 +81,8 @@
               </p>
             </a>
           </li>
-          <li class="nav-item has-treeview ">
-            <a href="#" class="nav-link ">
+          <li class="nav-item has-treeview {{set_open(['user.index']) }}">
+            <a href="#" class="nav-link {{set_active(['user.index']) }}">
               <i class="nav-icon fas fa-users"></i>
               <p>
                 User Management
@@ -91,7 +91,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="" class="nav-link ">
+                <a href="{{ route('user.index') }}" class="nav-link {{set_active('user.index') }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>User Database</p>
                 </a>

@@ -51,4 +51,19 @@ class ConfigurationController extends Controller
     {
     	return view('apps.pages.assetCategory');
     }
+
+    public function userIndex()
+    {
+        return view('apps.pages.users');
+    }
+
+    public function roleIndex()
+    {
+        return view('apps.pages.roles');
+    }
+
+    public function logActivity()
+    {
+        return view('apps.pages.logActivity');
+    }
 }
