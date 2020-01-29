@@ -11724,8 +11724,6 @@ body.sidebar-collapse:not(.sidebar-mini-md):not(.sidebar-mini) .main-header::bef
 .main-header {
     border-bottom: 1px solid #dee2e6;
     z-index: 1034;
-    background: #ffffff url("public/assets/header_bg.svg")0% 0% no-repeat padding-box;
-    opacity: 1;
 }
 
 .main-header .nav-link {
@@ -12153,7 +12151,7 @@ body.sidebar-collapse:not(.sidebar-mini-md):not(.sidebar-mini) .main-header::bef
 
 [class*=sidebar-light-] .nav-sidebar>.nav-item>.nav-link:active,
 [class*=sidebar-light-] .nav-sidebar>.nav-item>.nav-link:focus {
-    color: #343a40
+    color: #343a40;
 }
 
 [class*=sidebar-light-] .nav-sidebar>.nav-item.menu-open>.nav-link,
@@ -13955,7 +13953,9 @@ body.text-sm .control-sidebar {
 }
 
 .navbar-white {
-    background-color: #fff
+    background: #ffffff url("assets/header_bg.svg")0% 0% no-repeat padding-box;
+    background-size: cover;
+    opacity: 1
 }
 
 .navbar-gray {
