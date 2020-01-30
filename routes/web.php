@@ -14,10 +14,11 @@
 Route::get('/', function () {
     return view('apps.pages.login');
 });
-
+/*Development Routes*/
+Auth::routes(['register' => false]);
 /* Prototype Routes*/
-Route::group(['prefix' => 'apps'], function() {
-	Route::get('/','Apps\UserMenuController@index')->name('home.index');
+Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
+	Route::get('home','Apps\UserMenuController@index')->name('home.index');
 	Route::get('dashboard','Apps\DashboardController@index')->name('dashboard.index');
 	Route::get('configuration','Apps\ConfigurationController@index')->name('config.index');
 	Route::get('human-resources','Apps\HumanResourcesController@index')->name('hr.index');
@@ -42,7 +43,6 @@ Route::group(['prefix' => 'apps'], function() {
 	Route::get('accounting/bank-statement','Apps\AccountingController@bankIndex')->name('bank.index');
 });
 
-/*Development Routes*/
-Auth::routes(['register' => false]);
+
 
 

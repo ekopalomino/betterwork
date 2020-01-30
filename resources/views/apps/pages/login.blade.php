@@ -33,16 +33,29 @@
                 <div class="col-md-6 login-container bs-reset mt-login-5-bsfix">
                     <div class="login-content">
                         <h1>User Login</h1>
-                        <form action="javascript:;" class="login-form" method="post">
+                        <form class="login-form" method="post" action="{{ route('login') }}">
+                            @csrf
                             <div class="alert alert-danger display-hide">
                                 <button class="close" data-close="alert"></button>
-                                <span>Enter any username and password. </span>
+                                <span>Enter your email and password. </span>
                             </div>
                             <div class="row">
                                 <div class="col-xs-6">
-                                    <input class="form-control form-control-solid placeholder-no-fix form-group" type="text" autocomplete="off" placeholder="Username" name="username" required/> </div>
+                                    <input class="form-control @error('email') is-invalid @enderror form-control-solid placeholder-no-fix form-group" type="text" autocomplete="off" placeholder="Email" name="email" required/> 
+                                    @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
                                 <div class="col-xs-6">
-                                    <input class="form-control form-control-solid placeholder-no-fix form-group" type="password" autocomplete="off" placeholder="Password" name="password" required/> </div>
+                                    <input class="form-control @error('password') is-invalid @enderror form-control-solid placeholder-no-fix form-group" type="password" autocomplete="off" placeholder="Password" name="password" required/>
+                                    @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror 
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-4">
@@ -50,14 +63,17 @@
                                 </div>
                                 <div class="col-sm-8 text-right">
                                     <div class="forgot-password">
+                                        @if (Route::has('password.request'))
                                         <a href="javascript:;" id="forget-password" class="forget-password">Forgot Password?</a>
+                                        @endif
                                     </div>
                                     <button class="btn green" type="submit">Sign In</button>
                                 </div>
                             </div>
                         </form>
                         <!-- BEGIN FORGOT PASSWORD FORM -->
-                        <form class="forget-form" action="javascript:;" method="post">
+                        <form class="forget-form" action="{{ route('password.email') }}" method="post">
+                            @csrf
                             <h3 class="font-green">Forgot Password ?</h3>
                             <p> Enter your e-mail address below to reset your password. </p>
                             <div class="form-group">
