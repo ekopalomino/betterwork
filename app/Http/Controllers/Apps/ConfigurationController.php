@@ -77,6 +77,7 @@ class ConfigurationController extends Controller
 
     public function logActivity()
     {
-        return view('apps.pages.logActivity');
+        $logs = \LogActivity::logActivityLists();
+        return view('apps.pages.logActivity',compact('logs'));
     }
 }

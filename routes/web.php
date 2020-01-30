@@ -26,6 +26,7 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::get('accounting','Apps\AccountingController@index')->name('accounting.index');
 
 	Route::get('configuration/users','Apps\ConfigurationController@userIndex')->name('user.index');
+	Route::get('configuration/log-activity','Apps\ConfigurationController@logActivity')->name('logs.index');
 	Route::get('configuration/application','Apps\ConfigurationController@applicationIndex')->name('application.index');
 	Route::get('configuration/employee-position','Apps\ConfigurationController@positionIndex')->name('position.index');
 	Route::get('configuration/leave-type','Apps\ConfigurationController@leaveTypeIndex')->name('leaveType.index');
