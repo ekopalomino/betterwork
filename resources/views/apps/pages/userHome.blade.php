@@ -82,7 +82,7 @@ Better Work Indonesia | Home
                 				<strong><i class="fas fa-map-marker-alt mr-1"></i> Home Address</strong>
                 				<p class="text-muted">Malibu, California</p>
                 				<hr>
-                				<strong><i class="fas fa-pencil-alt mr-1"></i> Certification</strong>
+                				<strong><i class="fas fa-pencil-alt mr-1"></i> Training & Certification</strong>
                 				<p class="text-muted">
                   					<span class="tag tag-danger">UI Design</span>
                   					<span class="tag tag-success">Coding</span>
@@ -91,6 +91,7 @@ Better Work Indonesia | Home
                   					<span class="tag tag-primary">Node.js</span>
                 				</p>
                 				<hr>
+                        <strong><i class="fas fa-pencil-alt mr-1"></i> Contract Download</strong>
               				</div>
                       <div class="tab-pane" id="organization">
                         <strong><i class="fas fa-id-badge mr-1"></i> Employee ID</strong>
