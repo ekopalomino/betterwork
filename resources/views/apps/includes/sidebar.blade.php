@@ -19,7 +19,7 @@
 	    			<a href="{{ route('dashboard.index') }}" class="nav-link {{set_active('dashboard.index') }}">
             	<i class="nav-icon fas fa-tachometer-alt"></i>
             	<p>
-            		Dashboard
+            		Main Dashboard
             	</p>
             </a>
           </li>
@@ -326,9 +326,9 @@
             </ul>
           </li>
           @endif
-          @if(\Route::current()->getName() == 'accounting.index')
-          <li class="nav-item">
-            <a href="#" class="nav-link">
+          @if(\Route::is(['accounting.index','bank.index']))
+          <li class="nav-item {{set_open('bank.index') }}">
+            <a href="{{ route('bank.index') }}" class="nav-link {{set_active('bank.index') }}">
               <i class="nav-icon fas fa-money-check-alt"></i>
               <p>
                 Bank Statement

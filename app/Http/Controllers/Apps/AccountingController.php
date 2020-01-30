@@ -11,4 +11,9 @@ class AccountingController extends Controller
     {
     	return view('apps.pages.accountingHome');
     }
+
+    public function bankIndex()
+    {
+    	return view('apps.pages.bankStatement');
+    }
 }

@@ -16,7 +16,7 @@
         	<a href="{{route('grievance.index') }}" class="nav-link {{set_active('grievance.index') }}">Grievance</a>
       	</li>
       	<li class="nav-item d-none d-sm-inline-block">
-        	<a href="{{route('accounting.index') }}" class="nav-link {{set_active('accounting.index') }}">Accounting</a>
+        	<a href="{{route('accounting.index') }}" class="nav-link {{set_active(['accounting.index','bank.index']) }}">Accounting</a>
       	</li>
       
 	</ul>

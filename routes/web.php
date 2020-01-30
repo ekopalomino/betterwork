@@ -38,5 +38,7 @@ Route::group(['prefix' => 'apps'], function() {
 	Route::get('human-resources/attendance','Apps\HumanResourcesController@attendanceIndex')->name('attendance.index');
 	Route::get('human-resources/attendance/request','Apps\HumanResourcesController@requestIndex')->name('request.index');
 	Route::get('human-resources/appraisal','Apps\HumanResourcesController@appraisalIndex')->name('appraisal.index');
+
+	Route::get('accounting/bank-statement','Apps\AccountingController@bankIndex')->name('bank.index');
 });
 
