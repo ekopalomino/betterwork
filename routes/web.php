@@ -11,9 +11,9 @@
 |
 */
 
-/*Route::get('/', function () {
-    return view('welcome');
-});*/
+Route::get('/', function () {
+    return view('apps.pages.login');
+});
 
 /* Prototype Routes*/
 Route::group(['prefix' => 'apps'], function() {
@@ -41,4 +41,8 @@ Route::group(['prefix' => 'apps'], function() {
 
 	Route::get('accounting/bank-statement','Apps\AccountingController@bankIndex')->name('bank.index');
 });
+
+/*Development Routes*/
+Auth::routes(['register' => false]);
+
 
