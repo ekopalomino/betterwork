@@ -210,17 +210,29 @@ Better Work Indonesia | Home
                         </table>
                       </div>
               				<div class="tab-pane" id="settings">
-              					<form class="form-horizontal">
+                        @if (count($errors) > 0) 
+            <div class="alert alert-danger alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+              <h5><i class="icon fas fa-ban"></i> Alert!</h5>
+              <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+              </ul>
+            </div>
+            @endif
+              					{!! Form::open(array('route' => 'userPassword.update','method'=>'POST', 'class' => 'form-horizontal')) !!}
+                        @csrf
               						<div class="form-group row">
                         				<label for="inputEmail" class="col-sm-2 col-form-label">New Password</label>
                         				<div class="col-sm-10">
-                          					<input type="password" class="form-control" id="inputEmail" placeholder="Password">
+                          					{!! Form::password('password', array('placeholder' => 'Password','class' => 'form-control')) !!}
                         				</div>
                       				</div>
                       				<div class="form-group row">
                         				<label for="inputEmail" class="col-sm-2 col-form-label">Confirm New Password</label>
                         				<div class="col-sm-10">
-                          					<input type="password" class="form-control" id="inputEmail" placeholder="Password">
+                          					{!! Form::password('confirm-password', array('placeholder' => 'Confirm Password','class' => 'form-control')) !!}
                         				</div>
                       				</div>
                       				<div class="form-group row">
@@ -230,6 +242,7 @@ Better Work Indonesia | Home
                       				</div>
                       			</form>
                       		</div>
+                        {!! Form::close() !!}
               			</div>
               		</div>
               	</div>

@@ -1,9 +1,11 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
 	<a href="index3.html" class="brand-link">
-      <img src="{{ asset('public/assets/logo_resize.png') }}" alt="Better Work" class="brand-image img-circle elevation-3"
+
+      <img src="{{ asset('public/assets/img/logo_resize.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
-      <span class="brand-text font-weight-light" ><img src="{{ asset('public/assets/logo.png') }}" alt="Better Work" 
-           style="opacity: .8"></span>
+      <span class="brand-text font-weight-light"><img src="{{ asset('public/assets/img/logo.png') }}" style="opacity: .8"></span>
+
+     
     </a>
     <div class="sidebar">
     	<div class="user-panel mt-3 pb-3 mb-3 d-flex">
@@ -11,7 +13,7 @@
 	           <img src="{{ asset('public/bower_components/admin-lte/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
 	        </div>
 	        <div class="info">
-	           <a href="{{ route('home.index') }}" class="d-block">Alexander Pierce</a>
+	           <a href="{{ route('home.index') }}" class="d-block">{{{ isset(Auth::user()->name) ? Auth::user()->name : Auth::user()->email }}}</a>
 	        </div>
 	    </div>
 	    <nav class="mt-2">
@@ -73,7 +75,7 @@
             </ul>
           </li>
           @endif
-          @if(\Route::is(['application.index','config.index','position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','coaCat.index','assetCat.index','user.index']))
+          @if(\Route::is(['application.index','config.index','position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','coaCat.index','assetCat.index','user.index','logs.index','role.index','role.create']))
           <li class="nav-item">
             <a href="{{ route('application.index') }}" class="nav-link {{set_active('application.index') }}">
               <i class="nav-icon fas fa-cog"></i>
@@ -82,8 +84,8 @@
               </p>
             </a>
           </li>
-          <li class="nav-item has-treeview {{set_open(['user.index']) }}">
-            <a href="#" class="nav-link {{set_active(['user.index']) }}">
+          <li class="nav-item has-treeview {{set_open(['user.index','logs.index','role.index','role.create']) }}">
+            <a href="#" class="nav-link {{set_active(['user.index','logs.index','role.index','role.create']) }}">
               <i class="nav-icon fas fa-users"></i>
               <p>
                 User Management
@@ -98,13 +100,13 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="" class="nav-link ">
+                <a href="{{ route('role.index') }}" class="nav-link {{set_active(['role.index','role.create']) }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Access Roles</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="" class="nav-link ">
+                <a href="{{ route('logs.index') }}" class="nav-link {{set_active('logs.index') }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Activity Log</p>
                 </a>

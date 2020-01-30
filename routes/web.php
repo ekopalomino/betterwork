@@ -11,13 +11,14 @@
 |
 */
 
-/*Route::get('/', function () {
-    return view('welcome');
-});*/
-
+Route::get('/', function () {
+    return view('apps.pages.login');
+});
+/*Development Routes*/
+Auth::routes(['register' => false]);
 /* Prototype Routes*/
-Route::group(['prefix' => 'apps'], function() {
-	Route::get('/','Apps\UserMenuController@index')->name('home.index');
+Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
+	Route::get('home','Apps\UserMenuController@index')->name('home.index');
 	Route::get('dashboard','Apps\DashboardController@index')->name('dashboard.index');
 	Route::get('configuration','Apps\ConfigurationController@index')->name('config.index');
 	Route::get('human-resources','Apps\HumanResourcesController@index')->name('hr.index');
@@ -25,6 +26,16 @@ Route::group(['prefix' => 'apps'], function() {
 	Route::get('accounting','Apps\AccountingController@index')->name('accounting.index');
 
 	Route::get('configuration/users','Apps\ConfigurationController@userIndex')->name('user.index');
+	Route::post('configuration/users','Apps\ConfigurationController@userStore')->name('user.store');
+	Route::get('configuration/users/edit/{id}','Apps\ConfigurationController@userEdit')->name('user.edit');
+	Route::post('configuration/users/update/{id}','Apps\ConfigurationController@userUpdate')->name('user.update');
+	Route::post('configuration/users/password/update','Apps\ConfigurationController@updatePassword')->name('userPassword.update');
+	Route::post('configuration/users/suspend/{id}','Apps\ConfigurationController@userSuspend')->name('user.suspend');
+	Route::post('configuration/users/delete/{id}','Apps\ConfigurationController@userDestroy')->name('user.destroy');
+	Route::get('configuration/access-roles','Apps\ConfigurationController@roleIndex')->name('role.index');
+	Route::get('configuration/access-roles/create','Apps\ConfigurationController@roleCreate')->name('role.create');
+	Route::post('configuration/access-roles/store','Apps\ConfigurationController@roleStore')->name('role.store');
+	Route::get('configuration/log-activity','Apps\ConfigurationController@logActivity')->name('logs.index');
 	Route::get('configuration/application','Apps\ConfigurationController@applicationIndex')->name('application.index');
 	Route::get('configuration/employee-position','Apps\ConfigurationController@positionIndex')->name('position.index');
 	Route::get('configuration/leave-type','Apps\ConfigurationController@leaveTypeIndex')->name('leaveType.index');
@@ -41,4 +52,7 @@ Route::group(['prefix' => 'apps'], function() {
 
 	Route::get('accounting/bank-statement','Apps\AccountingController@bankIndex')->name('bank.index');
 });
+
+
+
 
