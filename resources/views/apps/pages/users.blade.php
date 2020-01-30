@@ -33,23 +33,30 @@ Better Work Indonesia | User Database
 	              		</button>
 	            	</div>
 	            	<div class="modal-body">
-                  <form class="form-horizontal">
+                  {!! Form::open(array('route' => 'user.store','method'=>'POST', 'class' => 'form-horizontal')) !!}
+                  @csrf
                     <div class="form-group row">
-                      <label for="inputEmail" class="col-sm-2 col-form-label">Username</label>
+                      <label for="inputEmail" class="col-sm-2 col-form-label">Name</label>
                         <div class="col-sm-10">
-                          <input type="text" class="form-control" id="inputEmail" placeholder="Username">
+                          {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
                         </div>
                     </div>
                     <div class="form-group row">
                       <label for="inputEmail" class="col-sm-2 col-form-label">Password</label>
                         <div class="col-sm-10">
-                          <input type="password" class="form-control" id="inputEmail" placeholder="Password">
+                          {!! Form::password('password', array('placeholder' => 'Password','class' => 'form-control')) !!}
                         </div>
                     </div>
                     <div class="form-group row">
                       <label for="inputEmail" class="col-sm-2 col-form-label">Confirm Password</label>
                         <div class="col-sm-10">
-                          <input type="password" class="form-control" id="inputEmail" placeholder="Confirm Password">
+                          {!! Form::password('confirm-password', array('placeholder' => 'Confirm Password','class' => 'form-control')) !!}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+                        <div class="col-sm-10">
+                          {!! Form::text('email', null, array('placeholder' => 'Email','class' => 'form-control')) !!}
                         </div>
                     </div>
                     <div class="form-group row">
@@ -63,16 +70,29 @@ Better Work Indonesia | User Database
                           </select>
                         </div>
                     </div>
+                  
                  	</div>
 				            	<div class="modal-footer justify-content-between">
-				              		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				              		<button type="button" class="btn btn-primary">Save changes</button>
+				              		<button type="close" class="btn btn-default" data-dismiss="modal">Close</button>
+				              		<button id="register" type="submit" class="btn btn-primary">Save changes</button>
 				            	</div>
 				          	</div>
+                {!! Form::close() !!}
 				        </div>
 				    </div>
           </div>
          	<div class="card-body">
+            @if (count($errors) > 0) 
+            <div class="alert alert-danger alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+              <h5><i class="icon fas fa-ban"></i> Alert!</h5>
+              <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+              </ul>
+            </div>
+            @endif
          		<table id="example2" class="table table-bordered table-hover">
          			<thead>
          				<tr>
@@ -116,10 +136,13 @@ Better Work Indonesia | User Database
                             Action
                           </button>
                           <div class="dropdown-menu" role="menu">
-                            <a class="dropdown-item" href="#">View User</a>
-                            <a class="dropdown-item" href="#">Edit User</a>
-                            <a class="dropdown-item" href="#">Suspend User</a>
-                            <a class="dropdown-item" href="#">Delete User</a>
+                            <a class="dropdown-item modalMd" href="#" value="{{ action('Apps\ConfigurationController@userEdit',['id'=>$user->id]) }}" data-toggle="modal" data-target="#modalMd">Edit User</a>
+                            {!! Form::open(['method' => 'POST','route' => ['user.suspend', $user->id],'style'=>'dropdown-item','onsubmit' => 'return ConfirmSuspend()']) !!}
+                            {!! Form::button('<a>Suspend User</a>',['type'=>'submit','class' => 'dropdown-item']) !!}
+                            {!! Form::close() !!}
+                            {!! Form::open(['method' => 'POST','route' => ['user.destroy', $user->id],'style'=>'dropdown-item','onsubmit' => 'return ConfirmSuspend()']) !!}
+                            {!! Form::button('<a>Delete User</a>',['type'=>'submit','class' => 'dropdown-item']) !!}
+                            {!! Form::close() !!}
                           </div>
                         </div>
                       </td>
@@ -147,5 +170,25 @@ Better Work Indonesia | User Database
       "autoWidth": false,
     });
   });
+</script>
+<script>
+    function ConfirmDelete()
+    {
+    var x = confirm("User Akan Dihapus?");
+    if (x)
+        return true;
+    else
+        return false;
+    }
+</script>
+<script>
+    function ConfirmSuspend()
+    {
+    var x = confirm("User Akan Dinonaktifkan?");
+    if (x)
+        return true;
+    else
+        return false;
+    }
 </script>
 @endsection

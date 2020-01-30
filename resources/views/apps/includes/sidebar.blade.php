@@ -10,7 +10,7 @@
 	           <img src="{{ asset('public/bower_components/admin-lte/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
 	        </div>
 	        <div class="info">
-	           <a href="{{ route('home.index') }}" class="d-block">Alexander Pierce</a>
+	           <a href="{{ route('home.index') }}" class="d-block">{{{ isset(Auth::user()->name) ? Auth::user()->name : Auth::user()->email }}}</a>
 	        </div>
 	    </div>
 	    <nav class="mt-2">
@@ -72,7 +72,7 @@
             </ul>
           </li>
           @endif
-          @if(\Route::is(['application.index','config.index','position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','coaCat.index','assetCat.index','user.index','logs.index']))
+          @if(\Route::is(['application.index','config.index','position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','coaCat.index','assetCat.index','user.index','logs.index','role.index']))
           <li class="nav-item">
             <a href="{{ route('application.index') }}" class="nav-link {{set_active('application.index') }}">
               <i class="nav-icon fas fa-cog"></i>
@@ -81,8 +81,8 @@
               </p>
             </a>
           </li>
-          <li class="nav-item has-treeview {{set_open(['user.index','logs.index']) }}">
-            <a href="#" class="nav-link {{set_active(['user.index','logs.index']) }}">
+          <li class="nav-item has-treeview {{set_open(['user.index','logs.index','role.index']) }}">
+            <a href="#" class="nav-link {{set_active(['user.index','logs.index','role.index']) }}">
               <i class="nav-icon fas fa-users"></i>
               <p>
                 User Management
@@ -97,7 +97,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="" class="nav-link ">
+                <a href="{{ route('role.index') }}" class="nav-link {{set_active('role.index') }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Access Roles</p>
                 </a>
