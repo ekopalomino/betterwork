@@ -26,5 +26,10 @@ class HumanResourcesController extends Controller
     {
     	return view('apps.pages.requestIndex');
     }
+
+    public function appraisalIndex()
+    {
+        return view('apps.pages.appraisalIndex');
+    }
 }
 

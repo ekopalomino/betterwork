@@ -251,6 +251,10 @@ th {
     font-size: 12px;
 }
 
+td {
+    font-size: 12px;
+}
+
 label {
     display: inline-block;
     margin-bottom: .5rem
@@ -11692,7 +11696,7 @@ body.sidebar-collapse:not(.sidebar-mini-md):not(.sidebar-mini) .main-header::bef
 }
 
 .content-header h1 {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     margin: 0
 }
 

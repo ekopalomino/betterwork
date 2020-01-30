@@ -175,7 +175,7 @@
             </ul>
           </li>
           @endif
-          @if(\Route::is(['hr.index','employee.index','attendance.index','request.index']))
+          @if(\Route::is(['hr.index','employee.index','attendance.index','request.index','appraisal.index']))
           <li class="nav-item {{set_open(['employee.index']) }}">
             <a href="{{ route('employee.index') }}" class="nav-link {{set_active('employee.index') }}">
               <i class="nav-icon fas fa-users-cog"></i>
@@ -215,8 +215,8 @@
               </p>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
+          <li class="nav-item {{set_open('appraisal.index') }}">
+            <a href="{{ route('appraisal.index') }}" class="nav-link {{set_active('appraisal.index') }}">
               <i class="nav-icon fas fa-clipboard-check"></i>
               <p>
                 Appraisal
