@@ -33,6 +33,12 @@ Better Work Indonesia | Create Role
 				<form class="form-horizontal">
 					<div class="card-body">
 						<div class="row">
+							<div class="col-6">
+								<label><strong>Role Name</strong></label>
+								{!! Form::text('name', null, array('placeholder' => 'Role Name','class' => 'form-control')) !!}
+							</div>
+						</div>
+						<div class="row">
 							<div class="col-2">
 								<div class="card card-info">
 									<div class="card-body">
