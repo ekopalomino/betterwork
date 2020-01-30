@@ -21,7 +21,7 @@ class User extends Authenticatable
         'name', 
         'email', 
         'password',
-        'status',
+        'status_id',
         'last_login_at',
         'last_login_from',
     ];
@@ -45,4 +45,9 @@ class User extends Authenticatable
     ];
 
     public $incrementing = false;
+
+    public function Statuses()
+    {
+        return $this->belongsTo(Status::class,'status_id');
+    }
 }

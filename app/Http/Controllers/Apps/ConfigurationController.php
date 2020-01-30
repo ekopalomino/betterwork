@@ -4,6 +4,7 @@ namespace iteos\Http\Controllers\Apps;
 
 use Illuminate\Http\Request;
 use iteos\Http\Controllers\Controller;
+use iteos\Models\User;
 
 class ConfigurationController extends Controller
 {
@@ -20,6 +21,11 @@ class ConfigurationController extends Controller
     public function positionIndex()
     {
     	return view('apps.pages.employeePosition');
+    }
+
+    public function positionStore(Request $request)
+    {
+
     }
 
     public function leaveTypeIndex()
@@ -54,7 +60,9 @@ class ConfigurationController extends Controller
 
     public function userIndex()
     {
-        return view('apps.pages.users');
+        $data = User::orderBy('id','ASC')->get();
+
+        return view('apps.pages.users',compact('data'));
     }
 
     public function roleIndex()

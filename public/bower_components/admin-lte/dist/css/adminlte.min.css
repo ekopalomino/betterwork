@@ -248,11 +248,11 @@ caption {
 
 th {
     text-align: inherit;
-    font-size: 12px;
+    font-size: 16px;
 }
 
 td {
-    font-size: 12px;
+    font-size: 14px;
 }
 
 label {
@@ -4767,7 +4767,8 @@ input[type=submit].btn-block {
 .navbar-light .navbar-nav .nav-link.active,
 .navbar-light .navbar-nav .nav-link.show,
 .navbar-light .navbar-nav .show>.nav-link {
-    color: rgba(0, 0, 0, .9)
+    color: rgba(0, 0, 0, .9);
+    font-weight: bold
 }
 
 .navbar-light .navbar-toggler {
