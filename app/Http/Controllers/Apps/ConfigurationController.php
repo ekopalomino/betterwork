@@ -199,6 +199,27 @@ class ConfigurationController extends Controller
         return view('apps.input.roles');
     }
 
+    public function roleStore(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required|unique:roles,name',
+            'permission' => 'required',
+        ]);
+
+
+        $role = Role::create(['name' => $request->input('name')]);
+        $role->syncPermissions($request->input('permission'));
+        $log = 'Access Role '.($role->name).' Created';
+         \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'Access Role '.($role->name).' Created',
+            'alert-type' => 'success'
+        ); 
+
+        return redirect()->route('role.index')
+                        ->with($notification);
+    }
+
     public function logActivity()
     {
         $logs = \LogActivity::logActivityLists();

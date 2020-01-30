@@ -30,7 +30,8 @@ Better Work Indonesia | Create Role
 				<div class="card-header">
                 	<h3 class="card-title">Permission List</h3>
               	</div>
-				<form class="form-horizontal">
+				{!! Form::open(array('route' => 'role.store','method'=>'POST', 'class' => 'form-horizontal')) !!}
+				@csrf
 					<div class="card-body">
 						<div class="row">
 							<div class="col-6">
@@ -60,19 +61,19 @@ Better Work Indonesia | Create Role
 													<tr>
 														<td>Access Human Resources</td>
 														<td>
-															<input type="checkbox" value="1" name="permission[]" />
+															<input type="checkbox" value="2" name="permission[]" />
 														</td>
 													</tr>
 													<tr>
 														<td>Access Accounting</td>
 														<td>
-															<input type="checkbox" value="1" name="permission[]" />
+															<input type="checkbox" value="4" name="permission[]" />
 														</td>
 													</tr>
 													<tr>
 														<td>Access Grievance</td>
 														<td>
-															<input type="checkbox" value="1" name="permission[]" />
+															<input type="checkbox" value="3" name="permission[]" />
 														</td>
 													</tr>
 												</tbody>
@@ -95,73 +96,73 @@ Better Work Indonesia | Create Role
 													<tr>
 														<td>Create Application Setting</td>
 														<td>
-															<input type="checkbox" value="1" name="permission[]" />
+															<input type="checkbox" value="33" name="permission[]" />
 														</td>
 													</tr>
 													<tr>
 														<td>Create User</td>
 														<td>
-															<input type="checkbox" value="1" name="permission[]" />
+															<input type="checkbox" value="5" name="permission[]" />
 														</td>
 													</tr>
 													<tr>
 														<td>Edit User</td>
 														<td>
-															<input type="checkbox" value="1" name="permission[]" />
+															<input type="checkbox" value="6" name="permission[]" />
 														</td>
 													</tr>
 													<tr>
 														<td>Suspend / Delete User</td>
 														<td>
-															<input type="checkbox" value="1" name="permission[]" />
+															<input type="checkbox" value="7" name="permission[]" />
 														</td>
 													</tr>
 													<tr>
 														<td>Create Access Role</td>
 														<td>
-															<input type="checkbox" value="1" name="permission[]" />
+															<input type="checkbox" value="8" name="permission[]" />
 														</td>
 													</tr>
 													<tr>
 														<td>Edit Access Role</td>
 														<td>
-															<input type="checkbox" value="1" name="permission[]" />
+															<input type="checkbox" value="9" name="permission[]" />
 														</td>
 													</tr>
 													<tr>
 														<td>Create HR Master Data</td>
 														<td>
-															<input type="checkbox" value="1" name="permission[]" />
+															<input type="checkbox" value="10" name="permission[]" />
 														</td>
 													</tr>
 													<tr>
 														<td>Edit HR Master Data</td>
 														<td>
-															<input type="checkbox" value="1" name="permission[]" />
+															<input type="checkbox" value="11" name="permission[]" />
 														</td>
 													</tr>
 													<tr>
 														<td>Delete HR Master Data</td>
 														<td>
-															<input type="checkbox" value="1" name="permission[]" />
+															<input type="checkbox" value="12" name="permission[]" />
 														</td>
 													</tr>
 													<tr>
 														<td>Create Accounting Master Data</td>
 														<td>
-															<input type="checkbox" value="1" name="permission[]" />
+															<input type="checkbox" value="13" name="permission[]" />
 														</td>
 													</tr>
 													<tr>
 														<td>Edit Accounting Master Data</td>
 														<td>
-															<input type="checkbox" value="1" name="permission[]" />
+															<input type="checkbox" value="14" name="permission[]" />
 														</td>
 													</tr>
 													<tr>
 														<td>Delete Accounting Master Data</td>
 														<td>
-															<input type="checkbox" value="1" name="permission[]" />
+															<input type="checkbox" value="15" name="permission[]" />
 														</td>
 													</tr>
 												</tbody>
@@ -169,7 +170,7 @@ Better Work Indonesia | Create Role
 									</div>
 								</div>
 							</div>
-							<div class="col-3>
+							<div class="col-3">
 								<div class="card card-info">
 									<div class="card-body">
 										<label><strong>Human Resource Menu</strong></label>
@@ -184,85 +185,110 @@ Better Work Indonesia | Create Role
 													<tr>
 														<td>Create Employee</td>
 														<td>
-															<input type="checkbox" value="1" name="permission[]" />
+															<input type="checkbox" value="16" name="permission[]" />
 														</td>
 													</tr>
 													<tr>
 														<td>Edit Employee</td>
 														<td>
-															<input type="checkbox" value="1" name="permission[]" />
+															<input type="checkbox" value="17" name="permission[]" />
 														</td>
 													</tr>
 													<tr>
 														<td>Suspend / Delete Employee</td>
 														<td>
-															<input type="checkbox" value="1" name="permission[]" />
+															<input type="checkbox" value="18" name="permission[]" />
 														</td>
 													</tr>
 													<tr>
 														<td>Approve / Reject Leave Request</td>
 														<td>
-															<input type="checkbox" value="1" name="permission[]" />
+															<input type="checkbox" value="19" name="permission[]" />
 														</td>
 													</tr>
 													<tr>
 														<td>Create Payroll</td>
 														<td>
-															<input type="checkbox" value="1" name="permission[]" />
+															<input type="checkbox" value="20" name="permission[]" />
 														</td>
 													</tr>
 													<tr>
 														<td>Edit Payroll</td>
 														<td>
-															<input type="checkbox" value="1" name="permission[]" />
+															<input type="checkbox" value="21" name="permission[]" />
 														</td>
 													</tr>
 													<tr>
 														<td>Approve / Reject Payroll</td>
 														<td>
-															<input type="checkbox" value="1" name="permission[]" />
+															<input type="checkbox" value="22" name="permission[]" />
+														</td>
+													</tr>
+													<tr>
+														<td>Create Reimburs</td>
+														<td>
+															<input type="checkbox" value="23" name="permission[]" />
+														</td>
+													</tr>
+													<tr>
+														<td>Edit Reimburs</td>
+														<td>
+															<input type="checkbox" value="24" name="permission[]" />
+														</td>
+													</tr>
+													<tr>
+														<td>Delete Reimburs</td>
+														<td>
+															<input type="checkbox" value="25" name="permission[]" />
+														</td>
+													</tr>
+													<tr>
+														<td>Approve / Reject Reimburs</td>
+														<td>
+															<input type="checkbox" value="26" name="permission[]" />
 														</td>
 													</tr>
 													<tr>
 														<td>Create Appraisal</td>
 														<td>
-															<input type="checkbox" value="1" name="permission[]" />
+															<input type="checkbox" value="27" name="permission[]" />
 														</td>
 													</tr>
 													<tr>
 														<td>Edit Appraisal</td>
 														<td>
-															<input type="checkbox" value="1" name="permission[]" />
+															<input type="checkbox" value="28" name="permission[]" />
 														</td>
 													</tr>
 													<tr>
 														<td>Approve / Reject Appraisal</td>
 														<td>
-															<input type="checkbox" value="1" name="permission[]" />
+															<input type="checkbox" value="29" name="permission[]" />
 														</td>
 													</tr>
 													<tr>
 														<td>Create Training</td>
 														<td>
-															<input type="checkbox" value="1" name="permission[]" />
+															<input type="checkbox" value="30" name="permission[]" />
 														</td>
 													</tr>
 													<tr>
 														<td>Edit Training</td>
 														<td>
-															<input type="checkbox" value="1" name="permission[]" />
+															<input type="checkbox" value="31" name="permission[]" />
 														</td>
 													</tr>
 													<tr>
 														<td>Approve / Reject Training</td>
 														<td>
-															<input type="checkbox" value="1" name="permission[]" />
+															<input type="checkbox" value="32" name="permission[]" />
 														</td>
 													</tr>
 												</tbody>
 											</table>	
 										
 									</div>
+								</div>
 							</div>
 							<div class="col-3">
 								<div class="card card-info">
@@ -310,7 +336,7 @@ Better Work Indonesia | Create Role
 	                  	<button type="submit" class="btn btn-info">Submit</button>
 	                  	<button type="submit" class="btn btn-default float-right">Cancel</button>
 	                </div>
-	            </form>
+	            {!! Form::close() !!}
 	        </div>
         </div>
     </div>

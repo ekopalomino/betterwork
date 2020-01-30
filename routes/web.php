@@ -34,6 +34,7 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::post('configuration/users/delete/{id}','Apps\ConfigurationController@userDestroy')->name('user.destroy');
 	Route::get('configuration/access-roles','Apps\ConfigurationController@roleIndex')->name('role.index');
 	Route::get('configuration/access-roles/create','Apps\ConfigurationController@roleCreate')->name('role.create');
+	Route::post('configuration/access-roles/store','Apps\ConfigurationController@roleStore')->name('role.store');
 	Route::get('configuration/log-activity','Apps\ConfigurationController@logActivity')->name('logs.index');
 	Route::get('configuration/application','Apps\ConfigurationController@applicationIndex')->name('application.index');
 	Route::get('configuration/employee-position','Apps\ConfigurationController@positionIndex')->name('position.index');
