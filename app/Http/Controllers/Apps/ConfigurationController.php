@@ -190,7 +190,13 @@ class ConfigurationController extends Controller
 
     public function roleIndex()
     {
-        return view('apps.pages.roles');
+        $roles = Role::orderBy('id','ASC')->get();
+        return view('apps.pages.roles',compact('roles'));
+    }
+
+    public function roleCreate()
+    {
+        return view('apps.input.roles');
     }
 
     public function logActivity()

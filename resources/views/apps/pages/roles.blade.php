@@ -20,8 +20,8 @@ Better Work Indonesia | Access Roles
 		<div class="col-12">
 			<div class="card">
 				<div class="card-header">
-       				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-lg">
-         			Add New
+       				<a class="btn btn-primary" href="{{ route('role.create') }}">
+         			Add New</a>
          		</button>
          	</div>
          	<div class="card-body">
@@ -35,11 +35,11 @@ Better Work Indonesia | Access Roles
          				</tr>
          			</thead>
          			<tbody>
-                		@foreach($data as $key=>$user)
+                		@foreach($roles as $key=>$role)
          				<tr>
          					<td>{{ $key+1 }}</td>
-         					<td>{{ $user->name }}</td>
-                      		<td>{{date("d F Y H:i",strtotime($user->created_at)) }}</td>
+         					<td>{{ $role->name }}</td>
+                      		<td>{{date("d F Y H:i",strtotime($role->created_at)) }}</td>
                       		<td>
 		                        <div class="btn-group">
 		                          <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -76,5 +76,4 @@ Better Work Indonesia | Access Roles
     });
   });
 </script>
-@endsection
 @endsection
