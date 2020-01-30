@@ -5,6 +5,11 @@ namespace iteos\Http\Controllers\Apps;
 use Illuminate\Http\Request;
 use iteos\Http\Controllers\Controller;
 use iteos\Models\User;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+use Hash;
+use DB;
+use Auth;
 
 class ConfigurationController extends Controller
 {
