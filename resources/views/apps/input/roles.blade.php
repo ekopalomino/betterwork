@@ -334,7 +334,7 @@ Better Work Indonesia | Create Role
 							</div>
 						</div>
 	                  	<button type="submit" class="btn btn-info">Submit</button>
-	                  	<button type="submit" class="btn btn-default float-right">Cancel</button>
+	                  	<a button type="button" class="btn btn-danger float-right" href="{{ route('role.index') }}">Cancel</a>
 	                </div>
 	            {!! Form::close() !!}
 	        </div>
@@ -342,12 +342,3 @@ Better Work Indonesia | Create Role
     </div>
 </section>
 @endsection
-@section('footer.scripts')
-<script src="{{ asset('public/bower_components/admin-lte/plugins/bootstrap-switch/js/bootstrap-switch.min.js') }}"></script>
-<script>
-	$(function () {
-		$("input[data-bootstrap-switch]").each(function(){
-      		$(this).bootstrapSwitch('state', $(this).prop('checked'));
-    	});
-	});
-</script>

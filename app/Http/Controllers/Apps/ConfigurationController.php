@@ -220,6 +220,58 @@ class ConfigurationController extends Controller
                         ->with($notification);
     }
 
+    public function roleEdit($id)
+    {
+        $data = Role::find($id);
+        $permission = Permission::get();
+        $roles = Role::join('role_has_permissions','role_has_permissions.role_id','=','roles.id')
+                       ->where('roles.id',$id)
+                       ->get();
+        $rolePermissions = DB::table("role_has_permissions")->where("role_has_permissions.role_id",$id)
+            /*->pluck('role_has_permissions.permission_id','role_has_permissions.permission_id')*/
+            ->get();
+        
+        return view('apps.edit.roles',compact('data','rolePermissions','roles'));
+    }
+
+    public function roleUpdate(Request $request, $id)
+    {
+        $this->validate($request, [
+            'name' => 'required',
+            'permission' => 'required',
+        ]);
+
+
+        $role = Role::find($id);
+        $role->name = $request->input('name');
+        $role->save();
+
+
+        $role->syncPermissions($request->input('permission'));
+        $log = 'Access Role '.($role->name).' Updated';
+         \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'Access Role '.($role->name).' Updated',
+            'alert-type' => 'success'
+        ); 
+
+        return redirect()->route('role.index')
+                        ->with($notification);
+    }
+
+    public function roleDestroy($id)
+    {
+        DB::table("roles")->where('id',$id)->delete();
+        $log = 'Access Role '.($role->name).' Deleted';
+         \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'Access Role '.($role->name).' Deleted',
+            'alert-type' => 'success'
+        ); 
+        return redirect()->route('role.index')
+                        ->with($notification);
+    }
+
     public function logActivity()
     {
         $logs = \LogActivity::logActivityLists();
