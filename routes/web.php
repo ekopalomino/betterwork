@@ -48,6 +48,14 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 
 
 	Route::get('configuration/leave-type','Apps\ConfigurationController@leaveTypeIndex')->name('leaveType.index');
+	Route::post('configuration/leave-type/store','Apps\ConfigurationController@leaveTypeStore')->name('leaveType.store');
+	Route::get('configuration/leave-type/edit/{id}','Apps\ConfigurationController@leaveTypeEdit')->name('leaveType.edit');
+	Route::post('configuration/leave-type/update/{id}','Apps\ConfigurationController@leaveTypeUpdate')->name('leaveType.update');
+	Route::post('configuration/leave-type/delete/{id}','Apps\ConfigurationController@leaveTypeDestroy')->name('leaveType.destroy');
+
+
+
+	
 	Route::get('configuration/reimburstment-type','Apps\ConfigurationController@reimbursTypeIndex')->name('reimbursType.index');
 	Route::get('configuration/document-category','Apps\ConfigurationController@documentCategoryIndex')->name('docCat.index');
 	Route::get('configuration/grievance-category','Apps\ConfigurationController@grievanceCategoryIndex')->name('grievCat.index');

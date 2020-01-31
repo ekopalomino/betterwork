@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use iteos\Http\Controllers\Controller;
 use iteos\Models\User;
 use iteos\Models\EmployeePosition;
+use iteos\Models\LeaveType;
 use Hash;
 use DB;
 use Auth;
@@ -94,7 +95,72 @@ class ConfigurationController extends Controller
 
     public function leaveTypeIndex()
     {
-    	return view('apps.pages.leaveType');
+        $data = LeaveType::orderBy('id','ASC')->get();
+
+    	return view('apps.pages.leaveType',compact('data'));
+    }
+
+    public function leaveTypeStore(Request $request)
+    {
+        $this->validate($request, [
+            'leave_name' => 'required',
+        ]);
+
+        $data = LeaveType::create([
+            'leave_name' => $request->input('leave_name'),
+            'created_by' => auth()->user()->id,
+        ]);
+
+        $log = 'Type '.($data->leave_name).' Created';
+         \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'Type '.($data->leave_name).' Created',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('leaveType.index')->with($notification);
+    }
+
+    public function leaveTypeEdit($id)
+    {
+        $data = LeaveType::find($id);
+
+        return view('apps.edit.leaveType',compact('data'))->renderSections()['content'];
+    }
+
+    public function leaveTypeUpdate(Request $request,$id)
+    {
+        $this->validate($request, [
+            'leave_name' => 'required',
+        ]);
+        $orig = LeaveType::find($id);
+        $data = $orig->update([
+            'leave_name' => $request->input('leave_name'),
+            'updated_by' => auth()->user()->id,
+        ]);
+
+        $log = 'Type '.($orig->leave_name).' Updated';
+         \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'Type '.($orig->leave_name).' Updated',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('leaveType.index')->with($notification);
+    }
+
+    public function leaveTypeDestroy($id)
+    {
+        $data = LeaveType::find($id);
+        $log = 'Type '.($data->leave_name).' Deleted';
+         \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'Type '.($data->leave_name).' Deleted',
+            'alert-type' => 'success'
+        );
+        $data->delete();
+
+        return redirect()->route('leaveType.index')->with($notification);
     }
 
     public function reimbursTypeIndex()
