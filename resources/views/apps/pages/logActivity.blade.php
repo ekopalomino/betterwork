@@ -44,9 +44,9 @@ Better Work Indonesia | Log Activity
                 <td><span class="badge badge-danger">{{ $log->creator->name }}</span></td>
                 <td>{{date("d F Y H:i",strtotime($log->created_at)) }}</td>
               </tr>
+              @endforeach
+              @endif
             </tbody>
-            @endforeach
-            @endif
           </table>
       </div>
     </div>
@@ -58,7 +58,10 @@ Better Work Indonesia | Log Activity
 <script src="{{ asset('public/bower_components/admin-lte/plugins/datatables-bs4/js/dataTables.bootstrap4.js') }}"></script>
 <script>
   $(function () {
-    $("#example1").DataTable();
+    $("#example1").DataTable({
+      "paging": true,
+      "lengthChange": true,
+    });
     $('#example2').DataTable({
       "paging": true,
       "lengthChange": false,

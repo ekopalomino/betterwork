@@ -36,7 +36,7 @@
         </div>
 		@include('apps.includes.footer')
 	</div>
-	<script src="{{ asset('public/bower_components/admin-lte/plugins/jquery/jquery.min.js') }}"></script>
+  <script src="{{ asset('public/bower_components/admin-lte/plugins/jquery/jquery.min.js') }}"></script>
 	<script src="{{ asset('public/bower_components/admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 	<script src="{{ asset('public/bower_components/admin-lte/dist/js/adminlte.min.js') }}"></script>
 	<script src="{{ asset('public/bower_components/admin-lte/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
