@@ -63,9 +63,24 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::post('configuration/reimburstment-type/delete/{id}','Apps\ConfigurationController@reimbursTypeDestroy')->name('reimbursType.destroy');
 
 
-	
+
 	Route::get('configuration/document-category','Apps\ConfigurationController@documentCategoryIndex')->name('docCat.index');
+	Route::post('configuration/document-category/store','Apps\ConfigurationController@documentCategoryStore')->name('docCat.store');
+	Route::get('configuration/document-category/edit/{id}','Apps\ConfigurationController@documentCategoryEdit')->name('docCat.edit');
+	Route::post('configuration/document-category/update/{id}','Apps\ConfigurationController@documentCategoryUpdate')->name('docCat.update');
+	Route::post('configuration/document-category/delete/{id}','Apps\ConfigurationController@documentCategoryDestroy')->name('docCat.destroy');
+
+
+
+
 	Route::get('configuration/grievance-category','Apps\ConfigurationController@grievanceCategoryIndex')->name('grievCat.index');
+	Route::post('configuration/grievance-category/store','Apps\ConfigurationController@grievanceCategoryStore')->name('grievCat.store');
+	Route::get('configuration/grievance-category/edit/{id}','Apps\ConfigurationController@grievanceCategoryEdit')->name('grievCat.edit');
+	Route::post('configuration/grievance-category/update/{id}','Apps\ConfigurationController@grievanceCategoryUpdate')->name('grievCat.update');
+	Route::post('configuration/grievance-category/delete/{id}','Apps\ConfigurationController@grievanceCategoryDestroy')->name('grievCat.destroy');
+
+
+
 	Route::get('configuration/chart-of-account','Apps\ConfigurationController@coaCategoryIndex')->name('coaCat.index');
 	Route::get('configuration/asset-category','Apps\ConfigurationController@assetCategoryIndex')->name('assetCat.index');
 

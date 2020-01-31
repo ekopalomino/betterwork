@@ -8,6 +8,8 @@ use iteos\Models\User;
 use iteos\Models\EmployeePosition;
 use iteos\Models\LeaveType;
 use iteos\Models\ReimbursType;
+use iteos\Models\DocumentCategory;
+use iteos\Models\GrievanceCategory;
 use Hash;
 use DB;
 use Auth;
@@ -236,12 +238,142 @@ class ConfigurationController extends Controller
 
     public function documentCategoryIndex()
     {
-    	return view('apps.pages.documentCategory');
+        $data = DocumentCategory::orderBy('id','ASC')->get();
+
+    	return view('apps.pages.documentCategory',compact('data'));
+    }
+
+    public function documentCategoryStore(Request $request)
+    {
+        $this->validate($request, [
+            'category_name' => 'required',
+        ]);
+
+        $data = DocumentCategory::create([
+            'category_name' => $request->input('category_name'),
+            'created_by' => auth()->user()->id,
+        ]);
+
+        $log = 'Category '.($data->category_name).' Created';
+         \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'Category '.($data->category_name).' Created',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('docCat.index')->with($notification);
+    }
+
+    public function documentCategoryEdit($id)
+    {
+        $data = DocumentCategory::find($id);
+
+        return view('apps.edit.documentCategory',compact('data'))->renderSections()['content'];
+    }
+
+    public function documentCategoryUpdate(Request $request,$id)
+    {
+        $this->validate($request, [
+            'category_name' => 'required',
+        ]);
+        $orig = DocumentCategory::find($id);
+        $data = $orig->update([
+            'category_name' => $request->input('category_name'),
+            'updated_by' => auth()->user()->id,
+        ]);
+
+        $log = 'Category '.($orig->category_name).' Updated';
+         \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'Category '.($orig->category_name).' Updated',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('docCat.index')->with($notification);
+    }
+
+    public function documentCategoryDestroy($id)
+    {
+        $data = DocumentCategory::find($id);
+        $log = 'Category '.($data->category_name).' Deleted';
+         \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'Category '.($data->category_name).' Deleted',
+            'alert-type' => 'success'
+        );
+        $data->delete();
+
+        return redirect()->route('docCat.index')->with($notification);
     }
 
     public function grievanceCategoryIndex()
     {
-    	return view('apps.pages.grievanceCategory');
+        $data = GrievanceCategory::orderBy('id','ASC')->get();
+
+    	return view('apps.pages.grievanceCategory',compact('data'));
+    }
+
+    public function grievanceCategoryStore(Request $request)
+    {
+        $this->validate($request, [
+            'category_name' => 'required',
+        ]);
+
+        $data = GrievanceCategory::create([
+            'category_name' => $request->input('category_name'),
+            'created_by' => auth()->user()->id,
+        ]);
+
+        $log = 'Category '.($data->category_name).' Created';
+         \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'Category '.($data->category_name).' Created',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('grievCat.index')->with($notification);
+    }
+
+    public function grievanceCategoryEdit($id)
+    {
+        $data = GrievanceCategory::find($id);
+
+        return view('apps.edit.grievanceCategory',compact('data'))->renderSections()['content'];
+    }
+
+    public function grievanceCategoryUpdate(Request $request,$id)
+    {
+        $this->validate($request, [
+            'category_name' => 'required',
+        ]);
+        $orig = GrievanceCategory::find($id);
+        $data = $orig->update([
+            'category_name' => $request->input('category_name'),
+            'updated_by' => auth()->user()->id,
+        ]);
+
+        $log = 'Category '.($orig->category_name).' Updated';
+         \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'Category '.($orig->category_name).' Updated',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('grievCat.index')->with($notification);
+    }
+
+    public function grievanceCategoryDestroy($id)
+    {
+        $data = GrievanceCategory::find($id);
+        $log = 'Category '.($data->category_name).' Deleted';
+         \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'Category '.($data->category_name).' Deleted',
+            'alert-type' => 'success'
+        );
+        $data->delete();
+
+        return redirect()->route('grievCat.index')->with($notification);
     }
 
     public function coaCategoryIndex()
