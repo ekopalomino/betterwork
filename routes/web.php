@@ -18,7 +18,7 @@ Route::get('/', function () {
 Auth::routes(['register' => false]);
 /* Prototype Routes*/
 Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
-	Route::get('user-home','Apps\UserMenuController@index')->name('userHome.index');
+	Route::get('user-dashboard','Apps\UserMenuController@index')->name('userHome.index');
 	Route::get('dashboard','Apps\DashboardController@index')->name('dashboard.index');
 	Route::get('configuration','Apps\ConfigurationController@index')->name('config.index');
 	Route::get('human-resources','Apps\HumanResourcesController@index')->name('hr.index');
@@ -57,6 +57,13 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 
 	
 	Route::get('configuration/reimburstment-type','Apps\ConfigurationController@reimbursTypeIndex')->name('reimbursType.index');
+	Route::post('configuration/reimburstment-type/store','Apps\ConfigurationController@reimbursTypeStore')->name('reimbursType.store');
+	Route::get('configuration/reimburstment-type/edit/{id}','Apps\ConfigurationController@reimbursTypeEdit')->name('reimbursType.edit');
+	Route::post('configuration/reimburstment-type/update/{id}','Apps\ConfigurationController@reimbursTypeUpdate')->name('reimbursType.update');
+	Route::post('configuration/reimburstment-type/delete/{id}','Apps\ConfigurationController@reimbursTypeDestroy')->name('reimbursType.destroy');
+
+
+	
 	Route::get('configuration/document-category','Apps\ConfigurationController@documentCategoryIndex')->name('docCat.index');
 	Route::get('configuration/grievance-category','Apps\ConfigurationController@grievanceCategoryIndex')->name('grievCat.index');
 	Route::get('configuration/chart-of-account','Apps\ConfigurationController@coaCategoryIndex')->name('coaCat.index');

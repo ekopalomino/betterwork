@@ -7,6 +7,7 @@ use iteos\Http\Controllers\Controller;
 use iteos\Models\User;
 use iteos\Models\EmployeePosition;
 use iteos\Models\LeaveType;
+use iteos\Models\ReimbursType;
 use Hash;
 use DB;
 use Auth;
@@ -165,7 +166,72 @@ class ConfigurationController extends Controller
 
     public function reimbursTypeIndex()
     {
-    	return view('apps.pages.reimbursType');
+        $data = ReimbursType::orderBy('id','ASC')->get();
+
+    	return view('apps.pages.reimbursType',compact('data'));
+    }
+
+    public function reimbursTypeStore(Request $request)
+    {
+        $this->validate($request, [
+            'reimburs_name' => 'required',
+        ]);
+
+        $data = ReimbursType::create([
+            'reimburs_name' => $request->input('reimburs_name'),
+            'created_by' => auth()->user()->id,
+        ]);
+
+        $log = 'Type '.($data->reimburs_name).' Created';
+         \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'Type '.($data->reimburs_name).' Created',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('reimbursType.index')->with($notification);
+    }
+
+    public function reimbursTypeEdit($id)
+    {
+        $data = ReimbursType::find($id);
+
+        return view('apps.edit.reimbursType',compact('data'))->renderSections()['content'];
+    }
+
+    public function reimbursTypeUpdate(Request $request,$id)
+    {
+        $this->validate($request, [
+            'reimburs_name' => 'required',
+        ]);
+        $orig = ReimbursType::find($id);
+        $data = $orig->update([
+            'reimburs_name' => $request->input('reimburs_name'),
+            'updated_by' => auth()->user()->id,
+        ]);
+
+        $log = 'Type '.($orig->reimburs_name).' Updated';
+         \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'Type '.($orig->reimburs_name).' Updated',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('reimbursType.index')->with($notification);
+    }
+
+    public function reimbursTypeDestroy($id)
+    {
+        $data = ReimbursType::find($id);
+        $log = 'Type '.($data->reimburs_name).' Deleted';
+         \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'Type '.($data->reimburs_name).' Deleted',
+            'alert-type' => 'success'
+        );
+        $data->delete();
+
+        return redirect()->route('reimbursType.index')->with($notification);
     }
 
     public function documentCategoryIndex()
