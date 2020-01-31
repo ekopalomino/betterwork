@@ -5,8 +5,7 @@ namespace iteos\Http\Controllers\Apps;
 use Illuminate\Http\Request;
 use iteos\Http\Controllers\Controller;
 use iteos\Models\User;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
+use iteos\Models\EmployeePosition;
 use Hash;
 use DB;
 use Auth;
@@ -25,12 +24,72 @@ class ConfigurationController extends Controller
 
     public function positionIndex()
     {
-    	return view('apps.pages.employeePosition');
+        $data = EmployeePosition::orderBy('id','ASC')->get();
+
+    	return view('apps.pages.employeePosition',compact('data'));
     }
 
     public function positionStore(Request $request)
     {
+        $this->validate($request, [
+            'position_name' => 'required',
+        ]);
 
+        $data = EmployeePosition::create([
+            'position_name' => $request->input('position_name'),
+            'created_by' => auth()->user()->id,
+        ]);
+
+        $log = 'Position '.($data->position_name).' Created';
+         \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'Position '.($data->position_name).' Created',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('position.index')->with($notification);
+    }
+
+    public function positionEdit($id)
+    {
+        $data = EmployeePosition::find($id);
+
+        return view('apps.edit.employeePosition',compact('data'))->renderSections()['content'];
+    }
+
+    public function positionUpdate(Request $request,$id)
+    {
+        $this->validate($request, [
+            'position_name' => 'required',
+        ]);
+        $orig = EmployeePosition::find($id);
+        $data = $orig->update([
+            'position_name' => $request->input('position_name'),
+            'updated_by' => auth()->user()->id,
+        ]);
+
+        $log = 'Position '.($orig->position_name).' Updated';
+         \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'Position '.($orig->position_name).' Updated',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('position.index')->with($notification);
+    }
+
+    public function positionDestroy($id)
+    {
+        $data = EmployeePosition::find($id);
+        $log = 'Position '.($data->position_name).' Deleted';
+         \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'Position '.($data->position_name).' Deleted',
+            'alert-type' => 'success'
+        );
+        $data->delete();
+
+        return redirect()->route('position.index')->with($notification);
     }
 
     public function leaveTypeIndex()
