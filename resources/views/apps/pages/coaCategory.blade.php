@@ -33,39 +33,36 @@ Better Work Indonesia | Chart of Account Category
 				              		</button>
 				            	</div>
 				            	<div class="modal-body">
+                        {!! Form::open(array('route' => 'coaCat.store','method'=>'POST', 'class' => 'form-horizontal')) !!}
+                        @csrf
 				              		<label for="inputEmail" class="col-sm-12 col-form-label">Account ID</label>
                         				<div class="col-sm-12">
-                          					<input type="password" class="form-control" id="inputEmail" placeholder="Password">
+                          					{!! Form::text('account_id', null, array('placeholder' => 'Account ID','class' => 'form-control')) !!}
                         				</div>
                         			<label for="inputEmail" class="col-sm-12 col-form-label">Account Name</label>
                         				<div class="col-sm-12">
-                          					<input type="password" class="form-control" id="inputEmail" placeholder="Password">
+                          					{!! Form::text('account_name', null, array('placeholder' => 'Account Name','class' => 'form-control')) !!}
                         				</div>
                         			<label for="inputEmail" class="col-sm-12 col-form-label">Account Category</label>
                         				<div class="col-sm-12">
-                          					<select class="form-control">
-                          						<option>option 1</option>
-						                        <option>option 2</option>
-						                        <option>option 3</option>
-						                        <option>option 4</option>
-						                        <option>option 5</option>
+                          					<select name="account_category" class="form-control">
+                          					<option value="0">Please Select</option>
+						                        <option value="1">Asset</option>
+						                        <option value="2">Liabilities</option>
+						                        <option value="3">Revenue</option>
+						                        <option value="4">Expense</option>
 						                    </select>
                         				</div>
                         			<label for="inputEmail" class="col-sm-12 col-form-label">Account Parent</label>
                         				<div class="col-sm-12">
-                          					<select class="form-control">
-                          						<option>option 1</option>
-						                        <option>option 2</option>
-						                        <option>option 3</option>
-						                        <option>option 4</option>
-						                        <option>option 5</option>
-						                    </select>
+                          					{!! Form::select('account_parent', [null=>'Please Select'] + $parents,[], array('class' => 'form-control')) !!}
                         				</div>
 				            	</div>
 				            	<div class="modal-footer justify-content-between">
 				              		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				              		<button type="button" class="btn btn-primary">Save changes</button>
+                          <button id="register" type="submit" class="btn btn-primary">Save changes</button>
 				            	</div>
+                      {!! Form::close() !!}
 				          	</div>
 				        </div>
 				    </div>
@@ -79,20 +76,53 @@ Better Work Indonesia | Chart of Account Category
             					<th>Account Name</th>
             					<th>Account Category</th>
             					<th>Account Parent</th>
-            					<th>Created At</th>
+            					<th>Created By</th>
+                      <th>Created At</th>
             					<th></th>
             				</tr>
             			</thead>
             			<tbody>
+                    @foreach($data as $key=>$value)
             				<tr>
-            					<td></td>
-            					<td></td>
-            					<td></td>
-            					<td></td>
-            					<td></td>
-            					<td></td>
-            					<td></td>
+            					<td>{{ $key+1 }}</td>
+            					<td>{{ $value->account_id }}</td>
+            					<td>{{ $value->account_name }}</td>
+            					<td>
+                          @if(($value->account_category) == 1)
+                          Asset
+                          @elseif(($value->account_category) == 2)
+                          Liabilities
+                          @elseif(($value->account_category) == 3)
+                          Revenue
+                          @elseif(($value->account_category) == 4)
+                          Expense
+                          @else
+                          No Category
+                          @endif 
+                      </td>
+            					<td>
+                          @if(!empty($value->account_parent))
+                          {{ $value->account_parent }}
+                          @else
+                          No Parent Account
+                          @endif
+                      </td>
+            					<td>{{ $value->Author->name }}</td>
+            					<td>{{date("d F Y H:i",strtotime($value->created_at)) }}</td>
+                      <td>
+                          <div class="btn-group">
+                          <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Action
+                          </button>
+                          <div class="dropdown-menu" role="menu">
+                            <a class="dropdown-item modalMd" href="#" value="{{ action('Apps\ConfigurationController@coaCategoryEdit',['id'=>$value->id]) }}" data-toggle="modal" data-target="#modalMd">Edit Data</a>
+                            {!! Form::open(['method' => 'POST','route' => ['coaCat.destroy', $value->id],'style'=>'dropdown-item','onsubmit' => 'return ConfirmDelete()']) !!}
+                            {!! Form::button('<a>Delete Data</a>',['type'=>'submit','class' => 'dropdown-item']) !!}
+                            {!! Form::close() !!}
+                          </div>
+                      </td>
             				</tr>
+                    @endforeach
             			</tbody>
             		</table>
             	</div>

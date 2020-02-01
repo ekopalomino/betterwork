@@ -4,7 +4,6 @@ Better Work Indonesia | Log Activity
 @endsection
 @section('header.plugins')
 <link rel="stylesheet" href="{{ asset('public/bower_components/admin-lte/plugins/datatables-bs4/css/dataTables.bootstrap4.css') }}">
-<link rel="stylesheet" href="{{ asset('public/bower_components/admin-lte/plugins/daterangepicker/daterangepicker.css') }}">
 @endsection
 @section('content')
 <section class="content-header">
@@ -23,7 +22,7 @@ Better Work Indonesia | Log Activity
 				<div class="card-header">
         </div>
         <div class="card-body">
-          <table id="example2" class="table table-bordered table-hover">
+          <table id="example1" class="table table-bordered table-striped">
             <thead>
               <tr>
                 <th>No</th>
@@ -45,9 +44,9 @@ Better Work Indonesia | Log Activity
                 <td><span class="badge badge-danger">{{ $log->creator->name }}</span></td>
                 <td>{{date("d F Y H:i",strtotime($log->created_at)) }}</td>
               </tr>
+              @endforeach
+              @endif
             </tbody>
-            @endforeach
-            @endif
           </table>
       </div>
     </div>
@@ -57,11 +56,12 @@ Better Work Indonesia | Log Activity
 @section('footer.scripts')
 <script src="{{ asset('public/bower_components/admin-lte/plugins/datatables/jquery.dataTables.js') }}"></script>
 <script src="{{ asset('public/bower_components/admin-lte/plugins/datatables-bs4/js/dataTables.bootstrap4.js') }}"></script>
-<script src="{{ asset('public/bower_components/admin-lte/plugins/moment/moment.min.js') }}"></script>
-<script src="{{ asset('public/bower_components/admin-lte/plugins/daterangepicker/daterangepicker.js') }}"></script>
 <script>
   $(function () {
-    $("#example1").DataTable();
+    $("#example1").DataTable({
+      "paging": true,
+      "lengthChange": true,
+    });
     $('#example2').DataTable({
       "paging": true,
       "lengthChange": false,
@@ -70,7 +70,6 @@ Better Work Indonesia | Log Activity
       "info": true,
       "autoWidth": false,
     });
-    $('#reservation').daterangepicker()
   });
 </script>
 @endsection

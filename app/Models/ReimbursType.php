@@ -4,10 +4,10 @@ namespace iteos\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class EmployeePosition extends Model
+class ReimbursType extends Model
 {
     protected $fillable = [
-    	'position_name',
+    	'reimburs_name',
     	'created_by',
     	'updated_by',
     ];

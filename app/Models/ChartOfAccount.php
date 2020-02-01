@@ -2,15 +2,23 @@
 
 namespace iteos\Models;
 
+use iteos\Traits\Uuid;
 use Illuminate\Database\Eloquent\Model;
 
-class EmployeePosition extends Model
+class ChartOfAccount extends Model
 {
+    use Uuid;
+
     protected $fillable = [
-    	'position_name',
+    	'account_id',
+    	'account_name',
+    	'account_category',
+    	'account_parent',
     	'created_by',
     	'updated_by',
     ];
+
+    public $incrementing = false;
 
     public function Author()
     {

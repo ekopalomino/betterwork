@@ -22,7 +22,7 @@ Better Work Indonesia | Access Roles
 				<div class="card-header">
        				<a class="btn btn-primary" href="{{ route('role.create') }}">
          			Add New</a>
-         		</button>
+         		
          	</div>
          	<div class="card-body">
          		<table id="example2" class="table table-bordered table-hover">
@@ -46,8 +46,10 @@ Better Work Indonesia | Access Roles
 		                            Action
 		                          </button>
 		                          <div class="dropdown-menu" role="menu">
-		                            <a class="dropdown-item" href="#">View Role</a>
-		                            <a class="dropdown-item" href="#">Edit Role</a>
+		                            <a class="dropdown-item" href="{{ route('role.edit',$role->id) }}">Edit Role</a>
+		                            {!! Form::open(['method' => 'POST','route' => ['role.destroy', $role->id],'style'=>'dropdown-item','onsubmit' => 'return ConfirmDelete()']) !!}
+                            		{!! Form::button('<a>Delete Role</a>',['type'=>'submit','class' => 'dropdown-item']) !!}
+                            		{!! Form::close() !!}
 		                          </div>
 		                        </div>
                       		</td>
@@ -75,5 +77,15 @@ Better Work Indonesia | Access Roles
       "autoWidth": false,
     });
   });
+</script>
+<script>
+    function ConfirmDelete()
+    {
+    var x = confirm("Role Delete?");
+    if (x)
+        return true;
+    else
+        return false;
+    }
 </script>
 @endsection
