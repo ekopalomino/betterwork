@@ -21,6 +21,7 @@ class CreateEmployeesTable extends Migration
             $table->date('date_of_birth');
             $table->string('place_of_birth');
             $table->integer('sex');
+            $table->integer('marital_status');
             $table->string('picture');
             $table->text('address');
             $table->string('phone')->nullable();

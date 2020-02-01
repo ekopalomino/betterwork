@@ -5,6 +5,11 @@ namespace iteos\Http\Controllers\Apps;
 use Illuminate\Http\Request;
 use iteos\Http\Controllers\Controller;
 use iteos\Models\Employee;
+use iteos\Models\EmployeeFamily;
+use iteos\Models\EmployeeEducation;
+use iteos\Models\EmployeeTraining;
+use iteos\Models\EmployeeService;
+use iteos\Models\EmployeePosition;
 
 class HumanResourcesController extends Controller
 {
@@ -15,12 +20,16 @@ class HumanResourcesController extends Controller
 
     public function employeeIndex()
     {
-    	return view('apps.pages.employeeIndex');
+        $data = Employee::orderBy('name','ASC')->get();
+
+    	return view('apps.pages.employeeIndex',compact('data'));
     }
 
     public function employeeCreate()
     {
-        return view('apps.input.employee');
+        $grades = EmployeePosition::pluck('position_name','position_name')->toArray();
+
+        return view('apps.input.employee',compact('grades'));
     }
 
     public function attendanceIndex()
