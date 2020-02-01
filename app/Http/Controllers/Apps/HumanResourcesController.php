@@ -24,7 +24,7 @@ class HumanResourcesController extends Controller
     public function employeeIndex()
     {
         $data = Employee::orderBy('employee_id','ASC')->get();
-
+        
     	return view('apps.pages.employeeIndex',compact('data'));
     }
 
@@ -57,7 +57,7 @@ class HumanResourcesController extends Controller
         $ext = $file->getClientOriginalExtension();
         $destinationPath = public_path('/employees');
         $extension = $file->getClientOriginalExtension();
-        $filename=$file_name.'employee.'.$extension;
+        $filename=$file_name.''.$extension;
         $uploadSuccess = $request->file('picture')
         ->move($destinationPath, $filename);
 
@@ -89,6 +89,66 @@ class HumanResourcesController extends Controller
             'email' => $request->input('email'),
             'password' => $encryptPass,
         ]);
+    }
+
+    public function employeeEdit($id)
+    {
+        $data = Employee::find($id);
+        $grades = EmployeePosition::pluck('position_name','position_name')->toArray();
+        $cities = Location::pluck('city','city')->toArray();
+
+        return view('apps.edit.employee',compact('grades','cities','data'));
+    }
+
+    public function employeeUpdate(Request $request,$id)
+    {
+        $data = Employee::find($id);
+        if ($request->hasFile('picture')) {
+            $file = $request->file('picture');
+            $file_name = $request->input('employee_id');
+            $size = $file->getSize();
+            $ext = $file->getClientOriginalExtension();
+            $destinationPath = public_path('/employees');
+            $extension = $file->getClientOriginalExtension();
+            $filename=$file_name.''.$extension;
+            $uploadSuccess = $request->file('picture')
+            ->move($destinationPath, $filename);
+            $input = [
+                'employee_id' => $request->input('employee_id'), 
+                'first_name' => $request->input('first_name'),
+                'last_name' => $request->input('last_name'),
+                'address' => $request->input('address'),
+                'sex' => $request->input('sex'),
+                'marital_status' => $request->input('marital_status'),
+                'place_of_birth' => $request->input('place_of_birth'),
+                'date_of_birth' => $request->input('date_of_birth'),
+                'id_card' => $request->input('id_card'),
+                'picture' => $filename,
+                'address' => $request->input('address'),
+                'phone' => $request->input('phone'),
+                'mobile' => $request->input('mobile'),
+                'email' => $request->input('email'),
+                'updated_by' => auth()->user()->id,
+            ];
+        } else {
+            $input = [
+                'employee_id' => $request->input('employee_id'), 
+                'first_name' => $request->input('first_name'),
+                'last_name' => $request->input('last_name'),
+                'address' => $request->input('address'),
+                'sex' => $request->input('sex'),
+                'marital_status' => $request->input('marital_status'),
+                'place_of_birth' => $request->input('place_of_birth'),
+                'date_of_birth' => $request->input('date_of_birth'),
+                'id_card' => $request->input('id_card'),
+                'address' => $request->input('address'),
+                'phone' => $request->input('phone'),
+                'mobile' => $request->input('mobile'),
+                'email' => $request->input('email'),
+                'updated_by' => auth()->user()->id,
+            ];
+        }
+        $updateEmployee = $data->update($input);
     }
 
     public function familyStore(Request $request)

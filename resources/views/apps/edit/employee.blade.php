@@ -1,6 +1,6 @@
 @extends('apps.layouts.main')
 @section('header.title')
-Better Work Indonesia | Create New Employee
+Better Work Indonesia | Edit Employee
 @endsection
 @section('header.plugins')
 <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
@@ -10,7 +10,7 @@ Better Work Indonesia | Create New Employee
 	<div class="container-fluid">
       	<div class="row mb-2">
        		<div class="col-sm-6">
-          		<h1>Create New Employee</h1>
+          		<h1>Edit Employee</h1>
        		</div>
        	</div>
     </div>
@@ -47,7 +47,7 @@ Better Work Indonesia | Create New Employee
 		            <div class="col-11 col-sm-11">
 		            	<div class="tab-content" id="vert-tabs-tabContent">
 		            		<div class="tab-pane text-left fade show active" id="vert-tabs-profile" role="tabpanel" aria-labelledby="vert-tabs-profile-tab">
-		            			{!! Form::open(array('route' => 'employee.store','method'=>'POST','files'=>'true')) !!}
+		            			{!! Form::model($data, ['method' => 'POST','route' => ['employee.update', $data->id]]) !!}
                   				@csrf
 		            			<div class="form-group">
 			    					<label for="employeeID">Employee ID</label>
@@ -63,11 +63,11 @@ Better Work Indonesia | Create New Employee
 			    				</div>
 			    				<div class="form-group">
 			    					<label for="placeOb">Place Of Birth</label>
-			    					{!! Form::select('place_of_birth', [null=>'Please Select'] + $cities,[], array('class' => 'form-control')) !!}
+			    					{!! Form::select('place_of_birth', $cities,old('place_of_birth'), array('class' => 'form-control')) !!}
 			    				</div>
 			    				<div class="form-group">
 			    					<label for="dateOb">Date Of Birth</label>
-			    					{!! Form::date('date_of_birth', '', array('id' => 'datepicker','class' => 'form-control')) !!}
+			    					{!! Form::date('date_of_birth', old('date_of_birth'), array('id' => 'datepicker','class' => 'form-control')) !!}
 			    				</div>
 			    				<div class="form-group">
 			    					<label for="idCard">ID Card (KTP)</label>
@@ -76,19 +76,19 @@ Better Work Indonesia | Create New Employee
 			    				<div class="form-group">
 			    					<label for="sex">Sex</label>
 			    					<select name="sex" class="form-control">
-                          				<option value="0">Please Select</option>
-						                <option value="1">Male</option>
-						                <option value="2">Female</option>
+                          				<option value="0" {{ old('sex',$data->sex)=='0' ? 'selected' : ''  }}>Please Select</option>
+						                <option value="1" {{ old('sex',$data->sex)=='1' ? 'selected' : ''  }}>Male</option>
+						                <option value="2" {{ old('sex',$data->sex)=='2' ? 'selected' : ''  }}>Female</option>
 						            </select>
 			    				</div>
 			    				<div class="form-group">
 			    					<label for="maritalStatus">Marital Status</label>
 			    					<select name="marital_status" class="form-control">
-                          				<option value="0">Please Select</option>
-						                <option value="1">Single</option>
-						                <option value="2">Married</option>
-						                <option value="3">Divorce</option>
-						                <option value="4">Widower</option>
+                          				<option value="0" {{ old('sex',$data->marital_status)=='0' ? 'selected' : ''  }}>Please Select</option>
+						                <option value="1" {{ old('sex',$data->marital_status)=='1' ? 'selected' : ''  }}>Single</option>
+						                <option value="2" {{ old('sex',$data->marital_status)=='2' ? 'selected' : ''  }}>Married</option>
+						                <option value="3" {{ old('sex',$data->marital_status)=='3' ? 'selected' : ''  }}>Divorce</option>
+						                <option value="4" {{ old('sex',$data->marital_status)=='4' ? 'selected' : ''  }}>Widower</option>
 						            </select>
 			    				</div>
 			    				<div class="form-group">

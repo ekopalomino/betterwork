@@ -86,6 +86,8 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::get('human-resources/employee','Apps\HumanResourcesController@employeeIndex')->name('employee.index');
 	Route::get('human-resources/employee/create','Apps\HumanResourcesController@employeeCreate')->name('employee.create');
 	Route::post('human-resources/employee/store','Apps\HumanResourcesController@employeeStore')->name('employee.store');
+	Route::get('human-resources/employee/edit/{id}','Apps\HumanResourcesController@employeeEdit')->name('employee.edit');
+	Route::post('human-resources/employee/update/{id}','Apps\HumanResourcesController@employeeUpdate')->name('employee.update');
 	Route::post('human-resources/employee/familystore','Apps\HumanResourcesController@familyStore')->name('family.store');
 	Route::get('human-resources/attendance','Apps\HumanResourcesController@attendanceIndex')->name('attendance.index');
 	Route::get('human-resources/attendance/request','Apps\HumanResourcesController@requestIndex')->name('request.index');

@@ -178,9 +178,9 @@
             </ul>
           </li>
           @endif
-          @if(\Route::is(['hr.index','employee.index','employee.create','attendance.index','request.index','appraisal.index']))
-          <li class="nav-item {{set_open(['employee.index','employee.create']) }}">
-            <a href="{{ route('employee.index') }}" class="nav-link {{set_active('employee.index','employee.create') }}">
+          @if(\Route::is(['hr.index','employee.index','employee.create','employee.edit','attendance.index','request.index','appraisal.index']))
+          <li class="nav-item {{set_open(['employee.index','employee.create','employee.edit']) }}">
+            <a href="{{ route('employee.index') }}" class="nav-link {{set_active('employee.index','employee.create','employee.edit') }}">
               <i class="nav-icon fas fa-users-cog"></i>
               <p>
                 Employee Database
