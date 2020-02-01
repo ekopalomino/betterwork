@@ -13,8 +13,9 @@ class StatusTableSeeder extends Seeder
     public function run()
     {
         $statuses = [
-            'Active',
-            'Suspend',
+            'Complete',
+            'Propose',
+            'On Going',
         ];
 
         foreach($statuses as $status) {

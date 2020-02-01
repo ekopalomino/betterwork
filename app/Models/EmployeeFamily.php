@@ -15,4 +15,9 @@ class EmployeeFamily extends Model
     	'phone',
     	'mobile'
     ];
+
+    public function Parent()
+    {
+    	return $this->belongsTo(Employee::class,'employee_id');
+    }
 }

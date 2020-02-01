@@ -16,4 +16,9 @@ class EmployeeService extends Model
     	'salary',
     	'contract',
     ];
+
+    public function Parent()
+    {
+        return $this->belongsTo(Employee::class);
+    }
 }

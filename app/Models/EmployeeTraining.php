@@ -15,4 +15,14 @@ class EmployeeTraining extends Model
     	'to',
     	'status',
     ];
+
+    public function Parent()
+    {
+    	return $this->belongsTo(Employee::class);
+    }
+
+    public function Docs()
+    {
+    	return $this->hasMany(EmployeeTrainingFile::class);
+    }
 }

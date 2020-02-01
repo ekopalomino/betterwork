@@ -22,6 +22,9 @@ class CreateEmployeeTrainingsTable extends Migration
             $table->date('from');
             $table->date('to')->nullable();
             $table->uuid('status');
+            $table->string('certification')->nullable();
+            $table->string('reports')->nullable();
+            $table->string('materials')->nullable();
             $table->foreign('employee_id')->references('id')->on('employees')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });

@@ -13,4 +13,9 @@ class EmployeeEducation extends Model
     	'major',
     	'gpa',
     ];
+
+    public function Parent()
+    {
+    	return $this->belongsTo(Employee::class);
+    }
 }

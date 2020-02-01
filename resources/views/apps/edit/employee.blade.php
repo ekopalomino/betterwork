@@ -1,6 +1,6 @@
 @extends('apps.layouts.main')
 @section('header.title')
-Better Work Indonesia | Edit Employee
+Better Work Indonesia | Update Employee
 @endsection
 @section('header.plugins')
 <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
@@ -10,7 +10,7 @@ Better Work Indonesia | Edit Employee
 	<div class="container-fluid">
       	<div class="row mb-2">
        		<div class="col-sm-6">
-          		<h1>Edit Employee</h1>
+          		<h1>Update Employee</h1>
        		</div>
        	</div>
     </div>
@@ -51,7 +51,7 @@ Better Work Indonesia | Edit Employee
                   				@csrf
 		            			<div class="form-group">
 			    					<label for="employeeID">Employee ID</label>
-			    					{!! Form::text('employee_id', null, array('placeholder' => 'Employee ID','class' => 'form-control')) !!}
+			    					{!! Form::text('employee_no', null, array('placeholder' => 'Employee ID','class' => 'form-control')) !!}
 			    				</div>
 			    				<div class="form-group">
 			    					<label for="firstName">First Name</label>
@@ -109,7 +109,15 @@ Better Work Indonesia | Edit Employee
 			    				</div>
 			    				<div class="form-group">
 			    					<label for="inputName">Photo</label>
-			    					{!! Form::file('picture', null, array('placeholder' => 'Employee Photo','class' => 'form-control')) !!}
+			    					<div class="input-group">
+									   	<div class="custom-file">
+	                        				<input type="file" class="custom-file-input" id="picture">
+	                        				<label class="custom-file-label" for="picture">Choose Photo</label>
+	                      				</div>
+	                      				<div class="input-group-append">
+	                        				<span class="input-group-text" id="">Upload</span>
+	                      				</div>
+	                      			</div>
 			    				</div>
 			    				<div class="form-group">
 			    					<button type="submit" class="btn btn-info">Submit</button>
@@ -132,48 +140,55 @@ Better Work Indonesia | Edit Employee
 								              		</button>
 								            	</div>
 								            	<div class="modal-body">
-								            		{!! Form::open(array('route' => 'family.store','method'=>'POST')) !!}
+								            		{!! Form::model($data, ['method' => 'POST','route' => ['employee.update', $data->id]]) !!}
                   									@csrf
+                  									{!! Form::hidden('employee_id',$data->id) !!}
 								            		<div class="form-group row">
 								                      	<label for="inputEmail" class="col-sm-2 col-form-label">First Name</label>
 								                        <div class="col-sm-10">
-								                          {!! Form::text('first_name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
+								                          	<input type="text" name="first_name" placeholder="First Name" class="form-control">
 								                        </div>
 								                    </div>
 								                    <div class="form-group row">
 								                      	<label for="inputEmail" class="col-sm-2 col-form-label">Last Name</label>
 								                        <div class="col-sm-10">
-								                          {!! Form::text('last_name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
+								                          	<input type="text" name="last_name" placeholder="Last Name" class="form-control">
 								                        </div>
 								                    </div>
 								                    <div class="form-group row">
 								                      	<label for="inputEmail" class="col-sm-2 col-form-label">Relations</label>
 								                        <div class="col-sm-10">
-								                          {!! Form::text('relations', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
+								                          	<select name="relations" class="form-control">
+						                          				<option value="0">Please Select</option>
+												                <option value="1">Husband</option>
+												                <option value="2">Wife</option>
+												                <option value="3">Parent</option>
+												                <option value="4">Sibling</option>
+												            </select>
 								                        </div>
 								                    </div>
 								                    <div class="form-group row">
 								                      	<label for="inputEmail" class="col-sm-2 col-form-label">Address</label>
 								                        <div class="col-sm-10">
-								                          {!! Form::text('address', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
+								                          	<input type="text" name="address" placeholder="Address" class="form-control">
 								                        </div>
 								                    </div>
 								                    <div class="form-group row">
 								                      	<label for="inputEmail" class="col-sm-2 col-form-label">Phone</label>
 								                        <div class="col-sm-10">
-								                          {!! Form::text('phone', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
+								                          	<input type="text" name="phone" placeholder="Phone" class="form-control">
 								                        </div>
 								                    </div>
 								                    <div class="form-group row">
 								                      	<label for="inputEmail" class="col-sm-2 col-form-label">Mobile</label>
 								                        <div class="col-sm-10">
-								                          {!! Form::text('mobile', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
+								                          	<input type="text" name="mobile" placeholder="Mobile" class="form-control">
 								                        </div>
 								                    </div>
 								                </div>
 								                <div class="modal-footer justify-content-between">
 								              		<button type="close" class="btn btn-default" data-dismiss="modal">Close</button>
-								              		<button id="register" type="submit" class="btn btn-primary">Save changes</button>
+								              		<button name="family" type="submit" class="btn btn-primary">Save changes</button>
 								            	</div>
 								            	{!! Form::close() !!}
 								            </div>
@@ -195,15 +210,29 @@ Better Work Indonesia | Edit Employee
 					            			</tr>
 					            		</thead>
 					            		<tbody>
+					            			@foreach($data->Child as $child)
 					            			<tr>
-					            				<td></td>
-					            				<td></td>
-					            				<td></td>
-					            				<td></td>
-					            				<td></td>
-					            				<td></td>
+					            				<td>{{ $child->first_name}}</td>
+					            				<td>{{ $child->last_name}}</td>
+					            				<td>
+					            					@if(($child->relations) == '1')
+					            					Husband
+					            					@elseif(($child->relations) == '2')
+					            					Wife
+					            					@elseif(($child->relations) == '3')
+					            					Parent
+					            					@elseif(($child->relations) == '4')
+					            					Sibling
+					            					@else
+					            					No Relation
+					            					@endif
+					            				</td>
+					            				<td>{{ $child->address}}</td>
+					            				<td>{{ $child->phone}}</td>
+					            				<td>{{ $child->mobile}}</td>
 					            				<td></td>
 					            			</tr>
+					            			@endforeach
 					            		</tbody>
 					            	</table>
 					            </div>
@@ -223,34 +252,37 @@ Better Work Indonesia | Edit Employee
 								              		</button>
 								            	</div>
 								            	<div class="modal-body">
+								            		{!! Form::model($data, ['method' => 'POST','route' => ['employee.update', $data->id]]) !!}
+                  									@csrf
+                  									{!! Form::hidden('employee_id',$data->id) !!}
 								            		<div class="form-group row">
 								                      	<label for="inputEmail" class="col-sm-2 col-form-label">Insitution Name</label>
 								                        <div class="col-sm-10">
-								                          {!! Form::text('institution', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
+								                          	<input type="text" name="institution_name" placeholder="Insitution Name" class="form-control">
 								                        </div>
 								                    </div>
 								                    <div class="form-group row">
 								                      	<label for="inputEmail" class="col-sm-2 col-form-label">Grade</label>
 								                        <div class="col-sm-10">
-								                          {!! Form::text('grade', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
+								                        	<input type="text" name="grade" placeholder="Grade" class="form-control">
 								                        </div>
 								                    </div>
 								                    <div class="form-group row">
 								                      	<label for="inputEmail" class="col-sm-2 col-form-label">Major</label>
 								                        <div class="col-sm-10">
-								                          {!! Form::text('major', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
+								                        	<input type="text" name="major" placeholder="Major" class="form-control">
 								                        </div>
 								                    </div>
 								                    <div class="form-group row">
 								                      	<label for="inputEmail" class="col-sm-2 col-form-label">GPA</label>
 								                        <div class="col-sm-10">
-								                          {!! Form::text('gpa', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
+								                        	<input type="text" name="gpa" placeholder="GPA" class="form-control">
 								                        </div>
 								                    </div>
 								                </div>
 								                <div class="modal-footer justify-content-between">
 								              		<button type="close" class="btn btn-default" data-dismiss="modal">Close</button>
-								              		<button id="register" type="submit" class="btn btn-primary">Save changes</button>
+								              		<button name="education" type="submit" class="btn btn-primary">Save changes</button>
 								            	</div>
 								            </div>
 								        </div>
@@ -269,13 +301,15 @@ Better Work Indonesia | Edit Employee
 					            			</tr>
 					            		</thead>
 					            		<tbody>
+					            			@foreach($data->Educations as $value)
 					            			<tr>
-					            				<td></td>
-					            				<td></td>
-					            				<td></td>
-					            				<td></td>
+					            				<td>{{ $value->institution_name }}</td>
+					            				<td>{{ $value->grade }}</td>
+					            				<td>{{ $value->major }}</td>
+					            				<td>{{ $value->gpa }}</td>
 					            				<td></td>
 					            			</tr>
+					            			@endforeach
 					            		</tbody>
 					            	</table>
 					            </div>
@@ -295,52 +329,54 @@ Better Work Indonesia | Edit Employee
 								              		</button>
 								            	</div>
 								            	<div class="modal-body">
+								            		{!! Form::model($data, ['method' => 'POST','route' => ['employee.update', $data->id],'files'=> true]) !!}
+                  									@csrf
+                  									{!! Form::hidden('employee_id',$data->id) !!}
 								            		<div class="form-group row">
 								                      	<label for="inputEmail" class="col-sm-2 col-form-label">Training Provider</label>
 								                        <div class="col-sm-10">
-								                          {!! Form::text('institution', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
+								                        	<input type="text" name="training_provider" placeholder="Training Provider" class="form-control">
 								                        </div>
 								                    </div>
 								                    <div class="form-group row">
 								                      	<label for="inputEmail" class="col-sm-2 col-form-label">Training Title</label>
 								                        <div class="col-sm-10">
-								                          {!! Form::text('grade', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
+								                        	<input type="text" name="training_title" placeholder="Training Title" class="form-control">
 								                        </div>
 								                    </div>
 								                    <div class="form-group row">
 								                      	<label for="inputEmail" class="col-sm-2 col-form-label">Location</label>
 								                        <div class="col-sm-10">
-								                          {!! Form::text('major', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
+								                        	<input type="text" name="location" placeholder="Location" class="form-control">
 								                        </div>
 								                    </div>
 								                    <div class="form-group row">
 								                      	<label for="inputEmail" class="col-sm-2 col-form-label">From</label>
 								                        <div class="col-sm-10">
-								                          {!! Form::text('gpa', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
+								                        	{!! Form::date('from', '', array('id' => 'datepicker','class' => 'form-control')) !!}
 								                        </div>
 								                    </div>
 								                    <div class="form-group row">
 								                      	<label for="inputEmail" class="col-sm-2 col-form-label">To</label>
 								                        <div class="col-sm-10">
-								                          {!! Form::text('gpa', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
+								                        	{!! Form::date('to', '', array('id' => 'datepicker','class' => 'form-control')) !!}
 								                        </div>
 								                    </div>
 								                    <div class="form-group row">
 								                      	<label for="inputEmail" class="col-sm-2 col-form-label">Status</label>
 								                        <div class="col-sm-10">
-								                          {!! Form::text('gpa', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
-								                        </div>
-								                    </div>
-								                    <div class="form-group row">
-								                      	<label for="inputEmail" class="col-sm-2 col-form-label">Documentation</label>
-								                        <div class="col-sm-10">
-								                          {!! Form::text('gpa', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
+								                        	<select name="status" class="form-control">
+						                          				<option value="0">Please Select</option>
+												                <option value="c64ca24c-78c6-4026-ac65-e6dc3de288ac">Propose</option>
+												                <option value="c0c2bde9-b149-489c-9e0d-a10e4d2fd661">On Going</option>
+												                <option value="97904ce7-87e2-4c61-b16e-c52a3c9f8b6d">Complete</option>
+												            </select>
 								                        </div>
 								                    </div>
 								                </div>
 								                <div class="modal-footer justify-content-between">
 								              		<button type="close" class="btn btn-default" data-dismiss="modal">Close</button>
-								              		<button id="register" type="submit" class="btn btn-primary">Save changes</button>
+								              		<button name="training" type="submit" class="btn btn-primary">Save changes</button>
 								            	</div>
 								            </div>
 								        </div>
@@ -479,4 +515,12 @@ Better Work Indonesia | Edit Employee
 		</div>
 	</div>
 </section>
+@endsection
+@section('footer.scripts')
+<script src="{{ asset('public/bower_components/admin-lte/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+  	bsCustomFileInput.init();
+});
+</script>
 @endsection

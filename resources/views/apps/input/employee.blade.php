@@ -47,7 +47,7 @@ Better Work Indonesia | Create New Employee
                   				@csrf
 		            			<div class="form-group">
 			    					<label for="employeeID">Employee ID</label>
-			    					{!! Form::text('employee_id', null, array('placeholder' => 'Employee ID','class' => 'form-control')) !!}
+			    					{!! Form::text('employee_no', null, array('placeholder' => 'Employee ID','class' => 'form-control')) !!}
 			    				</div>
 			    				<div class="form-group">
 			    					<label for="firstName">First Name</label>
@@ -108,7 +108,7 @@ Better Work Indonesia | Create New Employee
 			    					{!! Form::file('picture', null, array('placeholder' => 'Employee Photo','class' => 'form-control')) !!}
 			    				</div>
 			    				<div class="form-group">
-			    					<button type="submit" class="btn btn-info">Submit</button>
+			    					<button type="submit" name="profile" class="btn btn-info">Submit</button>
 	                  				<a button type="button" class="btn btn-danger" href="{{ route('employee.index') }}">Cancel</a>
 	                  			</div>
 	                  			{!! Form::close() !!}

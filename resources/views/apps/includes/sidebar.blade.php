@@ -26,7 +26,7 @@
             	</p>
             </a>
           </li>
-          @if(\Route::current()->getName() == 'home.index')
+          @if(\Route::current()->getName() == 'userHome.index')
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-user"></i>

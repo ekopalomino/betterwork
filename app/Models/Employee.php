@@ -10,7 +10,7 @@ class Employee extends Model
     use Uuid;
 
     protected $fillable = [
-    	'employee_id',
+    	'employee_no',
     	'first_name',
     	'last_name',
     	'date_of_birth',
@@ -37,5 +37,25 @@ class Employee extends Model
     public function Editor()
     {
     	return $this->belongsTo(User::class,'updated_by');
+    }
+
+    public function Child()
+    {
+        return $this->hasMany(EmployeeFamily::class,'employee_id','id');
+    }
+
+    public function Educations()
+    {
+        return $this->hasMany(EmployeeEducation::class,'employee_id');
+    }
+
+    public function Trainings()
+    {
+        return $this->hasMany(EmployeeTraining::class,'employee_id');
+    }
+
+    public function Services()
+    {
+        return $this->hasMany(EmployeeService::class,'employee_id');
     }
 }
