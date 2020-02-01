@@ -5,12 +5,10 @@
 		<div class="col-12">
 			{!! Form::model($data, ['method' => 'POST','route' => ['docCat.update', $data->id]]) !!}
 			@csrf
-			<div class="form-group row">
-                <label for="inputEmail" class="col-sm-2 col-form-label">Category Name</label>
-                    <div class="col-sm-10">
-            	        {!! Form::text('category_name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
-                    </div>
-            </div>
+			<label for="category_name" class="col-sm-2 col-form-label">Category Name</label>
+                <div class="col-sm-10">
+                    {!! Form::text('category_name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
+                </div>
             <div class="modal-footer justify-content-between">
                 <button type="close" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button id="register" type="submit" class="btn btn-primary">Save changes</button>

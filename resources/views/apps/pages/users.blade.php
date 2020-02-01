@@ -62,12 +62,7 @@ Better Work Indonesia | User Database
                     <div class="form-group row">
                       <label for="inputEmail" class="col-sm-2 col-form-label">Access Role</label>
                         <div class="col-sm-10">
-                          <select class="form-control">
-                            <option>Please Select</option>
-                            <option>Administrator</option>
-                            <option>User</option>
-                            <option>Manager</option>
-                          </select>
+                          {!! Form::select('roles[]', [null=>'Please Select'] + $roles,[], array('class' => 'form-control')) !!}
                         </div>
                     </div>
                   
@@ -93,7 +88,7 @@ Better Work Indonesia | User Database
               </ul>
             </div>
             @endif
-         		<table id="example2" class="table table-bordered table-hover">
+         		<table id="example1" class="table table-bordered table-hover">
          			<thead>
          				<tr>
          					<th>No</th>

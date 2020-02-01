@@ -10,6 +10,9 @@ use iteos\Models\LeaveType;
 use iteos\Models\ReimbursType;
 use iteos\Models\DocumentCategory;
 use iteos\Models\GrievanceCategory;
+use iteos\Models\ChartOfAccount;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 use Hash;
 use DB;
 use Auth;
@@ -378,7 +381,79 @@ class ConfigurationController extends Controller
 
     public function coaCategoryIndex()
     {
-    	return view('apps.pages.coaCategory');
+        $data = ChartOfAccount::orderBy('account_id','ASC')->get();
+        $parents = ChartOfAccount::pluck('account_name','account_name')->toArray();
+
+    	return view('apps.pages.coaCategory',compact('data','parents'));
+    }
+
+    public function coaCategoryStore(Request $request)
+    {
+        $this->validate($request, [
+            'account_id' => 'required',
+            'account_name' => 'required',
+            'account_category' => 'required',
+        ]);
+
+        $data = ChartOfAccount::create([
+            'account_id' => $request->input('account_id'),
+            'account_name' => $request->input('account_name'),
+            'account_category' => $request->input('account_category'),
+            'account_parent' => $request->input('account_parent'),
+            'created_by' => auth()->user()->id,
+        ]);
+
+        $log = 'Category '.($data->account_name).' Created';
+         \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'Category '.($data->account_name).' Created',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('coaCat.index')->with($notification);
+    }
+
+    public function coaCategoryEdit($id)
+    {
+        $data = ChartOfAccount::find($id);
+        $parents = ChartOfAccount::pluck('account_name','account_name')->toArray();
+
+        return view('apps.edit.coaCategory',compact('data','parents'))->renderSections()['content'];
+    }
+
+    public function coaCategoryUpdate(Request $request,$id)
+    {
+        $this->validate($request, [
+            'category_name' => 'required',
+        ]);
+        $orig = GrievanceCategory::find($id);
+        $data = $orig->update([
+            'category_name' => $request->input('category_name'),
+            'updated_by' => auth()->user()->id,
+        ]);
+
+        $log = 'Category '.($orig->category_name).' Updated';
+         \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'Category '.($orig->category_name).' Updated',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('coaCat.index')->with($notification);
+    }
+
+    public function coaCategoryDestroy($id)
+    {
+        $data = GrievanceCategory::find($id);
+        $log = 'Category '.($data->category_name).' Deleted';
+         \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'Category '.($data->category_name).' Deleted',
+            'alert-type' => 'success'
+        );
+        $data->delete();
+
+        return redirect()->route('coaCat.index')->with($notification);
     }
 
     public function assetCategoryIndex()
@@ -389,8 +464,9 @@ class ConfigurationController extends Controller
     public function userIndex()
     {
         $data = User::orderBy('id','ASC')->get();
+        $roles = Role::pluck('name','name')->all();
 
-        return view('apps.pages.users',compact('data'));
+        return view('apps.pages.users',compact('data','roles'));
     }
 
     public function userStore(Request $request)
@@ -399,6 +475,7 @@ class ConfigurationController extends Controller
             'name' => 'required|unique:users,name',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|same:confirm-password',
+            'roles' => 'required',
         ]);
 
         $input = $request->all();
@@ -430,6 +507,7 @@ class ConfigurationController extends Controller
             'name' => 'required|unique:users,name,'.$id,
             'email' => 'required|email|unique:users,email,'.$id,
             'password' => 'same:confirm-password',
+            'roles' => 'required',
         ]);
 
         $input = $request->all(); 
