@@ -5,6 +5,7 @@ namespace iteos\Http\Controllers\Apps;
 use Illuminate\Http\Request;
 use iteos\Http\Controllers\Controller;
 use iteos\Models\Employee;
+use iteos\Models\User;
 use iteos\Models\EmployeeFamily;
 use iteos\Models\EmployeeEducation;
 use iteos\Models\EmployeeTraining;
@@ -23,7 +24,7 @@ class HumanResourcesController extends Controller
 
     public function employeeIndex()
     {
-        $data = Employee::orderBy('employee_id','ASC')->get();
+        $data = Employee::orderBy('employee_id','ASC')->paginate(6);
         
     	return view('apps.pages.employeeIndex',compact('data'));
     }
@@ -149,6 +150,13 @@ class HumanResourcesController extends Controller
             ];
         }
         $updateEmployee = $data->update($input);
+    }
+
+    public function employeeDelete($id)
+    {
+        $data = Employee::find($id);
+        $user = User::where('email',$data->email)->delete();
+        $data->delete();
     }
 
     public function familyStore(Request $request)

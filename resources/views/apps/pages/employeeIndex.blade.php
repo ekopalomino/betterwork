@@ -45,12 +45,15 @@ Better Work Indonesia | Human Resources
 	                	</div>
 	                	<div class="card-footer">
 	                  		<div class="text-right">
+	                  			<a href="#" class="btn btn-sm btn-primary">
+	                      			<i class="fas fa-user"></i> View Profile
+	                    		</a>
 	                  			<a href="{{ route('employee.edit',$employee->id) }}" class="btn btn-sm btn-info">
 	                      			<i class="fas fa-edit"></i> Edit Profile
 	                    		</a>
-	                    		<a href="#" class="btn btn-sm btn-primary">
-	                      			<i class="fas fa-user"></i> View Profile
-	                    		</a>
+	                    		{!! Form::open(['method' => 'POST','route' => ['employee.destroy', $employee->id],'onsubmit' => 'return ConfirmDelete()']) !!}
+                            	{!! Form::button('<i class="fas fa-user"></i> Delete Profile',['type'=>'submit','class' => 'btn btn-sm btn-danger']) !!}
+                            	{!! Form::close() !!}
 	                  		</div>
 	                	</div>
 	                </div>
@@ -60,16 +63,7 @@ Better Work Indonesia | Human Resources
    		</div>
         <div class="card-footer">
           	<nav aria-label="Contacts Page Navigation">
-            	<ul class="pagination justify-content-center m-0">
-		            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-		            <li class="page-item"><a class="page-link" href="#">2</a></li>
-		            <li class="page-item"><a class="page-link" href="#">3</a></li>
-		            <li class="page-item"><a class="page-link" href="#">4</a></li>
-		            <li class="page-item"><a class="page-link" href="#">5</a></li>
-		            <li class="page-item"><a class="page-link" href="#">6</a></li>
-		            <li class="page-item"><a class="page-link" href="#">7</a></li>
-		            <li class="page-item"><a class="page-link" href="#">8</a></li>
-            	</ul>
+            	{{ $data->links() }}
           	</nav>
         </div>
     </div>
