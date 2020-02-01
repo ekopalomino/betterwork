@@ -4,6 +4,7 @@ namespace iteos\Http\Controllers\Apps;
 
 use Illuminate\Http\Request;
 use iteos\Http\Controllers\Controller;
+use iteos\Models\Employee;
 
 class HumanResourcesController extends Controller
 {
@@ -15,6 +16,11 @@ class HumanResourcesController extends Controller
     public function employeeIndex()
     {
     	return view('apps.pages.employeeIndex');
+    }
+
+    public function employeeCreate()
+    {
+        return view('apps.input.employee');
     }
 
     public function attendanceIndex()

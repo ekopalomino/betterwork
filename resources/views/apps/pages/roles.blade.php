@@ -22,7 +22,7 @@ Better Work Indonesia | Access Roles
 				<div class="card-header">
        				<a class="btn btn-primary" href="{{ route('role.create') }}">
          			Add New</a>
-         		</button>
+         		
          	</div>
          	<div class="card-body">
          		<table id="example2" class="table table-bordered table-hover">

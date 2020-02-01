@@ -14,9 +14,9 @@ Better Work Indonesia | Human Resources
 </section>
 <section class="content">
 	<div class="col-4">
-		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">
-            New Employee
-        </button>
+		<a class="btn btn-primary" href="{{ route('employee.create') }}">
+			New Employee
+		</a> 
     </div>
     <br>
     <div class="card card-solid">
