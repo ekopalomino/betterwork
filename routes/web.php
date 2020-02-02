@@ -98,6 +98,8 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 
 	Route::post('my-menu/attendance-in','Apps\UserMenuController@clockIn')->name('attendanceIn.store');
 	Route::post('my-menu/attendance-out','Apps\UserMenuController@clockOut')->name('attendanceOut.store');
+	Route::get('my-menu/leave-request','Apps\UserMenuController@leaveIndex')->name('myLeave.index');
+	Route::post('my-menu/leave-request/create','Apps\UserMenuController@leaveRequest')->name('myLeave.store');
 });
 
 

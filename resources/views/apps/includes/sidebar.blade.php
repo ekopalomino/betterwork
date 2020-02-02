@@ -26,24 +26,24 @@
             	</p>
             </a>
           </li>
-          @if(\Route::current()->getName() == 'userHome.index')
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
+          @if(\Route::is(['userHome.index','myLeave.index']))
+          <li class="nav-item has-treeview {{set_open(['myLeave.index']) }}">
+            <a href="#" class="nav-link {{set_active(['myLeave.index']) }}">
               <i class="nav-icon fas fa-user"></i>
               <p>
                 My Menu
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
-            <ul class="nav nav-treeview">
+            <ul class="nav nav-treeview ">
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="#" class="nav-link ">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Update Data</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{ route('myLeave.index') }}" class="nav-link {{set_active('myLeave.index') }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Leave Request</p>
                 </a>

@@ -13,9 +13,9 @@ class StatusTableSeeder extends Seeder
     public function run()
     {
         $statuses = [
-            'Attendance In',
-            'Attendance Out',
-            'Attendance Incomplete',
+            'Requested',
+            'Approved',
+            'Rejected',
         ];
 
         foreach($statuses as $status) {
