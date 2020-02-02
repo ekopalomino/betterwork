@@ -95,7 +95,6 @@ class UserMenuController extends Controller
 
     public function reimbursStore(Request $request)
     {
-    	
     	$this->validate($request, [
             'request_type' => 'required',
             'amount' => 'required',
@@ -143,5 +142,80 @@ class UserMenuController extends Controller
     	$types = GrievanceCategory::pluck('category_name','id')->toArray();
 
     	return view('apps.input.myGrievance',compact('getEmployee','types'));
+    }
+
+    public function grievanceStore(Request $request)
+    {
+    	$this->validate($request, [
+            'subject' => 'required',
+            'type_id' => 'required',
+            'description' => 'required',
+        ]);
+
+        $content = $request->input('description');
+        $dom = new\DomDocument();
+        $dom->loadHtml($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        $images = $dom->getElementsByTagName('img');
+        foreach($images as $k => $img){
+            $isi = $img->getAttribute('src');
+            list($type, $data) = explode(';', $isi);
+            list(, $isi) = explode(',', $isi);
+            $isi = base64_decode($isi);
+            $image_name = "/grievance_image/" . time().$k.'.png';
+            $path = public_path() . $image_name;
+            file_put_contents($path, $isi);
+            $access = "http://betterwork.local/public".$image_name;
+            $img->removeAttribute('src');
+            $img->setAttribute('src', $access);
+        }
+        $content = $dom->saveHtml();
+
+        if($request->input('is_public') == 'on') {
+        	$data = EmployeeGrievance::create([
+	        	'employee_id' => $request->input('employee_id'),
+	        	'subject' => $request->input('subject'),
+	        	'type_id' => $request->input('type_id'),
+	        	'is_public' => '1',
+	        	'description' => $content,
+	        	'status_id' => '1f2967a5-9a88-4d44-a66b-5339c771aca0',
+	        ]);
+        } else {
+        	$data = EmployeeGrievance::create([
+	        	'employee_id' => $request->input('employee_id'),
+	        	'subject' => $request->input('subject'),
+	        	'type_id' => $request->input('type_id'),
+	        	'description' => $content,
+	        	'status_id' => '1f2967a5-9a88-4d44-a66b-5339c771aca0',
+	        ]);
+        }
+
+        return redirect()->route('myGrievance.index'); 
+    }
+
+    public function grievanceShow($id)
+    {
+    	$data = EmployeeGrievance::find($id);
+
+    	return view('apps.show.myGrievance',compact('data'));
+    }
+
+    public function grievanceEdit($id)
+    {
+
+    }
+
+    public function grievanceUpdate(Request $request,$id)
+    {
+
+    }
+
+    public function grievanceComment(Request $request,$id)
+    {
+
+    }
+
+    public function grievanceRate(Request $request,$id)
+    {
+
     }
 }

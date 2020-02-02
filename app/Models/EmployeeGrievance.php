@@ -20,6 +20,8 @@ class EmployeeGrievance extends Model
     	'rating',
     ];
 
+    public $incrementing = false;
+    
     public function Employees()
     {
     	return $this->belongsTo(Employee::class,'employee_id');

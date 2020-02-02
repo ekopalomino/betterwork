@@ -104,6 +104,12 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::post('my-menu/reimbursment/create','Apps\UserMenuController@reimbursStore')->name('myReimburs.store');
 	Route::get('my-menu/grievance','Apps\UserMenuController@grievanceIndex')->name('myGrievance.index');
 	Route::get('my-menu/grievance/create','Apps\UserMenuController@grievanceCreate')->name('myGrievance.create');
+	Route::post('my-menu/reimbursment/store','Apps\UserMenuController@grievanceStore')->name('myGrievance.store');
+	Route::get('my-menu/grievance/edit/{id}','Apps\UserMenuController@grievanceEdit')->name('myGrievance.edit');
+	Route::post('my-menu/grievance/update/{id}','Apps\UserMenuController@grievanceUpdate')->name('myGrievance.update');
+	Route::get('my-menu/grievance/view/{id}','Apps\UserMenuController@grievanceShow')->name('myGrievance.show');
+	Route::post('my-menu/grievance/respond/{id}','Apps\UserMenuController@grievanceComment')->name('myGrievance.respond');
+	Route::post('my-menu/grievance/rate/{id}','Apps\UserMenuController@grievanceRate')->name('myGrievance.rate');
 });
 
 

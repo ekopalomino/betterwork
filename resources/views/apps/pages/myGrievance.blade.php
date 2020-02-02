@@ -42,12 +42,22 @@ Better Work Indonesia | My Grievance Data
           	<tr>
           		<td>{{ $key+1 }}</td>
               <td>{{ $value->subject }}</td>
-          		<td>{{ $value->description }}</td>
+          		<td>{{ str_limit(strip_tags($value->description), 50) }}</td>
               <td>{{ $value->Statuses->name }}</td>
               <td>{{ $value->notes }}</td>
             	<td>{{date("d F Y H:i",strtotime($value->created_at)) }}</td>
               <td>{{date("d F Y H:i",strtotime($value->updated_at)) }}</td>
-              <td></td>
+              <td>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Action
+                  </button>
+                  <div class="dropdown-menu" role="menu">
+                    <a class="dropdown-item" href="#">Edit Data</a>
+                    <a class="dropdown-item" href="{{ route('myGrievance.show',$value->id) }}">View Data</a>
+                  </div>
+                </div>
+              </td>
             </tr>
             @endforeach
      			</tbody>
