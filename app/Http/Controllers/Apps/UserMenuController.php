@@ -10,6 +10,9 @@ use iteos\Models\EmployeeLeave;
 use iteos\Models\LeaveType;
 use iteos\Models\EmployeeReimbursment;
 use iteos\Models\ReimbursType;
+use iteos\Models\EmployeeGrievance;
+use iteos\Models\GrievanceComment;
+use iteos\Models\GrievanceCategory;
 use Auth;
 use Carbon\Carbon;
 
@@ -125,5 +128,20 @@ class UserMenuController extends Controller
 
 	        return redirect()->route('myReimburs.index');
     	}  
+    }
+
+    public function grievanceIndex()
+    {
+    	$data = EmployeeGrievance::orderBy('created_at','DESC')->get();
+    	
+    	return view('apps.pages.myGrievance',compact('data'));
+    }
+
+    public function grievanceCreate()
+    {
+    	$getEmployee = Employee::where('email',Auth()->user()->email)->first();
+    	$types = GrievanceCategory::pluck('category_name','id')->toArray();
+
+    	return view('apps.input.myGrievance',compact('getEmployee','types'));
     }
 }

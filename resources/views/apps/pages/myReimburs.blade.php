@@ -101,9 +101,9 @@ Better Work Indonesia | My Reimbursment Request
             @foreach($data as $key=>$value)
           	<tr>
           		<td>{{ $key+1 }}</td>
-              <td>{{ $value->Type->reimburs_name }}
+              <td>{{ $value->Type->reimburs_name }}</td>
           		<td>@if(!empty($value->transaction_date)){{date("d F Y H:i",strtotime($value->transaction_date)) }}@endif</td>
-              <td>{{ number_format($value->amount,2,',','.')}}
+              <td>{{ number_format($value->amount,2,',','.')}}</td>
               <td>{{ $value->notes }}</td>
             	<td>{{ $value->Statuses->name }}</td>
             	<td>{{date("d F Y H:i",strtotime($value->created_at)) }}</td>

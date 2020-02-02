@@ -102,6 +102,8 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::post('my-menu/leave-request/create','Apps\UserMenuController@leaveRequest')->name('myLeave.store');
 	Route::get('my-menu/reimbursment','Apps\UserMenuController@reimbursIndex')->name('myReimburs.index');
 	Route::post('my-menu/reimbursment/create','Apps\UserMenuController@reimbursStore')->name('myReimburs.store');
+	Route::get('my-menu/grievance','Apps\UserMenuController@grievanceIndex')->name('myGrievance.index');
+	Route::get('my-menu/grievance/create','Apps\UserMenuController@grievanceCreate')->name('myGrievance.create');
 });
 
 
