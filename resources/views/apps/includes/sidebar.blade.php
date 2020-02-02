@@ -18,6 +18,7 @@
 	    </div>
 	    <nav class="mt-2">
 	    	<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          @can('disable')
           <li class="nav-item {{set_open('dashboard.index') }}">
 	    			<a href="{{ route('dashboard.index') }}" class="nav-link {{set_active('dashboard.index') }}">
             	<i class="nav-icon fas fa-tachometer-alt"></i>
@@ -26,9 +27,10 @@
             	</p>
             </a>
           </li>
-          @if(\Route::is(['userHome.index','myLeave.index']))
-          <li class="nav-item has-treeview {{set_open(['myLeave.index']) }}">
-            <a href="#" class="nav-link {{set_active(['myLeave.index']) }}">
+          @endcan
+          @if(\Route::is(['userHome.index','myLeave.index','myReimburs.index']))
+          <li class="nav-item has-treeview {{set_open(['myLeave.index','myReimburs.index']) }}">
+            <a href="#" class="nav-link {{set_active(['myLeave.index','myReimburs.index']) }}">
               <i class="nav-icon fas fa-user"></i>
               <p>
                 My Menu
@@ -67,7 +69,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{ route('myReimburs.index') }}" class="nav-link {{set_active('myReimburs.index') }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Reimbursment</p>
                 </a>

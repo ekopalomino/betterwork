@@ -5,7 +5,7 @@
        <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
     </li>
     <li class="nav-item d-none d-sm-inline-block">
-     	<a href="{{route('userHome.index') }}" class="nav-link {{set_active(['userHome.index','myLeave.index']) }}">Home</a>
+     	<a href="{{route('userHome.index') }}" class="nav-link {{set_active(['userHome.index','myLeave.index','myReimburs.index']) }}">Home</a>
    	</li>
    	<li class="nav-item d-none d-sm-inline-block">
      	<a href="{{route('config.index') }}" class="nav-link {{set_active(['application.index','config.index','position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','coaCat.index','assetCat.index','user.index','logs.index','role.index','role.create']) }}">Configuration</a>

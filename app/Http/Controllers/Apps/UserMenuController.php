@@ -8,6 +8,8 @@ use iteos\Models\Employee;
 use iteos\Models\EmployeeAttendance;
 use iteos\Models\EmployeeLeave;
 use iteos\Models\LeaveType;
+use iteos\Models\EmployeeReimbursment;
+use iteos\Models\ReimbursType;
 use Auth;
 use Carbon\Carbon;
 
@@ -77,5 +79,51 @@ class UserMenuController extends Controller
     	]);
 
     	return redirect()->route('myLeave.index');
+    }
+
+    public function reimbursIndex()
+    {
+    	$getEmployee = Employee::where('email',Auth()->user()->email)->first();
+    	$data = EmployeeReimbursment::orderBy('created_at','DESC')->get();
+    	$types = ReimbursType::pluck('reimburs_name','id')->toArray();
+
+    	return view('apps.pages.myReimburs',compact('getEmployee','data','types'));
+    }
+
+    public function reimbursStore(Request $request)
+    {
+    	
+    	$this->validate($request, [
+            'request_type' => 'required',
+            'amount' => 'required',
+            'notes' => 'required',
+        ]);
+
+    	if($request->hasFile('receipt')) {
+    		$file = $request->file('receipt')->store('employees_reimburs');
+
+            $data = EmployeeReimbursment::create([
+	        	'employee_id' => $request->input('employee_id'),
+	        	'transaction_date' => $request->input('transaction_date'),
+	        	'type_id' => $request->input('request_type'),
+	        	'amount' => $request->input('amount'),
+	        	'notes' => $request->input('notes'),
+	        	'files' => $file,
+	        	'status_id' => 'b0a0c17d-e56a-41a7-bfb0-bd8bdc60a7be',
+	        ]);
+
+	        return redirect()->route('myReimburs.index');
+    	} else {
+    		$data = EmployeeReimbursment::create([
+	        	'employee_id' => $request->input('employee_id'),
+	        	'transaction_date' => $request->input('transaction_date'),
+	        	'type_id' => $request->input('request_type'),
+	        	'amount' => $request->input('amount'),
+	        	'notes' => $request->input('notes'),
+	        	'status_id' => 'b0a0c17d-e56a-41a7-bfb0-bd8bdc60a7be',
+	        ]);
+
+	        return redirect()->route('myReimburs.index');
+    	}  
     }
 }
