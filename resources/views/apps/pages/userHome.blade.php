@@ -44,9 +44,9 @@ Better Work Indonesia | Home
               		</div>
               		<div class="card-body">
               			<div class="row">
-                      @foreach($getEmployee->Attendances as $absent)
+                      
 	              			<div class="col-md-4">
-                        @if(($absent->status_id) != 'f4f23f41-0588-4111-a881-a043cf355831')
+                        @if(($getAttendance->status_id) != 'f4f23f41-0588-4111-a881-a043cf355831')
                         {!! Form::open(['method' => 'POST','route' => ['attendanceIn.store']]) !!}
                         {!! Form::button('<img src="https://img.icons8.com/flat_round/64/000000/youtube-play.png">',['type'=>'submit','class' => 'btn']) !!}
                         {!! Form::close() !!} 
@@ -83,11 +83,11 @@ Better Work Indonesia | Home
                         </div>
 	              			</div>
 	              			<div class="col-md-8">
-	              				<p> In : @if(!empty($absent->clock_in)){{date("d F Y H:i",strtotime($absent->clock_in)) }}@endif</p>
-	              				<p> Out : @if(!empty($absent->clock_out)){{date("d F Y H:i",strtotime($absent->clock_out)) }}@endif</p>
+	              				<p> In : @if(!empty($getAttendance->clock_in)){{date("d F Y H:i",strtotime($getAttendance->clock_in)) }}@endif</p>
+	              				<p> Out : @if(!empty($getAttendance->clock_out)){{date("d F Y H:i",strtotime($getAttendance->clock_out)) }}@endif</p>
 	              			</div>
 	              		</div>
-                    @endforeach
+                    
               		</div>
               	</div>
             </div>
@@ -108,7 +108,7 @@ Better Work Indonesia | Home
               				<div class="active tab-pane" id="overview">
                         <strong><i class="fas fa-calendar-check mr-1"></i> Birthday</strong>
                         <p class="text-muted">
-                            10 January 1976
+                            {{date("d F Y",strtotime($getEmployee->date_of_birth)) }}
                         </p>
               					<strong><i class="fas fa-book mr-1"></i> Education</strong>
               					<p class="text-muted">
@@ -116,7 +116,7 @@ Better Work Indonesia | Home
                 				</p>
                 				<hr>
                 				<strong><i class="fas fa-map-marker-alt mr-1"></i> Home Address</strong>
-                				<p class="text-muted">Malibu, California</p>
+                				<p class="text-muted">{{ $getEmployee->address }}</p>
                 				<hr>
                 				<strong><i class="fas fa-pencil-alt mr-1"></i> Training & Certification</strong>
                 				<p class="text-muted">
@@ -132,7 +132,7 @@ Better Work Indonesia | Home
                       <div class="tab-pane" id="organization">
                         <strong><i class="fas fa-id-badge mr-1"></i> Employee ID</strong>
                         <p class="text-muted">
-                            030306
+                            {{ $getEmployee->employee_no }}
                         </p>
                         <strong><i class="fas fa-calendar-check mr-1"></i> Join Date</strong>
                         <p class="text-muted">

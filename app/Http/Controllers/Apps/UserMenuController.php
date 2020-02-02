@@ -14,8 +14,9 @@ class UserMenuController extends Controller
     public function index()
     {
     	$getEmployee = Employee::where('email',Auth()->user()->email)->first();
-
-    	return view('apps.pages.userHome',compact('getEmployee'));
+    	$getAttendance = EmployeeAttendance::where('employee_id',$getEmployee->id)->orderBy('updated_at','DESC')->first();
+    	
+    	return view('apps.pages.userHome',compact('getEmployee','getAttendance'));
     }
 
     public function clockIn(Request $request)
