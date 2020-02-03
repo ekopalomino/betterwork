@@ -97,6 +97,9 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::get('human-resources/appraisal','Apps\HumanResourcesController@appraisalIndex')->name('appraisal.index');
 
 	Route::get('grievance/database','Apps\GrievanceController@grievanceData')->name('grievanceData.index');
+	Route::get('grievance/database/show/{id}','Apps\GrievanceController@grievanceShow')->name('grievanceData.show');
+	Route::get('grievance/database/edit/{id}','Apps\GrievanceController@grievanceEdit')->name('grievanceData.edit');
+	Route::post('grievance/database/update/{id}','Apps\GrievanceController@grievanceUpdate')->name('grievanceData.update');
 	Route::get('grievance/management-respond','Apps\GrievanceController@managementData')->name('managementGrievance.index');
 
 	Route::get('accounting/bank-statement','Apps\AccountingController@bankIndex')->name('bank.index');

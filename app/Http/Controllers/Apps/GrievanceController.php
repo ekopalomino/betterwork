@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use iteos\Http\Controllers\Controller;
 use iteos\Models\EmployeeGrievance;
 use iteos\Models\GrievanceComment;
+use iteos\Models\GrievanceCategory;
 use Auth;
 
 class GrievanceController extends Controller
@@ -34,5 +35,74 @@ class GrievanceController extends Controller
     	$data = EmployeeGrievance::find($id);
 
     	return view('apps.show.grievanceData',compact('data'));
+    }
+
+    public function grievanceEdit($id)
+    {
+    	$data = EmployeeGrievance::find($id);
+    	$types = GrievanceCategory::pluck('category_name','id')->toArray();
+
+    	return view('apps.edit.grievanceData',compact('data','types'));
+    }
+
+    public function grievanceUpdate(Request $request,$id)
+    {
+    	$this->validate($request, [
+            'type_id' => 'required',
+            'status_id' => 'required',
+            'description' => 'required',
+        ]);
+
+        $content = $request->input('description');
+         libxml_use_internal_errors(true);
+        $dom = new\DomDocument();   
+        $dom->loadHTML(
+            mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8'),
+            LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD
+        );
+
+        $images = $dom->getElementsByTagName('img');
+
+        foreach ($images as $count => $image) {
+            $src = $image->getAttribute('src');
+
+            if (preg_match('/data:image/', $src)) {
+                preg_match('/data:image\/(?<mime>.*?)\;/', $src, $groups);
+                $mimeType = $groups['mime'];
+
+                $path = '/grievance_image/' . uniqid('', true) . '.' . $mimeType;
+
+                Image::make($src)
+                    ->resize(750, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                    })
+                    ->encode($mimeType, 80)
+                    ->save(public_path($path));
+
+                $image->removeAttribute('src');
+                $image->setAttribute('src', asset($path));
+            }
+        }
+
+        
+        if(($request->input('is_public')) == 'on') {
+        	$data = EmployeeGrievance::find($id);
+        	$data->update([
+        		'type_id' => $request->input('type_id'),
+        		'status_id' => $request->input('status_id'),
+        		'is_public' => '1',
+	        	'description' => $content,
+        	]);
+        } else {
+        	$data = EmployeeGrievance::find($id);
+        	$data->update([
+        		'type_id' => $request->input('type_id'),
+        		'status_id' => $request->input('status_id'),
+        		'is_public' => '0',
+	        	'description' => $content,
+        	]);
+        }
+
+        return redirect()->route('grievanceData.show',$id);
     }
 }

@@ -14,7 +14,7 @@
      	<a href="{{route('hr.index') }}" class="nav-link {{set_active(['hr.index','employee.index','employee.create','employee.edit']) }}">Human Resources</a>
    	</li>
    	<li class="nav-item d-none d-sm-inline-block">
-     	<a href="{{route('grievance.index') }}" class="nav-link {{set_active(['grievance.index','grievanceData.index','managementGrievance.index']) }}">Grievance</a>
+     	<a href="{{route('grievance.index') }}" class="nav-link {{set_active(['grievance.index','grievanceData.index','managementGrievance.index','grievanceData.edit','grievanceData.show']) }}">Grievance</a>
    	</li>
    	<li class="nav-item d-none d-sm-inline-block">
      	<a href="{{route('accounting.index') }}" class="nav-link {{set_active(['accounting.index','bank.index']) }}">Accounting</a>
