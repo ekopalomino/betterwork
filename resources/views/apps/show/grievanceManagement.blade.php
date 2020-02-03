@@ -30,14 +30,6 @@ Better Work Indonesia | Grievance Database Show
           <p>Public Access : @if(($data->is_public) == 1)Yes @else No @endif</p>
           <p>Status : {{ $data->Statuses->name }}</p>
           <p>Description : {!!html_entity_decode($data->description)!!} </p>
-          @if(($data->status_id) != '16f30bee-5db5-472d-b297-926f5c8e4d21')
-          <a href="{{ route('grievanceData.edit',$data->id) }}" class="btn btn-danger btn-sm">
-            <i class="fas fa-edit"></i> Edit
-          </a>
-          {!! Form::open(['method' => 'POST','route' => ['grievanceData.publish', $data->id],'onsubmit' => 'return ConfirmPublished()']) !!}
-          {!! Form::button('<a><i class="fas fa-upload"></i>Publish</a>',['type'=>'submit','class' => 'btn btn-info btn-sm']) !!}
-          {!! Form::close() !!}
-          @endif
         </div>
         <div class="card-footer card-comments">
          	<p><strong>Comments and Response</strong></p>

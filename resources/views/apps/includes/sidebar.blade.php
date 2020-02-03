@@ -232,6 +232,29 @@
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-file-alt"></i>
               <p>
+                HR Finance
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Payroll Process</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Reimbursment</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-file-alt"></i>
+              <p>
                 Bulletin Board
                 <i class="right fas fa-angle-left"></i>
               </p>
@@ -275,7 +298,7 @@
             </ul>
           </li>
           @endif
-          @if(\Route::is(['grievance.index','grievanceData.index','managementGrievance.index','grievanceData.edit','grievanceData.show']))
+          @if(\Route::is(['grievance.index','grievanceData.index','managementGrievance.index','grievanceData.edit','grievanceData.show','managementGrievance.show']))
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-edit"></i>
@@ -284,8 +307,8 @@
               </p>
             </a>
           </li>
-          <li class="nav-item has-treeview {{set_open(['grievanceData.index','managementGrievance.index','grievanceData.edit','grievanceData.show']) }}">
-            <a href="#" class="nav-link {{set_active(['grievanceData.index','managementGrievance.index','grievanceData.edit','grievanceData.show']) }}">
+          <li class="nav-item has-treeview {{set_open(['grievanceData.index','managementGrievance.index','grievanceData.edit','grievanceData.show','managementGrievance.show']) }}">
+            <a href="#" class="nav-link {{set_active(['grievanceData.index','managementGrievance.index','grievanceData.edit','grievanceData.show','managementGrievance.show']) }}">
               <i class="nav-icon fas fa-user-shield"></i>
               <p>
                 Grievance Process
@@ -300,7 +323,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('managementGrievance.index') }}" class="nav-link {{set_active('managementGrievance.index') }}">
+                <a href="{{ route('managementGrievance.index') }}" class="nav-link {{set_active(['managementGrievance.index','managementGrievance.show']) }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Management Respond</p>
                 </a>

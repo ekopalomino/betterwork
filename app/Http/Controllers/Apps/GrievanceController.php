@@ -7,6 +7,7 @@ use iteos\Http\Controllers\Controller;
 use iteos\Models\EmployeeGrievance;
 use iteos\Models\GrievanceComment;
 use iteos\Models\GrievanceCategory;
+use iteos\Models\Employee;
 use Auth;
 
 class GrievanceController extends Controller
@@ -25,7 +26,9 @@ class GrievanceController extends Controller
 
     public function managementData()
     {
-    	$data = EmployeeGrievance::where('status_id','!=','6a787298-14f6-4d19-a7ee-99a3c8ed6466')->get();
+    	$data = EmployeeGrievance::where('status_id','ca52a2ce-5c37-48ce-a7f2-0fd5311860c2')
+                                    ->orWhere('status_id','fe6f8153-a433-4a4d-a23d-201811778733')
+                                    ->get();
 
     	return view('apps.pages.managementGrievance',compact('data'));
     }
@@ -35,6 +38,13 @@ class GrievanceController extends Controller
     	$data = EmployeeGrievance::find($id);
 
     	return view('apps.show.grievanceData',compact('data'));
+    }
+
+    public function grievanceManagementShow($id)
+    {
+    	$data = EmployeeGrievance::find($id);
+
+    	return view('apps.show.grievanceManagement',compact('data'));
     }
 
     public function grievanceEdit($id)
@@ -144,15 +154,28 @@ class GrievanceController extends Controller
             }
         }
         $content = $dom->saveHTML();
-
-        $data = EmployeeGrievance::find($id);
+        $getEmployee = EmployeeGrievance::find($id);
         $comments = GrievanceComment::create([
         	'grievance_id' => $id,
         	'comment' => $content,
-        	'comment_by' => Auth()->user()->id,
+        	'comment_by' => $getEmployee->employee_id,
         ]);
 
         return redirect()->back();
+    }
 
+    public function grievanceClose(Request $request,$id)
+    {
+
+    }
+
+    public function grievancePublish($id)
+    {
+    	$data = EmployeeGrievance::find($id);
+    	$data->update([
+    		'status_id' => '16f30bee-5db5-472d-b297-926f5c8e4d21',
+    	]);
+
+    	return redirect()->route('grievanceData.index');
     }
 }

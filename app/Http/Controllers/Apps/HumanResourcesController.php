@@ -88,6 +88,7 @@ class HumanResourcesController extends Controller
             
             $encryptPass = Hash::make($userPassword);
             $user = User::create([
+                'employee_id' => $result->id,
                 'name' => $name,
                 'email' => $request->input('email'),
                 'password' => $encryptPass,

@@ -19,6 +19,6 @@ class GrievanceComment extends Model
 
     public function Responder()
     {
-    	return $this->belongsTo(User::class,'comment_by');
+    	return $this->belongsTo(Employee::class,'comment_by');
     }
 }

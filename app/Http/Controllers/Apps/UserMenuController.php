@@ -131,7 +131,9 @@ class UserMenuController extends Controller
 
     public function grievanceIndex()
     {
-    	$data = EmployeeGrievance::orderBy('created_at','DESC')->get();
+        $getEmployee = Employee::where('email',Auth()->user()->email)->first();
+        $data = EmployeeGrievance::where('employee_id',$getEmployee->id)
+                                    ->orderBy('created_at','DESC')->get();
     	
     	return view('apps.pages.myGrievance',compact('data'));
     }
@@ -211,11 +213,72 @@ class UserMenuController extends Controller
 
     public function grievanceComment(Request $request,$id)
     {
+        $this->validate($request, [
+            'comment' => 'required',
+        ]);
 
+        $content = $request->input('comment');
+         libxml_use_internal_errors(true);
+        $dom = new\DomDocument();   
+        $dom->loadHTML(
+            mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8'),
+            LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD
+        );
+
+        $images = $dom->getElementsByTagName('img');
+
+        foreach ($images as $count => $image) {
+            $src = $image->getAttribute('src');
+
+            if (preg_match('/data:image/', $src)) {
+                preg_match('/data:image\/(?<mime>.*?)\;/', $src, $groups);
+                $mimeType = $groups['mime'];
+
+                $path = '/grievance_image/' . uniqid('', true) . '.' . $mimeType;
+
+                Image::make($src)
+                    ->resize(750, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                    })
+                    ->encode($mimeType, 80)
+                    ->save(public_path($path));
+
+                $image->removeAttribute('src');
+                $image->setAttribute('src', asset($path));
+            }
+        }
+        $content = $dom->saveHTML();
+
+        $data = EmployeeGrievance::find($id);
+        if(($data->status_id) == '16f30bee-5db5-472d-b297-926f5c8e4d21') {
+            $data->update([
+                'status_id' => 'fe6f8153-a433-4a4d-a23d-201811778733',
+            ]);
+            $comments = GrievanceComment::create([
+                'grievance_id' => $id,
+                'comment' => $content,
+                'comment_by' => $data->employee_id,
+            ]);
+        } else {
+            $comments = GrievanceComment::create([
+                'grievance_id' => $id,
+                'comment' => $content,
+                'comment_by' => $data->employee_id,
+            ]);
+        }
+        
+
+        return redirect()->back();
     }
 
     public function grievanceRate(Request $request,$id)
     {
+        $data = EmployeeGrievance::find($id);
+        $data->update([
+            'status_id' => '6a787298-14f6-4d19-a7ee-99a3c8ed6466',
+            'rating' => $request->input('rating'),
+        ]);
 
+        return redirect()->route('myGrievance.index');
     }
 }

@@ -30,14 +30,13 @@ Better Work Indonesia | Employee Grievance Data
               <th>Description</th>
               <th>Status</th>
               <th>Created At</th>
-          		<th></th>
           	</tr>
           </thead>
           <tbody>
             @foreach($data as $key=>$value)
           	<tr>
-          		<td><a href="{{ route('grievanceData.show',$value->id) }}">{{ $key+1 }}</a></td>
-              <td>{{ $value->subject }}</td>
+          		<td>{{ $key+1 }}</td>
+              <td><a href="{{ route('grievanceData.show',$value->id) }}">{{ $value->subject }}</a></td>
               <td>{{ $value->Categories->category_name }}</td>
               <td>
                   @if(($value->is_public) == 1)
@@ -49,18 +48,6 @@ Better Work Indonesia | Employee Grievance Data
           		<td>{{ str_limit(strip_tags($value->description), 100) }}</td>
               <td>{{ $value->Statuses->name }}</td>
               <td>{{date("d F Y H:i",strtotime($value->created_at)) }}</td>
-              <td>
-                <div class="btn-group">
-                  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Action
-                  </button>
-                  <div class="dropdown-menu" role="menu">
-                    <a class="dropdown-item" href="#">Edit Data</a>
-                    <a class="dropdown-item" href="#">Approval Data</a>
-                    <a class="dropdown-item" href="{{ route('myGrievance.show',$value->id) }}">View Data</a>
-                  </div>
-                </div>
-              </td>
             </tr>
             @endforeach
      			</tbody>

@@ -101,8 +101,10 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::get('grievance/database/edit/{id}','Apps\GrievanceController@grievanceEdit')->name('grievanceData.edit');
 	Route::post('grievance/database/update/{id}','Apps\GrievanceController@grievanceUpdate')->name('grievanceData.update');
 	Route::post('grievance/database/comment/{id}','Apps\GrievanceController@grievanceComment')->name('grievanceData.comment');
+	Route::post('grievance/database/close/{id}','Apps\GrievanceController@grievanceClose')->name('grievanceData.closed');
+	Route::post('grievance/database/publish/{id}','Apps\GrievanceController@grievancePublish')->name('grievanceData.publish');
 	Route::get('grievance/management-respond','Apps\GrievanceController@managementData')->name('managementGrievance.index');
-
+	Route::get('grievance/management-respond/show/{id}','Apps\GrievanceController@grievanceManagementShow')->name('managementGrievance.show');
 	Route::get('accounting/bank-statement','Apps\AccountingController@bankIndex')->name('bank.index');
 
 	Route::post('my-menu/attendance-in','Apps\UserMenuController@clockIn')->name('attendanceIn.store');
