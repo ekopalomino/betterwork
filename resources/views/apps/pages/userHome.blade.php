@@ -44,14 +44,20 @@ Better Work Indonesia | Home
               		</div>
               		<div class="card-body">
               			<div class="row">
-                      
 	              			<div class="col-md-4">
+                        @if(($getAttendance) == null)
+                        {!! Form::open(['method' => 'POST','route' => ['attendanceIn.store']]) !!}
+                        {!! Form::button('<img src="https://img.icons8.com/flat_round/64/000000/youtube-play.png">',['type'=>'submit','class' => 'btn']) !!}
+                        {!! Form::close() !!}
+                        @endif
+                        @if(($getAttendance) != null)
                         @if(($getAttendance->status_id) != 'f4f23f41-0588-4111-a881-a043cf355831')
                         {!! Form::open(['method' => 'POST','route' => ['attendanceIn.store']]) !!}
                         {!! Form::button('<img src="https://img.icons8.com/flat_round/64/000000/youtube-play.png">',['type'=>'submit','class' => 'btn']) !!}
                         {!! Form::close() !!} 
 	              				@else
                         <a class="btn" data-toggle="modal" data-target="#modal-lg"><img src="https://img.icons8.com/dotty/80/000000/home-button.png">Clock Out</a>
+                        @endif
                         @endif
                         <div class="modal fade" id="modal-lg">
                           <div class="modal-dialog modal-lg">
