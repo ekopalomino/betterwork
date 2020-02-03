@@ -83,6 +83,7 @@ class GrievanceController extends Controller
                 $image->setAttribute('src', asset($path));
             }
         }
+        $content = $dom->saveHTML();
 
         
         if(($request->input('is_public')) == 'on') {
@@ -104,5 +105,54 @@ class GrievanceController extends Controller
         }
 
         return redirect()->route('grievanceData.show',$id);
+    }
+
+    public function grievanceComment(Request $request,$id)
+    {
+    	$this->validate($request, [
+            'comment' => 'required',
+        ]);
+
+    	$content = $request->input('comment');
+         libxml_use_internal_errors(true);
+        $dom = new\DomDocument();   
+        $dom->loadHTML(
+            mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8'),
+            LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD
+        );
+
+        $images = $dom->getElementsByTagName('img');
+
+        foreach ($images as $count => $image) {
+            $src = $image->getAttribute('src');
+
+            if (preg_match('/data:image/', $src)) {
+                preg_match('/data:image\/(?<mime>.*?)\;/', $src, $groups);
+                $mimeType = $groups['mime'];
+
+                $path = '/grievance_image/' . uniqid('', true) . '.' . $mimeType;
+
+                Image::make($src)
+                    ->resize(750, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                    })
+                    ->encode($mimeType, 80)
+                    ->save(public_path($path));
+
+                $image->removeAttribute('src');
+                $image->setAttribute('src', asset($path));
+            }
+        }
+        $content = $dom->saveHTML();
+
+        $data = EmployeeGrievance::find($id);
+        $comments = GrievanceComment::create([
+        	'grievance_id' => $id,
+        	'comment' => $content,
+        	'comment_by' => Auth()->user()->id,
+        ]);
+
+        return redirect()->back();
+
     }
 }

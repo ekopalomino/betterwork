@@ -28,6 +28,7 @@ Better Work Indonesia | Grievance Database Show
         <div class="card-body">
           <p>Category : {{ $data->Categories->category_name }}</p>
           <p>Public Access : @if(($data->is_public) == 1)Yes @else No @endif</p>
+          <p>Status : {{ $data->Statuses->name }}</p>
           <p>Description : {!!html_entity_decode($data->description)!!} </p>
           <a href="{{ route('grievanceData.edit',$data->id) }}" class="btn btn-default btn-sm">
             <i class="fas fa-edit"></i> Edit
@@ -35,16 +36,27 @@ Better Work Indonesia | Grievance Database Show
         </div>
         <div class="card-footer card-comments">
          	<p><strong>Comments and Response</strong></p>
+          @foreach($data->Child as $child)
          	<div class="card-comment">
+            <img class="img-circle img-sm" src="{{ asset('public/bower_components/admin-lte/dist/img/user4-128x128.jpg') }}" alt="User Image">
+            <div class="comment-text">
+              <span class="username">
+                {{ $child->Responder->name}}
+                <span class="text-muted float-right">{{date("d F Y H:i",strtotime($child->created_at)) }}</span>
+              </span><!-- /.username -->
+              {!!html_entity_decode($child->comment)!!}
+            </div>
          	</div>
+          @endforeach
         </div>
         <div class="card-footer">
-         	<form action="#" method="post">
-           	<textarea class="textarea" name="description" placeholder="Place some text here"
+         	{!! Form::open(array('method' => 'POST','route' => ['grievanceData.comment', $data->id])) !!}
+          @csrf
+           	<textarea class="textarea" name="comment" placeholder="Place some text here"
              	style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">
             </textarea>
             <button type="submit" class="btn btn-info">Submit</button>
-	        </form>
+	        {!! Form::close() !!}
         </div>
       </div>
     </div>

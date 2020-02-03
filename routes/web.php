@@ -100,6 +100,7 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::get('grievance/database/show/{id}','Apps\GrievanceController@grievanceShow')->name('grievanceData.show');
 	Route::get('grievance/database/edit/{id}','Apps\GrievanceController@grievanceEdit')->name('grievanceData.edit');
 	Route::post('grievance/database/update/{id}','Apps\GrievanceController@grievanceUpdate')->name('grievanceData.update');
+	Route::post('grievance/database/comment/{id}','Apps\GrievanceController@grievanceComment')->name('grievanceData.comment');
 	Route::get('grievance/management-respond','Apps\GrievanceController@managementData')->name('managementGrievance.index');
 
 	Route::get('accounting/bank-statement','Apps\AccountingController@bankIndex')->name('bank.index');
