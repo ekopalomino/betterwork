@@ -58,4 +58,9 @@ class Employee extends Model
     {
         return $this->hasMany(EmployeeService::class,'employee_id');
     }
+
+    public function Attendances()
+    {
+        return $this->hasMany(EmployeeAttendance::class,'employee_id');
+    }
 }

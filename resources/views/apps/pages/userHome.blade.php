@@ -20,10 +20,10 @@ Better Work Indonesia | Home
 					<div class="card-body box-profile">
 						<div class="text-center">
                   			<img class="profile-user-img img-fluid img-circle"
-                       			src="{{ asset('public/bower_components/admin-lte/dist/img/user2-160x160.jpg') }}"
+                       			src="http://betterwork.local/public/employees/{{$getEmployee->picture}}"
                        			alt="User profile picture">
                 		</div>
-                		<h3 class="profile-username text-center">Alexander Pierce</h3>
+                		<h3 class="profile-username text-center">{{{ isset(Auth::user()->name) ? Auth::user()->name : Auth::user()->email }}}</h3>
                 		<p class="text-muted text-center">Software Engineer</p>
                 		<ul class="list-group list-group-unbordered mb-3">
                   			<li class="list-group-item">
@@ -45,13 +45,55 @@ Better Work Indonesia | Home
               		<div class="card-body">
               			<div class="row">
 	              			<div class="col-md-4">
-	              				<img src="{{ asset('public/assets/clock_off_icon.svg') }}">
+                        @if(($getAttendance) == null)
+                        {!! Form::open(['method' => 'POST','route' => ['attendanceIn.store']]) !!}
+                        {!! Form::button('<img src="https://img.icons8.com/flat_round/64/000000/youtube-play.png">',['type'=>'submit','class' => 'btn']) !!}
+                        {!! Form::close() !!}
+                        @endif
+                        @if(($getAttendance) != null)
+                        @if(($getAttendance->status_id) != 'f4f23f41-0588-4111-a881-a043cf355831')
+                        {!! Form::open(['method' => 'POST','route' => ['attendanceIn.store']]) !!}
+                        {!! Form::button('<img src="https://img.icons8.com/flat_round/64/000000/youtube-play.png">',['type'=>'submit','class' => 'btn']) !!}
+                        {!! Form::close() !!} 
+	              				@else
+                        <a class="btn" data-toggle="modal" data-target="#modal-lg"><img src="https://img.icons8.com/dotty/80/000000/home-button.png">Clock Out</a>
+                        @endif
+                        @endif
+                        <div class="modal fade" id="modal-lg">
+                          <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h4 class="modal-title">Attendance Out Note</h4>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                              </div>
+                              <div class="modal-body">
+                                {!! Form::open(array('route' => 'attendanceOut.store','method'=>'POST', 'class' => 'form-horizontal')) !!}
+                                @csrf
+                                <div class="form-group row">
+                                  <label for="inputEmail" class="col-sm-2 col-form-label">Note</label>
+                                  <div class="col-sm-10">
+                                    {!! Form::textarea('notes', null, array('placeholder' => 'Attendance Note','class' => 'form-control')) !!}
+                                  </div>
+                                  {!! Form::hidden('employee_id', $getEmployee->id, array('placeholder' => 'Attendance Note','class' => 'form-control')) !!}
+                                </div>
+                              </div>
+                              <div class="modal-footer justify-content-between">
+                                <button type="close" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button id="register" type="submit" class="btn btn-primary">Clock Out</button>
+                              </div>
+                              {!! Form::close() !!}
+                            </div>
+                          </div>
+                        </div>
 	              			</div>
-	              			<div class="col-md-6">
-	              				<p> In </p>
-	              				<p> Out </p>
+	              			<div class="col-md-8">
+	              				<p> In : @if(!empty($getAttendance->clock_in)){{date("d F Y H:i",strtotime($getAttendance->clock_in)) }}@endif</p>
+	              				<p> Out : @if(!empty($getAttendance->clock_out)){{date("d F Y H:i",strtotime($getAttendance->clock_out)) }}@endif</p>
 	              			</div>
 	              		</div>
+                    
               		</div>
               	</div>
             </div>
@@ -72,7 +114,7 @@ Better Work Indonesia | Home
               				<div class="active tab-pane" id="overview">
                         <strong><i class="fas fa-calendar-check mr-1"></i> Birthday</strong>
                         <p class="text-muted">
-                            10 January 1976
+                            {{date("d F Y",strtotime($getEmployee->date_of_birth)) }}
                         </p>
               					<strong><i class="fas fa-book mr-1"></i> Education</strong>
               					<p class="text-muted">
@@ -80,7 +122,7 @@ Better Work Indonesia | Home
                 				</p>
                 				<hr>
                 				<strong><i class="fas fa-map-marker-alt mr-1"></i> Home Address</strong>
-                				<p class="text-muted">Malibu, California</p>
+                				<p class="text-muted">{{ $getEmployee->address }}</p>
                 				<hr>
                 				<strong><i class="fas fa-pencil-alt mr-1"></i> Training & Certification</strong>
                 				<p class="text-muted">
@@ -96,7 +138,7 @@ Better Work Indonesia | Home
                       <div class="tab-pane" id="organization">
                         <strong><i class="fas fa-id-badge mr-1"></i> Employee ID</strong>
                         <p class="text-muted">
-                            030306
+                            {{ $getEmployee->employee_no }}
                         </p>
                         <strong><i class="fas fa-calendar-check mr-1"></i> Join Date</strong>
                         <p class="text-muted">

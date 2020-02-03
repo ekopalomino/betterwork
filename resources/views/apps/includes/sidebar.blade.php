@@ -18,6 +18,7 @@
 	    </div>
 	    <nav class="mt-2">
 	    	<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          @can('disable')
           <li class="nav-item {{set_open('dashboard.index') }}">
 	    			<a href="{{ route('dashboard.index') }}" class="nav-link {{set_active('dashboard.index') }}">
             	<i class="nav-icon fas fa-tachometer-alt"></i>
@@ -26,30 +27,31 @@
             	</p>
             </a>
           </li>
-          @if(\Route::current()->getName() == 'userHome.index')
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
+          @endcan
+          @if(\Route::is(['userHome.index','myLeave.index','myReimburs.index','myGrievance.index','myGrievance.create','myGrievance.edit','myGrievance.show']))
+          <li class="nav-item has-treeview {{set_open(['myLeave.index','myReimburs.index','myGrievance.index','myGrievance.create','myGrievance.edit','myGrievance.show']) }}">
+            <a href="#" class="nav-link {{set_active(['myLeave.index','myReimburs.index','myGrievance.index','myGrievance.create','myGrievance.edit','myGrievance.show']) }}">
               <i class="nav-icon fas fa-user"></i>
               <p>
                 My Menu
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
-            <ul class="nav nav-treeview">
+            <ul class="nav nav-treeview ">
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="#" class="nav-link ">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Update Data</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{ route('myLeave.index') }}" class="nav-link {{set_active('myLeave.index') }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Leave Request</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{ route('myGrievance.index') }}" class="nav-link {{set_active(['myGrievance.index','myGrievance.create','myGrievance.edit','myGrievance.show']) }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Grievance</p>
                 </a>
@@ -67,7 +69,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{ route('myReimburs.index') }}" class="nav-link {{set_active('myReimburs.index') }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Reimbursment</p>
                 </a>
@@ -273,7 +275,7 @@
             </ul>
           </li>
           @endif
-          @if(\Route::current()->getName() == 'grievance.index')
+          @if(\Route::is(['grievance.index','grievanceData.index','managementGrievance.index']))
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-edit"></i>
@@ -282,8 +284,8 @@
               </p>
             </a>
           </li>
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
+          <li class="nav-item has-treeview {{set_open(['grievanceData.index','managementGrievance.index']) }}">
+            <a href="#" class="nav-link {{set_active(['grievanceData.index','managementGrievance.index']) }}">
               <i class="nav-icon fas fa-user-shield"></i>
               <p>
                 Grievance Process
@@ -292,13 +294,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{ route('grievanceData.index') }}" class="nav-link {{set_active('grievanceData.index') }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Database</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{ route('managementGrievance.index') }}" class="nav-link {{set_active('managementGrievance.index') }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Management Respond</p>
                 </a>

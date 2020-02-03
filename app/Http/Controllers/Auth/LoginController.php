@@ -4,6 +4,7 @@ namespace iteos\Http\Controllers\Auth;
 
 use iteos\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Auth;
 
 class LoginController extends Controller
 {
@@ -26,7 +27,25 @@ class LoginController extends Controller
      * @var string
      */
     protected $redirectTo = '/apps/user-dashboard';
-
+    public function redirectTo(){
+    $role = Auth::user()->email; 
+        switch ($role) {
+            case 'heru.palomino@gmail.com':
+                    return '/apps/configuration';
+                break;
+            default:
+                    return '/apps/user-dashboard'; 
+                break;
+        }
+    }
+    /*public function redirectTo()
+    {
+        if ((Auth::user()->is_first_login == '1')) {
+            return redirect()->route('changePass.index');
+        } else {
+            return redirect()->route('userHome.index');
+        }
+    }*/
     /**
      * Create a new controller instance.
      *

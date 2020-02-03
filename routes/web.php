@@ -17,6 +17,8 @@ Route::get('/', function () {
 /*Development Routes*/
 Auth::routes(['register' => false]);
 Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
+	Route::get('change-password','Apps\DashboardController@changePasswordIndex')->name('changePass.index');
+	Route::post('change-password/store','Apps\DashboardController@changePasswd')->name('changePass.store');
 	/*Navbar Main Route*/
 	Route::get('user-dashboard','Apps\UserMenuController@index')->name('userHome.index');
 	Route::get('dashboard','Apps\DashboardController@index')->name('dashboard.index');
@@ -94,7 +96,25 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::get('human-resources/attendance/request','Apps\HumanResourcesController@requestIndex')->name('request.index');
 	Route::get('human-resources/appraisal','Apps\HumanResourcesController@appraisalIndex')->name('appraisal.index');
 
+	Route::get('grievance/database','Apps\GrievanceController@grievanceData')->name('grievanceData.index');
+	Route::get('grievance/management-respond','Apps\GrievanceController@managementData')->name('managementGrievance.index');
+
 	Route::get('accounting/bank-statement','Apps\AccountingController@bankIndex')->name('bank.index');
+
+	Route::post('my-menu/attendance-in','Apps\UserMenuController@clockIn')->name('attendanceIn.store');
+	Route::post('my-menu/attendance-out','Apps\UserMenuController@clockOut')->name('attendanceOut.store');
+	Route::get('my-menu/leave-request','Apps\UserMenuController@leaveIndex')->name('myLeave.index');
+	Route::post('my-menu/leave-request/create','Apps\UserMenuController@leaveRequest')->name('myLeave.store');
+	Route::get('my-menu/reimbursment','Apps\UserMenuController@reimbursIndex')->name('myReimburs.index');
+	Route::post('my-menu/reimbursment/create','Apps\UserMenuController@reimbursStore')->name('myReimburs.store');
+	Route::get('my-menu/grievance','Apps\UserMenuController@grievanceIndex')->name('myGrievance.index');
+	Route::get('my-menu/grievance/create','Apps\UserMenuController@grievanceCreate')->name('myGrievance.create');
+	Route::post('my-menu/reimbursment/store','Apps\UserMenuController@grievanceStore')->name('myGrievance.store');
+	Route::get('my-menu/grievance/edit/{id}','Apps\UserMenuController@grievanceEdit')->name('myGrievance.edit');
+	Route::post('my-menu/grievance/update/{id}','Apps\UserMenuController@grievanceUpdate')->name('myGrievance.update');
+	Route::get('my-menu/grievance/view/{id}','Apps\UserMenuController@grievanceShow')->name('myGrievance.show');
+	Route::post('my-menu/grievance/respond/{id}','Apps\UserMenuController@grievanceComment')->name('myGrievance.respond');
+	Route::post('my-menu/grievance/rate/{id}','Apps\UserMenuController@grievanceRate')->name('myGrievance.rate');
 });
 
 
