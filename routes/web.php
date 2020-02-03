@@ -96,6 +96,9 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::get('human-resources/attendance/request','Apps\HumanResourcesController@requestIndex')->name('request.index');
 	Route::get('human-resources/appraisal','Apps\HumanResourcesController@appraisalIndex')->name('appraisal.index');
 
+	Route::get('grievance/database','Apps\GrievanceController@grievanceData')->name('grievanceData.index');
+	Route::get('grievance/management-respond','Apps\GrievanceController@managementData')->name('managementGrievance.index');
+
 	Route::get('accounting/bank-statement','Apps\AccountingController@bankIndex')->name('bank.index');
 
 	Route::post('my-menu/attendance-in','Apps\UserMenuController@clockIn')->name('attendanceIn.store');

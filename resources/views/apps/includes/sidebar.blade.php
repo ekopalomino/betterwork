@@ -275,7 +275,7 @@
             </ul>
           </li>
           @endif
-          @if(\Route::current()->getName() == 'grievance.index')
+          @if(\Route::is(['grievance.index','grievanceData.index','managementGrievance.index']))
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-edit"></i>
@@ -284,8 +284,8 @@
               </p>
             </a>
           </li>
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
+          <li class="nav-item has-treeview {{set_open(['grievanceData.index','managementGrievance.index']) }}">
+            <a href="#" class="nav-link {{set_active(['grievanceData.index','managementGrievance.index']) }}">
               <i class="nav-icon fas fa-user-shield"></i>
               <p>
                 Grievance Process
@@ -294,13 +294,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{ route('grievanceData.index') }}" class="nav-link {{set_active('grievanceData.index') }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Database</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{ route('managementGrievance.index') }}" class="nav-link {{set_active('managementGrievance.index') }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Management Respond</p>
                 </a>
