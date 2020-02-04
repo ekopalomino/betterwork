@@ -18,4 +18,9 @@ class KnowledgeBase extends Model
     {
     	return $this->belongsTo(User::class,'created_by');
     }
+
+    public function Categories()
+    {
+        return $this->belongsTo(DocumentCategory::class,'category_id');
+    }
 }

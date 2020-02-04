@@ -643,32 +643,143 @@ class HumanResourcesController extends Controller
 
     public function knowledgeIndex()
     {
-        return view('apps.pages.bulletinIndex');
+        $data = KnowledgeBase::orderBy('updated_at','DESC')->get();
+
+        return view('apps.pages.knowledgeIndex',compact('data'));
     }
 
     public function knowledgeCreate()
     {
-        return view('apps.input.bulletin');
+        return view('apps.input.knowledge');
     }
 
     public function knowledgeStore(Request $request)
     {
+        $this->validate($request, [
+            'title' => 'required',
+            'content' => 'required',
+            'file' => 'file',
+        ]);
 
+        $content = $request->input('content');
+        $dom = new\DomDocument();
+        $dom->loadHtml($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        $images = $dom->getElementsByTagName('img');
+        foreach($images as $k => $img){
+            $isi = $img->getAttribute('src');
+            list($type, $data) = explode(';', $isi);
+            list(, $isi) = explode(',', $isi);
+            $isi = base64_decode($isi);
+            $image_name = "/bulletin/" . time().$k.'.png';
+            $path = public_path() . $image_name;
+            file_put_contents($path, $isi);
+            $access = "http://betterwork.local/public".$image_name;
+            $img->removeAttribute('src');
+            $img->setAttribute('src', $access);
+        }
+        $content = $dom->saveHtml();
+
+        if($request->hasFile('file')) {
+            $uploadedFile = $request->file('file');
+            $path = $uploadedFile->store('knowledgebase');
+
+            $data = KnowledgeBase::create([
+                'title' => $request->input('title'),
+                'content' => $content,
+                'file' => $path,
+                'created_by' => Auth()->user()->id,
+            ]);
+        } else {
+            $data = KnowledgeBase::create([
+                'title' => $request->input('title'),
+                'content' => $content,
+                'created_by' => Auth()->user()->id,
+            ]);
+        }
+        
+        return redirect()->route('knowledge.index');
+    }
+
+    public function knowledgeShow($id)
+    {
+        $data = KnowledgeBase::find($id);
+
+        return view('apps.show.knowledge',compact('data'));
     }
 
     public function knowledgeEdit($id)
     {
+        $data = KnowledgeBase::find($id);
 
+        return view('apps.edit.knowledge',compact('data'));
     }
 
     public function knowledgeUpdate(Request $request,$id)
     {
+        $this->validate($request, [
+            'title' => 'required',
+            'content' => 'required',
+            'file' => 'file',
+        ]);
 
+        $content = $request->input('content');
+         libxml_use_internal_errors(true);
+        $dom = new\DomDocument();   
+        $dom->loadHTML(
+            mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8'),
+            LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD
+        );
+
+        $images = $dom->getElementsByTagName('img');
+
+        foreach ($images as $count => $image) {
+            $src = $image->getAttribute('src');
+
+            if (preg_match('/data:image/', $src)) {
+                preg_match('/data:image\/(?<mime>.*?)\;/', $src, $groups);
+                $mimeType = $groups['mime'];
+
+                $path = '/bulletin/' . uniqid('', true) . '.' . $mimeType;
+
+                Image::make($src)
+                    ->resize(750, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                    })
+                    ->encode($mimeType, 80)
+                    ->save(public_path($path));
+
+                $image->removeAttribute('src');
+                $image->setAttribute('src', asset($path));
+            }
+        }
+        $content = $dom->saveHTML();
+
+        if($request->hasFile('file')) {
+            $data = KnowledgeBase::find($id);
+            $uploadedFile = $request->file('file');
+            $path = $uploadedFile->store('knowledgebase');
+            $data->update([
+                'title' => $request->input('title'),
+                'content' => $content,
+                'file' => $path,
+            ]);
+        } else {
+            $data = KnowledgeBase::find($id);
+            $data->update([
+                'title' => $request->input('title'),
+                'content' => $content,
+            ]);
+        }
+        
+        return redirect()->route('knowledge.index');
     }
 
     public function knowledgeDelete($id)
     {
+        $data = KnowledgeBase::find($id);
+        $data->delete();
 
+        return redirect()->route('knowledge.index');
     }
 
 

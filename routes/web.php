@@ -111,6 +111,7 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::get('human-resources/knowledgebase','Apps\HumanResourcesController@knowledgeIndex')->name('knowledge.index');
 	Route::get('human-resources/knowledgebase/create','Apps\HumanResourcesController@knowledgeCreate')->name('knowledge.create');
 	Route::post('human-resources/knowledgebase/store','Apps\HumanResourcesController@knowledgeStore')->name('knowledge.store');
+	Route::get('human-resources/knowledgebase/show/{id}','Apps\HumanResourcesController@knowledgeShow')->name('knowledge.show');
 	Route::get('human-resources/knowledgebase/edit/{id}','Apps\HumanResourcesController@knowledgeEdit')->name('knowledge.edit');
 	Route::post('human-resources/knowledgebase/update/{id}','Apps\HumanResourcesController@bulletinUpdate')->name('knowledge.update');
 	Route::post('human-resources/knowledgebase/destroy/{id}','Apps\HumanResourcesController@knowledgeDelete')->name('knowledge.destroy');

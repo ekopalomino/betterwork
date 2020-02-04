@@ -180,7 +180,7 @@
             </ul>
           </li>
           @endif
-          @if(\Route::is(['hr.index','employee.index','employee.create','employee.edit','attendance.index','request.index','appraisal.index','salary.index','bulletin.index','knowledge.index','bulletin.create','bulletin.edit','bulletin.show']))
+          @if(\Route::is(['hr.index','employee.index','employee.create','employee.edit','attendance.index','request.index','appraisal.index','salary.index','bulletin.index','knowledge.index','bulletin.create','bulletin.edit','bulletin.show','knowledge.create','knowledge.edit','knowledge.show']))
           <li class="nav-item {{set_open(['employee.index','employee.create','employee.edit']) }}">
             <a href="{{ route('employee.index') }}" class="nav-link {{set_active('employee.index','employee.create','employee.edit') }}">
               <i class="nav-icon fas fa-users-cog"></i>
@@ -251,8 +251,8 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item has-treeview {{set_open(['bulletin.index','knowledge.index','bulletin.create','bulletin.edit','bulletin.show']) }}">
-            <a href="#" class="nav-link {{set_active(['bulletin.index','knowledge.index','bulletin.create','bulletin.edit','bulletin.show']) }}">
+          <li class="nav-item has-treeview {{set_open(['bulletin.index','knowledge.index','bulletin.create','bulletin.edit','bulletin.show','knowledge.create','knowledge.edit','knowledge.show']) }}">
+            <a href="#" class="nav-link {{set_active(['bulletin.index','knowledge.index','bulletin.create','bulletin.edit','bulletin.show','knowledge.create','knowledge.edit','knowledge.show']) }}">
               <i class="nav-icon fas fa-file-alt"></i>
               <p>
                 Bulletin Board
@@ -260,14 +260,14 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
-              <li class="nav-item {{set_open(['bulletin.index','bulletin.create']) }}">
+              <li class="nav-item {{set_open(['bulletin.index','bulletin.create','bulletin.edit','bulletin.show']) }}">
                 <a href="{{ route('bulletin.index') }}" class="nav-link {{set_active(['bulletin.index','bulletin.create','bulletin.edit','bulletin.show']) }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Employee Bulletin</p>
                 </a>
               </li>
-              <li class="nav-item {{set_open(['knowledge.index']) }}">
-                <a href="{{ route('knowledge.index') }}" class="nav-link {{set_active('knowledge.index') }}">
+              <li class="nav-item {{set_open(['knowledge.index','knowledge.create','knowledge.edit','knowledge.show']) }}">
+                <a href="{{ route('knowledge.index') }}" class="nav-link {{set_active(['knowledge.index','knowledge.create','knowledge.edit','knowledge.show']) }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Knowledge Base</p>
                 </a>
