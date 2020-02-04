@@ -15,6 +15,9 @@ use iteos\Models\EmployeePosition;
 use iteos\Models\Location;
 use iteos\Models\EmployeeSalary;
 use iteos\Models\Salary;
+use iteos\Models\Bulletin;
+use iteos\Models\KnowledgeBase;
+use iteos\Models\DocumentCategory;
 use Hash;
 use Auth;
 use DB;
@@ -245,7 +248,6 @@ class HumanResourcesController extends Controller
         if($request->has('service')) {
             $this->validate($request, [
                 'position' => 'required',
-                'report_to' => 'required',
                 'from' => 'required|date',
                 'job_title' => 'required',
                 'salary' => 'required',
@@ -522,6 +524,154 @@ class HumanResourcesController extends Controller
     {
         return view('apps.pages.appraisalIndex');
     }
+
+    public function bulletinIndex()
+    {
+        $data = Bulletin::orderBy('updated_at','DESC')->get();
+
+        return view('apps.pages.bulletinIndex',compact('data'));
+    }
+
+    public function bulletinCreate()
+    {
+        return view('apps.input.bulletin');
+    }
+
+    public function bulletinStore(Request $request)
+    {
+        $this->validate($request, [
+            'title' => 'required',
+            'content' => 'required',
+        ]);
+
+        $content = $request->input('content');
+        $dom = new\DomDocument();
+        $dom->loadHtml($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        $images = $dom->getElementsByTagName('img');
+        foreach($images as $k => $img){
+            $isi = $img->getAttribute('src');
+            list($type, $data) = explode(';', $isi);
+            list(, $isi) = explode(',', $isi);
+            $isi = base64_decode($isi);
+            $image_name = "/bulletin/" . time().$k.'.png';
+            $path = public_path() . $image_name;
+            file_put_contents($path, $isi);
+            $access = "http://betterwork.local/public".$image_name;
+            $img->removeAttribute('src');
+            $img->setAttribute('src', $access);
+        }
+        $content = $dom->saveHtml();
+
+        $data = Bulletin::create([
+            'title' => $request->input('title'),
+            'content' => $content,
+            'created_by' => Auth()->user()->id,
+        ]);
+        
+        return redirect()->route('bulletin.index');
+    }
+
+    public function bulletinShow($id)
+    {
+        $data = Bulletin::find($id);
+
+        return view('apps.show.bulletin');
+    }
+
+    public function bulletinEdit($id)
+    {
+        $data = Bulletin::find($id);
+
+        return view('apps.edit.bulletin',compact('data'));
+    }
+
+    public function bulletinUpdate(Request $request,$id)
+    {
+        $this->validate($request, [
+            'title' => 'required',
+            'content' => 'required',
+        ]);
+
+        $content = $request->input('content');
+         libxml_use_internal_errors(true);
+        $dom = new\DomDocument();   
+        $dom->loadHTML(
+            mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8'),
+            LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD
+        );
+
+        $images = $dom->getElementsByTagName('img');
+
+        foreach ($images as $count => $image) {
+            $src = $image->getAttribute('src');
+
+            if (preg_match('/data:image/', $src)) {
+                preg_match('/data:image\/(?<mime>.*?)\;/', $src, $groups);
+                $mimeType = $groups['mime'];
+
+                $path = '/bulletin/' . uniqid('', true) . '.' . $mimeType;
+
+                Image::make($src)
+                    ->resize(750, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                    })
+                    ->encode($mimeType, 80)
+                    ->save(public_path($path));
+
+                $image->removeAttribute('src');
+                $image->setAttribute('src', asset($path));
+            }
+        }
+        $content = $dom->saveHTML();
+
+        $data = Bulletin::find($id);
+        $data->update([
+            'title' => $request->input('title'),
+            'content' => $content,
+        ]);
+
+        return redirect()->route('bulletin.index');
+    }
+
+    public function bulletinDelete($id)
+    {
+        $data = Bulletin::find($id);
+        $data->delete();
+
+        return redirect()->route('bulletin.index');
+    }
+
+    public function knowledgeIndex()
+    {
+        return view('apps.pages.bulletinIndex');
+    }
+
+    public function knowledgeCreate()
+    {
+        return view('apps.input.bulletin');
+    }
+
+    public function knowledgeStore(Request $request)
+    {
+
+    }
+
+    public function knowledgeEdit($id)
+    {
+
+    }
+
+    public function knowledgeUpdate(Request $request,$id)
+    {
+
+    }
+
+    public function knowledgeDelete($id)
+    {
+
+    }
+
+
 
     public function salaryIndex()
     {

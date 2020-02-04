@@ -100,6 +100,21 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::get('human-resources/employee/service/edit/{id}','Apps\HumanResourcesController@serviceEdit')->name('employeeService.edit');
 	Route::post('human-resources/employee/service/update/{id}','Apps\HumanResourcesController@serviceUpdate')->name('employeeService.update');
 	
+	Route::get('human-resources/bulletin','Apps\HumanResourcesController@bulletinIndex')->name('bulletin.index');
+	Route::get('human-resources/bulletin/create','Apps\HumanResourcesController@bulletinCreate')->name('bulletin.create');
+	Route::post('human-resources/bulletin/store','Apps\HumanResourcesController@bulletinStore')->name('bulletin.store');
+	Route::get('human-resources/bulletin/show/{id}','Apps\HumanResourcesController@bulletinShow')->name('bulletin.show');
+	Route::get('human-resources/bulletin/edit/{id}','Apps\HumanResourcesController@bulletinEdit')->name('bulletin.edit');
+	Route::post('human-resources/bulletin/update/{id}','Apps\HumanResourcesController@knowledgeUpdate')->name('bulletin.update');
+	Route::post('human-resources/bulletin/destroy/{id}','Apps\HumanResourcesController@bulletinDelete')->name('bulletin.destroy');
+
+	Route::get('human-resources/knowledgebase','Apps\HumanResourcesController@knowledgeIndex')->name('knowledge.index');
+	Route::get('human-resources/knowledgebase/create','Apps\HumanResourcesController@knowledgeCreate')->name('knowledge.create');
+	Route::post('human-resources/knowledgebase/store','Apps\HumanResourcesController@knowledgeStore')->name('knowledge.store');
+	Route::get('human-resources/knowledgebase/edit/{id}','Apps\HumanResourcesController@knowledgeEdit')->name('knowledge.edit');
+	Route::post('human-resources/knowledgebase/update/{id}','Apps\HumanResourcesController@bulletinUpdate')->name('knowledge.update');
+	Route::post('human-resources/knowledgebase/destroy/{id}','Apps\HumanResourcesController@knowledgeDelete')->name('knowledge.destroy');
+
 	Route::get('human-resources/attendance','Apps\HumanResourcesController@attendanceIndex')->name('attendance.index');
 	Route::get('human-resources/attendance/request','Apps\HumanResourcesController@requestIndex')->name('request.index');
 	Route::get('human-resources/appraisal','Apps\HumanResourcesController@appraisalIndex')->name('appraisal.index');
