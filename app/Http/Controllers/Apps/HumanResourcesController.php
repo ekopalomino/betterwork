@@ -29,7 +29,7 @@ class HumanResourcesController extends Controller
 
     public function employeeIndex()
     {
-        $data = Employee::orderBy('employee_no','ASC')->paginate(3);
+        $data = Employee::orderBy('employee_no','ASC')->paginate(6);
         
     	return view('apps.pages.employeeIndex',compact('data'));
     }
@@ -56,6 +56,7 @@ class HumanResourcesController extends Controller
                 'address' => 'required',
                 'mobile' => 'required|numeric',
                 'email' => 'required|email:rfc,dns|unique:employees,email',
+                'contract_status' => 'required',
                 'picture' => 'required|image'
             ]);
 
@@ -70,7 +71,8 @@ class HumanResourcesController extends Controller
             ->move($destinationPath, $filename);
 
             $input = [
-                'employee_no' => $request->input('employee_no'), 
+                'employee_no' => $request->input('employee_no'),
+                'contract_status' => $request->input('contract_status'), 
                 'first_name' => $request->input('first_name'),
                 'last_name' => $request->input('last_name'),
                 'address' => $request->input('address'),
@@ -99,6 +101,7 @@ class HumanResourcesController extends Controller
                 'name' => $name,
                 'email' => $request->input('email'),
                 'password' => $encryptPass,
+                'avatar' => $result->picture,
             ]);
 
             return redirect()->route('employee.index');

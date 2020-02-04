@@ -50,6 +50,14 @@ Better Work Indonesia | Create New Employee
 			    					{!! Form::text('employee_no', null, array('placeholder' => 'Employee ID','class' => 'form-control')) !!}
 			    				</div>
 			    				<div class="form-group">
+			    					<label for="maritalStatus">Employee Status</label>
+			    					<select name="contract_status" class="form-control">
+                          				<option value="0">Please Select</option>
+						                <option value="c0bfb25c-b965-4972-95fd-ed5803318d93">Contract</option>
+						                <option value="2e9731fd-6544-44a1-b832-aab293e8804a">Permanent</option>
+						            </select>
+			    				</div>
+			    				<div class="form-group">
 			    					<label for="firstName">First Name</label>
 			    					{!! Form::text('first_name', null, array('placeholder' => 'First Name','class' => 'form-control')) !!}
 			    				</div>

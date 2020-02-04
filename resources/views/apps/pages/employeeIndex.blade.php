@@ -55,7 +55,6 @@ Better Work Indonesia | Human Resources
 	                	<div class="card-footer">
 	                  		<div class="text-right">
 	                  			<a class="btn btn-xs btn-success" href="{{ route('employee.edit',$employee->id) }}" title="Edit Data" ><i class="fa fa-edit"></i></a>
-	                  			<a class="btn btn-xs btn-success modalMd" href="#" value="" title="Edit Data" data-toggle="modal" data-target="#modalMd"><i class="fa fa-edit"></i></a>
 	                  			{!! Form::open(['method' => 'POST','route' => ['employee.destroy', $employee->id],'style'=>'display:inline','onsubmit' => 'return ConfirmDelete()']) !!}
                                 {!! Form::button('<i class="fas fa-user-slash"></i>',['type'=>'submit','class' => 'btn btn-xs btn-danger','title'=>'Suspend User']) !!}
                                 {!! Form::close() !!}
