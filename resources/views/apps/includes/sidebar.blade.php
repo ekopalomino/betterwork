@@ -180,7 +180,7 @@
             </ul>
           </li>
           @endif
-          @if(\Route::is(['hr.index','employee.index','employee.create','employee.edit','attendance.index','request.index','appraisal.index','salary.index','bulletin.index','knowledge.index','bulletin.create','bulletin.edit','bulletin.show','knowledge.create','knowledge.edit','knowledge.show']))
+          @if(\Route::is(['hr.index','employee.index','employee.create','employee.edit','attendance.index','request.index','appraisal.index','salary.index','bulletin.index','knowledge.index','bulletin.create','bulletin.edit','bulletin.show','knowledge.create','knowledge.edit','knowledge.show','attendance.search']))
           <li class="nav-item {{set_open(['employee.index','employee.create','employee.edit']) }}">
             <a href="{{ route('employee.index') }}" class="nav-link {{set_active('employee.index','employee.create','employee.edit') }}">
               <i class="nav-icon fas fa-users-cog"></i>
@@ -189,8 +189,8 @@
               </p>
             </a>
           </li>
-          <li class="nav-item has-treeview {{set_open(['attendance.index','request.index']) }}">
-            <a href="#" class="nav-link {{set_active(['attendance.index','request.index']) }}">
+          <li class="nav-item has-treeview {{set_open(['attendance.index','request.index','attendance.search']) }}">
+            <a href="#" class="nav-link {{set_active(['attendance.index','request.index','attendance.search']) }}">
               <i class="nav-icon fas fa-user-clock"></i>
               <p>
                 Attendance
@@ -199,7 +199,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item {{set_open(['attendance.index']) }}">
-                <a href="{{ route('attendance.index') }}" class="nav-link {{set_active('attendance.index') }}">
+                <a href="{{ route('attendance.index') }}" class="nav-link {{set_active(['attendance.index','attendance.search']) }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Employee Attendance</p>
                 </a>

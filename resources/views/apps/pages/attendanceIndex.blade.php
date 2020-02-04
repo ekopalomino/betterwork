@@ -21,13 +21,17 @@ Better Work Indonesia | Employee Attendance
 		<div class="col-12">
 			<div class="card">
 				<div class="card-header">
-          <form>
+          {!! Form::open(array('route' => 'attendance.search','method'=>'POST')) !!}
+          @csrf
             <div class="row">
-              <div class="col-3">
-                <input type="text" class="form-control" id="empolyeeID" placeholder="Employee ID">
+              <div class="col-2">
+                <input type="text" class="form-control" id="empolyeeID" name="employee_id" placeholder="Employee ID">
               </div>
-              <div class="col-3">
-                <input type="text" class="form-control" id="employeeName" placeholder="Employee Name">
+              <div class="col-2">
+                <input type="text" class="form-control" id="employeeFirstName" name="first_name" placeholder="Employee First Name">
+              </div>
+              <div class="col-2">
+                <input type="text" class="form-control" id="employeeLastName" name="last_name" placeholder="Employee Last Name">
               </div>
               <div class="col-3">
                 <div class="input-group">
@@ -36,14 +40,15 @@ Better Work Indonesia | Employee Attendance
                       <i class="far fa-calendar-alt"></i>
                     </span>
                   </div>
-                  <input type="text" class="form-control float-right" id="reservation">
+                  <input type="text" name="date_range" class="form-control float-right" id="reservation">
                 </div>
               </div>
               <div class="col-3">
-                <button type="button" class="btn btn-primary">Search</button>
+                <button type="submit" class="btn btn-primary">Search</button>
+                <a button type="button" class="btn btn-danger" href="{{ route('attendance.index') }}">Cancel</a>
               </div>
             </div>
-          </form>
+          {!! Form::close() !!}
         </div>
         <div class="card-body">
           <table id="example2" class="table table-bordered table-hover">
@@ -60,16 +65,18 @@ Better Work Indonesia | Employee Attendance
               </tr>
             </thead>
             <tbody>
+              @foreach($data as $key=>$value)
               <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>{{ $key+1 }}</td>
+                <td>{{ $value->Employees->employee_no }}</td>
+                <td>{{ $value->Employees->first_name }} {{ $value->Employees->last_name }}</td>
+                <td>{{date("d F Y",strtotime($value->created_at)) }}</td>
+                <td>{{date("H:i",strtotime($value->clock_in)) }}</td>
+                <td>{{date("H:i",strtotime($value->clock_out)) }}</td>
+                <td>{{ $value->notes }}</td>
+                <td>{{ $value->Statuses->name }}</td>
               </tr>
+              @endforeach
             </tbody>
           </table>
       </div>

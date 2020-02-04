@@ -12,6 +12,8 @@ use iteos\Models\EmployeeTraining;
 use iteos\Models\EmployeeTrainingFile;
 use iteos\Models\EmployeeService;
 use iteos\Models\EmployeePosition;
+use iteos\Models\EmployeeAttendance;
+use iteos\Models\EmployeeReimbursment;
 use iteos\Models\Location;
 use iteos\Models\EmployeeSalary;
 use iteos\Models\Salary;
@@ -21,6 +23,7 @@ use iteos\Models\DocumentCategory;
 use Hash;
 use Auth;
 use DB;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Input;
 
 class HumanResourcesController extends Controller
@@ -512,7 +515,29 @@ class HumanResourcesController extends Controller
 
     public function attendanceIndex()
     {
-    	return view('apps.pages.attendanceIndex');
+        $data = EmployeeAttendance::orderBy('updated_at','DESC')->get();
+
+    	return view('apps.pages.attendanceIndex',compact('data'));
+    }
+
+    public function attendanceSearch(Request $request)
+    {
+        $empID = $request->input('employee_id');
+        $firstName = $request->input('first_name');
+        $lastName = $request->input('last_name');
+        $dates = $request->input('date_range');
+        $dateRange = explode('-',$dates);
+        $startDate = Carbon::parse($dateRange[0]);
+        $endDate = Carbon::parse($dateRange[1]);
+
+        $data = EmployeeAttendance::join('employees','employees.id','employee_attendances.employee_id')
+                                    ->where('employees.employee_no',$empID)
+                                    ->orWhere('employees.first_name',$firstName)
+                                    ->orWhere('employees.last_name',$lastName)
+                                    ->orWhere('employee_attendances.created_at','>=',$startDate)
+                                    ->where('employee_attendances.created_at','<=',$endDate)
+                                    ->get();
+        return view('apps.pages.attendanceIndex',compact('data'));
     }
 
     public function requestIndex()
