@@ -15,10 +15,16 @@ class EmployeeService extends Model
     	'to',
     	'salary',
     	'contract',
+        'is_active',
     ];
 
     public function Parent()
     {
         return $this->belongsTo(Employee::class);
+    }
+
+    public function Reporting()
+    {
+        return $this->belongsTo(Employee::class,'report_to');
     }
 }

@@ -10,7 +10,7 @@
     <div class="sidebar">
     	<div class="user-panel mt-3 pb-3 mb-3 d-flex">
 	        <div class="image">
-	           <img src="{{ asset('public/bower_components/admin-lte/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
+	           <img src="http://betterwork.local/public/employees/{{Auth::user()->avatar}}" class="img-circle elevation-2" alt="User Image">
 	        </div>
 	        <div class="info">
 	           <a href="{{ route('userHome.index') }}" class="d-block">{{{ isset(Auth::user()->name) ? Auth::user()->name : Auth::user()->email }}}</a>
@@ -180,7 +180,7 @@
             </ul>
           </li>
           @endif
-          @if(\Route::is(['hr.index','employee.index','employee.create','employee.edit','attendance.index','request.index','appraisal.index']))
+          @if(\Route::is(['hr.index','employee.index','employee.create','employee.edit','attendance.index','request.index','appraisal.index','salary.index','bulletin.index','knowledge.index','bulletin.create','bulletin.edit','bulletin.show','knowledge.create','knowledge.edit','knowledge.show','attendance.search']))
           <li class="nav-item {{set_open(['employee.index','employee.create','employee.edit']) }}">
             <a href="{{ route('employee.index') }}" class="nav-link {{set_active('employee.index','employee.create','employee.edit') }}">
               <i class="nav-icon fas fa-users-cog"></i>
@@ -189,8 +189,8 @@
               </p>
             </a>
           </li>
-          <li class="nav-item has-treeview {{set_open(['attendance.index','request.index']) }}">
-            <a href="#" class="nav-link {{set_active(['attendance.index','request.index']) }}">
+          <li class="nav-item has-treeview {{set_open(['attendance.index','request.index','attendance.search']) }}">
+            <a href="#" class="nav-link {{set_active(['attendance.index','request.index','attendance.search']) }}">
               <i class="nav-icon fas fa-user-clock"></i>
               <p>
                 Attendance
@@ -199,7 +199,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item {{set_open(['attendance.index']) }}">
-                <a href="{{ route('attendance.index') }}" class="nav-link {{set_active('attendance.index') }}">
+                <a href="{{ route('attendance.index') }}" class="nav-link {{set_active(['attendance.index','attendance.search']) }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Employee Attendance</p>
                 </a>
@@ -228,8 +228,31 @@
               </p>
             </a>
           </li>
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
+          <li class="nav-item has-treeview {{set_open(['salary.index']) }}">
+            <a href="#" class="nav-link {{set_active(['salary.index']) }}">
+              <i class="nav-icon fas fa-file-alt"></i>
+              <p>
+                HR Finance
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item {{set_open(['salary.index']) }}">
+                <a href="{{ route('salary.index') }}" class="nav-link {{set_active('salary.index') }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Payroll Process</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Reimbursment</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item has-treeview {{set_open(['bulletin.index','knowledge.index','bulletin.create','bulletin.edit','bulletin.show','knowledge.create','knowledge.edit','knowledge.show']) }}">
+            <a href="#" class="nav-link {{set_active(['bulletin.index','knowledge.index','bulletin.create','bulletin.edit','bulletin.show','knowledge.create','knowledge.edit','knowledge.show']) }}">
               <i class="nav-icon fas fa-file-alt"></i>
               <p>
                 Bulletin Board
@@ -237,14 +260,14 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="#" class="nav-link">
+              <li class="nav-item {{set_open(['bulletin.index','bulletin.create','bulletin.edit','bulletin.show']) }}">
+                <a href="{{ route('bulletin.index') }}" class="nav-link {{set_active(['bulletin.index','bulletin.create','bulletin.edit','bulletin.show']) }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Employee Bulletin</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
+              <li class="nav-item {{set_open(['knowledge.index','knowledge.create','knowledge.edit','knowledge.show']) }}">
+                <a href="{{ route('knowledge.index') }}" class="nav-link {{set_active(['knowledge.index','knowledge.create','knowledge.edit','knowledge.show']) }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Knowledge Base</p>
                 </a>
@@ -275,7 +298,7 @@
             </ul>
           </li>
           @endif
-          @if(\Route::is(['grievance.index','grievanceData.index','managementGrievance.index']))
+          @if(\Route::is(['grievance.index','grievanceData.index','managementGrievance.index','grievanceData.edit','grievanceData.show','managementGrievance.show']))
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-edit"></i>
@@ -284,8 +307,8 @@
               </p>
             </a>
           </li>
-          <li class="nav-item has-treeview {{set_open(['grievanceData.index','managementGrievance.index']) }}">
-            <a href="#" class="nav-link {{set_active(['grievanceData.index','managementGrievance.index']) }}">
+          <li class="nav-item has-treeview {{set_open(['grievanceData.index','managementGrievance.index','grievanceData.edit','grievanceData.show','managementGrievance.show']) }}">
+            <a href="#" class="nav-link {{set_active(['grievanceData.index','managementGrievance.index','grievanceData.edit','grievanceData.show','managementGrievance.show']) }}">
               <i class="nav-icon fas fa-user-shield"></i>
               <p>
                 Grievance Process
@@ -294,13 +317,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{ route('grievanceData.index') }}" class="nav-link {{set_active('grievanceData.index') }}">
+                <a href="{{ route('grievanceData.index') }}" class="nav-link {{set_active(['grievanceData.index','grievanceData.edit','grievanceData.show']) }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Database</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('managementGrievance.index') }}" class="nav-link {{set_active('managementGrievance.index') }}">
+                <a href="{{ route('managementGrievance.index') }}" class="nav-link {{set_active(['managementGrievance.index','managementGrievance.show']) }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Management Respond</p>
                 </a>

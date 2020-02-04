@@ -27,35 +27,28 @@ Better Work Indonesia | Employee Request Approval
                 <th>No</th>
                 <th>Employee ID</th>
                 <th>Employee Name</th>
-                <th>Date</th>
+                <th>Date From</th>
+                <th>Date To</th>
                 <th>Request Type</th>
-                <th>Leave Remaining</th>
                 <th>Status</th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
+              @foreach($data as $key=>$value)
               <tr>
-                <td>1</td>
-                <td>1121101</td>
-                <td>John Doe</td>
-                <td>14 December 2019</td>
-                <td>Full Day Leave</td>
-                <td>7</td>
-                <td>Submit</td>
+                <td>{{ $key+1 }}</td>
+                <td>{{ $value->Employees->employee_no }}</td>
+                <td>{{ $value->Employees->first_name }} {{ $value->Employees->last_name }}</td>
+                <td>{{date("d F Y H:i",strtotime($value->leave_start)) }}</td>
+                <td>{{date("d F Y H:i",strtotime($value->leave_end)) }}</td>
+                <td>{{ $value->Types->leave_name }}</td>
+                <td>{{ $value->Statuses->name }}</td>
                 <td>
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Action
-                    </button>
-                    <div class="dropdown-menu" role="menu">
-                      <a class="dropdown-item" href="#">View Request</a>
-                      <a class="dropdown-item" href="#">Approve Request</a>
-                      <a class="dropdown-item" href="#">Reject Request</a>
-                    </div>
-                  </div>
+                    <a class="btn btn-danger btn-sm modalMd" href="#" value="{{ action('Apps\HumanResourcesController@requestShow',['id'=>$value->id]) }}" data-toggle="modal" data-target="#modalMd"><i class="fas fa-search"></i>Show Data</a>
                 </td>
               </tr>
+              @endforeach
             </tbody>
           </table>
       </div>

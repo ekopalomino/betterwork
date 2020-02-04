@@ -22,17 +22,26 @@ Better Work Indonesia | Human Resources
     <div class="card card-solid">
         <div class="card-body pb-0">
             <div class="row d-flex align-items-stretch">
+            	@foreach($data as $key=>$employee)
                 <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch">
-                	@foreach($data as $key=>$employee)
                 	<div class="card bg-light">
                 		<div class="card-header text-muted border-bottom-0">
-                  		Digital Strategist
+                		@foreach($employee->Services as $service)
+                  		{{$service->grade}}
+                  		@endforeach
                 		</div>
 	                	<div class="card-body pt-0">
 	                  		<div class="row">
 	                    		<div class="col-7">
 	                      			<h2 class="lead"><b>{{$employee->first_name}} {{$employee->last_name}}</b></h2>
-	                      			<p class="text-muted text-sm"><b>Available: <span class="badge bg-danger">On Leave</span></b></p>
+	                      			<p class="text-muted text-sm"><b>Available: 
+	                      				@if(($employee->availability) == '2207ac0e-71a0-41ae-897b-b49efb016d6e')
+	                      					<span class="badge bg-success">{{$employee->Available->name}}</span>
+	                      				@else
+	                      					<span class="badge bg-danger">{{$employee->Available->name}}</span>
+	                      				@endif
+	                      				</b>
+	                      			</p>
 	                      			<ul class="ml-4 mb-0 fa-ul text-muted">
 	                        			<li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Address: {{ $employee->address }}</li>
 	                        			<li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Mobile #: {{ $employee->mobile }}</li>
@@ -45,20 +54,15 @@ Better Work Indonesia | Human Resources
 	                	</div>
 	                	<div class="card-footer">
 	                  		<div class="text-right">
-	                  			<a href="#" class="btn btn-sm btn-primary">
-	                      			<i class="fas fa-user"></i> View Profile
-	                    		</a>
-	                  			<a href="{{ route('employee.edit',$employee->id) }}" class="btn btn-sm btn-info">
-	                      			<i class="fas fa-edit"></i> Edit Profile
-	                    		</a>
-	                    		{!! Form::open(['method' => 'POST','route' => ['employee.destroy', $employee->id],'onsubmit' => 'return ConfirmDelete()']) !!}
-                            	{!! Form::button('<i class="fas fa-user"></i> Delete Profile',['type'=>'submit','class' => 'btn btn-sm btn-danger']) !!}
-                            	{!! Form::close() !!}
+	                  			<a class="btn btn-xs btn-success" href="{{ route('employee.edit',$employee->id) }}" title="Edit Data" ><i class="fa fa-edit"></i></a>
+	                  			{!! Form::open(['method' => 'POST','route' => ['employee.destroy', $employee->id],'style'=>'display:inline','onsubmit' => 'return ConfirmDelete()']) !!}
+                                {!! Form::button('<i class="fas fa-user-slash"></i>',['type'=>'submit','class' => 'btn btn-xs btn-danger','title'=>'Suspend User']) !!}
+                                {!! Form::close() !!}
 	                  		</div>
 	                	</div>
 	                </div>
-	                @endforeach
-              	</div>
+	            </div>
+              	@endforeach
             </div>
    		</div>
         <div class="card-footer">
@@ -68,4 +72,16 @@ Better Work Indonesia | Human Resources
         </div>
     </div>
 </section>	
+@endsection
+@section('footer.scripts')
+<script>
+    function ConfirmDelete()
+    {
+    var x = confirm("User Akan Dihapus?");
+    if (x)
+        return true;
+    else
+        return false;
+    }
+</script>
 @endsection

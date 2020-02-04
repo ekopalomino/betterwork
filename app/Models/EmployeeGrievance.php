@@ -32,6 +32,11 @@ class EmployeeGrievance extends Model
     	return $this->belongsTo(Status::class,'status_id');
     }
 
+    public function Categories()
+    {
+        return $this->belongsTo(GrievanceCategory::class,'type_id');
+    }
+
     public function Child()
     {
         return $this->hasMany(GrievanceComment::class,'grievance_id','id');

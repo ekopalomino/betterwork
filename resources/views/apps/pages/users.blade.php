@@ -94,6 +94,7 @@ Better Work Indonesia | User Database
          					<th>No</th>
          					<th>Username</th>
                   <th>Email</th>
+                  <th>Access Role</th>
                   <th>Status</th>
                   <th>Last Login At</th>
                   <th>Last Login From</th>
@@ -107,9 +108,16 @@ Better Work Indonesia | User Database
          					<td>{{ $key+1 }}</td>
          					<td>{{ $user->name }}</td>
             					<td>{{ $user->email }}</td>
+                      <td>
+                        @if(!empty($user->getRoleNames()))
+                          @foreach($user->getRoleNames() as $v)
+                          <span class="badge badge-danger">{{ $v }}</span>
+                          @endforeach
+                        @endif 
+                      </td>
             					<td>
                           @if(($user->status_id) == '13ca0601-de87-4d58-8ccd-d1f01dba78d8' )
-                          <span class="badge badge-success">{{ $user->Statuses->name }}</span>
+                          <span class="badge badge-info">{{ $user->Statuses->name }}</span>
                           @else
                           <span class="badge badge-danger">{{ $user->Statuses->name }}</span>
                           @endif

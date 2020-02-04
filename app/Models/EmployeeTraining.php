@@ -14,6 +14,9 @@ class EmployeeTraining extends Model
     	'from',
     	'to',
     	'status',
+        'certification',
+        'reports',
+        'materials',
     ];
 
     public function Parent()
@@ -24,5 +27,10 @@ class EmployeeTraining extends Model
     public function Docs()
     {
     	return $this->hasMany(EmployeeTrainingFile::class);
+    }
+
+    public function Statuses()
+    {
+        return $this->belongsTo(Status::class,'status');
     }
 }

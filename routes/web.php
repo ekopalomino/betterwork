@@ -91,14 +91,53 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::get('human-resources/employee/edit/{id}','Apps\HumanResourcesController@employeeEdit')->name('employee.edit');
 	Route::post('human-resources/employee/update/{id}','Apps\HumanResourcesController@employeeUpdate')->name('employee.update');
 	Route::post('human-resources/employee/delete/{id}','Apps\HumanResourcesController@employeeDelete')->name('employee.destroy');
+	Route::get('human-resources/employee/family/edit/{id}','Apps\HumanResourcesController@familyEdit')->name('employeeFamily.edit');
+	Route::post('human-resources/employee/family/update/{id}','Apps\HumanResourcesController@familyUpdate')->name('employeeFamily.update');
+	Route::get('human-resources/employee/education/edit/{id}','Apps\HumanResourcesController@educationEdit')->name('employeeEducation.edit');
+	Route::post('human-resources/employee/education/update/{id}','Apps\HumanResourcesController@educationUpdate')->name('employeeEducation.update');
+	Route::get('human-resources/employee/training/edit/{id}','Apps\HumanResourcesController@trainingEdit')->name('employeeTraining.edit');
+	Route::post('human-resources/employee/training/update/{id}','Apps\HumanResourcesController@trainingUpdate')->name('employeeTraining.update');
+	Route::get('human-resources/employee/service/edit/{id}','Apps\HumanResourcesController@serviceEdit')->name('employeeService.edit');
+	Route::post('human-resources/employee/service/update/{id}','Apps\HumanResourcesController@serviceUpdate')->name('employeeService.update');
 	
+	Route::get('human-resources/bulletin','Apps\HumanResourcesController@bulletinIndex')->name('bulletin.index');
+	Route::get('human-resources/bulletin/create','Apps\HumanResourcesController@bulletinCreate')->name('bulletin.create');
+	Route::post('human-resources/bulletin/store','Apps\HumanResourcesController@bulletinStore')->name('bulletin.store');
+	Route::get('human-resources/bulletin/show/{id}','Apps\HumanResourcesController@bulletinShow')->name('bulletin.show');
+	Route::get('human-resources/bulletin/edit/{id}','Apps\HumanResourcesController@bulletinEdit')->name('bulletin.edit');
+	Route::post('human-resources/bulletin/update/{id}','Apps\HumanResourcesController@knowledgeUpdate')->name('bulletin.update');
+	Route::post('human-resources/bulletin/destroy/{id}','Apps\HumanResourcesController@bulletinDelete')->name('bulletin.destroy');
+
+	Route::get('human-resources/knowledgebase','Apps\HumanResourcesController@knowledgeIndex')->name('knowledge.index');
+	Route::get('human-resources/knowledgebase/create','Apps\HumanResourcesController@knowledgeCreate')->name('knowledge.create');
+	Route::post('human-resources/knowledgebase/store','Apps\HumanResourcesController@knowledgeStore')->name('knowledge.store');
+	Route::get('human-resources/knowledgebase/show/{id}','Apps\HumanResourcesController@knowledgeShow')->name('knowledge.show');
+	Route::get('human-resources/knowledgebase/edit/{id}','Apps\HumanResourcesController@knowledgeEdit')->name('knowledge.edit');
+	Route::post('human-resources/knowledgebase/update/{id}','Apps\HumanResourcesController@bulletinUpdate')->name('knowledge.update');
+	Route::post('human-resources/knowledgebase/destroy/{id}','Apps\HumanResourcesController@knowledgeDelete')->name('knowledge.destroy');
+
 	Route::get('human-resources/attendance','Apps\HumanResourcesController@attendanceIndex')->name('attendance.index');
+	Route::post('human-resources/attendance/search','Apps\HumanResourcesController@attendanceSearch')->name('attendance.search');
 	Route::get('human-resources/attendance/request','Apps\HumanResourcesController@requestIndex')->name('request.index');
+	Route::get('human-resources/attendance/request/show/{id}','Apps\HumanResourcesController@requestShow')->name('request.show');
+	Route::post('human-resources/attendance/request/update/{id}','Apps\HumanResourcesController@requestUpdate')->name('request.update');
+	
+
 	Route::get('human-resources/appraisal','Apps\HumanResourcesController@appraisalIndex')->name('appraisal.index');
 
-	Route::get('grievance/database','Apps\GrievanceController@grievanceData')->name('grievanceData.index');
-	Route::get('grievance/management-respond','Apps\GrievanceController@managementData')->name('managementGrievance.index');
+	Route::get('human-resources/salary','Apps\HumanResourcesController@salaryIndex')->name('salary.index');
+	Route::get('human-resources/salary/create','Apps\HumanResourcesController@salaryCreate')->name('salary.create');
+	Route::post('human-resources/salary/store','Apps\HumanResourcesController@salaryProcess')->name('salary.store');
 
+	Route::get('grievance/database','Apps\GrievanceController@grievanceData')->name('grievanceData.index');
+	Route::get('grievance/database/show/{id}','Apps\GrievanceController@grievanceShow')->name('grievanceData.show');
+	Route::get('grievance/database/edit/{id}','Apps\GrievanceController@grievanceEdit')->name('grievanceData.edit');
+	Route::post('grievance/database/update/{id}','Apps\GrievanceController@grievanceUpdate')->name('grievanceData.update');
+	Route::post('grievance/database/comment/{id}','Apps\GrievanceController@grievanceComment')->name('grievanceData.comment');
+	Route::post('grievance/database/close/{id}','Apps\GrievanceController@grievanceClose')->name('grievanceData.closed');
+	Route::post('grievance/database/publish/{id}','Apps\GrievanceController@grievancePublish')->name('grievanceData.publish');
+	Route::get('grievance/management-respond','Apps\GrievanceController@managementData')->name('managementGrievance.index');
+	Route::get('grievance/management-respond/show/{id}','Apps\GrievanceController@grievanceManagementShow')->name('managementGrievance.show');
 	Route::get('accounting/bank-statement','Apps\AccountingController@bankIndex')->name('bank.index');
 
 	Route::post('my-menu/attendance-in','Apps\UserMenuController@clockIn')->name('attendanceIn.store');

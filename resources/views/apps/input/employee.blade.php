@@ -50,6 +50,14 @@ Better Work Indonesia | Create New Employee
 			    					{!! Form::text('employee_no', null, array('placeholder' => 'Employee ID','class' => 'form-control')) !!}
 			    				</div>
 			    				<div class="form-group">
+			    					<label for="maritalStatus">Employee Status</label>
+			    					<select name="contract_status" class="form-control">
+                          				<option value="0">Please Select</option>
+						                <option value="c0bfb25c-b965-4972-95fd-ed5803318d93">Contract</option>
+						                <option value="2e9731fd-6544-44a1-b832-aab293e8804a">Permanent</option>
+						            </select>
+			    				</div>
+			    				<div class="form-group">
 			    					<label for="firstName">First Name</label>
 			    					{!! Form::text('first_name', null, array('placeholder' => 'First Name','class' => 'form-control')) !!}
 			    				</div>
@@ -68,6 +76,24 @@ Better Work Indonesia | Create New Employee
 			    				<div class="form-group">
 			    					<label for="idCard">ID Card (KTP)</label>
 			    					{!! Form::text('id_card', null, array('placeholder' => 'ID Card (KTP)','class' => 'form-control')) !!}
+			    				</div>
+			    				<div class="form-group">
+			    					<label for="sex">Tax Category</label>
+			    					<select name="tax_category" class="form-control">
+                          				<option value="0">Please Select</option>
+						                <option value="1">S0</option>
+						                <option value="2">S1</option>
+						                <option value="3">S2</option>
+						                <option value="4">S3</option>
+						                <option value="5">M0</option>
+						                <option value="6">M1</option>
+						                <option value="7">M2</option>
+						                <option value="8">M3</option>
+						            </select>
+			    				</div>
+			    				<div class="form-group">
+			    					<label for="idCard">Tax No</label>
+			    					{!! Form::text('tax_no', null, array('placeholder' => 'ID Card (KTP)','class' => 'form-control')) !!}
 			    				</div>
 			    				<div class="form-group">
 			    					<label for="sex">Sex</label>

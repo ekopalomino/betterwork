@@ -9,6 +9,8 @@ use iteos\Models\EmployeeAttendance;
 use iteos\Models\EmployeeLeave;
 use iteos\Models\LeaveType;
 use iteos\Models\EmployeeReimbursment;
+use iteos\Models\EmployeeService;
+use iteos\Models\EmployeeTraining;
 use iteos\Models\ReimbursType;
 use iteos\Models\EmployeeGrievance;
 use iteos\Models\GrievanceComment;
@@ -20,10 +22,22 @@ class UserMenuController extends Controller
 {
     public function index()
     {
+        $getEmployees = Employee::join('employee_services','employee_services.employee_id','employees.id')
+                                ->where('employees.email',Auth()->user()->email)
+                                ->get();
+        $getStartDate = EmployeeService::where('employee_id',Auth()->user()->employee_id)
+                                        ->orderBy('from','ASC')
+                                        ->first();
     	$getEmployee = Employee::where('email',Auth()->user()->email)->first();
     	$getAttendance = EmployeeAttendance::where('employee_id',$getEmployee->id)->orderBy('updated_at','DESC')->first();
     	
-    	return view('apps.pages.userHome',compact('getEmployee','getAttendance'));
+        $tDate = Carbon::now();
+        $interval = $tDate->diff($getStartDate->from);
+        $totalDays = $interval->format('%a');
+
+        $getRemaining = EmployeeLeave::where('employee_id',$getEmployee->id)->where('status_id','ca52a2ce-5c37-48ce-a7f2-0fd5311860c2')->count();
+        
+    	return view('apps.pages.userHome',compact('getEmployee','getAttendance','totalDays','getRemaining'));
     }
 
     public function clockIn(Request $request)
@@ -76,8 +90,8 @@ class UserMenuController extends Controller
     		'employee_id' => $request->input('employee_id'),
     		'leave_type' => $request->input('request_type'),
     		'notes' => $request->input('notes'),
-    		'leave_start' => $dates[0],
-    		'leave_end' => $dates[1],
+    		'leave_start' => Carbon::parse($dates[0]),
+    		'leave_end' => Carbon::parse($dates[1]),
     		'status_id' => 'b0a0c17d-e56a-41a7-bfb0-bd8bdc60a7be',
     	]);
 
@@ -131,7 +145,9 @@ class UserMenuController extends Controller
 
     public function grievanceIndex()
     {
-    	$data = EmployeeGrievance::orderBy('created_at','DESC')->get();
+        $getEmployee = Employee::where('email',Auth()->user()->email)->first();
+        $data = EmployeeGrievance::where('employee_id',$getEmployee->id)
+                                    ->orderBy('created_at','DESC')->get();
     	
     	return view('apps.pages.myGrievance',compact('data'));
     }
@@ -211,11 +227,72 @@ class UserMenuController extends Controller
 
     public function grievanceComment(Request $request,$id)
     {
+        $this->validate($request, [
+            'comment' => 'required',
+        ]);
 
+        $content = $request->input('comment');
+         libxml_use_internal_errors(true);
+        $dom = new\DomDocument();   
+        $dom->loadHTML(
+            mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8'),
+            LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD
+        );
+
+        $images = $dom->getElementsByTagName('img');
+
+        foreach ($images as $count => $image) {
+            $src = $image->getAttribute('src');
+
+            if (preg_match('/data:image/', $src)) {
+                preg_match('/data:image\/(?<mime>.*?)\;/', $src, $groups);
+                $mimeType = $groups['mime'];
+
+                $path = '/grievance_image/' . uniqid('', true) . '.' . $mimeType;
+
+                Image::make($src)
+                    ->resize(750, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                    })
+                    ->encode($mimeType, 80)
+                    ->save(public_path($path));
+
+                $image->removeAttribute('src');
+                $image->setAttribute('src', asset($path));
+            }
+        }
+        $content = $dom->saveHTML();
+
+        $data = EmployeeGrievance::find($id);
+        if(($data->status_id) == '16f30bee-5db5-472d-b297-926f5c8e4d21') {
+            $data->update([
+                'status_id' => 'fe6f8153-a433-4a4d-a23d-201811778733',
+            ]);
+            $comments = GrievanceComment::create([
+                'grievance_id' => $id,
+                'comment' => $content,
+                'comment_by' => $data->employee_id,
+            ]);
+        } else {
+            $comments = GrievanceComment::create([
+                'grievance_id' => $id,
+                'comment' => $content,
+                'comment_by' => $data->employee_id,
+            ]);
+        }
+        
+
+        return redirect()->back();
     }
 
     public function grievanceRate(Request $request,$id)
     {
+        $data = EmployeeGrievance::find($id);
+        $data->update([
+            'status_id' => '6a787298-14f6-4d19-a7ee-99a3c8ed6466',
+            'rating' => $request->input('rating'),
+        ]);
 
+        return redirect()->route('myGrievance.index');
     }
 }
