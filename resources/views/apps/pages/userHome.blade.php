@@ -20,7 +20,7 @@ Better Work Indonesia | Home
 					<div class="card-body box-profile">
 						<div class="text-center">
                   			<img class="profile-user-img img-fluid img-circle"
-                       			src="http://betterwork.local/public/employees/{{$getEmployee->picture}}"
+                       			src="http://betterwork.iteos.tech/public/employees/{{$getEmployee->picture}}"
                        			alt="User profile picture">
                 		</div>
                 		<h3 class="profile-username text-center">{{{ isset(Auth::user()->name) ? Auth::user()->name : Auth::user()->email }}}</h3>
