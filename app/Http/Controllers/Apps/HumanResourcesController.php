@@ -14,6 +14,7 @@ use iteos\Models\EmployeeService;
 use iteos\Models\EmployeePosition;
 use iteos\Models\EmployeeAttendance;
 use iteos\Models\EmployeeReimbursment;
+use iteos\Models\EmployeeLeave;
 use iteos\Models\Location;
 use iteos\Models\EmployeeSalary;
 use iteos\Models\Salary;
@@ -542,7 +543,32 @@ class HumanResourcesController extends Controller
 
     public function requestIndex()
     {
-    	return view('apps.pages.requestIndex');
+        $data = EmployeeLeave::orderBy('created_at','DESC')->get();
+
+    	return view('apps.pages.requestIndex',compact('data'));
+    }
+
+    public function requestShow($id)
+    {
+        $data = EmployeeLeave::find($id);
+        $usage = EmployeeLeave::where('employee_id',$data->employee_id)->where('status_id','ca52a2ce-5c37-48ce-a7f2-0fd5311860c2')->count();
+        $remaining = (12) - ($usage);
+
+        return view('apps.show.employeeRequest',compact('data','remaining'))->renderSections()['content'];
+    }
+
+    public function requestUpdate(Request $request,$id)
+    {
+        $this->validate($request, [
+            'status_id' => 'required',
+        ]);
+
+        $data = EmployeeLeave::find($id);
+        $data->update([
+            'status_id' => $request->input('status_id'),
+        ]);
+
+        return redirect()->route('request.index');
     }
 
     public function appraisalIndex()

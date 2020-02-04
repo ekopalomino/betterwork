@@ -10,3 +10,9 @@ $(document).ready(function () {
         $('#modalLgTitle').html($(this).attr('title'));
     });
 });
+$(document).ready(function () {
+    $('.modalXl').off('click').on('click', function () {
+        $('#modalXlContent').load($(this).attr('value'));
+        $('#modalXlTitle').html($(this).attr('title'));
+    });
+});

@@ -29,4 +29,9 @@ class EmployeeLeave extends Model
     {
     	return $this->belongsTo(Status::class,'status_id');
     }
+
+    public function Types()
+    {
+        return $this->belongsTo(LeaveType::class,'leave_type');
+    }
 }

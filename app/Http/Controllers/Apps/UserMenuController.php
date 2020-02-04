@@ -88,8 +88,8 @@ class UserMenuController extends Controller
     		'employee_id' => $request->input('employee_id'),
     		'leave_type' => $request->input('request_type'),
     		'notes' => $request->input('notes'),
-    		'leave_start' => $dates[0],
-    		'leave_end' => $dates[1],
+    		'leave_start' => Carbon::parse($dates[0]),
+    		'leave_end' => Carbon::parse($dates[1]),
     		'status_id' => 'b0a0c17d-e56a-41a7-bfb0-bd8bdc60a7be',
     	]);
 
