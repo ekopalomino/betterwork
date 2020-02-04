@@ -34,8 +34,10 @@ class UserMenuController extends Controller
         $tDate = Carbon::now();
         $interval = $tDate->diff($getStartDate->from);
         $totalDays = $interval->format('%a');
+
+        $getRemaining = EmployeeLeave::where('employee_id',$getEmployee->id)->where('status_id','ca52a2ce-5c37-48ce-a7f2-0fd5311860c2')->count();
         
-    	return view('apps.pages.userHome',compact('getEmployee','getAttendance','totalDays'));
+    	return view('apps.pages.userHome',compact('getEmployee','getAttendance','totalDays','getRemaining'));
     }
 
     public function clockIn(Request $request)

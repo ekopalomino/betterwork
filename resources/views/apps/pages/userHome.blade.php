@@ -35,7 +35,7 @@ Better Work Indonesia | Home
                     			<b>This Year Leave</b> <a class="float-right">12</a>
                   			</li>
                   			<li class="list-group-item">
-                    			<b>This Year Leave Taken</b> <a class="float-right">5</a>
+                    			<b>This Year Leave Taken</b> <a class="float-right">{{$getRemaining}}</a>
                   			</li>
                 		</ul>
                 	</div>
