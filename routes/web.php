@@ -91,10 +91,22 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::get('human-resources/employee/edit/{id}','Apps\HumanResourcesController@employeeEdit')->name('employee.edit');
 	Route::post('human-resources/employee/update/{id}','Apps\HumanResourcesController@employeeUpdate')->name('employee.update');
 	Route::post('human-resources/employee/delete/{id}','Apps\HumanResourcesController@employeeDelete')->name('employee.destroy');
+	Route::get('human-resources/employee/family/edit/{id}','Apps\HumanResourcesController@familyEdit')->name('employeeFamily.edit');
+	Route::post('human-resources/employee/family/update/{id}','Apps\HumanResourcesController@familyUpdate')->name('employeeFamily.update');
+	Route::get('human-resources/employee/education/edit/{id}','Apps\HumanResourcesController@educationEdit')->name('employeeEducation.edit');
+	Route::post('human-resources/employee/education/update/{id}','Apps\HumanResourcesController@educationUpdate')->name('employeeEducation.update');
+	Route::get('human-resources/employee/training/edit/{id}','Apps\HumanResourcesController@trainingEdit')->name('employeeTraining.edit');
+	Route::post('human-resources/employee/training/update/{id}','Apps\HumanResourcesController@trainingUpdate')->name('employeeTraining.update');
+	Route::get('human-resources/employee/service/edit/{id}','Apps\HumanResourcesController@serviceEdit')->name('employeeService.edit');
+	Route::post('human-resources/employee/service/update/{id}','Apps\HumanResourcesController@serviceUpdate')->name('employeeService.update');
 	
 	Route::get('human-resources/attendance','Apps\HumanResourcesController@attendanceIndex')->name('attendance.index');
 	Route::get('human-resources/attendance/request','Apps\HumanResourcesController@requestIndex')->name('request.index');
 	Route::get('human-resources/appraisal','Apps\HumanResourcesController@appraisalIndex')->name('appraisal.index');
+
+	Route::get('human-resources/salary','Apps\HumanResourcesController@salaryIndex')->name('salary.index');
+	Route::get('human-resources/salary/create','Apps\HumanResourcesController@salaryCreate')->name('salary.create');
+	Route::post('human-resources/salary/store','Apps\HumanResourcesController@salaryProcess')->name('salary.store');
 
 	Route::get('grievance/database','Apps\GrievanceController@grievanceData')->name('grievanceData.index');
 	Route::get('grievance/database/show/{id}','Apps\GrievanceController@grievanceShow')->name('grievanceData.show');

@@ -180,7 +180,7 @@
             </ul>
           </li>
           @endif
-          @if(\Route::is(['hr.index','employee.index','employee.create','employee.edit','attendance.index','request.index','appraisal.index']))
+          @if(\Route::is(['hr.index','employee.index','employee.create','employee.edit','attendance.index','request.index','appraisal.index','salary.index']))
           <li class="nav-item {{set_open(['employee.index','employee.create','employee.edit']) }}">
             <a href="{{ route('employee.index') }}" class="nav-link {{set_active('employee.index','employee.create','employee.edit') }}">
               <i class="nav-icon fas fa-users-cog"></i>
@@ -228,8 +228,8 @@
               </p>
             </a>
           </li>
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
+          <li class="nav-item has-treeview {{set_open(['salary.index']) }}">
+            <a href="#" class="nav-link {{set_active(['salary.index']) }}">
               <i class="nav-icon fas fa-file-alt"></i>
               <p>
                 HR Finance
@@ -237,8 +237,8 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="#" class="nav-link">
+              <li class="nav-item {{set_open(['salary.index']) }}">
+                <a href="{{ route('salary.index') }}" class="nav-link {{set_active('salary.index') }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Payroll Process</p>
                 </a>

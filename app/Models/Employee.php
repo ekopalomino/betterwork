@@ -23,6 +23,10 @@ class Employee extends Model
     	'mobile',
     	'email',
     	'id_card',
+        'tax_category',
+        'tax_no',
+        'availability',
+        'contract_status',
     	'created_by',
     	'updated_by',
     ];
@@ -49,6 +53,11 @@ class Employee extends Model
         return $this->hasMany(EmployeeEducation::class,'employee_id');
     }
 
+    public function Available()
+    {
+        return $this->belongsTo(Status::class,'availability');
+    }
+    
     public function Trainings()
     {
         return $this->hasMany(EmployeeTraining::class,'employee_id');
@@ -62,5 +71,10 @@ class Employee extends Model
     public function Attendances()
     {
         return $this->hasMany(EmployeeAttendance::class,'employee_id');
+    }
+
+    public function Contracts()
+    {
+        return $this->belongsTo(Status::class,'contract_status');
     }
 }

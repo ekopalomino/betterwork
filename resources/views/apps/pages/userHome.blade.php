@@ -24,10 +24,12 @@ Better Work Indonesia | Home
                        			alt="User profile picture">
                 		</div>
                 		<h3 class="profile-username text-center">{{{ isset(Auth::user()->name) ? Auth::user()->name : Auth::user()->email }}}</h3>
-                		<p class="text-muted text-center">Software Engineer</p>
+                		<p class="text-muted text-center">@foreach($getEmployee->Services as $service)
+                      {{$service->grade}}
+                      @endforeach</p>
                 		<ul class="list-group list-group-unbordered mb-3">
                   			<li class="list-group-item">
-                    			<b>Days In Company</b> <a class="float-right">1,322</a>
+                    			<b>Days In Company</b> <a class="float-right">{{$totalDays}}</a>
                   			</li>
                   			<li class="list-group-item">
                     			<b>This Year Leave</b> <a class="float-right">12</a>
@@ -118,7 +120,9 @@ Better Work Indonesia | Home
                         </p>
               					<strong><i class="fas fa-book mr-1"></i> Education</strong>
               					<p class="text-muted">
-                  					B.S. in Computer Science from the University of Tennessee at Knoxville
+                  					@foreach($getEmployee->Educations as $education)
+                              {{$education->grade}} in {{$education->major}} from {{$education->institution_name}}
+                            @endforeach
                 				</p>
                 				<hr>
                 				<strong><i class="fas fa-map-marker-alt mr-1"></i> Home Address</strong>
@@ -126,11 +130,9 @@ Better Work Indonesia | Home
                 				<hr>
                 				<strong><i class="fas fa-pencil-alt mr-1"></i> Training & Certification</strong>
                 				<p class="text-muted">
-                  					<span class="tag tag-danger">UI Design</span>
-                  					<span class="tag tag-success">Coding</span>
-                  					<span class="tag tag-info">Javascript</span>
-                  					<span class="tag tag-warning">PHP</span>
-                  					<span class="tag tag-primary">Node.js</span>
+                          @foreach($getEmployee->Trainings as $training)
+                  					<span class="tag tag-danger">{{$training->training_title}}</span>
+                  				@endforeach
                 				</p>
                 				<hr>
                         <strong><i class="fas fa-pencil-alt mr-1"></i> Contract Download</strong>
@@ -142,11 +144,11 @@ Better Work Indonesia | Home
                         </p>
                         <strong><i class="fas fa-calendar-check mr-1"></i> Join Date</strong>
                         <p class="text-muted">
-                            3 March 2006
+                            {{date("d F Y",strtotime($getEmployee->created_at)) }}
                         </p>
                         <strong><i class="fas fa-file-signature mr-1"></i> Employment Type</strong>
                         <p class="text-muted">
-                            Permanent
+                            {{ $getEmployee->Contracts->name }}
                         </p>
                         <strong><i class="fas fa-clipboard-check mr-1"></i> Current Position</strong>
                         <p class="text-muted">
@@ -231,7 +233,6 @@ Better Work Indonesia | Home
                         <table class="table table-bordered">
                           <thead>
                             <tr>
-                              <th style="width: 10px">#</th>
                               <th>Position</th>
                               <th>Department</th>
                               <th>From</th>
@@ -240,14 +241,15 @@ Better Work Indonesia | Home
                             </tr>
                           </thead>
                           <tbody>
+                            @foreach($getEmployee->Services as $service)
                             <tr>
+                              <td>{{$service->grade}}</td>
                               <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
+                              <td>{{date("d F Y",strtotime($service->from)) }}</td>
                               <td></td>
                               <td></td>
                             </tr>
+                            @endforeach
                           </tbody>
                         </table>
                       </div>

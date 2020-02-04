@@ -70,6 +70,24 @@ Better Work Indonesia | Create New Employee
 			    					{!! Form::text('id_card', null, array('placeholder' => 'ID Card (KTP)','class' => 'form-control')) !!}
 			    				</div>
 			    				<div class="form-group">
+			    					<label for="sex">Tax Category</label>
+			    					<select name="tax_category" class="form-control">
+                          				<option value="0">Please Select</option>
+						                <option value="1">S0</option>
+						                <option value="2">S1</option>
+						                <option value="3">S2</option>
+						                <option value="4">S3</option>
+						                <option value="5">M0</option>
+						                <option value="6">M1</option>
+						                <option value="7">M2</option>
+						                <option value="8">M3</option>
+						            </select>
+			    				</div>
+			    				<div class="form-group">
+			    					<label for="idCard">Tax No</label>
+			    					{!! Form::text('tax_no', null, array('placeholder' => 'ID Card (KTP)','class' => 'form-control')) !!}
+			    				</div>
+			    				<div class="form-group">
 			    					<label for="sex">Sex</label>
 			    					<select name="sex" class="form-control">
                           				<option value="0">Please Select</option>

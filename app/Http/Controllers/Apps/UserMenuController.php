@@ -9,6 +9,8 @@ use iteos\Models\EmployeeAttendance;
 use iteos\Models\EmployeeLeave;
 use iteos\Models\LeaveType;
 use iteos\Models\EmployeeReimbursment;
+use iteos\Models\EmployeeService;
+use iteos\Models\EmployeeTraining;
 use iteos\Models\ReimbursType;
 use iteos\Models\EmployeeGrievance;
 use iteos\Models\GrievanceComment;
@@ -20,10 +22,20 @@ class UserMenuController extends Controller
 {
     public function index()
     {
+        $getEmployees = Employee::join('employee_services','employee_services.employee_id','employees.id')
+                                ->where('employees.email',Auth()->user()->email)
+                                ->get();
+        $getStartDate = EmployeeService::where('employee_id',Auth()->user()->employee_id)
+                                        ->orderBy('from','ASC')
+                                        ->first();
     	$getEmployee = Employee::where('email',Auth()->user()->email)->first();
     	$getAttendance = EmployeeAttendance::where('employee_id',$getEmployee->id)->orderBy('updated_at','DESC')->first();
     	
-    	return view('apps.pages.userHome',compact('getEmployee','getAttendance'));
+        $tDate = Carbon::now();
+        $interval = $tDate->diff($getStartDate->from);
+        $totalDays = $interval->format('%a');
+        
+    	return view('apps.pages.userHome',compact('getEmployee','getAttendance','totalDays'));
     }
 
     public function clockIn(Request $request)
