@@ -13,8 +13,10 @@ use iteos\Models\EmployeeTrainingFile;
 use iteos\Models\EmployeeService;
 use iteos\Models\EmployeePosition;
 use iteos\Models\EmployeeAttendance;
+use iteos\Models\AttendanceTransaction;
 use iteos\Models\EmployeeReimbursment;
 use iteos\Models\EmployeeLeave;
+use iteos\Models\LeaveTransaction;
 use iteos\Models\Location;
 use iteos\Models\EmployeeSalary;
 use iteos\Models\Salary;
@@ -111,6 +113,12 @@ class HumanResourcesController extends Controller
                 'avatar' => $result->picture,
             ]);
 
+            $leaves = EmployeeLeave::create([
+                'employee_id' => $result->id,
+                'period' => Carbon::now()->year,
+                'leave_amount' => '12',
+            ]);
+
             return redirect()->route('employee.index');
         
     }
@@ -158,6 +166,7 @@ class HumanResourcesController extends Controller
                     'phone' => $request->input('phone'),
                     'mobile' => $request->input('mobile'),
                     'email' => $request->input('email'),
+                    'leave_amount' => $request->input('leave_amount'),
                     'updated_by' => auth()->user()->id,
                 ];
             } else {
@@ -177,6 +186,7 @@ class HumanResourcesController extends Controller
                     'phone' => $request->input('phone'),
                     'mobile' => $request->input('mobile'),
                     'email' => $request->input('email'),
+                    'leave_amount' => $request->input('leave_amount'),
                     'updated_by' => auth()->user()->id,
                 ];
             }
@@ -543,17 +553,24 @@ class HumanResourcesController extends Controller
 
     public function requestIndex()
     {
-        $data = EmployeeLeave::orderBy('created_at','DESC')->get();
+        $data = LeaveTransaction::with('parent')->orderBy('created_at','DESC')->get();
 
     	return view('apps.pages.requestIndex',compact('data'));
     }
 
     public function requestShow($id)
     {
-        $data = EmployeeLeave::find($id);
-        $usage = EmployeeLeave::where('employee_id',$data->employee_id)->where('status_id','ca52a2ce-5c37-48ce-a7f2-0fd5311860c2')->count();
-        $remaining = (12) - ($usage);
-
+        $data = LeaveTransaction::with('parent')->find($id);
+        $getLeaveAmount = Employee::where('id',$data->Parent->employee_id)->first();
+        $getLeaveParent = EmployeeLeave::where('employee_id',$getLeaveAmount->id)->where('period',Carbon::now()->year)->first();
+        $usage = LeaveTransaction::where('leave_id',$getLeaveParent->id)->where('status_id','!=','6840ffe5-600b-4109-8abf-819bf77b24cf')->orderBy('updated_at','DESC')->first();
+        
+        if(empty($getLeaveParent->leave_remaining)) {
+            $remaining = $getLeaveParent->leave_amount;
+        } else {
+            $remaining = $getLeaveParent->leave_remaining;
+        }
+        
         return view('apps.show.employeeRequest',compact('data','remaining'))->renderSections()['content'];
     }
 
@@ -562,13 +579,42 @@ class HumanResourcesController extends Controller
         $this->validate($request, [
             'status_id' => 'required',
         ]);
+        
+        $details = LeaveTransaction::with('parent')->find($id);
+        $data = EmployeeLeave::where('id',$details->leave_id)->where('period',Carbon::now()->year)->first();
 
-        $data = EmployeeLeave::find($id);
-        $data->update([
+        $record = $details->update([
             'status_id' => $request->input('status_id'),
         ]);
+        if(($details->status_id) == 'ca52a2ce-5c37-48ce-a7f2-0fd5311860c2') {
+           if(empty($data->leave_remaining)) {
+                $changes = $data->update([
+                    'leave_usage' => $details->amount_requested,
+                    'leave_remaining' => ($data->leave_amount) - ($details->amount_requested),
+                ]);
+            } else {
+                $changes = $data->update([
+                    'leave_usage' => ($data->leave_usage) + ($details->amount_requested),
+                    'leave_remaining' => ($data->leave_remaining) - ($details->amount_requested),
+                ]);
+            } 
+        }
+        
 
         return redirect()->route('request.index');
+    }
+
+    public function employeeLeave()
+    {
+        $current = Carbon::now()->year;
+        $data = Employee::orderBy('employee_no','ASC')->get();
+        $leaves = EmployeeLeave::where('status_id','ca52a2ce-5c37-48ce-a7f2-0fd5311860c2')->whereYEAR('created_at',$current)->get();
+        foreach($data as $index=>$value) {
+            $getLeaveAmount = $value->leave_amount;
+            $usage = EmployeeLeave::where('employee_id',$value->id)->where('status_id','ca52a2ce-5c37-48ce-a7f2-0fd5311860c2')->count();
+            $remaining = ($getLeaveAmount) - ($usage);
+        }
+        return view('apps.pages.leaveIndex',compact('data','remaining'));
     }
 
     public function appraisalIndex()
@@ -849,19 +895,6 @@ class HumanResourcesController extends Controller
 
     public function salaryProcess(Request $request)
     {
-        $input = $request->all();
-        
-        $getJkk = '0.0024';
-        $getJkm = '0.003';
-        $jhtC = '0.037';
-        $jhtP = '0.02';
-        $jpC = '0.02';
-        $jpP = '0.01';
-
-
-        $employees = $request->employee_id;
-        $nett_salary = $request->nett_salary;
-        
         
     }
 }

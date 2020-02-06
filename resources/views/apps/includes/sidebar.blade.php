@@ -10,7 +10,7 @@
     <div class="sidebar">
     	<div class="user-panel mt-3 pb-3 mb-3 d-flex">
 	        <div class="image">
-	           <img src="http://betterwork.iteos.tech/public/employees/{{Auth::user()->avatar}}" class="img-circle elevation-2" alt="User Image">
+	           <img src="http://betterwork.local/public/employees/{{Auth::user()->avatar}}" class="img-circle elevation-2" alt="User Image">
 	        </div>
 	        <div class="info">
 	           <a href="{{ route('userHome.index') }}" class="d-block">{{{ isset(Auth::user()->name) ? Auth::user()->name : Auth::user()->email }}}</a>
@@ -28,9 +28,9 @@
             </a>
           </li>
           @endcan
-          @if(\Route::is(['userHome.index','myLeave.index','myReimburs.index','myGrievance.index','myGrievance.create','myGrievance.edit','myGrievance.show']))
-          <li class="nav-item has-treeview {{set_open(['myLeave.index','myReimburs.index','myGrievance.index','myGrievance.create','myGrievance.edit','myGrievance.show']) }}">
-            <a href="#" class="nav-link {{set_active(['myLeave.index','myReimburs.index','myGrievance.index','myGrievance.create','myGrievance.edit','myGrievance.show']) }}">
+          @if(\Route::is(['userHome.index','myLeave.index','myReimburs.index','myGrievance.index','myGrievance.create','myGrievance.edit','myGrievance.show','myAppraisal.index','myAppraisal.create','myAppraisal.detail','myDevelopment.create','myAppraisal.show','myAppraisal.edit']))
+          <li class="nav-item has-treeview {{set_open(['myLeave.index','myReimburs.index','myGrievance.index','myGrievance.create','myGrievance.edit','myGrievance.show','myAppraisal.index','myAppraisal.create','myAppraisal.detail','myDevelopment.create','myAppraisal.edit','myAppraisal.show']) }}">
+            <a href="#" class="nav-link {{set_active(['myLeave.index','myReimburs.index','myGrievance.index','myGrievance.create','myGrievance.edit','myGrievance.show','myAppraisal.index','myAppraisal.create','myAppraisal.detail','myDevelopment.create','myAppraisal.show','myAppraisal.edit']) }}">
               <i class="nav-icon fas fa-user"></i>
               <p>
                 My Menu
@@ -57,7 +57,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{ route('myAppraisal.index') }}" class="nav-link {{set_active(['myAppraisal.index','myAppraisal.create','myAppraisal.detail','myDevelopment.create','myAppraisal.show','myAppraisal.edit']) }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Appraisal</p>
                 </a>
@@ -180,7 +180,7 @@
             </ul>
           </li>
           @endif
-          @if(\Route::is(['hr.index','employee.index','employee.create','employee.edit','attendance.index','request.index','appraisal.index','salary.index','bulletin.index','knowledge.index','bulletin.create','bulletin.edit','bulletin.show','knowledge.create','knowledge.edit','knowledge.show','attendance.search']))
+          @if(\Route::is(['hr.index','employee.index','employee.create','employee.edit','attendance.index','request.index','appraisal.index','salary.index','bulletin.index','knowledge.index','bulletin.create','bulletin.edit','bulletin.show','knowledge.create','knowledge.edit','knowledge.show','attendance.search','salary.create','employeeLeave.index']))
           <li class="nav-item {{set_open(['employee.index','employee.create','employee.edit']) }}">
             <a href="{{ route('employee.index') }}" class="nav-link {{set_active('employee.index','employee.create','employee.edit') }}">
               <i class="nav-icon fas fa-users-cog"></i>
@@ -189,8 +189,8 @@
               </p>
             </a>
           </li>
-          <li class="nav-item has-treeview {{set_open(['attendance.index','request.index','attendance.search']) }}">
-            <a href="#" class="nav-link {{set_active(['attendance.index','request.index','attendance.search']) }}">
+          <li class="nav-item has-treeview {{set_open(['attendance.index','request.index','attendance.search','employeeLeave.index']) }}">
+            <a href="#" class="nav-link {{set_active(['attendance.index','request.index','attendance.search','employeeLeave.index']) }}">
               <i class="nav-icon fas fa-user-clock"></i>
               <p>
                 Attendance
@@ -208,6 +208,12 @@
                 <a href="{{ route('request.index') }}" class="nav-link {{set_active('request.index') }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Request Approval</p>
+                </a>
+              </li>
+              <li class="nav-item {{set_open(['employeeLeave.index']) }}">
+                <a href="{{ route('employeeLeave.index') }}" class="nav-link {{set_active('employeeLeave.index') }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Employee Leave</p>
                 </a>
               </li>
             </ul>
@@ -228,8 +234,8 @@
               </p>
             </a>
           </li>
-          <li class="nav-item has-treeview {{set_open(['salary.index']) }}">
-            <a href="#" class="nav-link {{set_active(['salary.index']) }}">
+          <li class="nav-item has-treeview {{set_open(['salary.index','salary.create']) }}">
+            <a href="#" class="nav-link {{set_active(['salary.index','salary.create']) }}">
               <i class="nav-icon fas fa-file-alt"></i>
               <p>
                 HR Finance
@@ -237,8 +243,8 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
-              <li class="nav-item {{set_open(['salary.index']) }}">
-                <a href="{{ route('salary.index') }}" class="nav-link {{set_active('salary.index') }}">
+              <li class="nav-item {{set_open(['salary.index','salary.create']) }}">
+                <a href="{{ route('salary.index') }}" class="nav-link {{set_active(['salary.index','salary.create']) }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Payroll Process</p>
                 </a>

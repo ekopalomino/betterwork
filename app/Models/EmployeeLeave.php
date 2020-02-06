@@ -11,11 +11,10 @@ class EmployeeLeave extends Model
 
     protected $fillable = [
     	'employee_id',
-    	'leave_type',
-    	'notes',
-    	'leave_start',
-    	'leave_end',
-    	'status_id',
+        'period',
+    	'leave_amount',
+    	'leave_usage',
+    	'leave_remaining',
     ];
 
     public $incrementing = false;
@@ -30,8 +29,8 @@ class EmployeeLeave extends Model
     	return $this->belongsTo(Status::class,'status_id');
     }
 
-    public function Types()
+    public function Details()
     {
-        return $this->belongsTo(LeaveType::class,'leave_type');
+        return $this->hasMany(LeaveTransaction::class,'leave_id');
     }
 }

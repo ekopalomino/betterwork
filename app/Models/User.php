@@ -53,4 +53,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Status::class,'status_id');
     }
+
+    public function Logs()
+    {
+        return $this->hasMany(LogActivity::class,'user_id');
+    }
 }

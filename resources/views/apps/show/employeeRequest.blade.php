@@ -7,11 +7,15 @@
             @csrf
 			<label for="inputEmail" class="col-sm-12 col-form-label">Employee ID</label>
                 <div class="col-sm-12">
-                    {!! Form::text('employee_no', $data->Employees->employee_no, array('placeholder' => 'Account Name','class' => 'form-control','readonly')) !!}
+                    {!! Form::text('employee_no', $data->Parent->Employees->employee_no, array('placeholder' => 'Account Name','class' => 'form-control','readonly')) !!}
                 </div>
             <label for="inputEmail" class="col-sm-12 col-form-label">Employee Name</label>
                 <div class="col-sm-12">
-                    {!! Form::text('employee_name', ($data->Employees->first_name.' '.$data->Employees->last_name), array('placeholder' => 'Account Name','class' => 'form-control','readonly')) !!}
+                    {!! Form::text('employee_name', ($data->Parent->Employees->first_name.' '.$data->Parent->Employees->last_name), array('placeholder' => 'Account Name','class' => 'form-control','readonly')) !!}
+                </div>
+            <label for="inputEmail" class="col-sm-12 col-form-label">Request Type</label>
+                <div class="col-sm-12">
+                    {!! Form::text('leave_type', $data->Types->leave_name, array('placeholder' => 'Account Name','class' => 'form-control','readonly')) !!}
                 </div>
             <label for="inputEmail" class="col-sm-12 col-form-label">Request Date From</label>
                 <div class="col-sm-12">
@@ -21,9 +25,9 @@
                 <div class="col-sm-12">
                     {!! Form::datetime('leave_end', old('leave_end'), array('id' => 'datepicker','class' => 'form-control','readonly')) !!}
                 </div>
-            <label for="inputEmail" class="col-sm-12 col-form-label">Request Type</label>
+            <label for="inputEmail" class="col-sm-12 col-form-label">Leave Remaining</label>
                 <div class="col-sm-12">
-                    {!! Form::text('leave_type', $data->Types->leave_name, array('placeholder' => 'Account Name','class' => 'form-control','readonly')) !!}
+                    {!! Form::text('remaining', $remaining, array('placeholder' => 'Account Name','class' => 'form-control','readonly')) !!}
                 </div>
             <label for="inputEmail" class="col-sm-12 col-form-label">Request Note</label>
                 <div class="col-sm-12">

@@ -15,7 +15,7 @@ class LogActivity extends Model
     	'user_id',
 	];
 	
-	public function creator()
+	public function Creator()
 	{
 		return $this->belongsTo(User::class,'user_id');
 	}

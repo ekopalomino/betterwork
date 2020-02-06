@@ -1,6 +1,6 @@
 @extends('apps.layouts.main')
 @section('header.title')
-Better Work Indonesia | Employee Request Approval
+Better Work Indonesia | Employee Leave Data
 @endsection
 @section('header.plugins')
 <link rel="stylesheet" href="{{ asset('public/bower_components/admin-lte/plugins/datatables-bs4/css/dataTables.bootstrap4.css') }}">
@@ -11,7 +11,7 @@ Better Work Indonesia | Employee Request Approval
 	<div class="container-fluid">
     <div class="row mb-2">
     	<div class="col-sm-6">
-     		<h1>Employee Request Approval</h1>
+     		<h1>Employee Leave Data</h1>
     	</div>
     </div>
   </div>
@@ -20,6 +20,36 @@ Better Work Indonesia | Employee Request Approval
 	<div class="row">
 		<div class="col-12">
 			<div class="card">
+				<div class="card-header">
+          {!! Form::open(array('route' => 'attendance.search','method'=>'POST')) !!}
+          @csrf
+            <div class="row">
+              <div class="col-2">
+                <input type="text" class="form-control" id="empolyeeID" name="employee_id" placeholder="Employee ID">
+              </div>
+              <div class="col-2">
+                <input type="text" class="form-control" id="employeeFirstName" name="first_name" placeholder="Employee First Name">
+              </div>
+              <div class="col-2">
+                <input type="text" class="form-control" id="employeeLastName" name="last_name" placeholder="Employee Last Name">
+              </div>
+              <div class="col-3">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="far fa-calendar-alt"></i>
+                    </span>
+                  </div>
+                  <input type="text" name="date_range" class="form-control float-right" id="reservation">
+                </div>
+              </div>
+              <div class="col-3">
+                <button type="submit" class="btn btn-primary">Search</button>
+                <a button type="button" class="btn btn-danger" href="{{ route('attendance.index') }}">Cancel</a>
+              </div>
+            </div>
+          {!! Form::close() !!}
+        </div>
         <div class="card-body">
           <table id="example2" class="table table-bordered table-hover">
             <thead>
@@ -27,10 +57,8 @@ Better Work Indonesia | Employee Request Approval
                 <th>No</th>
                 <th>Employee ID</th>
                 <th>Employee Name</th>
-                <th>Date From</th>
-                <th>Date To</th>
-                <th>Request Type</th>
-                <th>Status</th>
+                <th>Leave Allowance</th>
+                <th>Leave Remaining</th>
                 <th></th>
               </tr>
             </thead>
@@ -38,25 +66,11 @@ Better Work Indonesia | Employee Request Approval
               @foreach($data as $key=>$value)
               <tr>
                 <td>{{ $key+1 }}</td>
-                <td>{{ $value->Parent->Employees->employee_no }}</td>
-                <td>{{ $value->Parent->Employees->first_name }} {{ $value->Parent->Employees->last_name }}</td>
-                <td>{{date("d F Y H:i",strtotime($value->leave_start)) }}</td>
-                <td>{{date("d F Y H:i",strtotime($value->leave_end)) }}</td>
-                <td>{{ $value->Types->leave_name }}</td>
-                <td>
-                    @if(($value->status_id) == 'b0a0c17d-e56a-41a7-bfb0-bd8bdc60a7be')
-                    <span class="badge badge-info">{{ $value->Statuses->name }}</span>
-                    @elseif(($value->status_id) == 'ca52a2ce-5c37-48ce-a7f2-0fd5311860c2')
-                    <span class="badge badge-success">{{ $value->Statuses->name }}</span>
-                    @else
-                    <span class="badge badge-danger">{{ $value->Statuses->name }}</span>
-                    @endif
-                </td>
-                <td>
-                    @if(($value->status_id) == 'b0a0c17d-e56a-41a7-bfb0-bd8bdc60a7be')
-                    <a class="btn btn-danger btn-sm modalMd" href="#" value="{{ action('Apps\HumanResourcesController@requestShow',['id'=>$value->id]) }}" data-toggle="modal" data-target="#modalMd"><i class="fas fa-search"></i>Show Data</a>
-                    @endif
-                </td>
+                <td>{{ $value->employee_no }}</td>
+                <td>{{ $value->first_name }} {{ $value->last_name }}</td>
+                <td>{{ $value->leave_amount }}</td>
+                <td>{{ $remaining }}</td>
+                <td></td>
               </tr>
               @endforeach
             </tbody>
