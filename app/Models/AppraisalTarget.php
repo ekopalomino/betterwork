@@ -19,4 +19,10 @@ class AppraisalTarget extends Model
     {
     	return $this->belongsTo(AppraisalData::class,'data_id');
     }
+
+    public function Appraisal()
+    {
+        return $this->belongsTo(EmployeeAppraisal::class,'appraisal_id');
+    }
+    
 }

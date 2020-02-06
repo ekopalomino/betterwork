@@ -23,6 +23,9 @@ use iteos\Models\Salary;
 use iteos\Models\Bulletin;
 use iteos\Models\KnowledgeBase;
 use iteos\Models\DocumentCategory;
+use iteos\Models\EmployeeAppraisal;
+use iteos\Models\AppraisalData;
+use iteos\Models\AppraisalTarget;
 use Hash;
 use Auth;
 use DB;
@@ -619,7 +622,47 @@ class HumanResourcesController extends Controller
 
     public function appraisalIndex()
     {
-        return view('apps.pages.appraisalIndex');
+        $data = EmployeeAppraisal::orderBy('created_at','DESC')->get();
+
+        return view('apps.pages.appraisalIndex',compact('data'));
+    }
+
+    public function appraisalShow($id)
+    {
+        $data = EmployeeAppraisal::with('Details.Target')->find($id);
+
+        return view('apps.show.employeeAppraisal',compact('data'));
+    }
+
+    public function appraisalProcess($id)
+    {
+        $data = EmployeeAppraisal::with('Details.Target')->find($id);
+
+        return view('apps.show.employeeAppraisal',compact('data'));
+    }
+
+    public function targetEdit($id)
+    {
+        $data = EmployeeAppraisal::with('Details.Target')->find($id);
+        
+        return view('apps.input.employeeAppraisal',compact('data'));
+    }
+
+    public function targetChange($id)
+    {
+        $data = AppraisalTarget::with('Data.Appraisal')->find($id);
+        
+        return view('apps.edit.employeeTarget',compact('data'))->renderSections()['content'];
+    }
+
+    public function targetUpdate(Request $request,$id)
+    {
+        
+    }
+
+    public function appraisalUpdate()
+    {
+
     }
 
     public function bulletinIndex()

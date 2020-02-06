@@ -124,6 +124,11 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::get('human-resources/leave','Apps\HumanResourcesController@employeeLeave')->name('employeeLeave.index');
 
 	Route::get('human-resources/appraisal','Apps\HumanResourcesController@appraisalIndex')->name('appraisal.index');
+	Route::get('human-resources/appraisal/show/{id}','Apps\HumanResourcesController@appraisalShow')->name('appraisal.show');
+	Route::get('human-resources/appraisal/edit/{id}','Apps\HumanResourcesController@targetEdit')->name('appraisal.edit');
+	Route::get('human-resources/appraisal/target/edit/{id}','Apps\HumanResourcesController@targetChange')->name('appraisalTarget.edit');
+	Route::post('human-resources/appraisal/target/update/{id}','Apps\HumanResourcesController@targetUpdate')->name('appraisalTarget.update');
+	Route::post('human-resources/appraisal/update/{id}','Apps\HumanResourcesController@appraisalUpdate')->name('appraisal.update');
 
 	Route::get('human-resources/salary','Apps\HumanResourcesController@salaryIndex')->name('salary.index');
 	Route::get('human-resources/salary/create','Apps\HumanResourcesController@salaryCreate')->name('salary.create');

@@ -180,7 +180,7 @@
             </ul>
           </li>
           @endif
-          @if(\Route::is(['hr.index','employee.index','employee.create','employee.edit','attendance.index','request.index','appraisal.index','salary.index','bulletin.index','knowledge.index','bulletin.create','bulletin.edit','bulletin.show','knowledge.create','knowledge.edit','knowledge.show','attendance.search','salary.create','employeeLeave.index']))
+          @if(\Route::is(['hr.index','employee.index','employee.create','employee.edit','attendance.index','request.index','appraisal.index','appraisal.show','salary.index','bulletin.index','knowledge.index','bulletin.create','bulletin.edit','bulletin.show','knowledge.create','knowledge.edit','knowledge.show','attendance.search','salary.create','employeeLeave.index','appraisal.edit']))
           <li class="nav-item {{set_open(['employee.index','employee.create','employee.edit']) }}">
             <a href="{{ route('employee.index') }}" class="nav-link {{set_active('employee.index','employee.create','employee.edit') }}">
               <i class="nav-icon fas fa-users-cog"></i>
@@ -226,8 +226,8 @@
               </p>
             </a>
           </li>
-          <li class="nav-item {{set_open('appraisal.index') }}">
-            <a href="{{ route('appraisal.index') }}" class="nav-link {{set_active('appraisal.index') }}">
+          <li class="nav-item {{set_open(['appraisal.index','appraisal.show','appraisal.edit']) }}">
+            <a href="{{ route('appraisal.index') }}" class="nav-link {{set_active(['appraisal.index','appraisal.show','appraisal.edit']) }}">
               <i class="nav-icon fas fa-clipboard-check"></i>
               <p>
                 Appraisal

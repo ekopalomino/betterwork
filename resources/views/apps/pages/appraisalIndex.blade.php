@@ -7,87 +7,52 @@ Better Work Indonesia | Employee Appraisal
 	<div class="container-fluid">
       	<div class="row mb-2">
        		<div class="col-sm-6">
-          		<h1>Employee Appraisal</h1>
+          		<h1>Employee Appraisal Data</h1>
        		</div>
        	</div>
     </div>
 </section>
 <section class="content">
 	<div class="card">
-		<div class="card-header">
-			<h3 class="card-title">Appraisal Data</h3>
-		</div>
 		<div class="card-body p-0">
 			<table class="table table-striped projects">
 				<thead>
-                  	<tr>
-                      	<th style="width: 1%">
-                        	#
-                      	</th>
-                      	<th style="width: 20%">
-                        	Appraisal Period
-                      	</th>
-                      	<th style="width: 30%">
-                        	Employee
-                      	</th>
-                      	<th>
-                        	Appraisal Progress
-                      	</th>
-                      	<th style="width: 8%" class="text-center">
-                        	Status
-                      	</th>
-                      	<th style="width: 20%">
-                      	</th>
-                  	</tr>
-              	</thead>
-              	<tbody>
-              		<tr>
-              			<td>
-              				1
-              			</td>
-              			<td>
-              				2019
-              			</td>
-              			<td>
-              				<ul class="list-inline">
-              					<li class="list-inline-item">
-                                	<img alt="Avatar" class="table-avatar" src="{{ asset('public/bower_components/admin-lte/dist/img/user2-160x160.jpg') }}">
-                              	</li>
-                            </ul>
-              			</td>
-              			<td class="project_progress">
-              				<div class="progress progress-sm">
-                            	<div class="progress-bar bg-green" role="progressbar" aria-volumenow="57" aria-volumemin="0" aria-volumemax="100" style="width: 57%">
-                              	</div>
-                          	</div>
-                          	<small>
-                            	57% Complete
-                          	</small>
-                        </td>
-                        <td class="project-state">
-                        	<span class="badge badge-success">On Progress</span>
-                      	</td>
-                      	<td class="project-actions text-right">
-                        	<a class="btn btn-primary btn-sm" href="#">
-                            	<i class="fas fa-folder">
-                              	</i>
-                              	View
-                          	</a>
-                          	<a class="btn btn-info btn-sm" href="#">
-                            	<i class="fas fa-pencil-alt">
-                              	</i>
-                              	Edit
-                          	</a>
-                          	<a class="btn btn-danger btn-sm" href="#">
-                            	<i class="fas fa-trash">
-                              	</i>
-                              	Delete
-                          	</a>
-                      	</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+         	<tr>
+           	<th style="width: 1%">No</th>
+            <th style="width: 20%">Appraisal Type</th>
+            <th>Appraisal Period</th>
+            <th>Direct Subordinate</th>
+            <th style="width: 30%">Appraisal Progress</th>
+            <th style="width: 8%">Status</th>
+            <th style="width: 20%"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach($data as $key=>$value)
+        	<tr>
+        		<td>{{ $key+1 }}</td>
+            <td>{{ $value->Types->name }}</td>
+            <td>{{date("Y",strtotime($value->appraisal_period)) }}</td>
+            <td><img src="http://betterwork.local/public/employees/{{ $value->Parent->picture }}" class="img-circle elevation-2" title="{{$value->Parent->first_name}} {{$value->Parent->last_name}}" style="width: 50px; height: 50px;"></td>
+            <td></td>
+            <td>{{ $value->Statuses->name }}</td>
+            <td>
+                <div class="btn-group">
+					<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Action
+					</button>
+					<div class="dropdown-menu" role="menu">
+						<a class="dropdown-item" href="{{ route('appraisal.show',$value->id) }}">View Appraisal</a>
+						<a class="dropdown-item" href="{{ route('appraisal.edit',$value->id) }}">Edit Appraisal</a>
+						<a class="dropdown-item" href="{{ route('myAppraisal.show',$value->id) }}">Close Appraisal</a>
+					</div>
+                </div>
+            </td>
+          </tr>
+          @endforeach
+        </tbody>
+      </table>
     </div>
+  </div>
 </section>
 @endsection
