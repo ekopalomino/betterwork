@@ -49,4 +49,9 @@ class EmployeeAppraisal extends Model
     {
         return $this->hasMany(EmployeeTraining::class,'appraisal_id');
     }
+
+    public function Comments()
+    {
+        return $this->hasMany(AppraisalComment::class,'appraisal_id');
+    }
 }

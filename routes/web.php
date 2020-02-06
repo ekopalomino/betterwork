@@ -163,6 +163,8 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::get('my-menu/appraisal/create','Apps\UserMenuController@appraisalCreate')->name('myAppraisal.create');
 	Route::post('my-menu/appraisal/store','Apps\UserMenuController@appraisalStore')->name('myAppraisal.store');
 	Route::get('my-menu/appraisal/add-detail/{id}','Apps\UserMenuController@appraisalDetail')->name('myAppraisal.detail');
+	Route::get('my-menu/appraisal/add-detail/comment/{id}','Apps\UserMenuController@appraisalComment')->name('myAppraisal.comment');
+	Route::post('my-menu/appraisal/add-detail/comment/store','Apps\UserMenuController@commentStore')->name('myAppraisalComment.store');
 	Route::get('my-menu/appraisal/add-target/create/{id}','Apps\UserMenuController@targetCreate')->name('myTarget.create');
 	Route::get('my-menu/appraisal/add-target/development/create/{id}','Apps\UserMenuController@developmentCreate')->name('myDevelopment.create');
 	Route::post('my-menu/appraisal/add-target/store','Apps\UserMenuController@targetStore')->name('myTarget.store');

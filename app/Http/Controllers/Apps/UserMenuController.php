@@ -20,6 +20,8 @@ use iteos\Models\GrievanceCategory;
 use iteos\Models\EmployeeAppraisal;
 use iteos\Models\AppraisalData;
 use iteos\Models\AppraisalTarget;
+use iteos\Models\AppraisalComment;
+use iteos\Models\AppraisalAdditionalRole;
 use iteos\Models\Bulletin;
 use iteos\Models\KnowledgeBase;
 use Auth;
@@ -358,6 +360,25 @@ class UserMenuController extends Controller
         $data = EmployeeAppraisal::with('Details.Target')->find($id);
         
         return view('apps.input.myAppraisalDetail',compact('data'));
+    }
+
+    public function appraisalComment($id)
+    {
+        $data = AppraisalData::with('Appraisal')->find($id);
+
+        return view('apps.input.myAppComment',compact('data'))->renderSections()['content'];
+    }
+
+    public function commentStore(Request $request)
+    {
+        $data = AppraisalComment::create([
+            'appraisal_id' => $request->input('appraisal_id'),
+            'data_id' => $request->input('data_id'),
+            'comment_by' => Auth()->user()->employee_id,
+            'comments' => $request->input('comments'),
+        ]);
+
+        return redirect()->back();
     }
 
     public function targetCreate($id)

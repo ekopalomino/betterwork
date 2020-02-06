@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTargetAchievementsTable extends Migration
+class CreateAppraisalSoftGoalsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,12 @@ class CreateTargetAchievementsTable extends Migration
      */
     public function up()
     {
-        Schema::create('target_achievements', function (Blueprint $table) {
+        Schema::create('appraisal_soft_goals', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->uuid('appraisal_id');
+            $table->string('competency');
+            $table->text('notes');
+            $table->foreign('appraisal_id')->references('id')->on('employee_appraisals')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -26,6 +30,6 @@ class CreateTargetAchievementsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('target_achievements');
+        Schema::dropIfExists('appraisal_soft_goals');
     }
 }

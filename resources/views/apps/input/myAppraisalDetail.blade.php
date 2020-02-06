@@ -39,8 +39,11 @@ Better Work Indonesia | Create New Appraisal Target
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group">
-                            <button type="button" href="#" value="{{ action('Apps\UserMenuController@targetCreate',['id'=>$detail->id]) }}" class="btn btn-primary modalLg" data-toggle="modal" data-target="#modalLg">
+                            <button type="button" href="#" value="{{ action('Apps\UserMenuController@targetCreate',['id'=>$detail->id]) }}" class="btn btn-sm btn-primary modalLg" data-toggle="modal" data-target="#modalLg">
 		                  		Add New
+		                	</button>
+							<button type="button" href="#" value="{{ action('Apps\UserMenuController@appraisalComment',['id'=>$detail->id]) }}" class="btn btn-sm btn-info modalLg" data-toggle="modal" data-target="#modalLg">
+		                  		Add Comment
 		                	</button>
                         </div>
                     </div>
@@ -71,6 +74,7 @@ Better Work Indonesia | Create New Appraisal Target
 		</div>
 		@endforeach
 		<a button type="button" href="{{ route('myDevelopment.create',$data->id) }}" class="btn btn-info">Add Development Objectives</a>
+		<br>
 	</div>
 </section>
 @endsection

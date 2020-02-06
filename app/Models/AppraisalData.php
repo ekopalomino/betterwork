@@ -23,4 +23,9 @@ class AppraisalData extends Model
     {
         return $this->hasMany(AppraisalTarget::class,'data_id','id');
     }
+
+    public function Expects()
+    {
+        return $this->hasMany(AppraisalComment::class,'data_id');
+    }
 }
