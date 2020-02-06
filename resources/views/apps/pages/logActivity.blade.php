@@ -41,7 +41,7 @@ Better Work Indonesia | Log Activity
                 <td>{{ $log->subject }}</td>
                 <td class="text-success">{{ $log->url }}</td>
                 <td class="text-danger">{{ $log->ip }}</td>
-                <td><span class="badge badge-danger">{{ $log->creator->name }}</span></td>
+                <td><span class="badge badge-danger">{{ $log->Creator->name }}</span></td>
                 <td>{{date("d F Y H:i",strtotime($log->created_at)) }}</td>
               </tr>
               @endforeach

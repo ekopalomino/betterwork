@@ -90,12 +90,20 @@ Better Work Indonesia | My Leave Request
           	</tr>
           </thead>
           <tbody>
-            @foreach($data as $key=>$value)
+            @foreach($details as $key=>$value)
           	<tr>
           		<td>{{ $key+1 }}</td>
           		<td>{{date("d F Y H:i",strtotime($value->leave_start)) }}</td>
               <td>{{date("d F Y H:i",strtotime($value->leave_end)) }}</td>
-            	<td>{{ $value->Statuses->name }}</td>
+            	<td>
+                  @if(($value->status_id) == 'b0a0c17d-e56a-41a7-bfb0-bd8bdc60a7be')
+                  <span class="badge badge-info">{{ $value->Statuses->name }}</span>
+                  @elseif(($value->status_id) == 'ca52a2ce-5c37-48ce-a7f2-0fd5311860c2')
+                  <span class="badge badge-success">{{ $value->Statuses->name }}</span>
+                  @else
+                  <span class="badge badge-danger">{{ $value->Statuses->name }}</span>
+                  @endif
+              </td>
             	<td>{{date("d F Y H:i",strtotime($value->created_at)) }}</td>
               <td>{{date("d F Y H:i",strtotime($value->updated_at)) }}</td>
             </tr>

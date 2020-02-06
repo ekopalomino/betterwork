@@ -11,9 +11,7 @@ class EmployeeAttendance extends Model
 
     protected $fillable = [
     	'employee_id',
-    	'clock_in',
-    	'clock_out',
-    	'notes',
+    	'working_hour',
     	'status_id',
     ];
 
@@ -27,5 +25,15 @@ class EmployeeAttendance extends Model
     public function Statuses()
     {
     	return $this->belongsTo(Status::class,'status_id');
+    }
+
+    public function Details()
+    {
+        return $this->hasMany(AttendanceTransaction::class,'attendance_id');
+    }
+
+    public function Activity()
+    {
+        return $this->hasMany(AttendanceTransaction::class,'attendance_id')->latest();
     }
 }

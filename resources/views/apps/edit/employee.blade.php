@@ -62,6 +62,10 @@ Better Work Indonesia | Update Employee
 						            </select>
 			    				</div>
 			    				<div class="form-group">
+			    					<label for="lastName">Leave Amount</label>
+			    					{!! Form::number('leave_amount', null, array('placeholder' => 'Leave','class' => 'form-control')) !!}
+			    				</div>
+			    				<div class="form-group">
 			    					<label for="firstName">First Name</label>
 			    					{!! Form::text('first_name', null, array('placeholder' => 'First Name','class' => 'form-control')) !!}
 			    				</div>

@@ -13,8 +13,10 @@ class StatusTableSeeder extends Seeder
     public function run()
     {
         $statuses = [
+            '3 Month Probation',
+            '6 Month Probation',
+            '1 Year Contract',
             'Permanent',
-            'Contract',
         ];
 
         foreach($statuses as $status) {

@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use iteos\Http\Controllers\Controller;
 use iteos\Models\Employee;
 use iteos\Models\EmployeeAttendance;
+use iteos\Models\AttendanceTransaction;
 use iteos\Models\EmployeeLeave;
+use iteos\Models\LeaveTransaction;
 use iteos\Models\LeaveType;
 use iteos\Models\EmployeeReimbursment;
 use iteos\Models\EmployeeService;
@@ -15,6 +17,13 @@ use iteos\Models\ReimbursType;
 use iteos\Models\EmployeeGrievance;
 use iteos\Models\GrievanceComment;
 use iteos\Models\GrievanceCategory;
+use iteos\Models\EmployeeAppraisal;
+use iteos\Models\AppraisalData;
+use iteos\Models\AppraisalTarget;
+use iteos\Models\AppraisalComment;
+use iteos\Models\AppraisalAdditionalRole;
+use iteos\Models\Bulletin;
+use iteos\Models\KnowledgeBase;
 use Auth;
 use Carbon\Carbon;
 
@@ -30,14 +39,18 @@ class UserMenuController extends Controller
                                         ->first();
     	$getEmployee = Employee::where('email',Auth()->user()->email)->first();
     	$getAttendance = EmployeeAttendance::where('employee_id',$getEmployee->id)->orderBy('updated_at','DESC')->first();
-    	
+        
         $tDate = Carbon::now();
         $interval = $tDate->diff($getStartDate->from);
         $totalDays = $interval->format('%a');
 
-        $getRemaining = EmployeeLeave::where('employee_id',$getEmployee->id)->where('status_id','ca52a2ce-5c37-48ce-a7f2-0fd5311860c2')->count();
+        $getRemaining = EmployeeLeave::where('employee_id',$getEmployee->id)->first();
+        $getServices = EmployeeService::where('employee_id',$getEmployee->id)->orderBy('from','ASC')->first();
+        $getSubordinate = EmployeeService::with('Parent')->where('report_to',$getEmployee->id)->get();
+        $getBulletin = Bulletin::orderBy('updated_at','DESC')->get();
+        $getKnowledge = KnowledgeBase::orderBy('updated_at','DESC')->get();
         
-    	return view('apps.pages.userHome',compact('getEmployee','getAttendance','totalDays','getRemaining'));
+    	return view('apps.pages.userHome',compact('getEmployee','getAttendance','totalDays','getRemaining','getServices','getSubordinate','getBulletin','getKnowledge'));
     }
 
     public function clockIn(Request $request)
@@ -46,24 +59,30 @@ class UserMenuController extends Controller
 
     	$clockIn = EmployeeAttendance::create([
     		'employee_id' => $getEmployee->id,
-    		'clock_in' => Carbon::now(),
     		'status_id' => 'f4f23f41-0588-4111-a881-a043cf355831',
     	]);
+
+        $attendanceIn = AttendanceTransaction::create([
+            'attendance_id' => $clockIn->id,
+            'clock_in' => Carbon::now(),
+        ]);
 
     	return redirect()->back();
     }
 
     public function clockOut(Request $request)
     {
-    	$getAttendance = EmployeeAttendance::where('employee_id',$request->input('employee_id'))
-    										 ->where('status_id','f4f23f41-0588-4111-a881-a043cf355831')
-    										 ->orderBy('updated_at','DESC')
-    										 ->first();
-    	$clockOut = $getAttendance->update([
-    										'clock_out' => Carbon::now(),
-    										'notes' => $request->input('notes'),
-    										'status_id' => '2dc764a0-f110-4985-922d-0ffb81363899'
-    									]);
+        $getEmployee = Employee::where('email',Auth()->user()->email)->first();
+        $getData = EmployeeAttendance::where('employee_id',$getEmployee->id)->orderBy('updated_at','DESC')->first();
+        $getTime = Carbon::now();
+        $clockOut = $getData->update([
+            'working_hour' => $getTime->diffInHours($getData->clock_in),
+            'status_id' => '2dc764a0-f110-4985-922d-0ffb81363899',
+        ]);
+        $attendanceOut = AttendanceTransaction::where('attendance_id',$getData->id)->update([
+            'clock_out' => $getTime,
+            'notes' => $request->input('notes'),
+        ]);
 
     	return redirect()->back();
     }
@@ -71,10 +90,11 @@ class UserMenuController extends Controller
     public function leaveIndex()
     {
     	$getEmployee = Employee::where('email',Auth()->user()->email)->first();
-    	$data = EmployeeLeave::orderBy('created_at','DESC')->get();
-    	$types = LeaveType::pluck('leave_name','id')->toArray();
-
-    	return view('apps.pages.myLeave',compact('getEmployee','data','types'));
+    	$data = EmployeeLeave::where('employee_id',$getEmployee->id)->orderBy('created_at','DESC')->first();
+        $types = LeaveType::pluck('leave_name','id')->toArray();
+        $details = LeaveTransaction::where('leave_id',$data->id)->orderBy('created_at','DESC')->get();
+        
+    	return view('apps.pages.myLeave',compact('getEmployee','details','types'));
     }
 
     public function leaveRequest(Request $request)
@@ -85,16 +105,20 @@ class UserMenuController extends Controller
             'notes' => 'required',
         ]);
     	$dates = explode('-',$request->input('request_period'));
-
-    	$data = EmployeeLeave::create([
-    		'employee_id' => $request->input('employee_id'),
-    		'leave_type' => $request->input('request_type'),
-    		'notes' => $request->input('notes'),
-    		'leave_start' => Carbon::parse($dates[0]),
-    		'leave_end' => Carbon::parse($dates[1]),
-    		'status_id' => 'b0a0c17d-e56a-41a7-bfb0-bd8bdc60a7be',
-    	]);
-
+        $amount = date_diff(date_create($dates[0]),date_create($dates[1]));
+        $diff = $amount->format('%d.%h');
+        
+        $data = EmployeeLeave::where('employee_id',Auth()->user()->employee_id)->where('period',Carbon::now()->year)->first();
+        $details = LeaveTransaction::create([
+            'leave_id' => $data->id,
+            'leave_type' => $request->input('request_type'),
+            'leave_start' => Carbon::parse($dates[0]),
+            'leave_end' => Carbon::parse($dates[1]),
+            'notes' => $request->input('notes'),
+            'amount_requested' => $diff,
+            'status_id' => 'b0a0c17d-e56a-41a7-bfb0-bd8bdc60a7be',
+        ]);
+    	
     	return redirect()->route('myLeave.index');
     }
 
@@ -294,5 +318,157 @@ class UserMenuController extends Controller
         ]);
 
         return redirect()->route('myGrievance.index');
+    }
+
+    public function appraisalIndex()
+    {
+        $data = EmployeeAppraisal::where('employee_id',Auth()->user()->employee_id)->orderBy('created_at','DESC')->get();
+
+        return view('apps.pages.myAppraisal',compact('data'));
+    }
+
+    public function appraisalCreate()
+    {
+        return view('apps.input.myAppraisal');
+    }
+
+    public function appraisalStore(Request $request)
+    {
+        $getSupervisor = EmployeeService::where('employee_id',Auth()->user()->employee_id)->where('is_active','1')->first();
+        $input = ([
+            'employee_id' => Auth()->user()->employee_id,
+            'supervisor_id' => $getSupervisor->report_to,
+            'appraisal_type' => $request->input('appraisal_type'),
+            'appraisal_period' => $request->input('period'),
+            'status_id' => '1f2967a5-9a88-4d44-a66b-5339c771aca0',
+        ]);
+        $data = EmployeeAppraisal::create($input);
+        $items = $request->kpi;
+        foreach($items as $index=>$item)
+        {
+            $details = AppraisalData::create([
+                'appraisal_id' => $data->id,
+                'indicator' => $item,
+            ]);
+        }
+
+        return redirect()->route('myAppraisal.detail',$data->id); 
+    }
+
+    public function appraisalDetail($id)
+    {
+        $data = EmployeeAppraisal::with('Details.Target')->find($id);
+        
+        return view('apps.input.myAppraisalDetail',compact('data'));
+    }
+
+    public function appraisalComment($id)
+    {
+        $data = AppraisalData::with('Appraisal')->find($id);
+
+        return view('apps.input.myAppComment',compact('data'))->renderSections()['content'];
+    }
+
+    public function commentStore(Request $request)
+    {
+        $data = AppraisalComment::create([
+            'appraisal_id' => $request->input('appraisal_id'),
+            'data_id' => $request->input('data_id'),
+            'comment_by' => Auth()->user()->employee_id,
+            'comments' => $request->input('comments'),
+        ]);
+
+        return redirect()->back();
+    }
+
+    public function targetCreate($id)
+    {
+        $data = AppraisalData::with('Appraisal')->find($id);
+
+        return view('apps.input.myTarget',compact('data'))->renderSections()['content'];
+    }
+
+    public function targetStore(Request $request)
+    {
+        $target = AppraisalTarget::create([
+            'data_id' => $request->input('data_id'),
+            'appraisal_id' => $request->input('appraisal_id'),
+            'target' => $request->input('target'),
+            'job_weight' => $request->input('weight'), 
+        ]);
+
+        return redirect()->back();
+    }
+
+    public function developmentCreate($id)
+    {
+        $data = EmployeeAppraisal::find($id);
+        
+        return view('apps.input.myDevelopment',compact('data'));
+    }
+
+    public function developmentStore(Request $request)
+    {
+        $courses = $request->course;
+        $outcomes = $request->outcome;
+        $appraisals = $request->appraisal_id;
+        foreach($courses as $index=>$course) {
+            $training = EmployeeTraining::create([
+                'employee_id' => Auth()->user()->employee_id,
+                'training_title' => $course,
+                'appraisal_id' => $appraisals[$index],
+                'training_outcome' => $outcomes[$index],
+                'status' => 'b0a0c17d-e56a-41a7-bfb0-bd8bdc60a7be',
+            ]);
+        }
+
+        return redirect()->route('myAppraisal.index');
+    }
+
+    public function appraisalShow($id)
+    {
+        $data = EmployeeAppraisal::with('Details.Target')->find($id);
+
+        return view('apps.show.myAppraisal',compact('data'));
+    }
+
+    public function appraisalEdit($id)
+    {
+        $data = EmployeeAppraisal::with('Details.Target')->find($id);
+
+        return view('apps.edit.myAppraisal',compact('data'));
+    }
+
+    public function targetEdit($id)
+    {
+        $data = AppraisalTarget::with('Data.Appraisal')->find($id);
+        
+        return view('apps.edit.myTarget',compact('data'))->renderSections()['content'];
+    }
+
+    public function appraisalUpdate(Request $request,$id)
+    {
+        $data = AppraisalTarget::with('Data.Appraisal')->find($id);
+        $sum = AppraisalTarget::where('appraisal_id',$data->appraisal_id)->sum('job_weight');
+        
+        $weight = ($request->input('weight_real'))/100;
+        $progress = ($data->job_weight) * ($weight);
+        $input = ([
+            'total' => $sum,
+            'progress_single' => $progress,
+            'progress_total' => $sum - $progress,
+            'percent_total' => round(($progress)/$sum,2),
+        ]);
+        dd($input);
+        $data->update([
+            'target_real' => $request->input('target_real'),
+            'weight_real' => $request->input('weight_real'),
+        ]);
+        $source = EmployeeAppraisal::where('id',$data->appraisal_id)->where('status_id','c0c2bde9-b149-489c-9e0d-a10e4d2fd661')->first();
+        $source->update([
+            'progress' => round(($progress)/$sum,2),
+        ]);
+        
+        return redirect()->back();
     }
 }

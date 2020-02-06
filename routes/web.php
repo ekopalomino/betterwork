@@ -121,9 +121,14 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::get('human-resources/attendance/request','Apps\HumanResourcesController@requestIndex')->name('request.index');
 	Route::get('human-resources/attendance/request/show/{id}','Apps\HumanResourcesController@requestShow')->name('request.show');
 	Route::post('human-resources/attendance/request/update/{id}','Apps\HumanResourcesController@requestUpdate')->name('request.update');
-	
+	Route::get('human-resources/leave','Apps\HumanResourcesController@employeeLeave')->name('employeeLeave.index');
 
 	Route::get('human-resources/appraisal','Apps\HumanResourcesController@appraisalIndex')->name('appraisal.index');
+	Route::get('human-resources/appraisal/show/{id}','Apps\HumanResourcesController@appraisalShow')->name('appraisal.show');
+	Route::get('human-resources/appraisal/edit/{id}','Apps\HumanResourcesController@targetEdit')->name('appraisal.edit');
+	Route::get('human-resources/appraisal/target/edit/{id}','Apps\HumanResourcesController@targetChange')->name('appraisalTarget.edit');
+	Route::post('human-resources/appraisal/target/update/{id}','Apps\HumanResourcesController@targetUpdate')->name('appraisalTarget.update');
+	Route::post('human-resources/appraisal/update/{id}','Apps\HumanResourcesController@appraisalUpdate')->name('appraisal.update');
 
 	Route::get('human-resources/salary','Apps\HumanResourcesController@salaryIndex')->name('salary.index');
 	Route::get('human-resources/salary/create','Apps\HumanResourcesController@salaryCreate')->name('salary.create');
@@ -154,6 +159,21 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::get('my-menu/grievance/view/{id}','Apps\UserMenuController@grievanceShow')->name('myGrievance.show');
 	Route::post('my-menu/grievance/respond/{id}','Apps\UserMenuController@grievanceComment')->name('myGrievance.respond');
 	Route::post('my-menu/grievance/rate/{id}','Apps\UserMenuController@grievanceRate')->name('myGrievance.rate');
+	Route::get('my-menu/appraisal','Apps\UserMenuController@appraisalIndex')->name('myAppraisal.index');
+	Route::get('my-menu/appraisal/create','Apps\UserMenuController@appraisalCreate')->name('myAppraisal.create');
+	Route::post('my-menu/appraisal/store','Apps\UserMenuController@appraisalStore')->name('myAppraisal.store');
+	Route::get('my-menu/appraisal/add-detail/{id}','Apps\UserMenuController@appraisalDetail')->name('myAppraisal.detail');
+	Route::get('my-menu/appraisal/add-detail/comment/{id}','Apps\UserMenuController@appraisalComment')->name('myAppraisal.comment');
+	Route::post('my-menu/appraisal/add-detail/comment/store','Apps\UserMenuController@commentStore')->name('myAppraisalComment.store');
+	Route::get('my-menu/appraisal/add-target/create/{id}','Apps\UserMenuController@targetCreate')->name('myTarget.create');
+	Route::get('my-menu/appraisal/add-target/development/create/{id}','Apps\UserMenuController@developmentCreate')->name('myDevelopment.create');
+	Route::post('my-menu/appraisal/add-target/store','Apps\UserMenuController@targetStore')->name('myTarget.store');
+	Route::post('my-menu/appraisal/add-target/development/store','Apps\UserMenuController@developmentStore')->name('myDevelopment.store');
+	Route::get('my-menu/appraisal/show/{id}','Apps\UserMenuController@appraisalShow')->name('myAppraisal.show');
+	Route::get('my-menu/appraisal/edit/{id}','Apps\UserMenuController@appraisalEdit')->name('myAppraisal.edit');
+	Route::get('my-menu/appraisal/target/edit/{id}','Apps\UserMenuController@targetEdit')->name('myTarget.edit');
+	Route::post('my-menu/appraisal/update-target/update/{id}','Apps\UserMenuController@appraisalUpdate')->name('myTarget.update');
+
 });
 
 

@@ -72,9 +72,19 @@ Better Work Indonesia | Employee Attendance
                 <td>{{ $value->Employees->first_name }} {{ $value->Employees->last_name }}</td>
                 <td>{{date("d F Y",strtotime($value->created_at)) }}</td>
                 <td>{{date("H:i",strtotime($value->clock_in)) }}</td>
-                <td>{{date("H:i",strtotime($value->clock_out)) }}</td>
+                <td>
+                    @if(!empty($value->clock_out))
+                    {{date("H:i",strtotime($value->clock_out)) }}
+                    @endif
+                </td>
                 <td>{{ $value->notes }}</td>
-                <td>{{ $value->Statuses->name }}</td>
+                <td>
+                    @if(($value->status_id) == 'f4f23f41-0588-4111-a881-a043cf355831')
+                    <span class="badge badge-danger">{{ $value->Statuses->name }}</span>
+                    @else
+                    <span class="badge badge-success">{{ $value->Statuses->name }}</span>
+                    @endif
+                </td>
               </tr>
               @endforeach
             </tbody>

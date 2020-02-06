@@ -27,6 +27,7 @@ class Employee extends Model
         'tax_no',
         'availability',
         'contract_status',
+        'leave_amount',
     	'created_by',
     	'updated_by',
     ];
