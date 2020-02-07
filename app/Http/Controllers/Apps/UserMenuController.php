@@ -471,4 +471,23 @@ class UserMenuController extends Controller
         
         return redirect()->back();
     }
+
+    public function trainingIndex()
+    {
+        $data = EmployeeTraining::where('employee_id',Auth()->user()->employee_id)->get();
+
+        return view('apps.pages.myTraining',compact('data'));
+    }
+
+    public function trainingEdit($id)
+    {
+        $data = EmployeeTraining::find($id);
+
+        return view('apps.edit.myTraining',compact('data'))->renderSections()['content'];
+    }
+
+    public function trainingUpdate(Request $request,$id)
+    {
+        
+    }
 }

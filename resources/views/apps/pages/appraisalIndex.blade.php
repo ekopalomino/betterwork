@@ -44,7 +44,6 @@ Better Work Indonesia | Employee Appraisal
 					<div class="dropdown-menu" role="menu">
 						<a class="dropdown-item" href="{{ route('appraisal.show',$value->id) }}">View Appraisal</a>
 						<a class="dropdown-item" href="{{ route('appraisal.edit',$value->id) }}">Edit Appraisal</a>
-						<a class="dropdown-item" href="{{ route('myAppraisal.show',$value->id) }}">Close Appraisal</a>
 					</div>
                 </div>
             </td>

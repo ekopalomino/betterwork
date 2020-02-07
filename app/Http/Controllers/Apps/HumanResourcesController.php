@@ -1024,6 +1024,7 @@ class HumanResourcesController extends Controller
 
 
 
+
     public function salaryIndex()
     {
         return view('apps.pages.salaryIndex');

@@ -28,9 +28,9 @@
             </a>
           </li>
           @endcan
-          @if(\Route::is(['userHome.index','myLeave.index','myReimburs.index','myGrievance.index','myGrievance.create','myGrievance.edit','myGrievance.show','myAppraisal.index','myAppraisal.create','myAppraisal.detail','myDevelopment.create','myAppraisal.show','myAppraisal.edit']))
-          <li class="nav-item has-treeview {{set_open(['myLeave.index','myReimburs.index','myGrievance.index','myGrievance.create','myGrievance.edit','myGrievance.show','myAppraisal.index','myAppraisal.create','myAppraisal.detail','myDevelopment.create','myAppraisal.edit','myAppraisal.show']) }}">
-            <a href="#" class="nav-link {{set_active(['myLeave.index','myReimburs.index','myGrievance.index','myGrievance.create','myGrievance.edit','myGrievance.show','myAppraisal.index','myAppraisal.create','myAppraisal.detail','myDevelopment.create','myAppraisal.show','myAppraisal.edit']) }}">
+          @if(\Route::is(['userHome.index','myLeave.index','myReimburs.index','myGrievance.index','myGrievance.create','myGrievance.edit','myGrievance.show','myAppraisal.index','myAppraisal.create','myAppraisal.detail','myDevelopment.create','myAppraisal.show','myAppraisal.edit','myTraining.index']))
+          <li class="nav-item has-treeview {{set_open(['myLeave.index','myReimburs.index','myGrievance.index','myGrievance.create','myGrievance.edit','myGrievance.show','myAppraisal.index','myAppraisal.create','myAppraisal.detail','myDevelopment.create','myAppraisal.edit','myAppraisal.show','myAppraisal.edit','myTraining.index']) }}">
+            <a href="#" class="nav-link {{set_active(['myLeave.index','myReimburs.index','myGrievance.index','myGrievance.create','myGrievance.edit','myGrievance.show','myAppraisal.index','myAppraisal.create','myAppraisal.detail','myDevelopment.create','myAppraisal.show','myAppraisal.edit','myTraining.index']) }}">
               <i class="nav-icon fas fa-user"></i>
               <p>
                 My Menu
@@ -63,7 +63,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{ route('myTraining.index') }}" class="nav-link {{set_active('myTraining.index') }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Training</p>
                 </a>

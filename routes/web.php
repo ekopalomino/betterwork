@@ -187,6 +187,9 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::get('my-menu/appraisal/target/edit/{id}','Apps\UserMenuController@targetEdit')->name('myTarget.edit');
 	Route::post('my-menu/appraisal/update-target/update/{id}','Apps\UserMenuController@appraisalUpdate')->name('myTarget.update');
 
+	Route::get('my-menu/training','Apps\UserMenuController@trainingIndex')->name('myTraining.index');
+	Route::get('my-menu/training/edit/{id}','Apps\UserMenuController@trainingEdit')->name('myTraining.edit');
+
 });
 
 
