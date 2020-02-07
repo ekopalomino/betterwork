@@ -100,6 +100,8 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::get('human-resources/employee/service/edit/{id}','Apps\HumanResourcesController@serviceEdit')->name('employeeService.edit');
 	Route::post('human-resources/employee/service/update/{id}','Apps\HumanResourcesController@serviceUpdate')->name('employeeService.update');
 	
+	Route::get('human-resources/employee/training','Apps\HumanResourcesController@trainingIndex')->name('training.index');
+
 	Route::get('human-resources/bulletin','Apps\HumanResourcesController@bulletinIndex')->name('bulletin.index');
 	Route::get('human-resources/bulletin/create','Apps\HumanResourcesController@bulletinCreate')->name('bulletin.create');
 	Route::post('human-resources/bulletin/store','Apps\HumanResourcesController@bulletinStore')->name('bulletin.store');
@@ -128,6 +130,19 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::get('human-resources/appraisal/edit/{id}','Apps\HumanResourcesController@targetEdit')->name('appraisal.edit');
 	Route::get('human-resources/appraisal/target/edit/{id}','Apps\HumanResourcesController@targetChange')->name('appraisalTarget.edit');
 	Route::post('human-resources/appraisal/target/update/{id}','Apps\HumanResourcesController@targetUpdate')->name('appraisalTarget.update');
+	Route::post('human-resources/appraisal/target/delete/{id}','Apps\HumanResourcesController@targetDestroy')->name('appraisalTarget.destroy');
+	Route::get('human-resources/appraisal/target/soft-goal/create/{id}','Apps\HumanResourcesController@softGoalCreate')->name('softGoal.create');
+	Route::post('human-resources/appraisal/target/soft-goal/store','Apps\HumanResourcesController@softGoalStore')->name('softGoal.store');
+	Route::get('human-resources/appraisal/target/soft-goal/edit/{id}','Apps\HumanResourcesController@softGoalEdit')->name('softGoal.edit');
+	Route::post('human-resources/appraisal/target/soft-goal/update/{id}','Apps\HumanResourcesController@softGoalUpdate')->name('softGoal.update');
+	Route::post('human-resources/appraisal/target/soft-goal/delete/{id}','Apps\HumanResourcesController@softGoalDelete')->name('softGoal.destroy');
+
+	Route::get('human-resources/appraisal/target/additional-role/create/{id}','Apps\HumanResourcesController@additionalRoleCreate')->name('additionalRole.create');
+	Route::post('human-resources/appraisal/target/additional-role/store','Apps\HumanResourcesController@additionalRoleStore')->name('additionalRole.store');
+	Route::get('human-resources/appraisal/target/additional-role/edit/{id}','Apps\HumanResourcesController@additionalRoleEdit')->name('additionalRole.edit');
+	Route::post('human-resources/appraisal/target/additional-role/update/{id}','Apps\HumanResourcesController@additionalRoleUpdate')->name('additionalRole.update');
+	Route::post('human-resources/appraisal/target/additional-role/delete/{id}','Apps\HumanResourcesController@additionalRoleDelete')->name('additionalRole.destroy');
+
 	Route::post('human-resources/appraisal/update/{id}','Apps\HumanResourcesController@appraisalUpdate')->name('appraisal.update');
 
 	Route::get('human-resources/salary','Apps\HumanResourcesController@salaryIndex')->name('salary.index');
@@ -135,6 +150,7 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::post('human-resources/salary/store','Apps\HumanResourcesController@salaryProcess')->name('salary.store');
 
 	Route::get('grievance/database','Apps\GrievanceController@grievanceData')->name('grievanceData.index');
+	Route::get('grievance/manual-input','Apps\GrievanceController@grievanceCreate')->name('grievanceData.create');
 	Route::get('grievance/database/show/{id}','Apps\GrievanceController@grievanceShow')->name('grievanceData.show');
 	Route::get('grievance/database/edit/{id}','Apps\GrievanceController@grievanceEdit')->name('grievanceData.edit');
 	Route::post('grievance/database/update/{id}','Apps\GrievanceController@grievanceUpdate')->name('grievanceData.update');
@@ -173,6 +189,9 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::get('my-menu/appraisal/edit/{id}','Apps\UserMenuController@appraisalEdit')->name('myAppraisal.edit');
 	Route::get('my-menu/appraisal/target/edit/{id}','Apps\UserMenuController@targetEdit')->name('myTarget.edit');
 	Route::post('my-menu/appraisal/update-target/update/{id}','Apps\UserMenuController@appraisalUpdate')->name('myTarget.update');
+
+	Route::get('my-menu/training','Apps\UserMenuController@trainingIndex')->name('myTraining.index');
+	Route::get('my-menu/training/edit/{id}','Apps\UserMenuController@trainingEdit')->name('myTraining.edit');
 
 });
 

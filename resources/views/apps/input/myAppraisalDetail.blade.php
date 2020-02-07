@@ -42,9 +42,6 @@ Better Work Indonesia | Create New Appraisal Target
                             <button type="button" href="#" value="{{ action('Apps\UserMenuController@targetCreate',['id'=>$detail->id]) }}" class="btn btn-sm btn-primary modalLg" data-toggle="modal" data-target="#modalLg">
 		                  		Add New
 		                	</button>
-							<button type="button" href="#" value="{{ action('Apps\UserMenuController@appraisalComment',['id'=>$detail->id]) }}" class="btn btn-sm btn-info modalLg" data-toggle="modal" data-target="#modalLg">
-		                  		Add Comment
-		                	</button>
                         </div>
                     </div>
                 </div>

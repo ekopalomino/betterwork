@@ -181,7 +181,7 @@ class UserMenuController extends Controller
     	$getEmployee = Employee::where('email',Auth()->user()->email)->first();
     	$types = GrievanceCategory::pluck('category_name','id')->toArray();
 
-    	return view('apps.input.myGrievance',compact('getEmployee','types'));
+    	return view('apps.input.employeeGrievance',compact('getEmployee','types'));
     }
 
     public function grievanceStore(Request $request)
@@ -470,5 +470,54 @@ class UserMenuController extends Controller
         ]);
         
         return redirect()->back();
+    }
+
+    public function trainingIndex()
+    {
+        $data = EmployeeTraining::where('employee_id',Auth()->user()->employee_id)->get();
+
+        return view('apps.pages.myTraining',compact('data'));
+    }
+
+    public function trainingEdit($id)
+    {
+        $data = EmployeeTraining::find($id);
+
+        return view('apps.edit.myTraining',compact('data'))->renderSections()['content'];
+    }
+
+    public function trainingUpdate(Request $request,$id)
+    {
+        $data = EmployeeTraining::find($id);
+
+        $certificate = '' ;
+        $reports = '' ;
+        $materials = '' ;
+
+        if($request->hasFile('certificate')) {
+            $uploadedFile = $request->file('certificate');
+            $certificate = $uploadedFile->store('employee_training');
+        }
+        
+
+        if($request->hasFile('reports')) {
+            $uploadedFile = $request->file('reports');
+            $reports = $uploadedFile->store('employee_training');
+        }
+        
+        
+        if($request->hasFile('materials')) {
+            $uploadedFile = $request->file('materials');
+            $materials = $uploadedFile->store('employee_training');
+        }
+        
+        
+        $data->update([
+            'certification' => $certificate,
+            'reports' => $reports,
+            'materials' => $materials,
+        ]);
+
+        return redirect()->route('myTraining.index');
     }
 }

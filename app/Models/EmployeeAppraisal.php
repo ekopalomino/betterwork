@@ -54,4 +54,14 @@ class EmployeeAppraisal extends Model
     {
         return $this->hasMany(AppraisalComment::class,'appraisal_id');
     }
+
+    public function Goals()
+    {
+        return $this->hasMany(AppraisalSoftGoal::class,'appraisal_id');
+    }
+
+    public function Roles()
+    {
+        return $this->hasMany(AppraisalAdditionalRole::class,'appraisal_id');
+    }
 }

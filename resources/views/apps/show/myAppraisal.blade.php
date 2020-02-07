@@ -57,6 +57,58 @@ Better Work Indonesia | My Appraisal Data
 		@endforeach
 		<div class="card card-primary card-outline">
 			<div class="card-body">
+				<h5>Soft Goal 
+				</h5>
+				<div class="row">
+                	<div class="col-md-12">
+                		<table id="salary" class="table table-bordered table-hover">
+                			<thead>
+                				<tr>
+                					<th>Required Competency(s)</th>
+                					<th>Notes/Comment</th>
+								</tr>
+                			</thead>
+                			<tbody>
+								@foreach($data->Goals as $goal)
+                				<tr>
+                					<td>{{ $goal->Competent->name }}</td>
+									<td>{{ $goal->notes }}</td>
+								</tr>
+								@endforeach
+                			</tbody>
+                		</table>
+                	</div>
+                </div>
+			</div>
+		</div>
+		<div class="card card-primary card-outline">
+			<div class="card-body">
+				<h5>Additional Role 
+				</h5>
+				<div class="row">
+                	<div class="col-md-12">
+                		<table id="salary" class="table table-bordered table-hover">
+                			<thead>
+                				<tr>
+                					<th>Task</th>
+                					<th>Job Detail</th>
+								</tr>
+                			</thead>
+                			<tbody>
+								@foreach($data->Roles as $role)
+                				<tr>
+                					<td>{{ $role->task }}</td>
+									<td>{{ $role->details }}</td>
+								</tr>
+								@endforeach
+                			</tbody>
+                		</table>
+                	</div>
+                </div>
+			</div>
+		</div>
+		<div class="card card-primary card-outline">
+			<div class="card-body">
 				<h5>Development Objectives</h5>
 				<div class="row">
                 	<div class="col-md-12">
