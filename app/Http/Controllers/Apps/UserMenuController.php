@@ -488,6 +488,36 @@ class UserMenuController extends Controller
 
     public function trainingUpdate(Request $request,$id)
     {
+        $data = EmployeeTraining::find($id);
+
+        $certificate = '' ;
+        $reports = '' ;
+        $materials = '' ;
+
+        if($request->hasFile('certificate')) {
+            $uploadedFile = $request->file('certificate');
+            $certificate = $uploadedFile->store('employee_training');
+        }
         
+
+        if($request->hasFile('reports')) {
+            $uploadedFile = $request->file('reports');
+            $reports = $uploadedFile->store('employee_training');
+        }
+        
+        
+        if($request->hasFile('materials')) {
+            $uploadedFile = $request->file('materials');
+            $materials = $uploadedFile->store('employee_training');
+        }
+        
+        
+        $data->update([
+            'certification' => $certificate,
+            'reports' => $reports,
+            'materials' => $materials,
+        ]);
+
+        return redirect()->route('myTraining.index');
     }
 }
