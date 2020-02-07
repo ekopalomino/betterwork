@@ -101,7 +101,7 @@ Better Work Indonesia | Employee Appraisal Data
 		<div class="card card-primary card-outline">
 			<div class="card-body">
 				<h5>Additional Role
-					<button type="button" href="#" value="{{ action('Apps\UserMenuController@targetEdit',['id'=>$item->id]) }}" class="btn btn-xs btn-success modalLg" data-toggle="modal" data-target="#modalLg">
+					<button type="button" href="#" value="{{ action('Apps\HumanResourcesController@additionalRoleCreate',['id'=>$item->id]) }}" class="btn btn-xs btn-success modalLg" data-toggle="modal" data-target="#modalLg">
 						<i class="fa fa-edit"></i>
 					</button>
 				</h5>
@@ -116,18 +116,20 @@ Better Work Indonesia | Employee Appraisal Data
 								</tr>
                 			</thead>
                 			<tbody>
+								@foreach($data->Roles as $role)
                 				<tr>
-                					<td></td>
-									<td></td>
+                					<td>{{ $role->task }}</td>
+									<td>{{ $role->details }}</td>
 									<td style="width:50px;">
-										<button type="button" href="#" value="{{ action('Apps\HumanResourcesController@targetChange',['id'=>$item->id]) }}" class="btn btn-xs btn-success modalLg" data-toggle="modal" data-target="#modalLg">
+										<button type="button" href="#" value="{{ action('Apps\HumanResourcesController@additionalRoleEdit',['id'=>$role->id]) }}" class="btn btn-xs btn-success modalLg" data-toggle="modal" data-target="#modalLg">
 											<i class="fa fa-edit"></i>
 										</button>
-										{!! Form::open(['method' => 'POST','route' => ['appraisalTarget.destroy', $item->id],'style'=>'dropdown-item','onsubmit' => 'return ConfirmSuspend()']) !!}
+										{!! Form::open(['method' => 'POST','route' => ['additionalRole.destroy', $role->id],'style'=>'dropdown-item','onsubmit' => 'return ConfirmSuspend()']) !!}
 										{!! Form::button('<i class="fa fa-times-circle"></i>',['type'=>'submit','class' => 'btn btn-xs btn-danger']) !!}
 										{!! Form::close() !!}
 									</td>
                 				</tr>
+								@endforeach
                 			</tbody>
                 		</table>
                 	</div>

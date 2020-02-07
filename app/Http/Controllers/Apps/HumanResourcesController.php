@@ -721,6 +721,50 @@ class HumanResourcesController extends Controller
         return redirect()->back();
     }
 
+    public function additionalRoleCreate($id)
+    {
+        $data = AppraisalTarget::with('Data.Appraisal')->find($id);
+
+        return view('apps.input.employeeAdditionalRole',compact('data'))->renderSections()['content'];
+    }
+
+    public function additionalRoleStore(Request $request)
+    {
+        $data = AppraisalAdditionalRole::create([
+            'appraisal_id' => $request->input('appraisal_id'),
+            'task' => $request->input('task'),
+            'details' => $request->input('details'),
+        ]);
+
+        return redirect()->back();
+    }
+
+    public function additionalRoleEdit($id)
+    {
+        $data = AppraisalAdditionalRole::find($id);
+
+        return view('apps.edit.employeeAdditionalRole',compact('data'))->renderSections()['content'];
+    }
+
+    public function additionalRoleUpdate(Request $request,$id)
+    {
+        $data = AppraisalAdditionalRole::find($id);
+        $data->update([
+            'task' => $request->input('task'),
+            'details' => $request->input('details'),
+        ]);
+
+        return redirect()->back();
+    }
+
+    public function additionalRoleDelete($id)
+    {
+        $data = AppraisalAdditionalRole::find($id);
+        $data->delete();
+
+        return redirect()->back();
+    }
+
     public function bulletinIndex()
     {
         $data = Bulletin::orderBy('updated_at','DESC')->get();
