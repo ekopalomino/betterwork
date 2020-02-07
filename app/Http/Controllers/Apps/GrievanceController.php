@@ -24,6 +24,14 @@ class GrievanceController extends Controller
     	return view('apps.pages.grievanceIndex',compact('data'));
     }
 
+    public function grievanceCreate()
+    {
+        $getEmployee = Employee::where('email',Auth()->user()->email)->first();
+        $types = GrievanceCategory::pluck('category_name','id')->toArray();
+
+        return view('apps.input.employeeGrievance',compact('getEmployee','types'));
+    }
+
     public function managementData()
     {
     	$data = EmployeeGrievance::where('status_id','ca52a2ce-5c37-48ce-a7f2-0fd5311860c2')

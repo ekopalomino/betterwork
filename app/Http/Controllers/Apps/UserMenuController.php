@@ -181,7 +181,7 @@ class UserMenuController extends Controller
     	$getEmployee = Employee::where('email',Auth()->user()->email)->first();
     	$types = GrievanceCategory::pluck('category_name','id')->toArray();
 
-    	return view('apps.input.myGrievance',compact('getEmployee','types'));
+    	return view('apps.input.employeeGrievance',compact('getEmployee','types'));
     }
 
     public function grievanceStore(Request $request)

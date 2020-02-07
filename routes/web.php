@@ -150,6 +150,7 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::post('human-resources/salary/store','Apps\HumanResourcesController@salaryProcess')->name('salary.store');
 
 	Route::get('grievance/database','Apps\GrievanceController@grievanceData')->name('grievanceData.index');
+	Route::get('grievance/manual-input','Apps\GrievanceController@grievanceCreate')->name('grievanceData.create');
 	Route::get('grievance/database/show/{id}','Apps\GrievanceController@grievanceShow')->name('grievanceData.show');
 	Route::get('grievance/database/edit/{id}','Apps\GrievanceController@grievanceEdit')->name('grievanceData.edit');
 	Route::post('grievance/database/update/{id}','Apps\GrievanceController@grievanceUpdate')->name('grievanceData.update');

@@ -304,9 +304,9 @@
             </ul>
           </li>
           @endif
-          @if(\Route::is(['grievance.index','grievanceData.index','managementGrievance.index','grievanceData.edit','grievanceData.show','managementGrievance.show']))
+          @if(\Route::is(['grievance.index','grievanceData.index','managementGrievance.index','grievanceData.edit','grievanceData.show','managementGrievance.show','grievanceData.create']))
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{{ route('grievanceData.create') }}" class="nav-link {{set_active(['grievanceData.create']) }}">
               <i class="nav-icon fas fa-edit"></i>
               <p>
                 Manual Input
