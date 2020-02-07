@@ -13,10 +13,11 @@ class StatusTableSeeder extends Seeder
     public function run()
     {
         $statuses = [
-            '3 Month Probation',
-            '6 Month Probation',
-            '1 Year Contract',
-            'Permanent',
+            'Integrity and Transparancy',
+            'Orientation to learning and sharing knowledge',
+            'Client Orientation',
+            'Takes responsibility for performance',
+            'Collaboration'
         ];
 
         foreach($statuses as $status) {

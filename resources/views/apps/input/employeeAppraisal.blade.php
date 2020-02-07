@@ -47,6 +47,9 @@ Better Work Indonesia | Employee Appraisal Data
 										<button type="button" href="#" value="{{ action('Apps\HumanResourcesController@targetChange',['id'=>$item->id]) }}" class="btn btn-xs btn-success modalLg" data-toggle="modal" data-target="#modalLg">
 											<i class="fa fa-edit"></i>
 										</button>
+										{!! Form::open(['method' => 'POST','route' => ['appraisalTarget.destroy', $item->id],'style'=>'dropdown-item','onsubmit' => 'return ConfirmSuspend()']) !!}
+										{!! Form::button('<i class="fa fa-times-circle"></i>',['type'=>'submit','class' => 'btn btn-xs btn-danger']) !!}
+										{!! Form::close() !!}
 									</td>
                 				</tr>
                 				@endforeach
@@ -60,7 +63,7 @@ Better Work Indonesia | Employee Appraisal Data
 		<div class="card card-primary card-outline">
 			<div class="card-body">
 				<h5>Soft Goal 
-					<button type="button" href="#" value="{{ action('Apps\UserMenuController@targetEdit',['id'=>$item->id]) }}" class="btn btn-xs btn-success modalLg" data-toggle="modal" data-target="#modalLg">
+					<button type="button" href="#" value="{{ action('Apps\HumanResourcesController@softGoalCreate',['id'=>$item->id]) }}" class="btn btn-xs btn-success modalLg" data-toggle="modal" data-target="#modalLg">
 						<i class="fa fa-edit"></i>
 					</button>
 				</h5>
@@ -71,13 +74,24 @@ Better Work Indonesia | Employee Appraisal Data
                 				<tr>
                 					<th>Required Competency(s)</th>
                 					<th>Notes/Comment</th>
+									<th style="width:50px;"></th>
 								</tr>
                 			</thead>
                 			<tbody>
+								@foreach($data->Goals as $goal)
                 				<tr>
-                					<td></td>
-									<td></td>
+                					<td>{{ $goal->Competent->name }}</td>
+									<td>{{ $goal->notes }}</td>
+									<td style="width:50px;">
+										<button type="button" href="#" value="{{ action('Apps\HumanResourcesController@softGoalEdit',['id'=>$goal->id]) }}" class="btn btn-xs btn-success modalLg" data-toggle="modal" data-target="#modalLg">
+											<i class="fa fa-edit"></i>
+										</button>
+										{!! Form::open(['method' => 'POST','route' => ['softGoal.destroy', $goal->id],'style'=>'dropdown-item','onsubmit' => 'return ConfirmSuspend()']) !!}
+										{!! Form::button('<i class="fa fa-times-circle"></i>',['type'=>'submit','class' => 'btn btn-xs btn-danger']) !!}
+										{!! Form::close() !!}
+									</td>
                 				</tr>
+								@endforeach
                 			</tbody>
                 		</table>
                 	</div>
@@ -98,12 +112,21 @@ Better Work Indonesia | Employee Appraisal Data
                 				<tr>
                 					<th>Task</th>
                 					<th>Job Detail</th>
+									<th style="width:50px;"></th>
 								</tr>
                 			</thead>
                 			<tbody>
                 				<tr>
                 					<td></td>
 									<td></td>
+									<td style="width:50px;">
+										<button type="button" href="#" value="{{ action('Apps\HumanResourcesController@targetChange',['id'=>$item->id]) }}" class="btn btn-xs btn-success modalLg" data-toggle="modal" data-target="#modalLg">
+											<i class="fa fa-edit"></i>
+										</button>
+										{!! Form::open(['method' => 'POST','route' => ['appraisalTarget.destroy', $item->id],'style'=>'dropdown-item','onsubmit' => 'return ConfirmSuspend()']) !!}
+										{!! Form::button('<i class="fa fa-times-circle"></i>',['type'=>'submit','class' => 'btn btn-xs btn-danger']) !!}
+										{!! Form::close() !!}
+									</td>
                 				</tr>
                 			</tbody>
                 		</table>
@@ -146,4 +169,16 @@ Better Work Indonesia | Employee Appraisal Data
 		</div>
 	</div>
 </section>
+@endsection
+@section('footer.scripts')
+<script>
+    function ConfirmSuspend()
+    {
+    var x = confirm("Data Delete?");
+    if (x)
+        return true;
+    else
+        return false;
+    }
+</script>
 @endsection

@@ -11,4 +11,9 @@ class AppraisalSoftGoal extends Model
     	'competency',
     	'notes',
     ];
+
+    public function Competent()
+    {
+    	return $this->belongsTo(Status::class,'competency');
+    }
 }

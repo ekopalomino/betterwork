@@ -128,6 +128,12 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::get('human-resources/appraisal/edit/{id}','Apps\HumanResourcesController@targetEdit')->name('appraisal.edit');
 	Route::get('human-resources/appraisal/target/edit/{id}','Apps\HumanResourcesController@targetChange')->name('appraisalTarget.edit');
 	Route::post('human-resources/appraisal/target/update/{id}','Apps\HumanResourcesController@targetUpdate')->name('appraisalTarget.update');
+	Route::post('human-resources/appraisal/target/delete/{id}','Apps\HumanResourcesController@targetDestroy')->name('appraisalTarget.destroy');
+	Route::get('human-resources/appraisal/target/soft-goal/create/{id}','Apps\HumanResourcesController@softGoalCreate')->name('softGoal.create');
+	Route::post('human-resources/appraisal/target/soft-goal/store','Apps\HumanResourcesController@softGoalStore')->name('softGoal.store');
+	Route::get('human-resources/appraisal/target/soft-goal/edit/{id}','Apps\HumanResourcesController@softGoalEdit')->name('softGoal.edit');
+	Route::post('human-resources/appraisal/target/soft-goal/update/{id}','Apps\HumanResourcesController@softGoalUpdate')->name('softGoal.update');
+	Route::post('human-resources/appraisal/target/soft-goal/delete/{id}','Apps\HumanResourcesController@softGoalDelete')->name('softGoal.destroy');
 	Route::post('human-resources/appraisal/update/{id}','Apps\HumanResourcesController@appraisalUpdate')->name('appraisal.update');
 
 	Route::get('human-resources/salary','Apps\HumanResourcesController@salaryIndex')->name('salary.index');

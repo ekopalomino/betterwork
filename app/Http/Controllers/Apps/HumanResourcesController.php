@@ -26,6 +26,9 @@ use iteos\Models\DocumentCategory;
 use iteos\Models\EmployeeAppraisal;
 use iteos\Models\AppraisalData;
 use iteos\Models\AppraisalTarget;
+use iteos\Models\AppraisalSoftGoal;
+use iteos\Models\AppraisalComment;
+use iteos\Models\AppraisalAdditionalRole;
 use Hash;
 use Auth;
 use DB;
@@ -657,12 +660,65 @@ class HumanResourcesController extends Controller
 
     public function targetUpdate(Request $request,$id)
     {
-        
+        $data = AppraisalTarget::with('Data.Appraisal')->find($id);
+        $data->update([
+            'target' => $request->input('target'),
+            'job_weight' => $request->input('job_weight'),
+        ]);
+
+        return redirect()->back();
     }
 
-    public function appraisalUpdate()
+    public function targetDestroy($id)
     {
+        $data = AppraisalTarget::with('Data.Appraisal')->find($id);
+        $data->delete();
 
+        return redirect()->back();
+    }
+
+    public function softGoalCreate($id)
+    {
+        $data = AppraisalTarget::with('Data.Appraisal')->find($id);
+
+        return view('apps.input.employeeSoftGoal',compact('data'))->renderSections()['content'];
+    }
+
+    public function softGoalStore(Request $request)
+    {
+        $data = AppraisalSoftGoal::create([
+            'appraisal_id' => $request->input('appraisal_id'),
+            'competency' => $request->input('competency'),
+            'notes' => $request->input('notes'),
+        ]);
+
+        return redirect()->back();
+    }
+
+    public function softGoalEdit($id)
+    {
+        $data = AppraisalSoftGoal::find($id);
+
+        return view('apps.edit.employeeSoftGoal',compact('data'))->renderSections()['content'];
+    }
+
+    public function softGoalUpdate(Request $request,$id)
+    {
+        $data = AppraisalSoftGoal::find($id);
+        $data->update([
+            'competency' => $request->input('competency'),
+            'notes' => $request->input('notes'),
+        ]);
+
+        return redirect()->back();
+    }
+
+    public function softGoalDelete($id)
+    {
+        $data = AppraisalSoftGoal::find($id);
+        $data->delete();
+
+        return redirect()->back();
     }
 
     public function bulletinIndex()
