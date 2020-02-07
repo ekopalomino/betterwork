@@ -100,6 +100,8 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::get('human-resources/employee/service/edit/{id}','Apps\HumanResourcesController@serviceEdit')->name('employeeService.edit');
 	Route::post('human-resources/employee/service/update/{id}','Apps\HumanResourcesController@serviceUpdate')->name('employeeService.update');
 	
+	Route::get('human-resources/employee/training','Apps\HumanResourcesController@trainingIndex')->name('training.index');
+
 	Route::get('human-resources/bulletin','Apps\HumanResourcesController@bulletinIndex')->name('bulletin.index');
 	Route::get('human-resources/bulletin/create','Apps\HumanResourcesController@bulletinCreate')->name('bulletin.create');
 	Route::post('human-resources/bulletin/store','Apps\HumanResourcesController@bulletinStore')->name('bulletin.store');

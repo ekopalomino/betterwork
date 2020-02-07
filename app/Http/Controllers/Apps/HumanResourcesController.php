@@ -1022,8 +1022,12 @@ class HumanResourcesController extends Controller
         return redirect()->route('knowledge.index');
     }
 
+    public function trainingIndex()
+    {
+        $data = EmployeeTraining::orderBy('created_at','DESC')->get();
 
-
+        return view('apps.pages.employeeTraining',compact('data'));
+    }
 
     public function salaryIndex()
     {
