@@ -31,7 +31,7 @@ Better Work Indonesia | User Dashboard
 					<div class="card-body box-profile">
 						<div class="text-center">
                   			<img class="profile-user-img img-fluid img-circle"
-                       			src="http://betterwork.local/public/employees/{{$getEmployee->picture}}"
+                       			src="http://betterwork.iteos.tech/public/employees/{{$getEmployee->picture}}"
                        			alt="User profile picture">
                 		</div>
                 		<h3 class="profile-username text-center">{{{ isset(Auth::user()->name) ? Auth::user()->name : Auth::user()->email }}}</h3>
@@ -221,6 +221,7 @@ Better Work Indonesia | User Dashboard
                 				<hr>
 								<strong><i class="fas fa-pencil-alt mr-1"></i> Contract Download</strong>
               				</div>
+
 							<div class="tab-pane" id="organization">
 								<strong><i class="fas fa-id-badge mr-1"></i> Employee ID</strong>
 								<p class="text-muted">
@@ -300,6 +301,78 @@ Better Work Indonesia | User Dashboard
 									</tbody>
 								</table>
 							</div>
+
+                      <div class="tab-pane" id="organization">
+                        <strong><i class="fas fa-id-badge mr-1"></i> Employee ID</strong>
+                        <p class="text-muted">
+                            {{ $getEmployee->employee_no }}
+                        </p>
+                        <strong><i class="fas fa-calendar-check mr-1"></i> Join Date</strong>
+                        <p class="text-muted">
+                            {{date("d F Y",strtotime($getServices->from)) }}
+                        </p>
+                        <strong><i class="fas fa-file-signature mr-1"></i> Employment Type</strong>
+                        <p class="text-muted">
+                            {{ $getEmployee->Contracts->name }}
+                        </p>
+                        <strong><i class="fas fa-clipboard-check mr-1"></i> Current Position</strong>
+                        <p class="text-muted">
+                            {{ $getServices->grade}}
+                        </p>
+                        <strong><i class="fas fa-user-tie mr-1"></i> Direct Supervisor</strong>
+                        <p class="text-muted">
+                          @isset($getServices->report_to)
+                          {{ $getServices->Reporting->first_name}} {{ $getServices->Reporting->last_name}}
+                          @endisset
+                        </p>
+                        <strong><i class="fas fa-user-friends mr-1"></i> Direct Subordinate</strong>
+                        <table class="table table-bordered">
+                          <thead>
+                            <tr>
+                              <th style="width: 10px">#</th>
+                              <th>Avatar</th>
+                              <th>Name</th>
+                              <th>Position</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            @foreach($getSubordinate as $key=>$value)
+                            <tr>
+                              <td>{{ $key+1 }}</td>
+                              <td><img src="http://betterwork.local/public/employees/{{ $value->Parent->picture }}" class="img-circle elevation-2" alt="User Image" style="width: 50px; height: 
+50px;"></td>
+                              <td>{{ $value->Parent->first_name}} {{ $value->Parent->last_name}}</td>
+                              <td>{{ $value->grade }}</td>
+                            </tr>
+                            @endforeach
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="tab-pane" id="family">
+                        <table class="table table-bordered">
+                          <thead>
+                            <tr>
+                              <th style="width: 10px">#</th>
+                              <th>Name</th>
+                              <th>Relation</th>
+                              <th>Address</th>
+                              <th>Phone</th>
+                              <th>Mobile</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+
               				<div class="tab-pane" id="salary">
               					<table class="table table-bordered">
               						<thead>
