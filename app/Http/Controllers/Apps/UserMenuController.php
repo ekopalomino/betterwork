@@ -5,6 +5,7 @@ namespace iteos\Http\Controllers\Apps;
 use Illuminate\Http\Request;
 use iteos\Http\Controllers\Controller;
 use iteos\Models\Employee;
+use iteos\Models\Location;
 use iteos\Models\EmployeeAttendance;
 use iteos\Models\AttendanceTransaction;
 use iteos\Models\EmployeeLeave;
@@ -25,6 +26,7 @@ use iteos\Models\AppraisalAdditionalRole;
 use iteos\Models\Bulletin;
 use iteos\Models\KnowledgeBase;
 use Auth;
+use DB;
 use Carbon\Carbon;
 
 class UserMenuController extends Controller
@@ -32,12 +34,12 @@ class UserMenuController extends Controller
     public function index()
     {
         $getEmployees = Employee::join('employee_services','employee_services.employee_id','employees.id')
-                                ->where('employees.email',Auth()->user()->email)
+                                ->where('employees.id',Auth()->user()->employee_id)
                                 ->get();
         $getStartDate = EmployeeService::where('employee_id',Auth()->user()->employee_id)
                                         ->orderBy('from','ASC')
                                         ->first();
-    	$getEmployee = Employee::where('email',Auth()->user()->email)->first();
+    	$getEmployee = Employee::where('id',Auth()->user()->employee_id)->first();
     	$getAttendance = EmployeeAttendance::where('employee_id',$getEmployee->id)->orderBy('updated_at','DESC')->first();
         
         $tDate = Carbon::now();
@@ -46,34 +48,55 @@ class UserMenuController extends Controller
 
         $getRemaining = EmployeeLeave::where('employee_id',$getEmployee->id)->first();
         $getServices = EmployeeService::where('employee_id',$getEmployee->id)->orderBy('from','ASC')->first();
+        $getCurPos = EmployeeService::where('employee_id',$getEmployee->id)->orderBy('from','DESC')->first();
         $getSubordinate = EmployeeService::with('Parent')->where('report_to',$getEmployee->id)->get();
         $getBulletin = Bulletin::orderBy('updated_at','DESC')->get();
         $getKnowledge = KnowledgeBase::orderBy('updated_at','DESC')->get();
         
-    	return view('apps.pages.userHome',compact('getEmployee','getAttendance','totalDays','getRemaining','getServices','getSubordinate','getBulletin','getKnowledge'));
+    	return view('apps.pages.userHome',compact('getEmployee','getAttendance','totalDays','getRemaining','getServices','getSubordinate','getBulletin','getKnowledge','getCurPos'));
     }
 
     public function clockIn(Request $request)
     {
-    	$getEmployee = Employee::where('email',Auth()->user()->email)->first();
+        $this->validate($request, [
+            'notes' => 'required|min:100',
+        ]);
 
     	$clockIn = EmployeeAttendance::create([
-    		'employee_id' => $getEmployee->id,
+    		'employee_id' => Auth()->user()->employee_id,
     		'status_id' => 'f4f23f41-0588-4111-a881-a043cf355831',
     	]);
 
         $attendanceIn = AttendanceTransaction::create([
             'attendance_id' => $clockIn->id,
             'clock_in' => Carbon::now(),
+            'notes' => $request->input('notes'),
         ]);
 
     	return redirect()->back();
     }
 
+    public function taskEdit(Request $request)
+    {
+        $this->validate($request, [
+            'notes' => 'required|min:100',
+        ]);
+
+        $getData = EmployeeAttendance::where('employee_id',auth()->user()->employee_id)->orderBy('updated_at','DESC')->first();
+        $attendanceOut = AttendanceTransaction::where('attendance_id',$getData->id)->update([
+            'notes' => $request->input('notes'),
+        ]);
+
+        return redirect()->back();
+    }
+
     public function clockOut(Request $request)
     {
-        $getEmployee = Employee::where('email',Auth()->user()->email)->first();
-        $getData = EmployeeAttendance::where('employee_id',$getEmployee->id)->orderBy('updated_at','DESC')->first();
+        $this->validate($request, [
+            'notes' => 'required|min:100',
+        ]);
+        
+        $getData = EmployeeAttendance::with('Activity')->where('employee_id',auth()->user()->employee_id)->orderBy('updated_at','DESC')->first();
         $getTime = Carbon::now();
         $clockOut = $getData->update([
             'working_hour' => $getTime->diffInHours($getData->clock_in),
@@ -85,6 +108,15 @@ class UserMenuController extends Controller
         ]);
 
     	return redirect()->back();
+    }
+
+    public function profileEdit()
+    {
+        $data = Employee::where('id',auth()->user()->employee_id)->first();
+        $cities = Location::pluck('city','city')->toArray();
+        $degrees  = DB::table('education_degree')->pluck('degree_name','degree_name')->toArray();
+
+        return view('apps.edit.myProfile',compact('data','cities','degrees'));
     }
 
     public function leaveIndex()

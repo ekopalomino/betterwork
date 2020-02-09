@@ -2,24 +2,41 @@
 
 namespace iteos\Models;
 
-use iteos\Traits\Uuid;
 use Illuminate\Database\Eloquent\Model;
 
 class EmployeeSalary extends Model
 {
-    use Uuid;
-
     protected $fillable = [
-    	'employee_id',
     	'payroll_period',
-    	'total_payroll',
-    	'total_allowance',
-    	'total_renumeration',
-    	'receive_payroll',
-    	'status_id',
-    	'created_by',
-    	'approved_by',
+    	'employee_no',
+    	'nett_salary',
+    	'jkk',
+    	'jkm',
+    	'leave_balance',
+    	'rewards',
+    	'expense',
+    	'bpjs',
+        'jht',
+        'jp',
+        'income_tax',
+        'receive_payroll',
+        'status_id',
+        'created_by',
+        'approved_by',
     ];
 
-    public $incrementing = false;
+    public function Statuses()
+    {
+        return $this->belongsTo(Status::class,'status_id');
+    }
+
+    public function Uploader()
+    {
+        return $this->belongsTo(Employee::class,'created_by');
+    }
+
+    public function Approval()
+    {
+        return $this->belongsTo(Employee::class,'approved_by');
+    }
 }

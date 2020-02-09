@@ -18,15 +18,14 @@ Better Work Indonesia | Log Activity
 <section class="content">
 	<div class="row">
 		<div class="col-12">
-			<div class="card">
-				<div class="card-header">
-        </div>
+			<div class="card card-primary card-outline">
+				
         <div class="card-body">
           <table id="example1" class="table table-bordered table-striped">
             <thead>
               <tr>
                 <th>No</th>
-                <th>Subject</th>
+                <th>Action</th>
                 <th>URL</th>
                 <th>User IP</th>
                 <th>Username</th>

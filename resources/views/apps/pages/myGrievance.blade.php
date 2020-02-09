@@ -18,54 +18,57 @@ Better Work Indonesia | My Grievance Data
 <section class="content">
 	<div class="row">
 		<div class="col-12">
-			<div class="card">
-				<div class="card-header"> 
-       		<a class="btn btn-primary" href="{{ route('myGrievance.create') }}">
-              Add New</a>
-        </div>
-        <div class="card-body">
-        <table id="example1" class="table table-bordered table-hover">
-          <thead>
-          	<tr>
-          		<th>No</th>
-          		<th>Subject</th>
-              <th>Description</th>
-              <th>Status</th>
-              <th>Respond</th>
-              <th>Created At</th>
-          		<th>Updated At</th>
-              <th></th>
-          	</tr>
-          </thead>
-          <tbody>
-            @foreach($data as $key=>$value)
-          	<tr>
-          		<td>{{ $key+1 }}</td>
-              <td>{{ $value->subject }}</td>
-          		<td>{{ str_limit(strip_tags($value->description), 50) }}</td>
-              <td>{{ $value->Statuses->name }}</td>
-              <td>{{ $value->notes }}</td>
-            	<td>{{date("d F Y H:i",strtotime($value->created_at)) }}</td>
-              <td>{{date("d F Y H:i",strtotime($value->updated_at)) }}</td>
-              <td>
-                <div class="btn-group">
-                  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Action
-                  </button>
-                  <div class="dropdown-menu" role="menu">
-                    <a class="dropdown-item" href="#">Edit Data</a>
-                    <a class="dropdown-item" href="{{ route('myGrievance.show',$value->id) }}">View Data</a>
-                  </div>
-                </div>
-              </td>
-            </tr>
-            @endforeach
-     			</tbody>
-     		</table>
-     	</div>
+			<div class="card card-primary card-outline">
+				<div class="card-header">
+					<a class="btn btn-primary" href="{{ route('myGrievance.create') }}">Add New</a>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-md-12">
+							<table id="example1" class="table table-bordered table-hover">
+								<thead>
+									<tr>
+										<th>No</th>
+										<th>Subject</th>
+										<th>Description</th>
+										<th>Status</th>
+										<th>Respond</th>
+										<th>Created At</th>
+										<th>Updated At</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+									@foreach($data as $key=>$value)
+									<tr>
+										<td>{{ $key+1 }}</td>
+										<td>{{ $value->subject }}</td>
+										<td>{{ str_limit(strip_tags($value->description), 50) }}</td>
+										<td>{{ $value->Statuses->name }}</td>
+										<td>{{ $value->notes }}</td>
+										<td>{{date("d F Y H:i",strtotime($value->created_at)) }}</td>
+										<td>{{date("d F Y H:i",strtotime($value->updated_at)) }}</td>
+										<td>
+											<div class="btn-group">
+												<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+													Action
+												</button>
+												<div class="dropdown-menu" role="menu">
+													<a class="dropdown-item" href="#">Edit Data</a>
+													<a class="dropdown-item" href="{{ route('myGrievance.show',$value->id) }}">View Data</a>
+												</div>
+											</div>
+										</td>
+									</tr>
+									@endforeach
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
     </div>
-  </div>
-</div>
 </section>
 @endsection
 @section('footer.scripts')

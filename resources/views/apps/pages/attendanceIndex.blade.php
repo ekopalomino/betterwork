@@ -19,7 +19,7 @@ Better Work Indonesia | Employee Attendance
 <section class="content">
 	<div class="row">
 		<div class="col-12">
-			<div class="card">
+			<div class="card card-primary card-outline">
 				<div class="card-header">
           {!! Form::open(array('route' => 'attendance.search','method'=>'POST')) !!}
           @csrf
@@ -66,10 +66,10 @@ Better Work Indonesia | Employee Attendance
             </thead>
             <tbody>
               @foreach($data as $key=>$value)
-              <tr>
+			  <tr>
                 <td>{{ $key+1 }}</td>
-                <td>{{ $value->Employees->employee_no }}</td>
-                <td>{{ $value->Employees->first_name }} {{ $value->Employees->last_name }}</td>
+                <td>{{ $value->employee_no }}</td>
+                <td>{{ $value->first_name }} {{ $value->last_name }}</td>
                 <td>{{date("d F Y",strtotime($value->created_at)) }}</td>
                 <td>{{date("H:i",strtotime($value->clock_in)) }}</td>
                 <td>
@@ -87,6 +87,7 @@ Better Work Indonesia | Employee Attendance
                 </td>
               </tr>
               @endforeach
+			  
             </tbody>
           </table>
       </div>

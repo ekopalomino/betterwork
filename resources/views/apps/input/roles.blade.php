@@ -201,6 +201,12 @@ Better Work Indonesia | Create Role
 														</td>
 													</tr>
 													<tr>
+														<td>Access Employee Attendance</td>
+														<td>
+															<input type="checkbox" value="34" name="permission[]" />
+														</td>
+													</tr>
+													<tr>
 														<td>Approve / Reject Leave Request</td>
 														<td>
 															<input type="checkbox" value="19" name="permission[]" />

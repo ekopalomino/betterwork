@@ -13,7 +13,7 @@ Better Work Indonesia | My Appraisal
     </div>
 </section>
 <section class="content">
-	<div class="card">
+	<div class="card card-primary card-outline">
 		<div class="card-header">
 			<a class="btn btn-primary" href="{{ route('myAppraisal.create') }}">
                 Add New

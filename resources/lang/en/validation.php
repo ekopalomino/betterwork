@@ -129,8 +129,8 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'notes' => [
+            'required' => 'Task List Must Be More Than 100 Characters',
         ],
     ],
 

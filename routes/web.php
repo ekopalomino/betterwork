@@ -149,6 +149,8 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::get('human-resources/salary/create','Apps\HumanResourcesController@salaryCreate')->name('salary.create');
 	Route::post('human-resources/salary/store','Apps\HumanResourcesController@salaryProcess')->name('salary.store');
 
+	Route::get('human-resources/reimbursment','Apps\HumanResourcesController@reimbursIndex')->name('reimburs.index');
+
 	Route::get('grievance/database','Apps\GrievanceController@grievanceData')->name('grievanceData.index');
 	Route::get('grievance/manual-input','Apps\GrievanceController@grievanceCreate')->name('grievanceData.create');
 	Route::get('grievance/database/show/{id}','Apps\GrievanceController@grievanceShow')->name('grievanceData.show');
@@ -161,7 +163,9 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::get('grievance/management-respond/show/{id}','Apps\GrievanceController@grievanceManagementShow')->name('managementGrievance.show');
 	Route::get('accounting/bank-statement','Apps\AccountingController@bankIndex')->name('bank.index');
 
+	Route::get('my-menu/update-profile','Apps\UserMenuController@profileEdit')->name('profile.edit');
 	Route::post('my-menu/attendance-in','Apps\UserMenuController@clockIn')->name('attendanceIn.store');
+	Route::post('my-menu/attendance/task/edit','Apps\UserMenuController@taskEdit')->name('attendanceTask.update');
 	Route::post('my-menu/attendance-out','Apps\UserMenuController@clockOut')->name('attendanceOut.store');
 	Route::get('my-menu/leave-request','Apps\UserMenuController@leaveIndex')->name('myLeave.index');
 	Route::post('my-menu/leave-request/create','Apps\UserMenuController@leaveRequest')->name('myLeave.store');
@@ -192,6 +196,8 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 
 	Route::get('my-menu/training','Apps\UserMenuController@trainingIndex')->name('myTraining.index');
 	Route::get('my-menu/training/edit/{id}','Apps\UserMenuController@trainingEdit')->name('myTraining.edit');
+
+	Route::get('human-resources/reports/attendance','Apps\ReportsController@attendanceReport')->name('attReport.index');
 
 });
 
