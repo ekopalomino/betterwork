@@ -16,8 +16,8 @@ Better Work Indonesia | My Training Data
     </div>
 </section>
 <section class="content">
-	<div class="row">
-        <div class="card-body">
+	<div class="card card-primary card-outline">
+		<div class="card-body">
 			<table id="example1" class="table table-bordered table-hover">
 				<thead>
 					<tr>

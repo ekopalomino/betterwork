@@ -19,7 +19,6 @@ use iteos\Models\EmployeeLeave;
 use iteos\Models\LeaveTransaction;
 use iteos\Models\Location;
 use iteos\Models\EmployeeSalary;
-use iteos\Models\Salary;
 use iteos\Models\Bulletin;
 use iteos\Models\KnowledgeBase;
 use iteos\Models\DocumentCategory;
@@ -29,17 +28,31 @@ use iteos\Models\AppraisalTarget;
 use iteos\Models\AppraisalSoftGoal;
 use iteos\Models\AppraisalComment;
 use iteos\Models\AppraisalAdditionalRole;
+use iteos\Imports\SalaryImport;
+use Maatwebsite\Excel\Facades\Excel;
 use Hash;
 use Auth;
 use DB;
 use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Input;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class HumanResourcesController extends Controller
 {
     public function index()
     {
-    	return view('apps.pages.humanResourceHome');
+        $onLeave = EmployeeLeave::join('leave_transactions','leave_transactions.leave_id','employee_leaves.id')
+                                    ->where('leave_transactions.status_id','ca52a2ce-5c37-48ce-a7f2-0fd5311860c2')
+                                    ->whereDate('employee_leaves.created_at',Carbon::today()->toDateString())
+                                    ->get();
+
+        $modifiedImmutable = CarbonImmutable::now()->add(7, 'day');
+        $onBirthday = Employee::whereDate('date_of_birth',Carbon::today()->toDateString())->get();
+
+        
+        
+    	return view('apps.pages.humanResourceHome',compact('onLeave','onBirthday'));
     }
 
     public function employeeIndex()
@@ -125,7 +138,14 @@ class HumanResourcesController extends Controller
                 'leave_amount' => '12',
             ]);
 
-            return redirect()->route('employee.index');
+            $log = 'Employee '.($result->first_name).' '.($result->last_name). ' Created';
+            \LogActivity::addToLog($log);
+            $notification = array (
+                'message' => 'Employee '.($result->first_name).' '.($result->last_name). ' Created',
+                'alert-type' => 'success'
+            );
+
+            return redirect()->route('employee.index')->with($notification);
         
     }
 
@@ -198,7 +218,13 @@ class HumanResourcesController extends Controller
             }
             $updateEmployee = $data->update($input);
 
-            return redirect()->back();
+            $log = 'Employee '.($data->first_name).' '.($data->last_name). ' Edited';
+            \LogActivity::addToLog($log);
+            $notification = array (
+                'message' => 'Employee '.($data->first_name).' '.($data->last_name). ' Edited',
+                'alert-type' => 'success'
+            );
+            return redirect()->back()->with($notification);
         }
 
         if($request->has('family')) {
@@ -219,8 +245,14 @@ class HumanResourcesController extends Controller
             ];
 
             $families = EmployeeFamily::create($input);
+            $log = 'Employee '.($data->first_name).' '.($data->last_name). ' Create Family Member';
+            \LogActivity::addToLog($log);
+            $notification = array (
+                'message' => 'Employee '.($data->first_name).' '.($data->last_name). ' Create Family Member',
+                'alert-type' => 'success'
+            );
 
-            return redirect()->back();
+            return redirect()->back()->with($notification);
         }
 
         if($request->has('education')) {
@@ -238,9 +270,15 @@ class HumanResourcesController extends Controller
                 'gpa' => $request->input('gpa'),
             ];
 
-            $families = EmployeeEducation::create($input);
+            $education = EmployeeEducation::create($input);
+            $log = 'Employee '.($data->first_name).' '.($data->last_name). ' Create Education Data';
+            \LogActivity::addToLog($log);
+            $notification = array (
+                'message' => 'Employee '.($data->first_name).' '.($data->last_name). ' Create Education Data',
+                'alert-type' => 'success'
+            );
 
-            return redirect()->back();
+            return redirect()->back()->with($notification);
         }
 
         if($request->has('training')) {
@@ -261,8 +299,14 @@ class HumanResourcesController extends Controller
             ];
             
             $data = EmployeeTraining::create($input);
+            $log = 'Employee '.($data->first_name).' '.($data->last_name). ' Create Training Data';
+            \LogActivity::addToLog($log);
+            $notification = array (
+                'message' => 'Employee '.($data->first_name).' '.($data->last_name). ' Create Training Data',
+                'alert-type' => 'success'
+            );
 
-            return redirect()->back();    
+            return redirect()->back()->with($notification);    
         }
 
         if($request->has('service')) {
@@ -331,8 +375,14 @@ class HumanResourcesController extends Controller
                     $data = EmployeeService::create($input);
                 }
             }
-            
-            return redirect()->back(); 
+            $log = 'Employee '.($data->first_name).' '.($data->last_name). ' Create Service Data';
+            \LogActivity::addToLog($log);
+            $notification = array (
+                'message' => 'Employee '.($data->first_name).' '.($data->last_name). ' Create Service Data',
+                'alert-type' => 'success'
+            );
+
+            return redirect()->back()->with($notification); 
         }
         
     }
@@ -354,7 +404,7 @@ class HumanResourcesController extends Controller
         ]);
 
         $data = EmployeeFamily::find($id);
-        $data->update([
+        $new = $data->update([
             'first_name' => $request->input('first_name'),
             'last_name' => $request->input('last_name'),
             'address' => $request->input('address'),
@@ -362,8 +412,14 @@ class HumanResourcesController extends Controller
             'phone' => $request->input('phone'),
             'mobile' => $request->input('mobile'),
         ]);
+        $log = 'Employee '.($data->first_name).' '.($data->last_name). ' Edited Family Data';
+        \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'Employee '.($data->first_name).' '.($data->last_name). ' Edited Family Data',
+            'alert-type' => 'success'
+        );
 
-        return redirect()->back();
+        return redirect()->back()->with($notification);
     }
 
     public function educationEdit($id) 
@@ -384,14 +440,21 @@ class HumanResourcesController extends Controller
         ]);
 
         $data = EmployeeEducation::find($id);
-        $data->update([
+        $new = $data->update([
             'institution_name' => $request->input('institution_name'),
             'grade' => $request->input('degree'),
             'major' => $request->input('major'),
             'gpa' => $request->input('gpa'),
         ]);
 
-        return redirect()->back();
+        $log = 'Employee '.($data->first_name).' '.($data->last_name). ' Edited Education Data';
+        \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'Employee '.($data->first_name).' '.($data->last_name). ' Edited Education Data',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->back()->with($notification);
     }
 
     public function trainingEdit($id) 
@@ -446,7 +509,14 @@ class HumanResourcesController extends Controller
             'materials' => $materials,
         ]);
 
-        return redirect()->back();
+        $log = 'Employee '.($data->first_name).' '.($data->last_name). ' Edited Training Data';
+        \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'Employee '.($data->first_name).' '.($data->last_name). ' Edited Training Data',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->back()->with($notification);
     }
 
     public function serviceEdit($id) 
@@ -517,7 +587,15 @@ class HumanResourcesController extends Controller
                 $result = $data->update($input);
             }
         }
-        return redirect()->back();
+
+        $log = 'Employee '.($data->first_name).' '.($data->last_name). ' Edited Service Data';
+        \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'Employee '.($data->first_name).' '.($data->last_name). ' Edited Service Data',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->back()->with($notification);
     }
 
     
@@ -527,13 +605,22 @@ class HumanResourcesController extends Controller
         $user = User::where('email',$data->email)->delete();
         $data->delete();
 
-        return redirect()->route('employee.index');
+        $log = 'Employee '.($data->first_name).' '.($data->last_name). ' Delete';
+        \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'Employee '.($data->first_name).' '.($data->last_name). ' Delete',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('employee.index')->with($notification);
     }
 
     public function attendanceIndex()
     {
-        $data = EmployeeAttendance::orderBy('updated_at','DESC')->get();
-
+        $data = EmployeeAttendance::join('employees','employees.id','employee_attendances.employee_id')
+                                    ->join('attendance_transactions','attendance_transactions.attendance_id','employee_attendances.id')
+                                    ->get();
+        
     	return view('apps.pages.attendanceIndex',compact('data'));
     }
 
@@ -548,12 +635,14 @@ class HumanResourcesController extends Controller
         $endDate = Carbon::parse($dateRange[1]);
 
         $data = EmployeeAttendance::join('employees','employees.id','employee_attendances.employee_id')
+                                    ->join('attendance_transactions','attendance_transactions.attendance_id','employee_attendances.id')
                                     ->where('employees.employee_no',$empID)
                                     ->orWhere('employees.first_name',$firstName)
                                     ->orWhere('employees.last_name',$lastName)
                                     ->orWhere('employee_attendances.created_at','>=',$startDate)
                                     ->where('employee_attendances.created_at','<=',$endDate)
                                     ->get();
+                                    
         return view('apps.pages.attendanceIndex',compact('data'));
     }
 
@@ -598,29 +687,37 @@ class HumanResourcesController extends Controller
                     'leave_usage' => $details->amount_requested,
                     'leave_remaining' => ($data->leave_amount) - ($details->amount_requested),
                 ]);
+
+                $log = 'Leave Request For'.($data->Employees->first_name).' '.($data->Employees->last_name). ' Approved';
+                \LogActivity::addToLog($log);
+                $notification = array (
+                    'message' => 'Leave Request For'.($data->Employees->first_name).' '.($data->Employees->last_name). ' Approved',
+                    'alert-type' => 'success'
+                );
             } else {
                 $changes = $data->update([
                     'leave_usage' => ($data->leave_usage) + ($details->amount_requested),
                     'leave_remaining' => ($data->leave_remaining) - ($details->amount_requested),
                 ]);
+
+                $log = 'Leave Request For'.($data->Employees->first_name).' '.($data->Employees->last_name). ' Rejected';
+                \LogActivity::addToLog($log);
+                $notification = array (
+                    'message' => 'Leave Request For'.($data->Employees->first_name).' '.($data->Employees->last_name). ' Rejected',
+                    'alert-type' => 'success'
+                );
             } 
         }
-        
 
-        return redirect()->route('request.index');
+        return redirect()->route('request.index')->with($notification);
     }
 
     public function employeeLeave()
     {
         $current = Carbon::now()->year;
-        $data = Employee::orderBy('employee_no','ASC')->get();
-        $leaves = EmployeeLeave::where('status_id','ca52a2ce-5c37-48ce-a7f2-0fd5311860c2')->whereYEAR('created_at',$current)->get();
-        foreach($data as $index=>$value) {
-            $getLeaveAmount = $value->leave_amount;
-            $usage = EmployeeLeave::where('employee_id',$value->id)->where('status_id','ca52a2ce-5c37-48ce-a7f2-0fd5311860c2')->count();
-            $remaining = ($getLeaveAmount) - ($usage);
-        }
-        return view('apps.pages.leaveIndex',compact('data','remaining'));
+        $data = EmployeeLeave::with('Details')->whereYEAR('created_at',$current)->get();
+        
+        return view('apps.pages.leaveIndex',compact('data'));
     }
 
     public function appraisalIndex()
@@ -666,7 +763,14 @@ class HumanResourcesController extends Controller
             'job_weight' => $request->input('job_weight'),
         ]);
 
-        return redirect()->back();
+        $log = 'KPI Target For'.($data->Employees->first_name).' '.($data->Employees->last_name). ' Updated';
+        \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'KPI Target For'.($data->Employees->first_name).' '.($data->Employees->last_name). ' Updated',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->back()->with($notification);
     }
 
     public function targetDestroy($id)
@@ -674,7 +778,14 @@ class HumanResourcesController extends Controller
         $data = AppraisalTarget::with('Data.Appraisal')->find($id);
         $data->delete();
 
-        return redirect()->back();
+        $log = 'KPI Target For'.($data->Employees->first_name).' '.($data->Employees->last_name). ' Deleted';
+        \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'KPI Target For'.($data->Employees->first_name).' '.($data->Employees->last_name). ' Deleted',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->back()->with($notification);
     }
 
     public function softGoalCreate($id)
@@ -692,7 +803,14 @@ class HumanResourcesController extends Controller
             'notes' => $request->input('notes'),
         ]);
 
-        return redirect()->back();
+        $log = 'KPI Target For'.($data->Employees->first_name).' '.($data->Employees->last_name). ' Deleted';
+        \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'KPI Target For'.($data->Employees->first_name).' '.($data->Employees->last_name). ' Deleted',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->back()->with($notification);
     }
 
     public function softGoalEdit($id)
@@ -710,7 +828,14 @@ class HumanResourcesController extends Controller
             'notes' => $request->input('notes'),
         ]);
 
-        return redirect()->back();
+        $log = 'KPI Target For'.($data->Employees->first_name).' '.($data->Employees->last_name). ' Deleted';
+        \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'KPI Target For'.($data->Employees->first_name).' '.($data->Employees->last_name). ' Deleted',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->back()->with($notification);
     }
 
     public function softGoalDelete($id)
@@ -718,7 +843,14 @@ class HumanResourcesController extends Controller
         $data = AppraisalSoftGoal::find($id);
         $data->delete();
 
-        return redirect()->back();
+        $log = 'KPI Target For'.($data->Employees->first_name).' '.($data->Employees->last_name). ' Deleted';
+        \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'KPI Target For'.($data->Employees->first_name).' '.($data->Employees->last_name). ' Deleted',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->back()->with($notification);
     }
 
     public function additionalRoleCreate($id)
@@ -736,7 +868,14 @@ class HumanResourcesController extends Controller
             'details' => $request->input('details'),
         ]);
 
-        return redirect()->back();
+        $log = 'KPI Target For'.($data->Employees->first_name).' '.($data->Employees->last_name). ' Deleted';
+        \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'KPI Target For'.($data->Employees->first_name).' '.($data->Employees->last_name). ' Deleted',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->back()->with($notification);
     }
 
     public function additionalRoleEdit($id)
@@ -754,7 +893,14 @@ class HumanResourcesController extends Controller
             'details' => $request->input('details'),
         ]);
 
-        return redirect()->back();
+        $log = 'KPI Target For'.($data->Employees->first_name).' '.($data->Employees->last_name). ' Deleted';
+        \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'KPI Target For'.($data->Employees->first_name).' '.($data->Employees->last_name). ' Deleted',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->back()->with($notification);
     }
 
     public function additionalRoleDelete($id)
@@ -762,7 +908,14 @@ class HumanResourcesController extends Controller
         $data = AppraisalAdditionalRole::find($id);
         $data->delete();
 
-        return redirect()->back();
+        $log = 'KPI Target For'.($data->Employees->first_name).' '.($data->Employees->last_name). ' Deleted';
+        \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'KPI Target For'.($data->Employees->first_name).' '.($data->Employees->last_name). ' Deleted',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->back()->with($notification);
     }
 
     public function bulletinIndex()
@@ -807,8 +960,15 @@ class HumanResourcesController extends Controller
             'content' => $content,
             'created_by' => Auth()->user()->id,
         ]);
+
+        $log = 'Bulleting'.($data->title). ' Create and Publish';
+        \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'Bulleting'.($data->title). ' Create and Publish',
+            'alert-type' => 'success'
+        );
         
-        return redirect()->route('bulletin.index');
+        return redirect()->route('bulletin.index')->with($notification);
     }
 
     public function bulletinShow($id)
@@ -865,12 +1025,19 @@ class HumanResourcesController extends Controller
         $content = $dom->saveHTML();
 
         $data = Bulletin::find($id);
-        $data->update([
+        $new = $data->update([
             'title' => $request->input('title'),
             'content' => $content,
         ]);
 
-        return redirect()->route('bulletin.index');
+        $log = 'Bulleting'.($data->title). ' Edited';
+        \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'Bulleting'.($data->title). ' Edited',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('bulletin.index')->with($notification);
     }
 
     public function bulletinDelete($id)
@@ -878,7 +1045,14 @@ class HumanResourcesController extends Controller
         $data = Bulletin::find($id);
         $data->delete();
 
-        return redirect()->route('bulletin.index');
+        $log = 'Bulleting'.($data->title). ' Deleted';
+        \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'Bulleting'.($data->title). ' Deleted',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('bulletin.index')->with($notification);
     }
 
     public function knowledgeIndex()
@@ -1031,19 +1205,47 @@ class HumanResourcesController extends Controller
 
     public function salaryIndex()
     {
-        return view('apps.pages.salaryIndex');
-    }
-
-    public function salaryCreate()
-    {
-        $employees = Employee::select(DB::raw("CONCAT(first_name,' ',last_name) AS name"),'id')->pluck('name','id')->toArray();
-
-        return view('apps.input.salary',compact('employees'));
+        $data = EmployeeSalary::select(DB::raw('date(payroll_period) as Period'),DB::raw('sum(nett_salary+jkk+jkm+jht+jp+bpjs) as Total'),
+                        DB::raw('sum(nett_salary) as Salary'),DB::raw('sum(jkk+jkm+jht+jp) as tk'),DB::raw('sum(bpjs) as bpjs'),
+                        DB::raw('sum(income_tax) as tax'),'status_id','created_by','approved_by')
+                    ->orderBy('created_at','DESC')
+                    ->groupBy(DB::raw('date(payroll_period)'),'created_at','status_id','created_by','approved_by')
+                    ->get();
+        
+        return view('apps.pages.salaryIndex',compact('data'));
     }
 
     public function salaryProcess(Request $request)
     {
-        
+        $request->validate([
+            'salary' => 'required|file|mimes:xlsx,xls,XLSX,XLS'
+        ]);
+ 
+        $input = $request->all();
+        Excel::import(new SalaryImport, $request->file('salary'));
+
+        $log = 'File Ekspor berhasil disimpan';
+         \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'File Ekspor berhasil disimpan',
+            'alert-type' => 'success'
+        );
+        return back()->with($notification);
+    }
+
+    public function salaryShow($id)
+    {
+
+    }
+
+    public function salaryApproval($id)
+    {
+
+    }
+
+    public function reimbursIndex()
+    {
+        return view('apps.pages.reimbursIndex');
     }
 }
 

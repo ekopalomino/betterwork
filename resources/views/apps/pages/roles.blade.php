@@ -18,7 +18,7 @@ Better Work Indonesia | Access Roles
 <section class="content">
 	<div class="row">
 		<div class="col-12">
-			<div class="card">
+			<div class="card card-primary card-outline">
 				<div class="card-header">
        				<a class="btn btn-primary" href="{{ route('role.create') }}">
          			Add New</a>

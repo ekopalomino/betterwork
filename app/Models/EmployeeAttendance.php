@@ -34,6 +34,6 @@ class EmployeeAttendance extends Model
 
     public function Activity()
     {
-        return $this->hasMany(AttendanceTransaction::class,'attendance_id')->latest();
+        return $this->hasMany(AttendanceTransaction::class,'attendance_id','id')->latest();
     }
 }

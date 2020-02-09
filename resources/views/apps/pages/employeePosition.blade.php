@@ -18,7 +18,7 @@ Better Work Indonesia | Employee Position
 <section class="content">
 	<div class="row">
 		<div class="col-12">
-			<div class="card">
+			<div class="card card-primary card-outline">
 				<div class="card-header"> 
               		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">
                   		Add New

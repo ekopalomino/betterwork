@@ -4,7 +4,6 @@ Better Work Indonesia | Employee Leave Data
 @endsection
 @section('header.plugins')
 <link rel="stylesheet" href="{{ asset('public/bower_components/admin-lte/plugins/datatables-bs4/css/dataTables.bootstrap4.css') }}">
-<link rel="stylesheet" href="{{ asset('public/bower_components/admin-lte/plugins/daterangepicker/daterangepicker.css') }}">
 @endsection
 @section('content')
 <section class="content-header">
@@ -18,73 +17,49 @@ Better Work Indonesia | Employee Leave Data
 </section>
 <section class="content">
 	<div class="row">
-		<div class="col-12">
-			<div class="card">
-				<div class="card-header">
-          {!! Form::open(array('route' => 'attendance.search','method'=>'POST')) !!}
-          @csrf
-            <div class="row">
-              <div class="col-2">
-                <input type="text" class="form-control" id="empolyeeID" name="employee_id" placeholder="Employee ID">
-              </div>
-              <div class="col-2">
-                <input type="text" class="form-control" id="employeeFirstName" name="first_name" placeholder="Employee First Name">
-              </div>
-              <div class="col-2">
-                <input type="text" class="form-control" id="employeeLastName" name="last_name" placeholder="Employee Last Name">
-              </div>
-              <div class="col-3">
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">
-                      <i class="far fa-calendar-alt"></i>
-                    </span>
-                  </div>
-                  <input type="text" name="date_range" class="form-control float-right" id="reservation">
-                </div>
-              </div>
-              <div class="col-3">
-                <button type="submit" class="btn btn-primary">Search</button>
-                <a button type="button" class="btn btn-danger" href="{{ route('attendance.index') }}">Cancel</a>
-              </div>
-            </div>
-          {!! Form::close() !!}
-        </div>
-        <div class="card-body">
-          <table id="example2" class="table table-bordered table-hover">
-            <thead>
-              <tr>
-                <th>No</th>
-                <th>Employee ID</th>
-                <th>Employee Name</th>
-                <th>Leave Allowance</th>
-                <th>Leave Remaining</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              @foreach($data as $key=>$value)
-              <tr>
-                <td>{{ $key+1 }}</td>
-                <td>{{ $value->employee_no }}</td>
-                <td>{{ $value->first_name }} {{ $value->last_name }}</td>
-                <td>{{ $value->leave_amount }}</td>
-                <td>{{ $remaining }}</td>
-                <td></td>
-              </tr>
-              @endforeach
-            </tbody>
-          </table>
-      </div>
-    </div>
-  </div>
+		<div class="col-md-12">
+			<div class="card card-primary card-outline">
+				
+				<div class="card-body">
+				  <table id="example1" class="table table-bordered table-hover">
+					<thead>
+					  <tr>
+						<th>No</th>
+						<th>Employee ID</th>
+						<th>Employee Name</th>
+						<th>Leave Allowance</th>
+						<th>Leave Remaining</th>
+						<th></th>
+					  </tr>
+					</thead>
+					<tbody>
+					  @foreach($data as $key=>$value)
+					  <tr>
+						<td>{{ $key+1 }}</td>
+						<td>{{ $value->Employees->employee_no }}</td>
+						<td>{{ $value->Employees->first_name }} {{ $value->Employees->last_name }}</td>
+						<td>{{ $value->leave_amount }}</td>
+						<td>
+							@if(!empty($value->leave_remaining))
+							{{ $value->leave_remaining }}
+							@else
+							{{ $value->leave_amount }}
+							@endif
+						</td>
+						<td></td>
+					  </tr>
+					  @endforeach
+					</tbody>
+				  </table>
+				</div>
+			</div>
+		</div>
+	</div>
 </section>
 @endsection
 @section('footer.scripts')
 <script src="{{ asset('public/bower_components/admin-lte/plugins/datatables/jquery.dataTables.js') }}"></script>
 <script src="{{ asset('public/bower_components/admin-lte/plugins/datatables-bs4/js/dataTables.bootstrap4.js') }}"></script>
-<script src="{{ asset('public/bower_components/admin-lte/plugins/moment/moment.min.js') }}"></script>
-<script src="{{ asset('public/bower_components/admin-lte/plugins/daterangepicker/daterangepicker.js') }}"></script>
 <script>
   $(function () {
     $("#example1").DataTable();
@@ -96,7 +71,6 @@ Better Work Indonesia | Employee Leave Data
       "info": true,
       "autoWidth": false,
     });
-    $('#reservation').daterangepicker()
   });
 </script>
 @endsection

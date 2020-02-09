@@ -71,8 +71,7 @@ Better Work Indonesia | Create Grievance
                           		</textarea>
                           	</div>
 						</div>
-						{!! Form::hidden('employee_id', $getEmployee->id, array('class' => 'form-control')) !!}
-	                  	<button type="submit" class="btn btn-info">Submit</button>
+						<button type="submit" class="btn btn-info">Submit</button>
 	                  	<a button type="button" class="btn btn-danger" href="{{ route('grievance.index') }}">Cancel</a>
 	                </div>
 	            {!! Form::close() !!}
