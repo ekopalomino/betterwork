@@ -9,6 +9,10 @@
                 <div class="col-sm-12">
                     {!! Form::text('institution_name', null, array('placeholder' => 'Insitution Name','class' => 'form-control')) !!}
                 </div>
+			<label for="inputEmail" class="col-sm-12 col-form-label">Graduate On</label>
+                <div class="col-sm-12">
+                    {!! Form::date('date_of_graduate', '', array('id' => 'datepicker','class' => 'form-control')) !!}
+                </div>
             <label for="inputEmail" class="col-sm-12 col-form-label">Degree</label>
                 <div class="col-sm-12">
                     {!! Form::select('degree', $degrees,old('degree'), array('class' => 'form-control')) !!}

@@ -24,5 +24,10 @@ class AppraisalTarget extends Model
     {
         return $this->belongsTo(EmployeeAppraisal::class,'appraisal_id');
     }
+
+    public function Child()
+    {
+        return $this->hasMany(TargetData::class,'target_id');
+    }
     
 }

@@ -27,7 +27,6 @@ Better Work Indonesia | My Appraisal
             <th style="width: 20%">Appraisal Type</th>
             <th>Appraisal Period</th>
             <th>Direct Supervisor</th>
-            <th style="width: 30%">Appraisal Progress</th>
             <th style="width: 8%">Status</th>
             <th style="width: 20%"></th>
           </tr>
@@ -39,7 +38,6 @@ Better Work Indonesia | My Appraisal
             <td>{{ $value->Types->name }}</td>
             <td>{{date("Y",strtotime($value->appraisal_period)) }}</td>
             <td><img src="http://betterwork.local/public/employees/{{ $value->Supervisor->picture }}" class="img-circle elevation-2" title="{{$value->Supervisor->first_name}} {{$value->Supervisor->last_name}}" style="width: 50px; height: 50px;"></td>
-            <td></td>
             <td>{{ $value->Statuses->name }}</td>
             <td>
                 <div class="btn-group">

@@ -290,6 +290,12 @@ Better Work Indonesia | Update Employee
 								                          	<input type="text" name="institution_name" placeholder="Insitution Name" class="form-control">
 								                        </div>
 								                    </div>
+													<div class="form-group row">
+								                      	<label for="inputEmail" class="col-sm-2 col-form-label">Graduate On</label>
+								                        <div class="col-sm-10">
+								                          	{!! Form::date('date_of_graduate', '', array('id' => 'datepicker','class' => 'form-control')) !!}
+								                        </div>
+								                    </div>
 								                    <div class="form-group row">
 								                      	<label for="inputEmail" class="col-sm-2 col-form-label">Degree</label>
 								                        <div class="col-sm-10"> 
@@ -334,7 +340,7 @@ Better Work Indonesia | Update Employee
 					            			@foreach($data->Educations as $value)
 					            			<tr>
 					            				<td>{{ $value->institution_name }}</td>
-					            				<td>{{ $value->grade }}</td>
+					            				<td>{{ $value->degree }}</td>
 					            				<td>{{ $value->major }}</td>
 					            				<td>{{ $value->gpa }}</td>
 					            				<td>

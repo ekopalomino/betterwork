@@ -13,11 +13,7 @@ class StatusTableSeeder extends Seeder
     public function run()
     {
         $statuses = [
-            'Integrity and Transparancy',
-            'Orientation to learning and sharing knowledge',
-            'Client Orientation',
-            'Takes responsibility for performance',
-            'Collaboration'
+            'Completed',
         ];
 
         foreach($statuses as $status) {

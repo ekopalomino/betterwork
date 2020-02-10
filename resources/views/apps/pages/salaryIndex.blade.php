@@ -20,9 +20,11 @@ Better Work Indonesia | Salary Process
 		<div class="col-12">
 			<div class="card card-primary card-outline">
 				<div class="card-header">
+					@can('Create Payroll')
 					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#salary">
                   		Add New
                 	</button>
+					@endcan
 					<div class="modal fade" id="salary">
 				        <div class="modal-dialog modal-lg">
 				          	<div class="modal-content">
@@ -73,6 +75,7 @@ Better Work Indonesia | Salary Process
 								<th>Payment To Tax</th>
 								<th>Status</th>
 								<th>Created By</th>
+								<th>Approved By</th>
 								<th></th>
 							</tr>
 						</thead>
@@ -80,15 +83,32 @@ Better Work Indonesia | Salary Process
 							@foreach($data as $key=>$value)
 							<tr>
 								<td>{{ $key+1 }}</td>
-								<td></td>
+								<td>{{date("F-Y",strtotime($value->Period)) }}</td>
 								<td>{{ number_format($value->Total,0,',','.')}}</td>
 								<td>{{ number_format($value->Salary,0,',','.')}}</td>
 								<td>{{ number_format($value->tk,0,',','.')}}</td>
 								<td>{{ number_format($value->bpjs,0,',','.')}}</td>
 								<td>{{ number_format($value->tax,0,',','.')}}</td>
 								<td>{{ $value->Statuses->name }}</td>
-								<td></td>
-								<td></td>
+								<td>{{ $value->Uploader->first_name }} {{ $value->Uploader->last_name }}</td>
+								<td>{{ $value->Approval->first_name }} {{ $value->Approval->last_name }}</td>
+								<td>
+									<div class="btn-group">
+										<a button id="search" type="submit" class="btn btn-info" href="{{ route('salary.show',$value->Period) }}">
+											<i class="fa fa-search"></i>
+										</a>
+										@if(($value->status_id) == '1f2967a5-9a88-4d44-a66b-5339c771aca0')
+										@can('Process Payroll')
+										{!! Form::open(['method' => 'POST','route' => ['salary.approve', $value->Period],'style'=>'display:inline','onsubmit' => 'return ConfirmApprove()']) !!}
+										{!! Form::button('<i class="fas fa-check"></i>',['type'=>'submit','class' => 'btn btn-success','title'=>'Suspend User']) !!}
+										{!! Form::close() !!}
+										{!! Form::open(['method' => 'POST','route' => ['salary.reject', $value->Period],'style'=>'display:inline','onsubmit' => 'return ConfirmReject()']) !!}
+										{!! Form::button('<i class="fas fa-times"></i>',['type'=>'submit','class' => 'btn btn-danger','title'=>'Suspend User']) !!}
+										{!! Form::close() !!}
+										@endcan
+										@endif
+									</div>
+								</td>
 							</tr>
 							@endforeach
 						</tbody>
@@ -114,5 +134,25 @@ Better Work Indonesia | Salary Process
       "autoWidth": false,
     });
   });
+</script>
+<script>
+    function ConfirmApprove()
+    {
+    var x = confirm("Payroll Approve?");
+    if (x)
+        return true;
+    else
+        return false;
+    }
+</script>
+<script>
+    function ConfirmReject()
+    {
+    var x = confirm("Payroll Reject?");
+    if (x)
+        return true;
+    else
+        return false;
+    }
 </script>
 @endsection

@@ -136,6 +136,9 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::get('human-resources/appraisal/target/soft-goal/edit/{id}','Apps\HumanResourcesController@softGoalEdit')->name('softGoal.edit');
 	Route::post('human-resources/appraisal/target/soft-goal/update/{id}','Apps\HumanResourcesController@softGoalUpdate')->name('softGoal.update');
 	Route::post('human-resources/appraisal/target/soft-goal/delete/{id}','Apps\HumanResourcesController@softGoalDelete')->name('softGoal.destroy');
+	Route::post('human-resources/appraisal/comment/{id}','Apps\HumanResourcesController@appraisalComment')->name('appraisal.comment');
+	Route::get('human-resources/appraisal/close/{id}','Apps\HumanResourcesController@appraisalClose')->name('appraisal.close');
+	Route::post('human-resources/appraisal/close/process/{id}','Apps\HumanResourcesController@appraisalCloseProcess')->name('appraisal.done');
 
 	Route::get('human-resources/appraisal/target/additional-role/create/{id}','Apps\HumanResourcesController@additionalRoleCreate')->name('additionalRole.create');
 	Route::post('human-resources/appraisal/target/additional-role/store','Apps\HumanResourcesController@additionalRoleStore')->name('additionalRole.store');
@@ -146,10 +149,14 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::post('human-resources/appraisal/update/{id}','Apps\HumanResourcesController@appraisalUpdate')->name('appraisal.update');
 
 	Route::get('human-resources/salary','Apps\HumanResourcesController@salaryIndex')->name('salary.index');
-	Route::get('human-resources/salary/create','Apps\HumanResourcesController@salaryCreate')->name('salary.create');
 	Route::post('human-resources/salary/store','Apps\HumanResourcesController@salaryProcess')->name('salary.store');
+	Route::get('human-resources/salary/show-detail/{period}','Apps\HumanResourcesController@salaryShow')->name('salary.show');
+	Route::post('human-resources/salary/approve/{period}','Apps\HumanResourcesController@salaryApproval')->name('salary.approve');
+	Route::post('human-resources/salary/approve/{period}','Apps\HumanResourcesController@salaryReject')->name('salary.reject');
 
 	Route::get('human-resources/reimbursment','Apps\HumanResourcesController@reimbursIndex')->name('reimburs.index');
+	Route::post('human-resources/reimbursment/approve/{id}','Apps\HumanResourcesController@reimbursApprove')->name('reimburs.approve');
+	Route::post('human-resources/reimbursment/reject/{id}','Apps\HumanResourcesController@reimbursApprove')->name('reimburs.reject');
 
 	Route::get('grievance/database','Apps\GrievanceController@grievanceData')->name('grievanceData.index');
 	Route::get('grievance/manual-input','Apps\GrievanceController@grievanceCreate')->name('grievanceData.create');
@@ -196,6 +203,13 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 
 	Route::get('my-menu/training','Apps\UserMenuController@trainingIndex')->name('myTraining.index');
 	Route::get('my-menu/training/edit/{id}','Apps\UserMenuController@trainingEdit')->name('myTraining.edit');
+
+	Route::get('my-menu/bulletin','Apps\UserMenuController@bulletinIndex')->name('myBulletin.index');
+	Route::get('my-menu/bulletin/show/{id}','Apps\UserMenuController@bulletinShow')->name('myBulletin.show');
+	Route::get('my-menu/knowledge','Apps\UserMenuController@knowledgeIndex')->name('myKnowledge.index');
+	Route::get('my-menu/knowledge/show/{id}','Apps\UserMenuController@knowledgeShow')->name('myKnowledge.show');
+	Route::get('my-menu/attendance','Apps\UserMenuController@attendanceIndex')->name('myAttendance.index');
+	Route::post('my-menu/attendance/search','Apps\UserMenuController@attendanceSearch')->name('myAttendance.search');
 
 	Route::get('human-resources/reports/attendance','Apps\ReportsController@attendanceReport')->name('attReport.index');
 

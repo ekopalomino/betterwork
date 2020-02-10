@@ -22,7 +22,6 @@ Better Work Indonesia | Employee Appraisal
             <th style="width: 20%">Appraisal Type</th>
             <th>Appraisal Period</th>
             <th>Direct Subordinate</th>
-            <th style="width: 30%">Appraisal Progress</th>
             <th style="width: 8%">Status</th>
             <th style="width: 20%"></th>
           </tr>
@@ -34,7 +33,6 @@ Better Work Indonesia | Employee Appraisal
             <td>{{ $value->Types->name }}</td>
             <td>{{date("Y",strtotime($value->appraisal_period)) }}</td>
             <td><img src="http://betterwork.local/public/employees/{{ $value->Parent->picture }}" class="img-circle elevation-2" title="{{$value->Parent->first_name}} {{$value->Parent->last_name}}" style="width: 50px; height: 50px;"></td>
-            <td></td>
             <td>{{ $value->Statuses->name }}</td>
             <td>
                 <div class="btn-group">
@@ -44,6 +42,7 @@ Better Work Indonesia | Employee Appraisal
 					<div class="dropdown-menu" role="menu">
 						<a class="dropdown-item" href="{{ route('appraisal.show',$value->id) }}">View Appraisal</a>
 						<a class="dropdown-item" href="{{ route('appraisal.edit',$value->id) }}">Edit Appraisal</a>
+						<a class="dropdown-item" href="{{ route('appraisal.close',$value->id) }}">Close Appraisal</a>
 					</div>
                 </div>
             </td>

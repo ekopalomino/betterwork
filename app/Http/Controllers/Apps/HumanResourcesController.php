@@ -265,7 +265,8 @@ class HumanResourcesController extends Controller
             $input = [
                 'employee_id' => $request->input('employee_id'), 
                 'institution_name' => $request->input('institution_name'),
-                'grade' => $request->input('degree'),
+                'date_of_graduate' => $request->input('date_of_graduate'),
+                'degree' => $request->input('degree'),
                 'major' => $request->input('major'),
                 'gpa' => $request->input('gpa'),
             ];
@@ -722,7 +723,7 @@ class HumanResourcesController extends Controller
 
     public function appraisalIndex()
     {
-        $data = EmployeeAppraisal::orderBy('created_at','DESC')->get();
+        $data = EmployeeAppraisal::where('supervisor_id',auth()->user()->employee_id)->orderBy('created_at','DESC')->get();
 
         return view('apps.pages.appraisalIndex',compact('data'));
     }
@@ -916,6 +917,36 @@ class HumanResourcesController extends Controller
         );
 
         return redirect()->back()->with($notification);
+    }
+
+    public function appraisalComment(Request $request,$id)
+    {
+        $data = EmployeeAppraisal::with('Details.Target')->find($id);
+        $comments = AppraisalComment::create([
+            'appraisal_id' => $data->id,
+            'comment_by' => auth()->user()->employee_id,
+            'comments' => $request->input('comment'),
+        ]);
+
+        return redirect()->back();
+
+    }
+
+    public function appraisalClose($id)
+    {
+        $data = EmployeeAppraisal::with('Details.Target')->find($id);
+        
+        return view('apps.edit.employeeAppraisal',compact('data'));
+    }
+
+    public function appraisalCloseProcess(Request $request,$id)
+    {
+        $data = EmployeeAppraisal::with('Details.Target')->find($id);
+        $closed = $data->update([
+            'status_id' => '6a787298-14f6-4d19-a7ee-99a3c8ed6466'
+        ]);
+
+        return redirect()->route('appraisal.index');
     }
 
     public function bulletinIndex()
@@ -1233,19 +1264,82 @@ class HumanResourcesController extends Controller
         return back()->with($notification);
     }
 
-    public function salaryShow($id)
+    public function salaryShow($period)
     {
-
+        $data = EmployeeSalary::join('employees','employees.employee_no','employee_salaries.employee_no')
+                                ->join('employee_services','employee_services.employee_id','employees.id')
+                                ->where('employee_salaries.payroll_period',$period)
+                                ->where('employee_services.is_active','1')
+                                ->get();
+                              
+        return view('apps.show.employeeSalary',compact('data'));
     }
 
-    public function salaryApproval($id)
+    public function salaryApproval($period)
     {
+        $data = EmployeeSalary::where('payroll_period',$period)->get();
+        foreach($data as $value) {
+            $approve = $value->update([
+                'status_id' => 'ca52a2ce-5c37-48ce-a7f2-0fd5311860c2',
+                'approved_by' => auth()->user()->employee_id,
+            ]);
+        }
 
+        return redirect()->route('salary.index');
+    }
+
+    public function salaryReject($period)
+    {
+        $data = EmployeeSalary::where('payroll_period',$period)->get();
+        foreach($data as $value) {
+            $approve = $value->update([
+                'status_id' => '6840ffe5-600b-4109-8abf-819bf77b24cf',
+                'approved_by' => auth()->user()->employee_id,
+            ]);
+        }
+        
+        return redirect()->route('salary.index');
     }
 
     public function reimbursIndex()
     {
-        return view('apps.pages.reimbursIndex');
+        $data = EmployeeReimbursment::orderBy('created_at','DESC')->get();
+
+        return view('apps.pages.reimbursIndex',compact('data'));
+    }
+
+    public function reimbursApprove(Request $request,$id)
+    {
+        $data = EmployeeReimbursment::find($id);
+
+        $approve = $data->update([
+            'status_id' => 'ca52a2ce-5c37-48ce-a7f2-0fd5311860c2',
+        ]);
+
+        $log = 'Reimburs Request for'.($data->Employees->first_name).' '.($data->Employees->last_name).' Approved';
+         \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'Reimburs Request for '.($data->Employees->first_name).' '.($data->Employees->last_name).' Approved',
+            'alert-type' => 'success'
+        );
+        return redirect()->route('reimburs.index')->with($notification);
+    }
+
+    public function reimbursReject(Request $request,$id)
+    {
+        $data = EmployeeReimbursment::find($id);
+
+        $approve = $data->update([
+            'status_id' => '6840ffe5-600b-4109-8abf-819bf77b24cf',
+        ]);
+
+        $log = 'Reimburs Request for'.($data->Employees->first_name).' '.($data->Employees->last_name).' Approved';
+         \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'Reimburs Request for '.($data->Employees->first_name).' '.($data->Employees->last_name).' Approved',
+            'alert-type' => 'success'
+        );
+        return redirect()->route('reimburs.index')->with($notification);
     }
 }
 
