@@ -32,7 +32,7 @@ Better Work Indonesia | My Grievance Data
 										<th>Subject</th>
 										<th>Description</th>
 										<th>Status</th>
-										<th>Respond</th>
+										<th>Rating</th>
 										<th>Created At</th>
 										<th>Updated At</th>
 										<th></th>
@@ -45,7 +45,24 @@ Better Work Indonesia | My Grievance Data
 										<td>{{ $value->subject }}</td>
 										<td>{{ str_limit(strip_tags($value->description), 50) }}</td>
 										<td>{{ $value->Statuses->name }}</td>
-										<td>{{ $value->notes }}</td>
+										<td>
+											@if(($value->rating) == '1')
+											<img src="https://img.icons8.com/color/48/000000/filled-star.png">
+											@elseif(($value->rating) == '2')
+											<img src="https://img.icons8.com/color/48/000000/filled-star.png"><img src="https://img.icons8.com/color/48/000000/filled-star.png">
+											@elseif(($value->rating) == '3')
+											<img src="https://img.icons8.com/color/48/000000/filled-star.png"><img src="https://img.icons8.com/color/48/000000/filled-star.png">
+											<img src="https://img.icons8.com/color/48/000000/filled-star.png">
+											@elseif(($value->rating) == '4')
+											<img src="https://img.icons8.com/color/48/000000/filled-star.png"><img src="https://img.icons8.com/color/48/000000/filled-star.png">
+											<img src="https://img.icons8.com/color/48/000000/filled-star.png"><img src="https://img.icons8.com/color/48/000000/filled-star.png">
+											@else
+											<img src="https://img.icons8.com/color/48/000000/filled-star.png"><img src="https://img.icons8.com/color/48/000000/filled-star.png">
+											<img src="https://img.icons8.com/color/48/000000/filled-star.png"><img src="https://img.icons8.com/color/48/000000/filled-star.png">
+											<img src="https://img.icons8.com/color/48/000000/filled-star.png">
+											@endif
+										</td>
+										{{ $value->rating }}</td>
 										<td>{{date("d F Y H:i",strtotime($value->created_at)) }}</td>
 										<td>{{date("d F Y H:i",strtotime($value->updated_at)) }}</td>
 										<td>

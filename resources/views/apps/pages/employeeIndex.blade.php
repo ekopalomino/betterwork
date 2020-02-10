@@ -45,6 +45,7 @@ Better Work Indonesia | Human Resources
 	                      				</b>
 	                      			</p>
 	                      			<ul class="ml-4 mb-0 fa-ul text-muted">
+										<li class="small"><span class="fa-li"><i class="far fa-lg fa-address-card"></i></span> ID No: {{ $employee->employee_no }}</li>
 	                        			<li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Address: {{ $employee->address }}</li>
 	                        			<li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Mobile #: {{ $employee->mobile }}</li>
 	                      			</ul>

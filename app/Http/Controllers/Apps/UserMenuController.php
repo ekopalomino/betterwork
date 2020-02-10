@@ -5,6 +5,7 @@ namespace iteos\Http\Controllers\Apps;
 use Illuminate\Http\Request;
 use iteos\Http\Controllers\Controller;
 use iteos\Models\Employee;
+use iteos\Models\EmployeeEducation;
 use iteos\Models\Location;
 use iteos\Models\EmployeeAttendance;
 use iteos\Models\AttendanceTransaction;
@@ -25,6 +26,8 @@ use iteos\Models\AppraisalComment;
 use iteos\Models\AppraisalAdditionalRole;
 use iteos\Models\Bulletin;
 use iteos\Models\KnowledgeBase;
+use iteos\Models\EmployeeSalary;
+use iteos\Models\TargetData;
 use Auth;
 use DB;
 use Carbon\Carbon;
@@ -33,27 +36,33 @@ class UserMenuController extends Controller
 {
     public function index()
     {
-        $getEmployees = Employee::join('employee_services','employee_services.employee_id','employees.id')
-                                ->where('employees.id',Auth()->user()->employee_id)
-                                ->get();
-        $getStartDate = EmployeeService::where('employee_id',Auth()->user()->employee_id)
-                                        ->orderBy('from','ASC')
-                                        ->first();
-    	$getEmployee = Employee::where('id',Auth()->user()->employee_id)->first();
-    	$getAttendance = EmployeeAttendance::where('employee_id',$getEmployee->id)->orderBy('updated_at','DESC')->first();
-        
+        /*Master Query*/
+        $getEmployee = Employee::where('id',Auth()->user()->employee_id)->first();
+        /*Query for Profile Card*/
+        $getBasicProfile = Employee::join('employee_services','employee_services.employee_id','employees.id')
+                                    ->join('employee_leaves','employee_leaves.employee_id','employees.id')
+                                    ->where('employees.id',auth()->user()->employee_id)
+                                    ->orderBy('employee_services.from','ASC')
+                                    ->first();
         $tDate = Carbon::now();
-        $interval = $tDate->diff($getStartDate->from);
+        $interval = $tDate->diff($getBasicProfile->from);
         $totalDays = $interval->format('%a');
-
-        $getRemaining = EmployeeLeave::where('employee_id',$getEmployee->id)->first();
-        $getServices = EmployeeService::where('employee_id',$getEmployee->id)->orderBy('from','ASC')->first();
-        $getCurPos = EmployeeService::where('employee_id',$getEmployee->id)->orderBy('from','DESC')->first();
-        $getSubordinate = EmployeeService::with('Parent')->where('report_to',$getEmployee->id)->get();
+        $getCurPos = EmployeeService::where('employee_id',auth()->user()->employee_id)->orderBy('from','DESC')->first(); 
+        /*Query for Attendance Card*/
+        $getAttendance = EmployeeAttendance::where('employee_id',$getEmployee->id)->whereDate('updated_at',Carbon::today())->first();
+        /*Query for User Card*/
+        $getLastEdu = EmployeeEducation::where('employee_id',auth()->user()->employee_id)->orderBy('date_of_graduate','DESC')->first();
+        $getTraining = EmployeeTraining::where('employee_id',auth()->user()->employee_id)->where('status','caf3f6a0-3aef-4984-8a87-1684579c5e45')->get();
+        $getSubordinate = EmployeeService::with('Parent')->where('report_to',auth()->user()->employee_id)->get();
+        $getSalary = EmployeeSalary::where('employee_no',$getEmployee->employee_no)->where('status_id','ca52a2ce-5c37-48ce-a7f2-0fd5311860c2')
+                                    ->orderBy('payroll_period','DESC')->get();
+        /*Query for Bulletin Board*/
         $getBulletin = Bulletin::orderBy('updated_at','DESC')->get();
         $getKnowledge = KnowledgeBase::orderBy('updated_at','DESC')->get();
+        /*Query for Birthday Card*/
+        $getBirthday = Employee::whereMonth('date_of_birth',Carbon::now()->month)->get();
         
-    	return view('apps.pages.userHome',compact('getEmployee','getAttendance','totalDays','getRemaining','getServices','getSubordinate','getBulletin','getKnowledge','getCurPos'));
+    	return view('apps.pages.userHome',compact('getBasicProfile','getEmployee','getAttendance','totalDays','getLastEdu','getSubordinate','getBulletin','getKnowledge','getCurPos','getBirthday','getSalary'));
     }
 
     public function clockIn(Request $request)
@@ -96,13 +105,19 @@ class UserMenuController extends Controller
             'notes' => 'required|min:100',
         ]);
         
-        $getData = EmployeeAttendance::with('Activity')->where('employee_id',auth()->user()->employee_id)->orderBy('updated_at','DESC')->first();
+        $getData = EmployeeAttendance::join('attendance_transactions','attendance_transactions.attendance_id','employee_attendances.id')
+                                        ->where('employee_attendances.employee_id',auth()->user()->employee_id)
+                                        ->orderBy('employee_attendances.updated_at','DESC')
+                                        ->first();
+        $getId = $getData->attendance_id;
         $getTime = Carbon::now();
-        $clockOut = $getData->update([
-            'working_hour' => $getTime->diffInHours($getData->clock_in),
+        $work = $getTime->diffInHours($getData->clock_in);
+        $clockOut = EmployeeAttendance::where('id',$getId)->update([
+            'working_hour' => $work,
             'status_id' => '2dc764a0-f110-4985-922d-0ffb81363899',
         ]);
-        $attendanceOut = AttendanceTransaction::where('attendance_id',$getData->id)->update([
+
+        $attendanceOut = AttendanceTransaction::where('attendance_id',$getData->attendance_id)->update([
             'clock_out' => $getTime,
             'notes' => $request->input('notes'),
         ]);
@@ -244,7 +259,7 @@ class UserMenuController extends Controller
 
         if($request->input('is_public') == 'on') {
         	$data = EmployeeGrievance::create([
-	        	'employee_id' => $request->input('employee_id'),
+	        	'employee_id' => auth()->user()->employee_id,
 	        	'subject' => $request->input('subject'),
 	        	'type_id' => $request->input('type_id'),
 	        	'is_public' => '1',
@@ -253,7 +268,7 @@ class UserMenuController extends Controller
 	        ]);
         } else {
         	$data = EmployeeGrievance::create([
-	        	'employee_id' => $request->input('employee_id'),
+	        	'employee_id' => auth()->user()->employee_id,
 	        	'subject' => $request->input('subject'),
 	        	'type_id' => $request->input('type_id'),
 	        	'description' => $content,
@@ -327,13 +342,13 @@ class UserMenuController extends Controller
             $comments = GrievanceComment::create([
                 'grievance_id' => $id,
                 'comment' => $content,
-                'comment_by' => $data->employee_id,
+                'comment_by' => auth()->user()->employee_id,
             ]);
         } else {
             $comments = GrievanceComment::create([
                 'grievance_id' => $id,
                 'comment' => $content,
-                'comment_by' => $data->employee_id,
+                'comment_by' => auth()->user()->employee_id,
             ]);
         }
         
@@ -474,32 +489,32 @@ class UserMenuController extends Controller
     public function targetEdit($id)
     {
         $data = AppraisalTarget::with('Data.Appraisal')->find($id);
-        
+
         return view('apps.edit.myTarget',compact('data'))->renderSections()['content'];
     }
 
     public function appraisalUpdate(Request $request,$id)
     {
         $data = AppraisalTarget::with('Data.Appraisal')->find($id);
-        $sum = AppraisalTarget::where('appraisal_id',$data->appraisal_id)->sum('job_weight');
-        
-        $weight = ($request->input('weight_real'))/100;
-        $progress = ($data->job_weight) * ($weight);
-        $input = ([
-            'total' => $sum,
-            'progress_single' => $progress,
-            'progress_total' => $sum - $progress,
-            'percent_total' => round(($progress)/$sum,2),
-        ]);
-        dd($input);
-        $data->update([
-            'target_real' => $request->input('target_real'),
-            'weight_real' => $request->input('weight_real'),
-        ]);
-        $source = EmployeeAppraisal::where('id',$data->appraisal_id)->where('status_id','c0c2bde9-b149-489c-9e0d-a10e4d2fd661')->first();
-        $source->update([
-            'progress' => round(($progress)/$sum,2),
-        ]);
+
+        if($request->hasFile('file')) {
+            $uploadedFile = $request->file('contract');
+            $path = $uploadedFile->store('employee_appraisal');
+            $input = ([
+                'target_id' => $data->id,
+                'appraisal_id' => $data->appraisal_id,
+                'data_details' => $request->input('details'),
+                'file' => $path,
+            ]);
+            $data = TargetData::create($input);
+        } else {
+            $input = ([
+                'target_id' => $data->id,
+                'appraisal_id' => $data->appraisal_id,
+                'data_details' => $request->input('details'),
+            ]);
+            $data = TargetData::create($input);
+        }
         
         return redirect()->back();
     }
@@ -551,5 +566,59 @@ class UserMenuController extends Controller
         ]);
 
         return redirect()->route('myTraining.index');
+    }
+
+    public function bulletinIndex()
+    {
+        $data = Bulletin::orderBy('created_at','DESC')->get();
+
+        return view('apps.pages.myBulletin',compact('data'));
+    }
+
+    public function bulletinShow($id)
+    {
+        $data = Bulletin::find($id);
+
+        return view('apps.show.bulletin',compact('data'));
+    }
+
+    public function knowledgeIndex()
+    {
+        $data = KnowledgeBase::orderBy('created_at','DESC')->get();
+
+        return view('apps.pages.myKnowledge',compact('data'));
+    }
+
+    public function knowledgeShow($id)
+    {
+        $data = KnowledgeBase::find($id);
+
+        return view('apps.show.knowledge',compact('data'));
+    }
+
+    public function attendanceIndex()
+    {
+        $data = EmployeeAttendance::join('employees','employees.id','employee_attendances.employee_id')
+                                    ->join('attendance_transactions','attendance_transactions.attendance_id','employee_attendances.id')
+                                    ->where('employee_attendances.employee_id',auth()->user()->employee_id)
+                                    ->get();
+        
+        return view('apps.pages.myAttendance',compact('data'));
+    }
+
+    public function attendanceSearch(Request $request)
+    {
+        $dates = $request->input('date_range');
+        $dateRange = explode('-',$dates);
+        $startDate = Carbon::parse($dateRange[0]);
+        $endDate = Carbon::parse($dateRange[1]);
+
+        $data = EmployeeAttendance::join('employees','employees.id','employee_attendances.employee_id')
+                                    ->join('attendance_transactions','attendance_transactions.attendance_id','employee_attendances.id')
+                                    ->where('employee_attendances.created_at','>=',$startDate)
+                                    ->where('employee_attendances.created_at','<=',$endDate)
+                                    ->get();
+                                    
+        return view('apps.pages.myAttendance',compact('data'));
     }
 }

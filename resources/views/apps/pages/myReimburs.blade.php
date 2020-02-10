@@ -20,29 +20,29 @@ Better Work Indonesia | My Reimbursment Request
 		<div class="col-12">
 			<div class="card card-primary card-outline">
 				<div class="card-header"> 
-       		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-lg">
-         		Add New
-         	</button>
-         	<div class="modal fade" id="modal-lg">
-  	        <div class="modal-dialog modal-lg">
-	          	<div class="modal-content">
-	            	<div class="modal-header">
-	             		<h4 class="modal-title">New Request</h4>
-	              		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	                		<span aria-hidden="true">&times;</span>
-                		</button>
-	            	</div>
-	            	<div class="modal-body">
-                  {!! Form::open(array('route' => 'myReimburs.store','method'=>'POST', 'class' => 'form-horizontal','files'=>'true')) !!}
-                  @csrf
-             	  	<label for="inputEmail" class="col-sm-12 col-form-label">Request Type</label>
-           				  <div class="col-sm-12">
-           					  {!! Form::select('request_type', [null=>'Please Select'] + $types,[], array('class' => 'form-control')) !!}
-           				  </div>
-                  <label for="inputEmail" class="col-sm-12 col-form-label">Transaction Date</label>
-                    <div class="col-sm-12">
-                      {!! Form::date('transaction_date', '', array('id' => 'datepicker','class' => 'form-control')) !!}
-                    </div>
+					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-lg">
+						Add New
+					</button>
+					<div class="modal fade" id="modal-lg">
+						<div class="modal-dialog modal-lg">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h4 class="modal-title">New Request</h4>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+								</div>
+								<div class="modal-body">
+									{!! Form::open(array('route' => 'myReimburs.store','method'=>'POST', 'class' => 'form-horizontal','files'=>'true')) !!}
+									@csrf
+									<label for="inputEmail" class="col-sm-12 col-form-label">Request Type</label>
+										<div class="col-sm-12">
+											{!! Form::select('request_type', [null=>'Please Select'] + $types,[], array('class' => 'form-control')) !!}
+										</div>
+									<label for="inputEmail" class="col-sm-12 col-form-label">Transaction Date</label>
+										<div class="col-sm-12">
+											{!! Form::date('transaction_date', '', array('id' => 'datepicker','class' => 'form-control')) !!}
+										</div>
                   <label for="inputEmail" class="col-sm-12 col-form-label">Amount</label>
                     <div class="col-sm-12">
                       {!! Form::number('amount', '', array('class' => 'form-control')) !!}
@@ -105,7 +105,15 @@ Better Work Indonesia | My Reimbursment Request
           		<td>@if(!empty($value->transaction_date)){{date("d F Y H:i",strtotime($value->transaction_date)) }}@endif</td>
               <td>{{ number_format($value->amount,2,',','.')}}</td>
               <td>{{ $value->notes }}</td>
-            	<td>{{ $value->Statuses->name }}</td>
+            	<td>
+									@if(($value->status_id) == 'b0a0c17d-e56a-41a7-bfb0-bd8bdc60a7be')
+									<span class="badge badge-info">{{ $value->Statuses->name }}</span>
+									@elseif(($value->status_id) == 'ca52a2ce-5c37-48ce-a7f2-0fd5311860c2')
+									<span class="badge badge-success">{{ $value->Statuses->name }}</span>
+									@else
+									<span class="badge badge-danger">{{ $value->Statuses->name }}</span>
+									@endif
+								</td>
             	<td>{{date("d F Y H:i",strtotime($value->created_at)) }}</td>
               <td>{{date("d F Y H:i",strtotime($value->updated_at)) }}</td>
             </tr>

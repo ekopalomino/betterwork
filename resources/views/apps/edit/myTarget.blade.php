@@ -3,15 +3,18 @@
 <section class="content">
 	<div class="row">
 		<div class="col-12">
-			{!! Form::open(array('route' => ['myTarget.update','id'=>$data->id],'method'=>'POST')) !!}
+			{!! Form::open(array('route' => ['myTarget.update','id'=>$data->id],'method'=>'POST','files'=>'true')) !!}
 			@csrf
 			<label for="inputEmail" class="col-sm-12 col-form-label">Target Realization</label>
                 <div class="col-sm-12">
-                    {!! Form::text('target_real', null, array('placeholder' => 'Target Name','class' => 'form-control')) !!}
+                    {!! Form::textarea('details', null, array('placeholder' => 'Target Name','class' => 'form-control')) !!}
                 </div>
-            <label for="inputEmail" class="col-sm-12 col-form-label">Progress</label>
-                <div class="col-sm-12">
-                    {!! Form::number('weight_real', null, array('placeholder' => 'Job Weight','class' => 'form-control')) !!}
+            <label for="inputEmail" class="col-sm-12 col-form-label">File</label>
+                <div class="input-group">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="file" name="file">
+                        <label class="custom-file-label" for="certificate">Choose File</label>
+                    </div>
                 </div>
 				{!! Form::hidden('data_id', $data->Data->id, array('placeholder' => 'Job Weight','class' => 'form-control')) !!}
             <div class="modal-footer justify-content-between">
@@ -22,4 +25,10 @@
         </div>
     </div>
 </section>
+<script src="{{ asset('public/bower_components/admin-lte/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+    bsCustomFileInput.init();
+});
+</script>
 @endsection

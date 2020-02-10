@@ -166,7 +166,7 @@ class GrievanceController extends Controller
         $comments = GrievanceComment::create([
         	'grievance_id' => $id,
         	'comment' => $content,
-        	'comment_by' => $getEmployee->employee_id,
+        	'comment_by' => auth()->user()->employee_id,
         ]);
 
         return redirect()->back();

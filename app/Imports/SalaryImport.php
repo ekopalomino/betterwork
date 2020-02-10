@@ -18,7 +18,7 @@ class SalaryImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
         return new EmployeeSalary([
-            'payroll_period' => Carbon::parse($row['period'])->format('Y-m-d','Asia/Jakarta'),
+            'payroll_period' => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['period']),
             'employee_no' => $row['id_no'],
             'nett_salary' => $row['nett_salary'],
             'jkk' => $row['jkk'],

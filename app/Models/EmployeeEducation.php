@@ -9,6 +9,7 @@ class EmployeeEducation extends Model
     protected $fillable = [
     	'employee_id',
     	'institution_name',
+        'date_of_graduate',
     	'grade',
     	'major',
     	'gpa',

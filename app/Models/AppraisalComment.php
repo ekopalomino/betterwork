@@ -8,8 +8,12 @@ class AppraisalComment extends Model
 {
     protected $fillable = [
     	'appraisal_id',
-    	'data_id',
     	'comment_by',
     	'comments',
     ];
+
+    public function Employees()
+    {
+    	return $this->belongsTo(Employee::class,'comment_by');
+    }
 }

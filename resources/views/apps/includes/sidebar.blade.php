@@ -15,7 +15,8 @@
 	    </div>
 	    <nav class="mt-2">
 	    	<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-			@if(\Route::is(['userHome.index','myLeave.index','myReimburs.index','myGrievance.index','myGrievance.create','myGrievance.edit','myGrievance.show','myAppraisal.index','myAppraisal.create','myAppraisal.detail','myDevelopment.create','myAppraisal.show','myAppraisal.edit','myTraining.index','profile.edit']))
+			@if(\Route::is(['userHome.index','myLeave.index','myReimburs.index','myGrievance.index','myGrievance.create','myGrievance.edit','myGrievance.show','myAppraisal.index','myAppraisal.create',
+			'myAppraisal.detail','myDevelopment.create','myAppraisal.show','myAppraisal.edit','myTraining.index','profile.edit','myAttendance.index','myBulletin.index','myKnowledge.index','myAttendance.search']))
 			<li class="nav-item {{set_open('userHome.index') }}">
 	    		<a href="{{ route('userHome.index') }}" class="nav-link {{set_active('userHome.index') }}">
 					<i class="nav-icon fas fa-tachometer-alt"></i>
@@ -24,8 +25,10 @@
 					</p>
 				</a>
 			</li>
-			<li class="nav-item has-treeview {{set_open(['myLeave.index','myReimburs.index','myGrievance.index','myGrievance.create','myGrievance.edit','myGrievance.show','myAppraisal.index','myAppraisal.create','myAppraisal.detail','myDevelopment.create','myAppraisal.edit','myAppraisal.show','myAppraisal.edit','myTraining.index','profile.edit']) }}">
-				<a href="#" class="nav-link {{set_active(['myLeave.index','myReimburs.index','myGrievance.index','myGrievance.create','myGrievance.edit','myGrievance.show','myAppraisal.index','myAppraisal.create','myAppraisal.detail','myDevelopment.create','myAppraisal.show','myAppraisal.edit','myTraining.index','profile.edit']) }}">
+			<li class="nav-item has-treeview {{set_open(['myLeave.index','myReimburs.index','myGrievance.index','myGrievance.create','myGrievance.edit','myGrievance.show','myAppraisal.index',
+			'myAppraisal.create','myAppraisal.detail','myDevelopment.create','myAppraisal.edit','myAppraisal.show','myAppraisal.edit','myTraining.index','profile.edit']) }}">
+				<a href="#" class="nav-link {{set_active(['myLeave.index','myReimburs.index','myGrievance.index','myGrievance.create','myGrievance.edit','myGrievance.show','myAppraisal.index',
+				'myAppraisal.create','myAppraisal.detail','myDevelopment.create','myAppraisal.show','myAppraisal.edit','myTraining.index','profile.edit']) }}">
 					<i class="nav-icon fas fa-user"></i>
 					<p>
 						My Menu
@@ -67,6 +70,47 @@
 						<a href="{{ route('myReimburs.index') }}" class="nav-link {{set_active('myReimburs.index') }}">
 							<i class="far fa-circle nav-icon"></i>
 							<p>Reimbursment</p>
+						</a>
+					</li>
+				</ul>
+			</li>
+			<li class="nav-item has-treeview {{set_open(['myBulletin.index','myKnowledge.index','myAttendance.index','myAttendance.search']) }}">
+				<a href="#" class="nav-link {{set_active(['myBulletin.index','myKnowledge.index','myAttendance.index','myAttendance.search']) }}">
+					<i class="nav-icon fas fa-database"></i>
+					<p>
+						My Data
+						<i class="right fas fa-angle-left"></i>
+					</p>
+				</a>
+				<ul class="nav nav-treeview">
+					<li class="nav-item">
+						<a href="{{ route('myAttendance.index') }}" class="nav-link {{set_active(['myAttendance.index','myAttendance.search']) }}">
+							<i class="far fa-circle nav-icon"></i>
+							<p>My Attendance</p>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="{{ route('myBulletin.index') }}" class="nav-link {{set_active('myBulletin.index') }}">
+							<i class="far fa-circle nav-icon"></i>
+							<p>Bulletin</p>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="{{ route('myKnowledge.index') }}" class="nav-link {{set_active('myKnowledge.index') }}">
+							<i class="far fa-circle nav-icon"></i>
+							<p>Knowledge Base</p>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="{{ route('myLeave.index') }}" class="nav-link {{set_active('myLeave.index') }}">
+							<i class="far fa-circle nav-icon"></i>
+							<p>Published Grievance</p>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="{{ route('myLeave.index') }}" class="nav-link {{set_active('myLeave.index') }}">
+							<i class="far fa-circle nav-icon"></i>
+							<p>Payroll</p>
 						</a>
 					</li>
 				</ul>
@@ -189,8 +233,8 @@
 			@endcan
 			@can('Access Human Resources')
 			@if(\Route::is(['hr.index','employee.index','employee.create','employee.edit','attendance.index','request.index','appraisal.index','appraisal.show','salary.index','bulletin.index','knowledge.index',
-			'bulletin.create','bulletin.edit','bulletin.show','knowledge.create','knowledge.edit','knowledge.show','attendance.search','salary.create','employeeLeave.index','appraisal.edit','training.index','attReport.index'
-			,'reimburs.index']))
+			'bulletin.create','bulletin.edit','bulletin.show','knowledge.create','knowledge.edit','knowledge.show','attendance.search','employeeLeave.index','appraisal.edit','training.index','attReport.index'
+			,'reimburs.index','salary.show','appraisal.close']))
 			@can('Create Employee')
 			<li class="nav-item {{set_open(['employee.index','employee.create','employee.edit']) }}">
 				<a href="{{ route('employee.index') }}" class="nav-link {{set_active(['employee.index','employee.create','employee.edit']) }}">
@@ -243,8 +287,8 @@
 				</a>
 			</li>
 			@can('Process Appraisal')
-			<li class="nav-item {{set_open(['appraisal.index','appraisal.show','appraisal.edit']) }}">
-				<a href="{{ route('appraisal.index') }}" class="nav-link {{set_active(['appraisal.index','appraisal.show','appraisal.edit']) }}">
+			<li class="nav-item {{set_open(['appraisal.index','appraisal.show','appraisal.edit','appraisal.close']) }}">
+				<a href="{{ route('appraisal.index') }}" class="nav-link {{set_active(['appraisal.index','appraisal.show','appraisal.edit','appraisal.close']) }}">
 					<i class="nav-icon fas fa-clipboard-check"></i>
 					<p>
 						Appraisal
@@ -253,17 +297,17 @@
 			</li>
 			@endcan
 			@can('Create Payroll')
-			<li class="nav-item has-treeview {{set_open(['salary.index','salary.create','reimburs.index']) }}">
-				<a href="#" class="nav-link {{set_active(['salary.index','salary.create','reimburs.index']) }}">
-					<i class="nav-icon fas fa-file-alt"></i>
+			<li class="nav-item has-treeview {{set_open(['salary.index','salary.create','reimburs.index','salary.show']) }}">
+				<a href="#" class="nav-link {{set_active(['salary.index','salary.create','reimburs.index','salary.show']) }}">
+					<i class="nav-icon fas fa-calculator"></i>
 					<p>
 						HR Finance
 						<i class="right fas fa-angle-left"></i>
 					</p>
 				</a>
 				<ul class="nav nav-treeview">
-					<li class="nav-item {{set_open(['salary.index','salary.create']) }}">
-						<a href="{{ route('salary.index') }}" class="nav-link {{set_active(['salary.index','salary.create']) }}">
+					<li class="nav-item {{set_open(['salary.index','salary.show']) }}">
+						<a href="{{ route('salary.index') }}" class="nav-link {{set_active(['salary.index','salary.show']) }}">
 							<i class="far fa-circle nav-icon"></i>
 							<p>Payroll Process</p>
 						</a>

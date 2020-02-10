@@ -35,17 +35,21 @@ Better Work Indonesia | My Appraisal Data
                 				<tr>
                 					<th>Target</th>
                 					<th style="width: 110px;">Job Weight</th>
-									<th>Realization</th>
-									<th style="width: 110px;">Progress</th>
-                				</tr>
+									<th>Progress</th>
+								</tr>
                 			</thead>
                 			<tbody>
                 				@foreach($detail->Target as $item)
                 				<tr>
                 					<td>{{ $item->target }}</td>
                 					<td style="width: 110px;">{{ $item->job_weight }}</td>
-									<td>{{ $item->target_real }}</td>
-									<td style="width: 110px;">{{ $item->weight_real }}</td>
+									<td>
+										@foreach($item->Child as $value)
+										<ul>
+											<li>{{ $value->data_details}}</li>
+										</ul>
+										@endforeach
+									</td>
                 				</tr>
                 				@endforeach
                 			</tbody>
@@ -134,6 +138,31 @@ Better Work Indonesia | My Appraisal Data
                 </div>
 			</div>
 		</div>
+		<div class="card-footer card-comments">
+			<p><strong>Appraisal Comment</strong></p>
+			@foreach($data->Comments as $comment)
+			<div class="card-comment">
+				<div class="comment-text">
+					<span class="username">
+						{{ $comment->Employees->first_name}} {{ $comment->Employees->last_name}}
+						<span class="text-muted float-right">{{date("d F Y H:i",strtotime($comment->created_at)) }}</span>
+					</span>
+					{!!html_entity_decode($comment->comments)!!}
+				</div>
+			</div>
+			@endforeach
+		</div>
+		@if(($data->status_id) != '6a787298-14f6-4d19-a7ee-99a3c8ed6466')
+		<div class="card-footer">
+			{!! Form::open(array('method' => 'POST','route' => ['appraisal.comment', $data->id])) !!}
+			@csrf
+			<textarea class="textarea" name="comment" placeholder="Place some text here"
+				style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">
+			</textarea>
+			<button type="submit" class="btn btn-info">Submit</button>
+			{!! Form::close() !!}
+		</div>
+		@endif
 	</div>
 </section>
 @endsection

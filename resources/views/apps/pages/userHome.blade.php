@@ -31,7 +31,11 @@ Better Work Indonesia | User Dashboard
 					<div class="card-body box-profile">
 						<div class="text-center">
                   			<img class="profile-user-img img-fluid img-circle"
+<<<<<<< HEAD
+                       			src="http://betterwork.local/public/employees/{{$getBasicProfile->picture}}"
+=======
                        			src="http://betterwork.iteos.tech/public/employees/{{$getEmployee->picture}}"
+>>>>>>> 65c30038c29f3fdf452842a5ec9f474b25516879
                        			alt="User profile picture">
                 		</div>
                 		<h3 class="profile-username text-center">{{{ isset(Auth::user()->name) ? Auth::user()->name : Auth::user()->email }}}</h3>
@@ -43,10 +47,10 @@ Better Work Indonesia | User Dashboard
                     			<b>Days In Company</b> <a class="float-right">{{$totalDays}}</a>
                   			</li>
                   			<li class="list-group-item">
-                    			<b>This Year Leave (Days)</b> <a class="float-right">{{$getEmployee->leave_amount}}</a>
+                    			<b>This Year Leave (Days)</b> <a class="float-right">{{$getBasicProfile->leave_amount}}</a>
                   			</li>
                   			<li class="list-group-item">
-                    			<b>This Year Leave Taken (Days)</b> <a class="float-right">{{$getRemaining->leave_usage}}</a>
+                    			<b>This Year Leave Taken (Days)</b> <a class="float-right">{{$getBasicProfile->leave_usage}}</a>
                   			</li>
                 		</ul>
                 	</div>
@@ -78,7 +82,7 @@ Better Work Indonesia | User Dashboard
 													</button>
 											</div>
 											<div class="modal-body">
-												{!! Form::open(array('route' => 'attendanceIn.store','method'=>'POST', 'class' => 'form-horizontal')) !!}
+												{!! Form::open(array('route' => 'attendanceIn.store','method'=>'POST')) !!}
 												@csrf
 												<div class="form-group">
 													<label for="inputEmail" class="col-sm-2 col-form-label">Task List</label>
@@ -103,7 +107,7 @@ Better Work Indonesia | User Dashboard
 													</button>
 											</div>
 											<div class="modal-body">
-												{!! Form::open(array('route' => 'attendanceOut.store','method'=>'POST', 'class' => 'form-horizontal')) !!}
+												{!! Form::open(array('route' => 'attendanceOut.store','method'=>'POST')) !!}
 												@csrf
 												<div class="form-group">
 													<label for="inputEmail" class="col-sm-2 col-form-label">Task List</label>
@@ -201,22 +205,24 @@ Better Work Indonesia | User Dashboard
               			<div class="tab-content">
               				<div class="active tab-pane" id="overview">
 								<strong><i class="fas fa-calendar-check mr-1"></i> Birthday</strong>
-								<p class="text-muted">{{date("d F Y",strtotime($getEmployee->date_of_birth)) }}</p>
+								<p class="text-muted">{{date("d F Y",strtotime($getBasicProfile->date_of_birth)) }}</p>
 								<strong><i class="fas fa-book mr-1"></i> Education</strong>
               					<p class="text-muted">
-                  					@foreach($getEmployee->Educations as $education)
-										{{$education->grade}} in {{$education->major}} from {{$education->institution_name}}
-									@endforeach
-                				</p>
+								@if(!empty($getLastEdu))
+                  					{{$getLastEdu->grade}} in {{$getLastEdu->major}} from {{$getLastEdu->institution_name}}
+								@endif
+								</p>
                 				<hr>
                 				<strong><i class="fas fa-map-marker-alt mr-1"></i> Home Address</strong>
-                				<p class="text-muted">{{ $getEmployee->address }}</p>
+                				<p class="text-muted">{{ $getBasicProfile->address }}</p>
                 				<hr>
                 				<strong><i class="fas fa-pencil-alt mr-1"></i> Training & Certification</strong>
                 				<p class="text-muted">
-								@foreach($getEmployee->Trainings as $training)
+								@if(!empty($getTraining))
+								@foreach($getTraining as $training)
                   					<span class="tag tag-danger">{{$training->training_title}}</span>
                   				@endforeach
+								@endif
                 				</p>
                 				<hr>
 								<strong><i class="fas fa-pencil-alt mr-1"></i> Contract Download</strong>
@@ -225,15 +231,15 @@ Better Work Indonesia | User Dashboard
 							<div class="tab-pane" id="organization">
 								<strong><i class="fas fa-id-badge mr-1"></i> Employee ID</strong>
 								<p class="text-muted">
-									{{ $getEmployee->employee_no }}
+									{{ $getBasicProfile->employee_no }}
 								</p>
 								<strong><i class="fas fa-calendar-check mr-1"></i> Join Date</strong>
 								<p class="text-muted">
-									{{date("d F Y",strtotime($getServices->from)) }}
+									{{date("d F Y",strtotime($getBasicProfile->from)) }}
 								</p>
 								<strong><i class="fas fa-file-signature mr-1"></i> Employment Type</strong>
 								<p class="text-muted">
-									{{ $getEmployee->Contracts->name }}
+									{{ $getBasicProfile->Contracts->name }}
 								</p>
 								<strong><i class="fas fa-clipboard-check mr-1"></i> Current Position</strong>
 								<p class="text-muted">
@@ -279,7 +285,7 @@ Better Work Indonesia | User Dashboard
 										</tr>
 									</thead>
 									<tbody>
-										@foreach($getEmployee->Child as $family)
+										@foreach($getBasicProfile->Child as $family)
 										<tr>
 											<td>{{ $family->first_name }} {{ $family->last_name }}</td>
 											<td>
@@ -383,13 +389,22 @@ Better Work Indonesia | User Dashboard
               							</tr>
               						</thead>
               						<tbody>
+										@if(!empty($getSalary))
+										@foreach($getSalary as $key => $value)
               							<tr>
-              								<td></td>
-              								<td></td>
+              								<td>{{ $key+1 }}</td>
+              								<td>{{date("F Y",strtotime($value->payroll_period)) }}</td>
               								<td>
 												<button type="button" class="btn btn-block bg-gradient-primary btn-sm">Download</button>
 											</td>
               							</tr>
+										@endforeach
+										@else
+										<tr>
+											<td></td>
+											<td></td>
+										</tr>
+										@endif
 									</tbody>
               					</table>
               				</div>
@@ -477,9 +492,27 @@ Better Work Indonesia | User Dashboard
 					<div class="col-md-6">
 						<div class="card card-success">
 							<div class="card-header">
-								<h3 class="card-title">Employee Birthday</h3>
+								<h3 class="card-title">This Month Birthday</h3>
 							</div>
 							<div class="card-body">
+								<div class="card-body table-responsive p-0" style="height: 300px;">
+									<table class="table table-head-fixed text-nowrap">
+										<thead>
+											<tr>
+												<th style="width: 10px;">Date</th>
+												<th>Employee Name</th>
+											</tr>
+										</thead>
+										<tbody>
+											@foreach($getBirthday as $key=>$birthday)
+											<tr>
+												<td>{{date("d F Y",strtotime($getBirthday->date_of_birth)) }}</td>
+												<td><strong>{{$getBirthday->first_name}} {{$getBirthday->last_name}}</strong></td>
+											</tr>
+											@endforeach
+										</tbody>
+									</table>
+								</div>
 							</div>
 						</div>
 					</div>
