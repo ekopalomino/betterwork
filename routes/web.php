@@ -26,8 +26,7 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::get('human-resources','Apps\HumanResourcesController@index')->name('hr.index');
 	Route::get('grievance','Apps\GrievanceController@index')->name('grievance.index');
 	Route::get('accounting','Apps\AccountingController@index')->name('accounting.index');
-
-	/*Configuration Sub Menu Route*/
+	/*User Manager Sub Menu Route*/
 	Route::get('configuration/users','Apps\ConfigurationController@userIndex')->name('user.index');
 	Route::post('configuration/users','Apps\ConfigurationController@userStore')->name('user.store');
 	Route::get('configuration/users/edit/{id}','Apps\ConfigurationController@userEdit')->name('user.edit');
@@ -35,24 +34,24 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::post('configuration/users/password/update','Apps\ConfigurationController@updatePassword')->name('userPassword.update');
 	Route::post('configuration/users/suspend/{id}','Apps\ConfigurationController@userSuspend')->name('user.suspend');
 	Route::post('configuration/users/delete/{id}','Apps\ConfigurationController@userDestroy')->name('user.destroy');
-
+	/*Role Manager Sub Menu Route*/
 	Route::get('configuration/access-roles','Apps\ConfigurationController@roleIndex')->name('role.index');
 	Route::get('configuration/access-roles/create','Apps\ConfigurationController@roleCreate')->name('role.create');
 	Route::post('configuration/access-roles/store','Apps\ConfigurationController@roleStore')->name('role.store');
 	Route::get('configuration/access-roles/edit/{id}','Apps\ConfigurationController@roleEdit')->name('role.edit');
 	Route::post('configuration/access-roles/update/{id}','Apps\ConfigurationController@roleUpdate')->name('role.update');
 	Route::post('configuration/access-roles/delete/{id}','Apps\ConfigurationController@roleDestroy')->name('role.destroy');
-
+	/*Log Activity Sub Menu Route*/
 	Route::get('configuration/log-activity','Apps\ConfigurationController@logActivity')->name('logs.index');
-
+	/*Application Setting Sub Menu Route*/
 	Route::get('configuration/application','Apps\ConfigurationController@applicationIndex')->name('application.index');
-
+	/*Employee Position Sub Menu Route*/
 	Route::get('configuration/employee-position','Apps\ConfigurationController@positionIndex')->name('position.index');
 	Route::post('configuration/employee-position/store','Apps\ConfigurationController@positionStore')->name('position.store');
 	Route::get('configuration/employee-position/edit/{id}','Apps\ConfigurationController@positionEdit')->name('position.edit');
 	Route::post('configuration/employee-position/update/{id}','Apps\ConfigurationController@positionUpdate')->name('position.update');
 	Route::post('configuration/employee-position/delete/{id}','Apps\ConfigurationController@positionDestroy')->name('position.destroy');
-
+	
 	Route::get('configuration/leave-type','Apps\ConfigurationController@leaveTypeIndex')->name('leaveType.index');
 	Route::post('configuration/leave-type/store','Apps\ConfigurationController@leaveTypeStore')->name('leaveType.store');
 	Route::get('configuration/leave-type/edit/{id}','Apps\ConfigurationController@leaveTypeEdit')->name('leaveType.edit');

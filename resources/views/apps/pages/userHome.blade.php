@@ -315,7 +315,7 @@ Better Work Indonesia | User Dashboard
                         </p>
                         <strong><i class="fas fa-calendar-check mr-1"></i> Join Date</strong>
                         <p class="text-muted">
-                            {{date("d F Y",strtotime($getServices->from)) }}
+                            {{date("d F Y",strtotime($getBasicProfile->from)) }}
                         </p>
                         <strong><i class="fas fa-file-signature mr-1"></i> Employment Type</strong>
                         <p class="text-muted">
