@@ -32,13 +32,9 @@ Better Work Indonesia | Employee Appraisal
         		<td>{{ $key+1 }}</td>
             <td>{{ $value->Types->name }}</td>
             <td>{{date("Y",strtotime($value->appraisal_period)) }}</td>
-<<<<<<< HEAD
-            <td><img src="http://betterwork.local/public/employees/{{ $value->Parent->picture }}" class="img-circle elevation-2" title="{{$value->Parent->first_name}} {{$value->Parent->last_name}}" style="width: 50px; height: 50px;"></td>
-=======
             <td><img src="http://betterwork.iteos.tech/public/employees/{{ $value->Parent->picture }}" class="img-circle elevation-2" title="{{$value->Parent->first_name}} 
 {{$value->Parent->last_name}}" style="width: 50px; height: 50px;"></td>
             <td></td>
->>>>>>> 65c30038c29f3fdf452842a5ec9f474b25516879
             <td>{{ $value->Statuses->name }}</td>
             <td>
                 <div class="btn-group">
