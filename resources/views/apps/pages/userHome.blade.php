@@ -31,11 +31,8 @@ Better Work Indonesia | User Dashboard
 					<div class="card-body box-profile">
 						<div class="text-center">
                   			<img class="profile-user-img img-fluid img-circle"
-<<<<<<< HEAD
-                       			src="http://betterwork.local/public/employees/{{$getBasicProfile->picture}}"
-=======
-                       			src="http://betterwork.iteos.tech/public/employees/{{$getEmployee->picture}}"
->>>>>>> 65c30038c29f3fdf452842a5ec9f474b25516879
+
+                       			src="http://betterwork.iteos.tech/public/employees/{{$getBasicProfile->picture}}"
                        			alt="User profile picture">
                 		</div>
                 		<h3 class="profile-username text-center">{{{ isset(Auth::user()->name) ? Auth::user()->name : Auth::user()->email }}}</h3>
@@ -265,7 +262,8 @@ Better Work Indonesia | User Dashboard
 										@foreach($getSubordinate as $key=>$value)
 										<tr>
 											<td>{{ $key+1 }}</td>
-											<td><img src="http://betterwork.local/public/employees/{{ $value->Parent->picture }}" class="img-circle elevation-2" alt="User Image" style="width: 50px; height: 50px;"></td>
+											<td><img src="http://betterwork.iteos.tech/public/employees/{{ $value->Parent->picture }}" class="img-circle 
+elevation-2" alt="User Image" style="width: 50px; height: 50px;"></td>
 											<td>{{ $value->Parent->first_name}} {{ $value->Parent->last_name}}</td>
 											<td>{{ $value->grade }}</td>
 										</tr>
