@@ -12,7 +12,7 @@ Better Work Indonesia | Employee Attendance Report
 			<div class="col-sm-6">
 				<ol class="breadcrumb float-sm-right">
 					<li class="breadcrumb-item"><a href="{{ route('attReport.index') }}">Attendance Report</a></li>
-					<li class="breadcrumb-item active">Employee Attendance Report</li>
+					<li class="breadcrumb-item active">Employee Attendance Detail</li>
 				</ol>
 			</div>
 		</div>
