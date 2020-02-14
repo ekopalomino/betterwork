@@ -7,7 +7,7 @@
     <div class="sidebar">
     	<div class="user-panel mt-3 pb-3 mb-3 d-flex">
 	        <div class="image">
-	           <img src="http://betterwork.iteos.tech/public/employees/{{Auth::user()->avatar}}" class="img-circle elevation-2" alt="User Image">
+	           <img src="http://betterwork.local/public/employees/{{Auth::user()->avatar}}" class="img-circle elevation-2" alt="User Image">
 	        </div>
 	        <div class="info">
 	           <a href="{{ route('userHome.index') }}" class="d-block">{{{ isset(Auth::user()->name) ? Auth::user()->name : Auth::user()->email }}}</a>
@@ -16,7 +16,7 @@
 	    <nav class="mt-2">
 	    	<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 			@if(\Route::is(['userHome.index','myLeave.index','myReimburs.index','myGrievance.index','myGrievance.create','myGrievance.edit','myGrievance.show','myAppraisal.index','myAppraisal.create',
-			'myAppraisal.detail','myDevelopment.create','myAppraisal.show','myAppraisal.edit','myTraining.index','profile.edit','myAttendance.index','myBulletin.index','myKnowledge.index','myAttendance.search']))
+			'myAppraisal.detail','myDevelopment.create','myAppraisal.show','myAppraisal.edit','myTraining.index','profile.edit','myAttendance.index','myBulletin.index','myKnowledge.index','myAttendance.search','myBulletin.show']))
 			<li class="nav-item {{set_open('userHome.index') }}">
 	    		<a href="{{ route('userHome.index') }}" class="nav-link {{set_active('userHome.index') }}">
 					<i class="nav-icon fas fa-tachometer-alt"></i>
@@ -74,8 +74,8 @@
 					</li>
 				</ul>
 			</li>
-			<li class="nav-item has-treeview {{set_open(['myBulletin.index','myKnowledge.index','myAttendance.index','myAttendance.search']) }}">
-				<a href="#" class="nav-link {{set_active(['myBulletin.index','myKnowledge.index','myAttendance.index','myAttendance.search']) }}">
+			<li class="nav-item has-treeview {{set_open(['myBulletin.index','myKnowledge.index','myAttendance.index','myAttendance.search','myBulletin.show']) }}">
+				<a href="#" class="nav-link {{set_active(['myBulletin.index','myKnowledge.index','myAttendance.index','myAttendance.search','myBulletin.show']) }}">
 					<i class="nav-icon fas fa-database"></i>
 					<p>
 						My Data
@@ -90,7 +90,7 @@
 						</a>
 					</li>
 					<li class="nav-item">
-						<a href="{{ route('myBulletin.index') }}" class="nav-link {{set_active('myBulletin.index') }}">
+						<a href="{{ route('myBulletin.index') }}" class="nav-link {{set_active(['myBulletin.index','myBulletin.show']) }}">
 							<i class="far fa-circle nav-icon"></i>
 							<p>Bulletin</p>
 						</a>

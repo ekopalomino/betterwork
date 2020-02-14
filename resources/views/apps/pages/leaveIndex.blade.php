@@ -46,7 +46,9 @@ Better Work Indonesia | Employee Leave Data
 							{{ $value->leave_amount }}
 							@endif
 						</td>
-						<td></td>
+						<td>
+							<a class="btn btn-xs btn-info" href="{{ route('employeeLeaveCard.index',$value->id) }} " title="Read Article" ><i class="fa fa-search"></i></a>
+						</td>
 					  </tr>
 					  @endforeach
 					</tbody>

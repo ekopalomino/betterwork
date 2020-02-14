@@ -32,7 +32,7 @@ Better Work Indonesia | User Dashboard
 						<div class="text-center">
                   			<img class="profile-user-img img-fluid img-circle"
 
-                       			src="http://betterwork.iteos.tech/public/employees/{{$getBasicProfile->picture}}"
+                       			src="http://betterwork.local/public/employees/{{$getBasicProfile->picture}}"
                        			alt="User profile picture">
                 		</div>
                 		<h3 class="profile-username text-center">{{{ isset(Auth::user()->name) ? Auth::user()->name : Auth::user()->email }}}</h3>
@@ -477,7 +477,7 @@ elevation-2" alt="User Image" style="width: 50px; height: 50px;"></td>
 												<td style="width: 10px;">{{$key+1}}</td>
 												<td><strong>{{$bulletin->title}}</strong></td>
 												<td style="width: 10px;">
-													<a class="btn btn-xs btn-success" href="" title="Read Article" ><i class="fa fa-search"></i></a>
+													<a class="btn btn-xs btn-success" href="{{ route('myBulletin.show',$bulletin->id) }} " title="Read Article" ><i class="fa fa-search"></i></a>
 												</td>
 											</tr>
 											@endforeach

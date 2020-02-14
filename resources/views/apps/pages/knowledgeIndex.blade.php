@@ -19,55 +19,55 @@ Better Work Indonesia | Employee Knowledge Base Data
 	<div class="row">
 		<div class="col-12">
 			<div class="card card-primary card-outline">
-        <div class="card-header">
-          <a class="btn btn-primary" href="{{ route('knowledge.create') }}">
-            Add New
-          </a>
-        </div>
-        <div class="card-body">
-        <table id="example1" class="table table-bordered table-hover">
-          <thead>
-          	<tr>
-          		<th>No</th>
-          		<th>Title</th>
-              <th>Category</th>
-              <th>Description</th>
-              <th>Created By</th>
-              <th>Created At</th>
-              <th></th>
-          	</tr>
-          </thead>
-          <tbody>
-            @foreach($data as $key=>$value)
-          	<tr>
-          		<td>{{ $key+1 }}</td>
-              <td>{{ $value->title }}</td>
-              <td>{{ $value->category_id }}</td>
-              <td>{{ str_limit(strip_tags($value->description), 100) }}</td>
-              <td>{{ $value->Author->name }}</td>
-              <td>{{date("d F Y H:i",strtotime($value->created_at)) }}</td>
-              <td>
-                <div class="btn-group">
-                  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Action
-                  </button>
-                  <div class="dropdown-menu" role="menu">
-                    <a class="dropdown-item" href="{{ route('knowledge.edit',$value->id) }}">Edit Data</a>
-                    <a class="dropdown-item" href="{{ route('knowledge.show',$value->id) }}">View Data</a>
-                    {!! Form::open(['method' => 'POST','route' => ['knowledge.destroy', $value->id],'style'=>'dropdown-item','onsubmit' => 'return ConfirmDelete()']) !!}
-                    {!! Form::button('<a>Delete Data</a>',['type'=>'submit','class' => 'dropdown-item']) !!}
-                    {!! Form::close() !!}
-                  </div>
-                </div>
-              </td>
-            </tr>
-            @endforeach
-     			</tbody>
-     		</table>
-     	</div>
-    </div>
-  </div>
-</div>
+				<div class="card-header">
+					<a class="btn btn-primary" href="{{ route('knowledge.create') }}">
+						Add New
+					</a>
+				</div>
+				<div class="card-body">
+					<table id="example1" class="table table-bordered table-hover">
+						<thead>
+							<tr>
+								<th>No</th>
+								<th>Title</th>
+								<th>Category</th>
+								<th>Description</th>
+								<th>Created By</th>
+								<th>Created At</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach($data as $key=>$value)
+							<tr>
+								<td>{{ $key+1 }}</td>
+								<td>{{ $value->title }}</td>
+								<td>{{ $value->category_id }}</td>
+								<td>{{ str_limit(strip_tags($value->description), 100) }}</td>
+								<td>{{ $value->Author->name }}</td>
+								<td>{{date("d F Y H:i",strtotime($value->created_at)) }}</td>
+								<td>
+									<div class="btn-group">
+										<button type="button" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											Action
+										</button>
+										<div class="dropdown-menu" role="menu">
+											<a class="dropdown-item" href="{{ route('knowledge.edit',$value->id) }}">Edit Data</a>
+											<a class="dropdown-item" href="{{ route('knowledge.show',$value->id) }}">View Data</a>
+											{!! Form::open(['method' => 'POST','route' => ['knowledge.destroy', $value->id],'style'=>'dropdown-item','onsubmit' => 'return ConfirmDelete()']) !!}
+											{!! Form::button('<a>Delete Data</a>',['type'=>'submit','class' => 'dropdown-item']) !!}
+											{!! Form::close() !!}
+										</div>
+									</div>
+								</td>
+							</tr>
+							@endforeach
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
 </section>
 @endsection
 @section('footer.scripts')

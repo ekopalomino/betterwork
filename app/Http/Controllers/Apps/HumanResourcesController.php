@@ -47,12 +47,10 @@ class HumanResourcesController extends Controller
                                     ->whereDate('employee_leaves.created_at',Carbon::today()->toDateString())
                                     ->get();
 
-        $modifiedImmutable = CarbonImmutable::now()->add(7, 'day');
         $onBirthday = Employee::whereDate('date_of_birth',Carbon::today()->toDateString())->get();
-
+        $onAttendance = Employee::with('Attendances')->orderBy('employee_no','ASC')->get();
         
-        
-    	return view('apps.pages.humanResourceHome',compact('onLeave','onBirthday'));
+    	return view('apps.pages.humanResourceHome',compact('onLeave','onBirthday','onAttendance'));
     }
 
     public function employeeIndex()
@@ -603,7 +601,9 @@ class HumanResourcesController extends Controller
     public function employeeDelete($id)
     {
         $data = Employee::find($id);
-        $user = User::where('email',$data->email)->delete();
+        $user = User::where('email',$data->email)->update([
+            'status_id' => 'bca5aaf9-c7ff-4359-9d6c-28768981b416',
+        ]);
         $data->delete();
 
         $log = 'Employee '.($data->first_name).' '.($data->last_name). ' Delete';
@@ -719,6 +719,14 @@ class HumanResourcesController extends Controller
         $data = EmployeeLeave::with('Details')->whereYEAR('created_at',$current)->get();
         
         return view('apps.pages.leaveIndex',compact('data'));
+    }
+
+    public function employeeLeaveCard($id)
+    {
+        $current = Carbon::now()->year;
+        $data = EmployeeLeave::with('Details')->where('id',$id)->whereYEAR('created_at',$current)->get();
+
+        return view('apps.show.employeeLeave',compact('data'));
     }
 
     public function appraisalIndex()
@@ -1006,7 +1014,7 @@ class HumanResourcesController extends Controller
     {
         $data = Bulletin::find($id);
 
-        return view('apps.show.bulletin');
+        return view('apps.show.bulletin',compact('data'));
     }
 
     public function bulletinEdit($id)

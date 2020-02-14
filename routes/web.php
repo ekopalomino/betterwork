@@ -123,6 +123,7 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::get('human-resources/attendance/request/show/{id}','Apps\HumanResourcesController@requestShow')->name('request.show');
 	Route::post('human-resources/attendance/request/update/{id}','Apps\HumanResourcesController@requestUpdate')->name('request.update');
 	Route::get('human-resources/leave','Apps\HumanResourcesController@employeeLeave')->name('employeeLeave.index');
+	Route::get('human-resources/leave/leave-card/{id}','Apps\HumanResourcesController@employeeLeaveCard')->name('employeeLeaveCard.index');
 
 	Route::get('human-resources/appraisal','Apps\HumanResourcesController@appraisalIndex')->name('appraisal.index');
 	Route::get('human-resources/appraisal/show/{id}','Apps\HumanResourcesController@appraisalShow')->name('appraisal.show');
@@ -211,6 +212,7 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::post('my-menu/attendance/search','Apps\UserMenuController@attendanceSearch')->name('myAttendance.search');
 
 	Route::get('human-resources/reports/attendance','Apps\ReportsController@attendanceReport')->name('attReport.index');
+	Route::post('human-resources/reports/attendance/result','Apps\ReportsController@attendanceProcess')->name('attReport.result');
 
 });
 
