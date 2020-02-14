@@ -48,7 +48,11 @@
 												<tr>
 													<td>{{ $key+1 }}</td>
 													<td>{{date("d F Y",strtotime($value->created_at)) }}</td>
-													<td>{{date("H:i",strtotime($value->clock_in)) }}</td>
+													<td>
+														@if(!empty($value->clock_in))
+														{{date("H:i",strtotime($value->clock_in)) }}
+														@endif
+													</td>
 													<td>
 														@if(!empty($value->clock_out))
 														{{date("H:i",strtotime($value->clock_out)) }}
