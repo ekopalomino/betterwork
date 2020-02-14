@@ -18,9 +18,9 @@ Better Work Indonesia | Access Roles
 <section class="content">
 	<div class="row">
 		<div class="col-12">
-			<div class="card card-primary card-outline">
+			<div class="card card-info card-outline">
 				<div class="card-header">
-       				<a class="btn btn-primary" href="{{ route('role.create') }}">
+       				<a class="btn btn-sm btn-danger" href="{{ route('role.create') }}">
          			Add New</a>
          		
          	</div>
@@ -42,7 +42,7 @@ Better Work Indonesia | Access Roles
                       		<td>{{date("d F Y H:i",strtotime($role->created_at)) }}</td>
                       		<td>
 		                        <div class="btn-group">
-		                          <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		                          <button type="button" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 		                            Action
 		                          </button>
 		                          <div class="dropdown-menu" role="menu">

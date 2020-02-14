@@ -234,7 +234,7 @@
 			@can('Access Human Resources')
 			@if(\Route::is(['hr.index','employee.index','employee.create','employee.edit','attendance.index','request.index','appraisal.index','appraisal.show','salary.index','bulletin.index','knowledge.index',
 			'bulletin.create','bulletin.edit','bulletin.show','knowledge.create','knowledge.edit','knowledge.show','attendance.search','employeeLeave.index','appraisal.edit','training.index','attReport.index'
-			,'reimburs.index','salary.show','appraisal.close']))
+			,'reimburs.index','salary.show','appraisal.close','attReport.result','attReport.detail']))
 			@can('Create Employee')
 			<li class="nav-item {{set_open(['employee.index','employee.create','employee.edit']) }}">
 				<a href="{{ route('employee.index') }}" class="nav-link {{set_active(['employee.index','employee.create','employee.edit']) }}">
@@ -344,8 +344,8 @@
 					</li>
 				</ul>
 			</li>
-			<li class="nav-item has-treeview {{set_open(['attReport.index']) }}">
-				<a href="#" class="nav-link {{set_active(['attReport.index']) }}">
+			<li class="nav-item has-treeview {{set_open(['attReport.index','attReport.result','attReport.detail']) }}">
+				<a href="#" class="nav-link {{set_active(['attReport.index','attReport.result','attReport.detail']) }}">
 					<i class="nav-icon fas fa-chart-line"></i>
 					<p>
 						Reports
@@ -353,8 +353,8 @@
 					</p>
 				</a>
 				<ul class="nav nav-treeview">
-					<li class="nav-item {{set_open(['attReport.index']) }}">
-						<a href="{{ route('attReport.index') }}" class="nav-link {{set_active(['attReport.index']) }}">
+					<li class="nav-item {{set_open(['attReport.index','attReport.result']) }}">
+						<a href="{{ route('attReport.index') }}" class="nav-link {{set_active(['attReport.index','attReport.result','attReport.detail']) }}">
 							<i class="far fa-circle nav-icon"></i>
 							<p>Employee Attendance</p>
 						</a>

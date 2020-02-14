@@ -27,58 +27,38 @@ Better Work Indonesia | Employee Attendance Report
 		<div class="col-12">
 			<div class="card card-success card-outline">
 				<div class="card-body">
-					<div class="row">
-						<div class="col-md-3">
-							<div class="card card-info card-outline">
-								<div class="card-body box-profile">
-									<div class="text-center">
-										<p><strong>Employee Summary</strong></p>
-									</div>
-										<p>Employee ID : {{$empID}}</p>
-										<p>Employee Name : </p>
-										<p>Attendance Range : </p>
-										<p>Total Working Hours : </p>
-								
-								</div>
-							</div>
-						</div>
-					</div>		
-					<div class="row">
-						<div class="col-12">
-							<table id="example2" class="table table-bordered table-hover">
-								<thead>
-									<tr>
-										<th>No</th>
-										<th>Employee ID</th>
-										<th>Employee Name</th>
-										<th>Attendance Date</th>
-										<th>In</th>
-										<th>Out</th>
-										<th>Working Hours</th>
-										<th style="width:500px;">Notes</th>
-									</tr>
-								</thead>
-								<tbody>
-									@foreach($data as $key=>$value)
-									<tr>
-										<td>{{ $key+1 }}</td>
-										<td>{{ $value->employee_no }}</td>
-										<td>{{ $value->first_name }} {{ $value->last_name }}</td>
-										<td>{{date("d F Y",strtotime($value->created_at)) }}</td>
-										<td>{{date("H:i",strtotime($value->clock_in)) }}</td>
-										<td>
-											@if(!empty($value->clock_out))
-											{{date("H:i",strtotime($value->clock_out)) }}
-											@endif
-										</td>
-										<td>{{ $value->working_hour }}</td>
-										<td style="width:500px;">{{ $value->notes }}</td>
-									</tr>
-									@endforeach
-								</tbody>
-							</table>
-						</div>
-					</div>
+					<table id="example2" class="table table-bordered table-hover">
+						<thead>
+							<tr>
+								<th>No</th>
+								<th>Employee ID</th>
+								<th>Employee Name</th>
+								<th>Date Range</th>
+								<th>Present</th>
+								<th>Leave</th>
+								<th>Holiday</th>
+								<th>Total Hours</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach($data as $key=>$value)
+							<tr>
+								<td>{{ $key+1 }}</td>
+								<td>{{ $value->ID }}</td>
+								<td>{{ $value->Name }}</td>
+								<td>{{date("d F Y",strtotime($startDate)) }} - {{date("d F Y",strtotime($endDate)) }}</td>
+								<td>{{ $value->Present }}</td>
+								<td>{{ $value->Leaves }}</td>
+								<td></td>
+								<td>{{ $value->Hours }}</td>
+								<td>
+									<a class="btn btn-xs btn-success" href="{{ route('attReport.detail',['ID'=>$value->ID,'startDate'=>$startDate,'endDate'=>$endDate]) }}" title="Read Article" ><i class="fa fa-search"></i></a>
+								</td>
+							</tr>
+							@endforeach
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>

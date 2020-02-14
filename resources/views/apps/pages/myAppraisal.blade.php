@@ -13,9 +13,9 @@ Better Work Indonesia | My Appraisal
     </div>
 </section>
 <section class="content">
-	<div class="card card-primary card-outline">
+	<div class="card card-info card-outline">
 		<div class="card-header">
-			<a class="btn btn-primary" href="{{ route('myAppraisal.create') }}">
+			<a class="btn btn-sm btn-danger" href="{{ route('myAppraisal.create') }}">
                 Add New
               </a>
 		</div>
@@ -37,7 +37,9 @@ Better Work Indonesia | My Appraisal
 						<td>{{ $key+1 }}</td>
 						<td>{{ $value->Types->name }}</td>
 						<td>{{date("Y",strtotime($value->appraisal_period)) }}</td>
-						<td><img src="http://betterwork.iteos.tech/public/employees/{{ $value->Supervisor->picture }}" class="img-circle elevation-2" title="{{$value->Supervisor->first_name}} 
+						<!--<td><img src="http://betterwork.iteos.tech/public/employees/{{ $value->Supervisor->picture }}" class="img-circle elevation-2" title="{{$value->Supervisor->first_name}} 
+							{{$value->Supervisor->last_name}}" style="width: 50px; height: 50px;"></td>-->
+						<td><img src="http://betterwork.local/public/employees/{{ $value->Supervisor->picture }}" class="img-circle elevation-2" title="{{$value->Supervisor->first_name}} 
 							{{$value->Supervisor->last_name}}" style="width: 50px; height: 50px;"></td>
 						<td>{{ $value->Statuses->name }}</td>
 						<td>

@@ -39,8 +39,56 @@ Better Work Indonesia | Create Role
 								{!! Form::text('name', null, array('placeholder' => 'Role Name','class' => 'form-control')) !!}
 							</div>
 						</div>
+						<br>
 						<div class="row">
-							<div class="col-2">
+							<div class="col-12">
+								<div class="card-body table-responsive p-0" style="height: 525px;">
+									<table class="table table-bordered table-head-fixed text-nowrap">
+										<thead>
+											<tr>
+												<th>No</th>
+												<th>Menu / Function </th>
+												<th>Access Menu</th>
+												<th>Create Data</th>
+												<th>Edit Data</th>
+												<th>Delete Data</th>
+												<th>Approve / Reject</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr style="text-align:center">
+												<td style="font-size:16px;" colspan="2"><strong>Configuration Menu</strong></td>
+												<td><input type="checkbox" value="1" name="permission[]" /></td>
+												<td><input type="checkbox" value="1" name="permission[]" disabled /></td>
+												<td><input type="checkbox" value="1" name="permission[]" disabled /></td>
+												<td><input type="checkbox" value="1" name="permission[]" disabled /></td>
+												<td><input type="checkbox" value="1" name="permission[]" disabled /></td>
+											</tr>
+											<tr>
+												<td><strong>1.1</strong></td>
+												<td>User Management Menu</td>
+												<td><input type="checkbox" value="1" name="permission[]" /></td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td></td>
+											</tr>
+											<tr>
+												<td><strong>1.1.1</strong></td>
+												<td>HR Configuration Menu</td>
+												<td><input type="checkbox" value="1" name="permission[]" /></td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+											
+							<!--<div class="col-2">
 								<div class="card card-info">
 									<div class="card-body">
 										<label><strong>Main Menu</strong></label>
@@ -337,8 +385,8 @@ Better Work Indonesia | Create Role
 										
 									</div>
 								</div>
-							</div>
-						</div>
+							</div>-->
+						
 	                  	<button type="submit" class="btn btn-info">Submit</button>
 	                  	<a button type="button" class="btn btn-danger float-right" href="{{ route('role.index') }}">Cancel</a>
 	                </div>

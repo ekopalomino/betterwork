@@ -213,6 +213,9 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 
 	Route::get('human-resources/reports/attendance','Apps\ReportsController@attendanceReport')->name('attReport.index');
 	Route::post('human-resources/reports/attendance/result','Apps\ReportsController@attendanceProcess')->name('attReport.result');
+	Route::get('human-resources/reports/attendance/result/detail/{ID}/{startDate}/{endDate}','Apps\ReportsController@attendanceDetail')->name('attReport.detail');
+	Route::get('human-resources/reports/attendance/result/print/{ID}/{startDate}/{endDate}','Apps\ReportsController@attendancePrint')->name('attReport.print');
+	Route::get('human-resources/reports/attendance/result/pdf/{ID}/{startDate}/{endDate}','Apps\ReportsController@attendancePdf')->name('attReport.export');
 
 });
 
