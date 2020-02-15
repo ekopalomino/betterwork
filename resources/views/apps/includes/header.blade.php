@@ -18,7 +18,7 @@
 		<li class="nav-item d-none d-sm-inline-block">
 			<a href="{{route('hr.index') }}" class="nav-link {{set_active(['hr.index','employee.index','employee.create','employee.edit','salary.index','bulletin.index','knowledge.index','bulletin.create','bulletin.edit',
 			'bulletin.show','knowledge.create','knowledge.edit','knowledge.show','attendance.search','employeeLeave.index','appraisal.show','appraisal.index','appraisal.edit',
-			'training.index','attReport.index','attendance.index','reimburs.index','salary.show','appraisal.close','attReport.result','attReport.detail']) }}">Human Resources</a>
+			'training.index','attReport.index','attendance.index','reimburs.index','salary.show','appraisal.close','attReport.result','attReport.detail','salarySlips.show']) }}">Human Resources</a>
 		</li>
 		@endcan
 		@can('Access Grievance')

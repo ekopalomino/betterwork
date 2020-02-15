@@ -153,6 +153,7 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::get('human-resources/salary/show-detail/{period}','Apps\HumanResourcesController@salaryShow')->name('salary.show');
 	Route::post('human-resources/salary/approve/{period}','Apps\HumanResourcesController@salaryApproval')->name('salary.approve');
 	Route::post('human-resources/salary/approve/{period}','Apps\HumanResourcesController@salaryReject')->name('salary.reject');
+	Route::get('human-resources/salary/show-slip/{empNo}','Apps\HumanResourcesController@salaryEmpShow')->name('salarySlips.show');
 
 	Route::get('human-resources/reimbursment','Apps\HumanResourcesController@reimbursIndex')->name('reimburs.index');
 	Route::post('human-resources/reimbursment/approve/{id}','Apps\HumanResourcesController@reimbursApprove')->name('reimburs.approve');
@@ -216,6 +217,8 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::get('human-resources/reports/attendance/result/detail/{ID}/{startDate}/{endDate}','Apps\ReportsController@attendanceDetail')->name('attReport.detail');
 	Route::get('human-resources/reports/attendance/result/print/{ID}/{startDate}/{endDate}','Apps\ReportsController@attendancePrint')->name('attReport.print');
 	Route::get('human-resources/reports/attendance/result/pdf/{ID}/{startDate}/{endDate}','Apps\ReportsController@attendancePdf')->name('attReport.export');
+
+	Route::get('human-resources/reports/payroll-and-allowance','Apps\ReportsController@financeReport')->name('payReport.index');
 
 });
 

@@ -1279,8 +1279,23 @@ class HumanResourcesController extends Controller
                                 ->where('employee_salaries.payroll_period',$period)
                                 ->where('employee_services.is_active','1')
                                 ->get();
-                              
+                        
         return view('apps.show.employeeSalary',compact('data'));
+    }
+
+    public function salaryEmpShow($empNo)
+    {
+        $data = EmployeeSalary::join('employees','employees.employee_no','employee_salaries.employee_no')
+                                ->join('employee_services','employee_services.employee_id','employees.id')
+                                ->where('employee_salaries.employee_no',$empNo)
+                                ->where('employee_services.is_active','1')
+                                ->first();
+                                
+        $iuran = $data->jkk + $data->jkm + $data->jht + $data->jp;
+        $income = $data->nett_salary + $iuran + $data->bpjs + $data->income_tax;
+        $outcome = $iuran + $data->bpjs + $data->income_tax;
+        $nett = $income - $outcome;
+        return view('apps.show.empSalary',compact('data','iuran','income','outcome','nett'));
     }
 
     public function salaryApproval($period)

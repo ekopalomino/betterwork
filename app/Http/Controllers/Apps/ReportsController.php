@@ -7,6 +7,7 @@ use iteos\Http\Controllers\Controller;
 use iteos\Models\Employee;
 use iteos\Models\EmployeeAttendance;
 use iteos\Models\AttendanceTransaction;
+use iteos\Models\EmployeeSalary;
 use Carbon\Carbon;
 use DB;
 use Route;
@@ -121,5 +122,15 @@ class ReportsController extends Controller
         
         return $pdf->download(''.$filename.'.pdf');
     }
+
+    public function financeReport()
+    {
+        $dates = EmployeeSalary::pluck('payroll_period','payroll_period')->map(function($date,$key) {
+            return date('F Y',strtotime($date));
+        })->toArray();
+        
+        return view('apps.pages.payrollReport',compact('dates'));
+    }
+
 
 }

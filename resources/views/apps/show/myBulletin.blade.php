@@ -13,11 +13,11 @@ Better Work Indonesia | Employee Bulletin
      		<h1>Employee Bulletin</h1>
    		</div>
 		<div class="col-sm-6">
-				<ol class="breadcrumb float-sm-right">
-					<li class="breadcrumb-item"><a href="{{ route('myBulletin.index') }}">My Bulletin</a></li>
-					<li class="breadcrumb-item active">{{ $data->title }}</li>
-				</ol>
-			</div>
+			<ol class="breadcrumb float-sm-right">
+				<li class="breadcrumb-item"><a href="{{ route('myBulletin.index') }}">My Bulletin</a></li>
+				<li class="breadcrumb-item active">{{ $data->title }}</li>
+			</ol>
+		</div>
    	</div>
   </div>
 </section>

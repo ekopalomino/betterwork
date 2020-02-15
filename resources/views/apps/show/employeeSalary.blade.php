@@ -47,9 +47,7 @@ Better Work Indonesia | Employee Payroll Data
 								<td>{{ number_format(($value->jkk)+($value->jkm)+($value->bpjs)+($value->jht)+($value->jp),0,',','.')}}</td>
 								<td>{{ number_format($value->income_tax,0,',','.')}}</td>
 								<td>
-									<div class="btn-group">
-										
-									</div>
+									<a class="btn btn-xs btn-success" href="{{ route('salarySlips.show',['empNo'=>$value->employee_no]) }} " title="Read Article" ><i class="fa fa-search"></i></a>
 								</td>
 							</tr>
 							@endforeach
