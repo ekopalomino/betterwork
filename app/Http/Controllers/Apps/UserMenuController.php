@@ -30,6 +30,7 @@ use iteos\Models\EmployeeSalary;
 use iteos\Models\TargetData;
 use Auth;
 use DB;
+use PDF;
 use Carbon\Carbon;
 
 class UserMenuController extends Controller
@@ -124,6 +125,40 @@ class UserMenuController extends Controller
         ]);
 
     	return redirect()->back();
+    }
+
+    public function salaryPrint($empNo)
+    {
+        $data = EmployeeSalary::join('employees','employees.employee_no','employee_salaries.employee_no')
+                                ->join('employee_services','employee_services.employee_id','employees.id')
+                                ->where('employee_salaries.employee_no',$empNo)
+                                ->where('employee_services.is_active','1')
+                                ->first();
+                                
+        $iuran = $data->jkk + $data->jkm + $data->jht + $data->jp;
+        $income = $data->nett_salary + $iuran + $data->bpjs + $data->income_tax;
+        $outcome = $iuran + $data->bpjs + $data->income_tax;
+        $nett = $income - $outcome;
+        return view('apps.print.mySalaryPrint',compact('data','iuran','income','outcome','nett'));
+    }
+
+    public function salaryPdf($empNo)
+    {
+        $data = EmployeeSalary::join('employees','employees.employee_no','employee_salaries.employee_no')
+                                ->join('employee_services','employee_services.employee_id','employees.id')
+                                ->where('employee_salaries.employee_no',$empNo)
+                                ->where('employee_services.is_active','1')
+                                ->first();
+                                
+        $iuran = $data->jkk + $data->jkm + $data->jht + $data->jp;
+        $income = $data->nett_salary + $iuran + $data->bpjs + $data->income_tax;
+        $outcome = $iuran + $data->bpjs + $data->income_tax;
+        $nett = $income - $outcome;
+        $filename = $empNo;
+        
+        $pdf = PDF::loadview('apps.print.mySalaryPdf',compact('data','iuran','income','outcome','nett'))->setPaper('a4','landscape');
+        
+        return $pdf->download(''.$filename.'.pdf');
     }
 
     public function profileEdit()

@@ -3,7 +3,20 @@
 Better Work Indonesia | Human Resources
 @endsection
 @section('header.plugins')
-	
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawGenderChart);
+    function drawGenderChart() {
+        var gender = <?php echo $getGender; ?>;
+        var data = google.visualization.arrayToDataTable(gender);
+        var options = {
+          legend: { position: 'bottom' }
+        };
+        var chart = new google.visualization.PieChart(document.getElementById('Gender_chart_div'));
+        chart.draw(data, options);
+    }
+</script>
 @endsection
 @section('content')
 <section class="content-header">
@@ -76,17 +89,17 @@ Better Work Indonesia | Human Resources
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-3">
+				<div class="col-md-6">
 					<div class="card card-secondary card-outline">
 						<div class="card-body box-profile">
 							<div class="text-center">
 								<p><strong>Employee by Gender</strong></p>
-								
+								<div id="Gender_chart_div" style="width: 100%; min-height: 250px"></div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-md-3">
+				<div class="col-md-6">
 					<div class="card card-secondary card-outline">
 						<div class="card-body box-profile">
 							<div class="text-center">
@@ -96,7 +109,9 @@ Better Work Indonesia | Human Resources
 						</div>
 					</div>
 				</div>
-				<div class="col-md-3">
+			</div>
+			<div class="row">
+				<div class="col-md-6">
 					<div class="card card-secondary card-outline">
 						<div class="card-body box-profile">
 							<div class="text-center">
@@ -106,7 +121,7 @@ Better Work Indonesia | Human Resources
 						</div>
 					</div>
 				</div>
-				<div class="col-md-3">
+				<div class="col-md-6">
 					<div class="card card-secondary card-outline">
 						<div class="card-body box-profile">
 							<div class="text-center">
@@ -122,13 +137,13 @@ Better Work Indonesia | Human Resources
 			<div class="card card-lime card-outline">
 				<div class="card-body box-profile">
 					<div class="text-center">
-						<p><strong>Today Attendance Status</strong></p>
+						<p><strong>Weekly Working Hours</strong></p>
 						<table class="table table-head-fixed text-nowrap">
 							<thead>
 								<tr>
 									<th>ID</th>
 									<th>Employee Name</th>
-									<th>Status</th>
+									<th>Total Hours</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -137,16 +152,7 @@ Better Work Indonesia | Human Resources
 									<td>{{ $absence->employee_no }}</td>
 									<td>{{ $absence->first_name }} {{ $absence->last_name }}</td>
 									<td>
-										@foreach($absence->Attendances as $data)
-											@if(empty($data->status_id))
-												<span class="badge badge-danger">No Record Found</span>
-											@elseif(($data->status_id) == 'f4f23f41-0588-4111-a881-a043cf355831')
-													<span class="badge badge-info">{{ $data->Statuses->name }}</span>
-												@else
-													<span class="badge badge-success">{{ $data->Statuses->name }}</span>
-												
-										@endif
-										@endforeach
+										{{ $absence->Hours}}
 									</td>
 								</tr>
 								@endforeach

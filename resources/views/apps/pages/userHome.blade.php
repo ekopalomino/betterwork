@@ -403,8 +403,8 @@ Better Work Indonesia | User Dashboard
               								<td>{{ $key+1 }}</td>
               								<td>{{date("F Y",strtotime($value->payroll_period)) }}</td>
               								<td>
-												<a href="" class="btn btn-sm btn-app"><i class="fas fa-file-pdf"></i> Save as PDF</a>
-												<a href="" target="blank" class="btn btn-sm btn-app"><i class="fas fa-print"></i> Print</a>
+												<a href="{{ route('mySalary.export',['empNo'=>$value->employee_no]) }}" class="btn btn-sm btn-app"><i class="fas fa-file-pdf"></i> Save as PDF</a>
+												<a href="{{ route('mySalary.print',['empNo'=>$value->employee_no]) }}" target="blank" class="btn btn-sm btn-app"><i class="fas fa-print"></i> Print</a>
 											</td>
               							</tr>
 										@endforeach

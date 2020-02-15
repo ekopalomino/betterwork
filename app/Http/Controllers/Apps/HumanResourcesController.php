@@ -48,9 +48,21 @@ class HumanResourcesController extends Controller
                                     ->get();
 
         $onBirthday = Employee::whereDate('date_of_birth',Carbon::today()->toDateString())->get();
-        $onAttendance = Employee::with('Attendances')->orderBy('employee_no','ASC')->get();
-        
-    	return view('apps.pages.humanResourceHome',compact('onLeave','onBirthday','onAttendance'));
+        $onAttendance = DB::table('employees')->join('employee_attendances','employee_attendances.employee_id','employees.id')
+                            ->select('employees.employee_no','employees.first_name','employees.last_name',DB::raw('sum(employee_attendances.working_hour) as Hours'))
+                            ->whereDate('employee_attendances.updated_at','>=',Carbon::now()->subDays(8))
+                            ->groupBy('employees.employee_no','employees.first_name','employees.last_name')
+                            ->get();
+                            
+        $getGender = DB::table('employees')->select(DB::raw('if(sex=1,"male","female")as Gender'),DB::raw('count(id) as Count'))
+                                ->groupBy('sex')
+                                ->get();
+        $gender[] = ['Gender','Count'];
+        foreach($getGender as $key=>$value) {
+            $gender[++$key] = [$value->Gender,(int)$value->Count];
+        }
+                           
+    	return view('apps.pages.humanResourceHome',compact('onLeave','onBirthday','onAttendance'))->with('getGender',json_encode($gender));
     }
 
     public function employeeIndex()
