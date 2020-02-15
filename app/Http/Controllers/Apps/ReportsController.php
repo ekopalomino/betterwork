@@ -132,5 +132,10 @@ class ReportsController extends Controller
         return view('apps.pages.payrollReport',compact('dates'));
     }
 
+    public function financeProcess()
+    {
+        
+    }
+
 
 }
