@@ -473,14 +473,25 @@ class UserMenuController extends Controller
 
     public function targetStore(Request $request)
     {
-        $target = AppraisalTarget::create([
-            'data_id' => $request->input('data_id'),
-            'appraisal_id' => $request->input('appraisal_id'),
-            'target' => $request->input('target'),
-            'job_weight' => $request->input('weight'), 
-        ]);
+        $weight = $request->input('weight');
+        $base = AppraisalTarget::where('appraisal_id',$request->input('appraisal_id'))->sum('job_weight');
+        
+        if(($base + $weight) <= '100') {
+            $target = AppraisalTarget::create([
+                'data_id' => $request->input('data_id'),
+                'appraisal_id' => $request->input('appraisal_id'),
+                'target' => $request->input('target'),
+                'job_weight' => $request->input('weight'), 
+            ]);
+        } else {
+            $notification = array (
+                'message' => 'Your total job weight exceed 100%, please reduce one or more job weight',
+                'alert-type' => 'error'
+            );
+        }
+        
 
-        return redirect()->back();
+        return redirect()->back()->with($notification);
     }
 
     public function developmentCreate($id)
