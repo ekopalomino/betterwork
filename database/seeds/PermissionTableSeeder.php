@@ -13,8 +13,9 @@ class PermissionTableSeeder extends Seeder
     public function run()
     {
         $permissions = [
-            'Access Employee Attendance',
-            'Process Leave',
+            'Edit All Grievance',
+            'Delete Grievance',
+            'Create Grievance Reports',
         ];
 
         foreach($permissions as $permission) {

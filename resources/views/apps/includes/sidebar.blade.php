@@ -118,7 +118,7 @@
 			</li>
 			@endif
 			@can('Access Configuration')
-			@if(\Route::is(['application.index','config.index','position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','coaCat.index','assetCat.index','user.index','logs.index','role.index','role.create']))
+			@if(\Route::is(['application.index','config.index','position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','coaCat.index','assetCat.index','user.index','logs.index','role.index','role.create','role.edit']))
 			@can('Create Application Setting')
 			<li class="nav-item">
 				<a href="{{ route('application.index') }}" class="nav-link {{set_active('application.index') }}">
@@ -129,8 +129,8 @@
 				</a>
 			</li>
 			@endcan
-			<li class="nav-item has-treeview {{set_open(['user.index','logs.index','role.index','role.create']) }}">
-				<a href="#" class="nav-link {{set_active(['user.index','logs.index','role.index','role.create']) }}">
+			<li class="nav-item has-treeview {{set_open(['user.index','logs.index','role.index','role.create','role.edit']) }}">
+				<a href="#" class="nav-link {{set_active(['user.index','logs.index','role.index','role.create','role.edit']) }}">
 					<i class="nav-icon fas fa-users"></i>
 					<p>
 						User Management
@@ -148,7 +148,7 @@
 					@endcan
 					@can('Create Role')
 					<li class="nav-item">
-						<a href="{{ route('role.index') }}" class="nav-link {{set_active(['role.index','role.create']) }}">
+						<a href="{{ route('role.index') }}" class="nav-link {{set_active(['role.index','role.create','role.edit']) }}">
 							<i class="far fa-circle nav-icon"></i>
 							<p>Access Roles</p>
 						</a>
