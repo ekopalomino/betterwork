@@ -1,0 +1,9 @@
+Change for domain public :
+includes
+--------sidebar.blade.php
+pages
+--------appraisalIndex.blade.php
+--------employeeIndex.blade.php
+--------myAppraisal.blade.php
+--------userHome.blade.php
+show

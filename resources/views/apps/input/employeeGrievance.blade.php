@@ -30,7 +30,7 @@ Better Work Indonesia | Create Grievance
         </div>
         @endif
 		<div class="col-12">
-			<div class="card card-outline card-info">
+			<div class="card card-outline card-danger">
 				<div class="card-header">
                 	<h3 class="card-title">Grievance Form</h3>
               	</div>
@@ -57,7 +57,7 @@ Better Work Indonesia | Create Grievance
 									<label><strong>Grievance View</strong></label>
 									<div class="custom-control custom-switch">
 										<input type="checkbox" class="custom-control-input" id="is_public" name="is_public">
-										<label class="custom-control-label" for="is_public">Toggle this switch to make data public</label>
+										<label class="custom-control-label" for="is_public">Toggle this switch to make this data public</label>
 									</div>
 								</div>
 							</div>

@@ -18,6 +18,10 @@ Better Work Indonesia | Salary Process
 <section class="content">
 	<div class="row">
 		<div class="col-12">
+			<div class="callout callout-info">
+				<h5><i class="fas fa-info"></i> Note:</h5>
+				Use <a class="btn btn-danger btn-xs" href="{{ asset('public/payroll.xlsx') }}">This</a> excel file to upload payroll data. Only input number into the sheet, not formula.
+            </div>
 			<div class="card card-primary card-outline">
 				<div class="card-header">
 					@can('Create Payroll')
@@ -94,16 +98,16 @@ Better Work Indonesia | Salary Process
 								<td>{{ $value->Approval->first_name }} {{ $value->Approval->last_name }}</td>
 								<td>
 									<div class="btn-group">
-										<a button id="search" type="submit" class="btn btn-info" href="{{ route('salary.show',$value->Period) }}">
+										<a button id="search" type="submit" class="btn btn-xs btn-info" href="{{ route('salary.show',$value->Period) }}">
 											<i class="fa fa-search"></i>
 										</a>
 										@if(($value->status_id) == '1f2967a5-9a88-4d44-a66b-5339c771aca0')
 										@can('Process Payroll')
 										{!! Form::open(['method' => 'POST','route' => ['salary.approve', $value->Period],'style'=>'display:inline','onsubmit' => 'return ConfirmApprove()']) !!}
-										{!! Form::button('<i class="fas fa-check"></i>',['type'=>'submit','class' => 'btn btn-success','title'=>'Suspend User']) !!}
+										{!! Form::button('<i class="fas fa-check"></i>',['type'=>'submit','class' => 'btn btn-xs btn-success','title'=>'Suspend User']) !!}
 										{!! Form::close() !!}
 										{!! Form::open(['method' => 'POST','route' => ['salary.reject', $value->Period],'style'=>'display:inline','onsubmit' => 'return ConfirmReject()']) !!}
-										{!! Form::button('<i class="fas fa-times"></i>',['type'=>'submit','class' => 'btn btn-danger','title'=>'Suspend User']) !!}
+										{!! Form::button('<i class="fas fa-times"></i>',['type'=>'submit','class' => 'btn btn-xs btn-danger','title'=>'Suspend User']) !!}
 										{!! Form::close() !!}
 										@endcan
 										@endif

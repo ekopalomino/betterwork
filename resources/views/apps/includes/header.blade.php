@@ -6,19 +6,19 @@
 		<li class="nav-item d-none d-sm-inline-block">
 			<a href="{{route('userHome.index') }}" class="nav-link {{set_active(['userHome.index','myLeave.index','myReimburs.index','myGrievance.index','myGrievance.create','myGrievance.edit','myGrievance.show',
 			'myAppraisal.index','myAppraisal.create','myAppraisal.detail','myDevelopment.create','myAppraisal.show','myAppraisal.edit','myTraining.index','profile.edit','myBulletin.index','myKnowledge.index',
-			'myAttendance.index','myAttendance.search']) }}">Home</a>
+			'myAttendance.index','myAttendance.search','myBulletin.show']) }}">Home</a>
 		</li>
 		@can('Access Configuration')
 		<li class="nav-item d-none d-sm-inline-block">
 			<a href="{{route('config.index') }}" class="nav-link {{set_active(['application.index','config.index','position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','coaCat.index',
-			'assetCat.index','user.index','logs.index','role.index','role.create']) }}">Configuration</a>
+			'assetCat.index','user.index','logs.index','role.index','role.create','role.edit']) }}">Configuration</a>
 		</li>
 		@endcan
 		@can('Access Human Resources')
 		<li class="nav-item d-none d-sm-inline-block">
 			<a href="{{route('hr.index') }}" class="nav-link {{set_active(['hr.index','employee.index','employee.create','employee.edit','salary.index','bulletin.index','knowledge.index','bulletin.create','bulletin.edit',
 			'bulletin.show','knowledge.create','knowledge.edit','knowledge.show','attendance.search','employeeLeave.index','appraisal.show','appraisal.index','appraisal.edit',
-			'training.index','attReport.index','attendance.index','reimburs.index','salary.show','appraisal.close']) }}">Human Resources</a>
+			'training.index','attReport.index','attendance.index','reimburs.index','salary.show','appraisal.close','attReport.result','attReport.detail','salarySlips.show']) }}">Human Resources</a>
 		</li>
 		@endcan
 		@can('Access Grievance')

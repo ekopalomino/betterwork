@@ -32,7 +32,7 @@ Better Work Indonesia | Create New Appraisal
 		        @endif
 		    </div>
 		</div>
-		<div class="card card-primary card-outline">
+		<div class="card card-danger card-outline">
 			<div class="card-body">
 				<div class="row">
 	            	<div class="col-md-6"> 

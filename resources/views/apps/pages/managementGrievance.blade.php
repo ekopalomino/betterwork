@@ -19,43 +19,43 @@ Better Work Indonesia | Grievance Management Respond
 	<div class="row">
 		<div class="col-12">
 			<div class="card card-primary card-outline">
-        <div class="card-body">
-        <table id="example1" class="table table-bordered table-hover">
-          <thead>
-          	<tr>
-          		<th>No</th>
-          		<th>Subject</th>
-              <th>Category</th>
-              <th>Public</th>
-              <th>Description</th>
-              <th>Status</th>
-              <th>Created At</th>
-          	</tr>
-          </thead>
-          <tbody>
-            @foreach($data as $key=>$value)
-          	<tr>
-          		<td>{{ $key+1 }}</td>
-              <td><a href="{{ route('managementGrievance.show',$value->id) }}">{{ $value->subject }}</a></td>
-              <td>{{ $value->Categories->category_name }}</td>
-              <td>
-                  @if(($value->is_public) == 1)
-                  Yes
-                  @else
-                  No
-                  @endif
-              </td>
-          		<td>{{ str_limit(strip_tags($value->description), 100) }}</td>
-              <td>{{ $value->Statuses->name }}</td>
-              <td>{{date("d F Y H:i",strtotime($value->created_at)) }}</td>
-            </tr>
-            @endforeach
-     			</tbody>
-     		</table>
-     	</div>
-    </div>
-  </div>
-</div>
+				<div class="card-body">
+					<table id="example1" class="table table-bordered table-hover">
+						<thead>
+							<tr>
+								<th>No</th>
+								<th>Subject</th>
+								<th>Category</th>
+								<th>Public</th>
+								<th>Description</th>
+								<th>Status</th>
+								<th>Created At</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach($data as $key=>$value)
+							<tr>
+								<td>{{ $key+1 }}</td>
+								<td><a href="{{ route('managementGrievance.show',$value->id) }}">{{ $value->subject }}</a></td>
+								<td>{{ $value->Categories->category_name }}</td>
+								<td>
+									@if(($value->is_public) == 1)
+										Yes
+									@else
+										No
+									@endif
+								</td>
+								<td>{{ str_limit(strip_tags($value->description), 100) }}</td>
+								<td>{{ $value->Statuses->name }}</td>
+								<td>{{date("d F Y H:i",strtotime($value->created_at)) }}</td>
+							</tr>
+							@endforeach
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
 </section>
 @endsection
 @section('footer.scripts')

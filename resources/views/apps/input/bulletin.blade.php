@@ -13,6 +13,12 @@ Better Work Indonesia | Create Bulletin
        		<div class="col-sm-6">
           		<h1>Create Bulletin</h1>
        		</div>
+			<div class="col-sm-6">
+				<ol class="breadcrumb float-sm-right">
+					<li class="breadcrumb-item"><a href="{{ route('bulletin.index') }}">Bulletin</a></li>
+					<li class="breadcrumb-item active">Create Bulletin</li>
+				</ol>
+			</div>
        	</div>
     </div>
 </section>
@@ -48,7 +54,7 @@ Better Work Indonesia | Create Bulletin
 							<div class="col-12">
 								<label><strong>Content</strong></label>
 								<textarea class="textarea" name="content" placeholder="Place some text here"
-                          			style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">
+                          			style="width: 100%; height: 1000px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">
                           		</textarea>
                           	</div>
 						</div>

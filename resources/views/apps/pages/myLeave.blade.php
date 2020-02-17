@@ -19,10 +19,10 @@ Better Work Indonesia | My Leave Request
 <section class="content">
 	<div class="row">
 		<div class="col-12">
-			<div class="card card-primary card-outline">
+			<div class="card card-info card-outline">
 				<div class="card-header">
 					<div class="col-md-2">
-						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-lg">
+						<button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modal-lg">
 							Add New
 						</button>
 						<div class="modal fade" id="modal-lg">

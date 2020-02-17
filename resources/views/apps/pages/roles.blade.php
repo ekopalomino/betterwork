@@ -18,9 +18,9 @@ Better Work Indonesia | Access Roles
 <section class="content">
 	<div class="row">
 		<div class="col-12">
-			<div class="card card-primary card-outline">
+			<div class="card card-info card-outline">
 				<div class="card-header">
-       				<a class="btn btn-primary" href="{{ route('role.create') }}">
+       				<a class="btn btn-sm btn-danger" href="{{ route('role.create') }}">
          			Add New</a>
          		
          	</div>
@@ -41,17 +41,9 @@ Better Work Indonesia | Access Roles
          					<td>{{ $role->name }}</td>
                       		<td>{{date("d F Y H:i",strtotime($role->created_at)) }}</td>
                       		<td>
-		                        <div class="btn-group">
-		                          <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		                            Action
-		                          </button>
-		                          <div class="dropdown-menu" role="menu">
-		                            <a class="dropdown-item" href="{{ route('role.edit',$role->id) }}">Edit Role</a>
-		                            {!! Form::open(['method' => 'POST','route' => ['role.destroy', $role->id],'style'=>'dropdown-item','onsubmit' => 'return ConfirmDelete()']) !!}
-                            		{!! Form::button('<a>Delete Role</a>',['type'=>'submit','class' => 'dropdown-item']) !!}
-                            		{!! Form::close() !!}
-		                          </div>
-		                        </div>
+								<a button id="search" type="submit" class="btn btn-xs btn-info" href="{{ route('role.edit',$role->id) }}">
+									<i class="fa fa-edit"></i>
+								</a>
                       		</td>
             			</tr>
                     	@endforeach

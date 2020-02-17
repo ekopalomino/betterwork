@@ -63,7 +63,7 @@ Better Work Indonesia | Employee Appraisal Data
 		<div class="card card-primary card-outline">
 			<div class="card-body">
 				<h5>Soft Goal 
-					<button type="button" href="#" value="{{ action('Apps\HumanResourcesController@softGoalCreate',['id'=>$item->id]) }}" class="btn btn-xs btn-success modalLg" data-toggle="modal" data-target="#modalLg">
+					<button type="button" href="#" value="{{ action('Apps\HumanResourcesController@softGoalCreate',['id'=>$data->id]) }}" class="btn btn-xs btn-success modalLg" data-toggle="modal" data-target="#modalLg">
 						<i class="fa fa-edit"></i>
 					</button>
 				</h5>
@@ -101,7 +101,7 @@ Better Work Indonesia | Employee Appraisal Data
 		<div class="card card-primary card-outline">
 			<div class="card-body">
 				<h5>Additional Role
-					<button type="button" href="#" value="{{ action('Apps\HumanResourcesController@additionalRoleCreate',['id'=>$item->id]) }}" class="btn btn-xs btn-success modalLg" data-toggle="modal" data-target="#modalLg">
+					<button type="button" href="#" value="{{ action('Apps\HumanResourcesController@additionalRoleCreate',['id'=>$data->id]) }}" class="btn btn-xs btn-success modalLg" data-toggle="modal" data-target="#modalLg">
 						<i class="fa fa-edit"></i>
 					</button>
 				</h5>

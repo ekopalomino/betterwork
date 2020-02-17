@@ -18,19 +18,22 @@ Better Work Indonesia | Employee Bulletin
 <section class="content">
 	<div class="row">
 		<div class="col-md-12">
-			<div class="card card-widget">
+			<div class="card card-success card-outline">
 				<div class="card-header">
 					<div class="user-block">
-          	<span class="username">{{ $data->title }}</a></span>
-          	<span class="description">{{date("d F Y H:i",strtotime($data->created_at)) }}</span>
-          </div>
-        </div>
-        <div class="card-body">
-          <p>Description : {!!html_entity_decode($data->description)!!} </p>
-        </div>
-      </div>
-    </div>
-  </div>
+						<span class="username">{{ $data->title }}</a></span>
+						<span class="description">{{date("d F Y H:i",strtotime($data->created_at)) }}</span>
+					</div>
+				</div>
+				<div class="card-body">
+					<p>{!!html_entity_decode($data->content)!!} </p>
+				</div>
+				<div class="card-footer">
+					<p>Author : {{ $data->Author->first_name }} {{ $data->Author->last_name }}</p>
+				</div>
+			</div>
+		</div>
+	</div>
 </section>
 @endsection
 @section('footer.scripts')

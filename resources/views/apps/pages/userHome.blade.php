@@ -30,10 +30,12 @@ Better Work Indonesia | User Dashboard
 				<div class="card card-primary card-outline">
 					<div class="card-body box-profile">
 						<div class="text-center">
-                  			<img class="profile-user-img img-fluid img-circle"
-
+							<img class="profile-user-img img-fluid img-circle"
                        			src="http://betterwork.iteos.tech/public/employees/{{$getBasicProfile->picture}}"
                        			alt="User profile picture">
+                  			<!--<img class="profile-user-img img-fluid img-circle"
+                       			src="http://betterwork.local/public/employees/{{$getBasicProfile->picture}}"
+                       			alt="User profile picture">-->
                 		</div>
                 		<h3 class="profile-username text-center">{{{ isset(Auth::user()->name) ? Auth::user()->name : Auth::user()->email }}}</h3>
                 		<p class="text-muted text-center">
@@ -262,8 +264,12 @@ Better Work Indonesia | User Dashboard
 										@foreach($getSubordinate as $key=>$value)
 										<tr>
 											<td>{{ $key+1 }}</td>
-											<td><img src="http://betterwork.iteos.tech/public/employees/{{ $value->Parent->picture }}" class="img-circle 
-elevation-2" alt="User Image" style="width: 50px; height: 50px;"></td>
+											<td>
+												<img src="http://betterwork.iteos.tech/public/employees/{{ $value->Parent->picture }}" class="img-circle elevation-2" alt="User Image" style="width: 50px; height: 50px;">
+											</td>
+											<!--<td>
+												<img src="http://betterwork.local/public/employees/{{ $value->Parent->picture }}" class="img-circle elevation-2" alt="User Image" style="width: 50px; height: 50px;">
+											</td>-->
 											<td>{{ $value->Parent->first_name}} {{ $value->Parent->last_name}}</td>
 											<td>{{ $value->grade }}</td>
 										</tr>
@@ -313,7 +319,7 @@ elevation-2" alt="User Image" style="width: 50px; height: 50px;"></td>
                         </p>
                         <strong><i class="fas fa-calendar-check mr-1"></i> Join Date</strong>
                         <p class="text-muted">
-                            {{date("d F Y",strtotime($getServices->from)) }}
+                            {{date("d F Y",strtotime($getBasicProfile->from)) }}
                         </p>
                         <strong><i class="fas fa-file-signature mr-1"></i> Employment Type</strong>
                         <p class="text-muted">
@@ -343,8 +349,12 @@ elevation-2" alt="User Image" style="width: 50px; height: 50px;"></td>
                             @foreach($getSubordinate as $key=>$value)
                             <tr>
                               <td>{{ $key+1 }}</td>
-                              <td><img src="http://betterwork.local/public/employees/{{ $value->Parent->picture }}" class="img-circle elevation-2" alt="User Image" style="width: 50px; height: 
-50px;"></td>
+                              <td>
+								<img src="http://betterwork.iteos.tech/public/employees/{{ $value->Parent->picture }}" class="img-circle elevation-2" alt="User Image" style="width: 50px; height: 50px;">
+								</td>
+							<!--<td>
+								<img src="http://betterwork.local/public/employees/{{ $value->Parent->picture }}" class="img-circle elevation-2" alt="User Image" style="width: 50px; height: 50px;">
+								</td>-->
                               <td>{{ $value->Parent->first_name}} {{ $value->Parent->last_name}}</td>
                               <td>{{ $value->grade }}</td>
                             </tr>
@@ -393,7 +403,8 @@ elevation-2" alt="User Image" style="width: 50px; height: 50px;"></td>
               								<td>{{ $key+1 }}</td>
               								<td>{{date("F Y",strtotime($value->payroll_period)) }}</td>
               								<td>
-												<button type="button" class="btn btn-block bg-gradient-primary btn-sm">Download</button>
+												<a href="{{ route('mySalary.export',['empNo'=>$value->employee_no]) }}" class="btn btn-sm btn-app"><i class="fas fa-file-pdf"></i> Save as PDF</a>
+												<a href="{{ route('mySalary.print',['empNo'=>$value->employee_no]) }}" target="blank" class="btn btn-sm btn-app"><i class="fas fa-print"></i> Print</a>
 											</td>
               							</tr>
 										@endforeach
@@ -477,7 +488,7 @@ elevation-2" alt="User Image" style="width: 50px; height: 50px;"></td>
 												<td style="width: 10px;">{{$key+1}}</td>
 												<td><strong>{{$bulletin->title}}</strong></td>
 												<td style="width: 10px;">
-													<a class="btn btn-xs btn-success" href="" title="Read Article" ><i class="fa fa-search"></i></a>
+													<a class="btn btn-xs btn-success" href="{{ route('myBulletin.show',$bulletin->id) }} " title="Read Article" ><i class="fa fa-search"></i></a>
 												</td>
 											</tr>
 											@endforeach

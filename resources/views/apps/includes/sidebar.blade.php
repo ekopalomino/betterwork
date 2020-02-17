@@ -7,7 +7,8 @@
     <div class="sidebar">
     	<div class="user-panel mt-3 pb-3 mb-3 d-flex">
 	        <div class="image">
-	           <img src="http://betterwork.iteos.tech/public/employees/{{Auth::user()->avatar}}" class="img-circle elevation-2" alt="User Image">
+				<img src="http://betterwork.iteos.tech/public/employees/{{Auth::user()->avatar}}" class="img-circle elevation-2" alt="User Image">
+				<!--<img src="http://betterwork.local/public/employees/{{Auth::user()->avatar}}" class="img-circle elevation-2" alt="User Image">-->
 	        </div>
 	        <div class="info">
 	           <a href="{{ route('userHome.index') }}" class="d-block">{{{ isset(Auth::user()->name) ? Auth::user()->name : Auth::user()->email }}}</a>
@@ -16,7 +17,7 @@
 	    <nav class="mt-2">
 	    	<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 			@if(\Route::is(['userHome.index','myLeave.index','myReimburs.index','myGrievance.index','myGrievance.create','myGrievance.edit','myGrievance.show','myAppraisal.index','myAppraisal.create',
-			'myAppraisal.detail','myDevelopment.create','myAppraisal.show','myAppraisal.edit','myTraining.index','profile.edit','myAttendance.index','myBulletin.index','myKnowledge.index','myAttendance.search']))
+			'myAppraisal.detail','myDevelopment.create','myAppraisal.show','myAppraisal.edit','myTraining.index','profile.edit','myAttendance.index','myBulletin.index','myKnowledge.index','myAttendance.search','myBulletin.show']))
 			<li class="nav-item {{set_open('userHome.index') }}">
 	    		<a href="{{ route('userHome.index') }}" class="nav-link {{set_active('userHome.index') }}">
 					<i class="nav-icon fas fa-tachometer-alt"></i>
@@ -74,8 +75,8 @@
 					</li>
 				</ul>
 			</li>
-			<li class="nav-item has-treeview {{set_open(['myBulletin.index','myKnowledge.index','myAttendance.index','myAttendance.search']) }}">
-				<a href="#" class="nav-link {{set_active(['myBulletin.index','myKnowledge.index','myAttendance.index','myAttendance.search']) }}">
+			<li class="nav-item has-treeview {{set_open(['myBulletin.index','myKnowledge.index','myAttendance.index','myAttendance.search','myBulletin.show']) }}">
+				<a href="#" class="nav-link {{set_active(['myBulletin.index','myKnowledge.index','myAttendance.index','myAttendance.search','myBulletin.show']) }}">
 					<i class="nav-icon fas fa-database"></i>
 					<p>
 						My Data
@@ -90,7 +91,7 @@
 						</a>
 					</li>
 					<li class="nav-item">
-						<a href="{{ route('myBulletin.index') }}" class="nav-link {{set_active('myBulletin.index') }}">
+						<a href="{{ route('myBulletin.index') }}" class="nav-link {{set_active(['myBulletin.index','myBulletin.show']) }}">
 							<i class="far fa-circle nav-icon"></i>
 							<p>Bulletin</p>
 						</a>
@@ -117,7 +118,7 @@
 			</li>
 			@endif
 			@can('Access Configuration')
-			@if(\Route::is(['application.index','config.index','position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','coaCat.index','assetCat.index','user.index','logs.index','role.index','role.create']))
+			@if(\Route::is(['application.index','config.index','position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','coaCat.index','assetCat.index','user.index','logs.index','role.index','role.create','role.edit']))
 			@can('Create Application Setting')
 			<li class="nav-item">
 				<a href="{{ route('application.index') }}" class="nav-link {{set_active('application.index') }}">
@@ -128,8 +129,8 @@
 				</a>
 			</li>
 			@endcan
-			<li class="nav-item has-treeview {{set_open(['user.index','logs.index','role.index','role.create']) }}">
-				<a href="#" class="nav-link {{set_active(['user.index','logs.index','role.index','role.create']) }}">
+			<li class="nav-item has-treeview {{set_open(['user.index','logs.index','role.index','role.create','role.edit']) }}">
+				<a href="#" class="nav-link {{set_active(['user.index','logs.index','role.index','role.create','role.edit']) }}">
 					<i class="nav-icon fas fa-users"></i>
 					<p>
 						User Management
@@ -147,7 +148,7 @@
 					@endcan
 					@can('Create Role')
 					<li class="nav-item">
-						<a href="{{ route('role.index') }}" class="nav-link {{set_active(['role.index','role.create']) }}">
+						<a href="{{ route('role.index') }}" class="nav-link {{set_active(['role.index','role.create','role.edit']) }}">
 							<i class="far fa-circle nav-icon"></i>
 							<p>Access Roles</p>
 						</a>
@@ -234,7 +235,7 @@
 			@can('Access Human Resources')
 			@if(\Route::is(['hr.index','employee.index','employee.create','employee.edit','attendance.index','request.index','appraisal.index','appraisal.show','salary.index','bulletin.index','knowledge.index',
 			'bulletin.create','bulletin.edit','bulletin.show','knowledge.create','knowledge.edit','knowledge.show','attendance.search','employeeLeave.index','appraisal.edit','training.index','attReport.index'
-			,'reimburs.index','salary.show','appraisal.close']))
+			,'reimburs.index','salary.show','appraisal.close','attReport.result','attReport.detail','payReport.index','salarySlips.show']))
 			@can('Create Employee')
 			<li class="nav-item {{set_open(['employee.index','employee.create','employee.edit']) }}">
 				<a href="{{ route('employee.index') }}" class="nav-link {{set_active(['employee.index','employee.create','employee.edit']) }}">
@@ -297,8 +298,8 @@
 			</li>
 			@endcan
 			@can('Create Payroll')
-			<li class="nav-item has-treeview {{set_open(['salary.index','salary.create','reimburs.index','salary.show']) }}">
-				<a href="#" class="nav-link {{set_active(['salary.index','salary.create','reimburs.index','salary.show']) }}">
+			<li class="nav-item has-treeview {{set_open(['salary.index','salary.create','reimburs.index','salary.show','salarySlips.show']) }}">
+				<a href="#" class="nav-link {{set_active(['salary.index','salary.create','reimburs.index','salary.show','salarySlips.show']) }}">
 					<i class="nav-icon fas fa-calculator"></i>
 					<p>
 						HR Finance
@@ -307,7 +308,7 @@
 				</a>
 				<ul class="nav nav-treeview">
 					<li class="nav-item {{set_open(['salary.index','salary.show']) }}">
-						<a href="{{ route('salary.index') }}" class="nav-link {{set_active(['salary.index','salary.show']) }}">
+						<a href="{{ route('salary.index') }}" class="nav-link {{set_active(['salary.index','salary.show','salarySlips.show']) }}">
 							<i class="far fa-circle nav-icon"></i>
 							<p>Payroll Process</p>
 						</a>
@@ -344,8 +345,8 @@
 					</li>
 				</ul>
 			</li>
-			<li class="nav-item has-treeview {{set_open(['attReport.index']) }}">
-				<a href="#" class="nav-link {{set_active(['attReport.index']) }}">
+			<li class="nav-item has-treeview {{set_open(['attReport.index','attReport.result','attReport.detail','payReport.index']) }}">
+				<a href="#" class="nav-link {{set_active(['attReport.index','attReport.result','attReport.detail','payReport.index']) }}">
 					<i class="nav-icon fas fa-chart-line"></i>
 					<p>
 						Reports
@@ -353,22 +354,16 @@
 					</p>
 				</a>
 				<ul class="nav nav-treeview">
-					<li class="nav-item {{set_open(['attReport.index']) }}">
-						<a href="{{ route('attReport.index') }}" class="nav-link {{set_active(['attReport.index']) }}">
+					<li class="nav-item {{set_open(['attReport.index','attReport.result']) }}">
+						<a href="{{ route('attReport.index') }}" class="nav-link {{set_active(['attReport.index','attReport.result','attReport.detail']) }}">
 							<i class="far fa-circle nav-icon"></i>
-							<p>Employee Attendance</p>
+							<p>Attendance and Leave</p>
 						</a>
 					</li>
-					<li class="nav-item">
-						<a href="#" class="nav-link">
+					<li class="nav-item {{set_open(['payReport.index']) }}">
+						<a href="{{ route('payReport.index') }}" class="nav-link {{set_active(['payReport.index']) }}">
 							<i class="far fa-circle nav-icon"></i>
-							<p>Employee Leave</p>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a href="#" class="nav-link">
-							<i class="far fa-circle nav-icon"></i>
-							<p>HR Finance</p>
+							<p>Payroll and Allowance</p>
 						</a>
 					</li>
 				</ul>
