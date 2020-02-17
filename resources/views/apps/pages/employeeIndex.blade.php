@@ -26,11 +26,11 @@ Better Work Indonesia | Human Resources
                 <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch">
                 	<div class="card bg-light">
                 		<div class="card-header text-muted border-bottom-0">
-                		@foreach($employee->Services as $service)
-						@if(empty($service->to))
-                  		{{$service->grade}}
-						@endif
-                  		@endforeach
+							@foreach($employee->Services as $service)
+							@if(empty($service->to))
+							{{$service->grade}}
+							@endif
+							@endforeach
                 		</div>
 	                	<div class="card-body pt-0">
 	                  		<div class="row">
@@ -51,6 +51,7 @@ Better Work Indonesia | Human Resources
 	                      			</ul>
 	                    		</div>
 	                    		<div class="col-5 text-center">
+									<!--<img src="http://betterwork.local/public/employees/{{$employee->picture}}" alt="" class="img-circle img-fluid">-->
 	                      			<img src="http://betterwork.iteos.tech/public/employees/{{$employee->picture}}" alt="" class="img-circle img-fluid">
 	                    		</div>
 	                  		</div>
@@ -58,11 +59,11 @@ Better Work Indonesia | Human Resources
 	                	<div class="card-footer">
 	                  		<div class="text-right">
 								@can('Edit Employee')
-	                  			<a class="btn btn-xs btn-success" href="{{ route('employee.edit',$employee->id) }}" title="Edit Data" ><i class="fa fa-edit"></i></a>
+	                  			<a class="btn btn-xs btn-success" href="{{ route('employee.edit',$employee->id) }}" title="Edit Employee" ><i class="fa fa-edit"></i></a>
 								@endcan
 								@can('Remove Employee')
 	                  			{!! Form::open(['method' => 'POST','route' => ['employee.destroy', $employee->id],'style'=>'display:inline','onsubmit' => 'return ConfirmDelete()']) !!}
-                                {!! Form::button('<i class="fas fa-user-slash"></i>',['type'=>'submit','class' => 'btn btn-xs btn-danger','title'=>'Suspend User']) !!}
+                                {!! Form::button('<i class="fas fa-user-slash"></i>',['type'=>'submit','class' => 'btn btn-xs btn-danger','title'=>'Delete Employee']) !!}
                                 {!! Form::close() !!}
 								@endcan
 	                  		</div>
@@ -84,7 +85,7 @@ Better Work Indonesia | Human Resources
 <script>
     function ConfirmDelete()
     {
-    var x = confirm("User Akan Dihapus?");
+    var x = confirm("Employee Delete?");
     if (x)
         return true;
     else

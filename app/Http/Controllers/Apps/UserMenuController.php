@@ -30,6 +30,7 @@ use iteos\Models\EmployeeSalary;
 use iteos\Models\TargetData;
 use Auth;
 use DB;
+use PDF;
 use Carbon\Carbon;
 
 class UserMenuController extends Controller
@@ -63,9 +64,7 @@ class UserMenuController extends Controller
         /*Query for Birthday Card*/
         $getBirthday = Employee::whereMonth('date_of_birth',Carbon::now()->month)->get();
         
-    	return 
-view('apps.pages.userHome',compact('getBasicProfile','getEmployee','getAttendance','totalDays','getLastEdu','getSubordinate','getBulletin','getKnowledge','getCurPos','getBirthday','getSalary','getServices'));
-    }
+    	return view('apps.pages.userHome',compact('getBasicProfile','getEmployee','getAttendance','totalDays','getLastEdu','getSubordinate','getBulletin','getKnowledge','getCurPos','getBirthday','getSalary','getServices'));
 
     public function clockIn(Request $request)
     {
@@ -125,6 +124,40 @@ view('apps.pages.userHome',compact('getBasicProfile','getEmployee','getAttendanc
         ]);
 
     	return redirect()->back();
+    }
+
+    public function salaryPrint($empNo)
+    {
+        $data = EmployeeSalary::join('employees','employees.employee_no','employee_salaries.employee_no')
+                                ->join('employee_services','employee_services.employee_id','employees.id')
+                                ->where('employee_salaries.employee_no',$empNo)
+                                ->where('employee_services.is_active','1')
+                                ->first();
+                                
+        $iuran = $data->jkk + $data->jkm + $data->jht + $data->jp;
+        $income = $data->nett_salary + $iuran + $data->bpjs + $data->income_tax;
+        $outcome = $iuran + $data->bpjs + $data->income_tax;
+        $nett = $income - $outcome;
+        return view('apps.print.mySalaryPrint',compact('data','iuran','income','outcome','nett'));
+    }
+
+    public function salaryPdf($empNo)
+    {
+        $data = EmployeeSalary::join('employees','employees.employee_no','employee_salaries.employee_no')
+                                ->join('employee_services','employee_services.employee_id','employees.id')
+                                ->where('employee_salaries.employee_no',$empNo)
+                                ->where('employee_services.is_active','1')
+                                ->first();
+                                
+        $iuran = $data->jkk + $data->jkm + $data->jht + $data->jp;
+        $income = $data->nett_salary + $iuran + $data->bpjs + $data->income_tax;
+        $outcome = $iuran + $data->bpjs + $data->income_tax;
+        $nett = $income - $outcome;
+        $filename = $empNo;
+        
+        $pdf = PDF::loadview('apps.print.mySalaryPdf',compact('data','iuran','income','outcome','nett'))->setPaper('a4','landscape');
+        
+        return $pdf->download(''.$filename.'.pdf');
     }
 
     public function profileEdit()
@@ -439,14 +472,25 @@ view('apps.pages.userHome',compact('getBasicProfile','getEmployee','getAttendanc
 
     public function targetStore(Request $request)
     {
-        $target = AppraisalTarget::create([
-            'data_id' => $request->input('data_id'),
-            'appraisal_id' => $request->input('appraisal_id'),
-            'target' => $request->input('target'),
-            'job_weight' => $request->input('weight'), 
-        ]);
+        $weight = $request->input('weight');
+        $base = AppraisalTarget::where('appraisal_id',$request->input('appraisal_id'))->sum('job_weight');
+        
+        if(($base + $weight) <= '100') {
+            $target = AppraisalTarget::create([
+                'data_id' => $request->input('data_id'),
+                'appraisal_id' => $request->input('appraisal_id'),
+                'target' => $request->input('target'),
+                'job_weight' => $request->input('weight'), 
+            ]);
+        } else {
+            $notification = array (
+                'message' => 'Your total job weight exceed 100%, please reduce one or more job weight',
+                'alert-type' => 'error'
+            );
+        }
+        
 
-        return redirect()->back();
+        return redirect()->back()->with($notification);
     }
 
     public function developmentCreate($id)
@@ -581,7 +625,7 @@ view('apps.pages.userHome',compact('getBasicProfile','getEmployee','getAttendanc
     {
         $data = Bulletin::find($id);
 
-        return view('apps.show.bulletin',compact('data'));
+        return view('apps.show.myBulletin',compact('data'));
     }
 
     public function knowledgeIndex()

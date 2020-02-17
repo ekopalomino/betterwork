@@ -18,9 +18,9 @@ Better Work Indonesia | My Grievance Data
 <section class="content">
 	<div class="row">
 		<div class="col-12">
-			<div class="card card-primary card-outline">
+			<div class="card card-info card-outline">
 				<div class="card-header">
-					<a class="btn btn-primary" href="{{ route('myGrievance.create') }}">Add New</a>
+					<a class="btn btn-sm btn-danger" href="{{ route('myGrievance.create') }}">Add New</a>
 				</div>
 				<div class="card-body">
 					<div class="row">

@@ -15,8 +15,8 @@ Route::get('/', function () {
     return view('apps.pages.login');
 });
 /*Development Routes*/
-Auth::routes(['register' => false]);
-Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
+Auth::routes(['register' => false,'verify' => true]);
+Route::group(['prefix' => 'apps', 'middleware' => ['auth','verified']], function() {
 	Route::get('change-password','Apps\DashboardController@changePasswordIndex')->name('changePass.index');
 	Route::post('change-password/store','Apps\DashboardController@changePasswd')->name('changePass.store');
 	/*Navbar Main Route*/
@@ -26,8 +26,7 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::get('human-resources','Apps\HumanResourcesController@index')->name('hr.index');
 	Route::get('grievance','Apps\GrievanceController@index')->name('grievance.index');
 	Route::get('accounting','Apps\AccountingController@index')->name('accounting.index');
-
-	/*Configuration Sub Menu Route*/
+	/*User Manager Sub Menu Route*/
 	Route::get('configuration/users','Apps\ConfigurationController@userIndex')->name('user.index');
 	Route::post('configuration/users','Apps\ConfigurationController@userStore')->name('user.store');
 	Route::get('configuration/users/edit/{id}','Apps\ConfigurationController@userEdit')->name('user.edit');
@@ -35,24 +34,24 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::post('configuration/users/password/update','Apps\ConfigurationController@updatePassword')->name('userPassword.update');
 	Route::post('configuration/users/suspend/{id}','Apps\ConfigurationController@userSuspend')->name('user.suspend');
 	Route::post('configuration/users/delete/{id}','Apps\ConfigurationController@userDestroy')->name('user.destroy');
-
+	/*Role Manager Sub Menu Route*/
 	Route::get('configuration/access-roles','Apps\ConfigurationController@roleIndex')->name('role.index');
 	Route::get('configuration/access-roles/create','Apps\ConfigurationController@roleCreate')->name('role.create');
 	Route::post('configuration/access-roles/store','Apps\ConfigurationController@roleStore')->name('role.store');
 	Route::get('configuration/access-roles/edit/{id}','Apps\ConfigurationController@roleEdit')->name('role.edit');
 	Route::post('configuration/access-roles/update/{id}','Apps\ConfigurationController@roleUpdate')->name('role.update');
 	Route::post('configuration/access-roles/delete/{id}','Apps\ConfigurationController@roleDestroy')->name('role.destroy');
-
+	/*Log Activity Sub Menu Route*/
 	Route::get('configuration/log-activity','Apps\ConfigurationController@logActivity')->name('logs.index');
-
+	/*Application Setting Sub Menu Route*/
 	Route::get('configuration/application','Apps\ConfigurationController@applicationIndex')->name('application.index');
-
+	/*Employee Position Sub Menu Route*/
 	Route::get('configuration/employee-position','Apps\ConfigurationController@positionIndex')->name('position.index');
 	Route::post('configuration/employee-position/store','Apps\ConfigurationController@positionStore')->name('position.store');
 	Route::get('configuration/employee-position/edit/{id}','Apps\ConfigurationController@positionEdit')->name('position.edit');
 	Route::post('configuration/employee-position/update/{id}','Apps\ConfigurationController@positionUpdate')->name('position.update');
 	Route::post('configuration/employee-position/delete/{id}','Apps\ConfigurationController@positionDestroy')->name('position.destroy');
-
+	
 	Route::get('configuration/leave-type','Apps\ConfigurationController@leaveTypeIndex')->name('leaveType.index');
 	Route::post('configuration/leave-type/store','Apps\ConfigurationController@leaveTypeStore')->name('leaveType.store');
 	Route::get('configuration/leave-type/edit/{id}','Apps\ConfigurationController@leaveTypeEdit')->name('leaveType.edit');
@@ -87,6 +86,7 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 
 	Route::get('human-resources/employee','Apps\HumanResourcesController@employeeIndex')->name('employee.index');
 	Route::get('human-resources/employee/create','Apps\HumanResourcesController@employeeCreate')->name('employee.create');
+	Route::get('human-resources/employee/location/find','Apps\HumanResourcesController@searchLocation')->name('employee.location');
 	Route::post('human-resources/employee/store','Apps\HumanResourcesController@employeeStore')->name('employee.store');
 	Route::get('human-resources/employee/edit/{id}','Apps\HumanResourcesController@employeeEdit')->name('employee.edit');
 	Route::post('human-resources/employee/update/{id}','Apps\HumanResourcesController@employeeUpdate')->name('employee.update');
@@ -124,6 +124,7 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::get('human-resources/attendance/request/show/{id}','Apps\HumanResourcesController@requestShow')->name('request.show');
 	Route::post('human-resources/attendance/request/update/{id}','Apps\HumanResourcesController@requestUpdate')->name('request.update');
 	Route::get('human-resources/leave','Apps\HumanResourcesController@employeeLeave')->name('employeeLeave.index');
+	Route::get('human-resources/leave/leave-card/{id}','Apps\HumanResourcesController@employeeLeaveCard')->name('employeeLeaveCard.index');
 
 	Route::get('human-resources/appraisal','Apps\HumanResourcesController@appraisalIndex')->name('appraisal.index');
 	Route::get('human-resources/appraisal/show/{id}','Apps\HumanResourcesController@appraisalShow')->name('appraisal.show');
@@ -153,6 +154,7 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::get('human-resources/salary/show-detail/{period}','Apps\HumanResourcesController@salaryShow')->name('salary.show');
 	Route::post('human-resources/salary/approve/{period}','Apps\HumanResourcesController@salaryApproval')->name('salary.approve');
 	Route::post('human-resources/salary/approve/{period}','Apps\HumanResourcesController@salaryReject')->name('salary.reject');
+	Route::get('human-resources/salary/show-slip/{empNo}','Apps\HumanResourcesController@salaryEmpShow')->name('salarySlips.show');
 
 	Route::get('human-resources/reimbursment','Apps\HumanResourcesController@reimbursIndex')->name('reimburs.index');
 	Route::post('human-resources/reimbursment/approve/{id}','Apps\HumanResourcesController@reimbursApprove')->name('reimburs.approve');
@@ -174,6 +176,8 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::post('my-menu/attendance-in','Apps\UserMenuController@clockIn')->name('attendanceIn.store');
 	Route::post('my-menu/attendance/task/edit','Apps\UserMenuController@taskEdit')->name('attendanceTask.update');
 	Route::post('my-menu/attendance-out','Apps\UserMenuController@clockOut')->name('attendanceOut.store');
+	Route::get('my-menu/payroll/print/{empNo}','Apps\UserMenuController@salaryPrint')->name('mySalary.print');
+	Route::get('my-menu/payroll/pdf/{empNo}','Apps\UserMenuController@salaryPdf')->name('mySalary.export');
 	Route::get('my-menu/leave-request','Apps\UserMenuController@leaveIndex')->name('myLeave.index');
 	Route::post('my-menu/leave-request/create','Apps\UserMenuController@leaveRequest')->name('myLeave.store');
 	Route::get('my-menu/reimbursment','Apps\UserMenuController@reimbursIndex')->name('myReimburs.index');
@@ -212,9 +216,19 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::post('my-menu/attendance/search','Apps\UserMenuController@attendanceSearch')->name('myAttendance.search');
 
 	Route::get('human-resources/reports/attendance','Apps\ReportsController@attendanceReport')->name('attReport.index');
+	Route::post('human-resources/reports/attendance/result','Apps\ReportsController@attendanceProcess')->name('attReport.result');
+	Route::get('human-resources/reports/attendance/result/detail/{ID}/{startDate}/{endDate}','Apps\ReportsController@attendanceDetail')->name('attReport.detail');
+	Route::get('human-resources/reports/attendance/result/print/{ID}/{startDate}/{endDate}','Apps\ReportsController@attendancePrint')->name('attReport.print');
+	Route::get('human-resources/reports/attendance/result/pdf/{ID}/{startDate}/{endDate}','Apps\ReportsController@attendancePdf')->name('attReport.export');
+
+	Route::get('human-resources/reports/payroll-and-allowance','Apps\ReportsController@financeReport')->name('payReport.index');
 
 });
 
 
 
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

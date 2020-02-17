@@ -39,4 +39,9 @@ class EmployeeSalary extends Model
     {
         return $this->belongsTo(Employee::class,'approved_by');
     }
+
+    public function Employees()
+    {
+        return $this->belongsTo(Employee::class,'employee_no','employee_no');
+    }
 }

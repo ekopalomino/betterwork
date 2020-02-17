@@ -15,6 +15,6 @@ class Bulletin extends Model
 
     public function Author()
     {
-    	return $this->belongsTo(User::class,'created_by');
+    	return $this->belongsTo(Employee::class,'created_by');
     }
 }

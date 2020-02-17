@@ -4,7 +4,6 @@ Better Work Indonesia | Edit Bulletin
 @endsection
 @section('header.styles')
 <link rel="stylesheet" href="{{ asset('public/bower_components/admin-lte/plugins/summernote/summernote-bs4.css') }}">
-<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 @endsection
 @section('content')
 <section class="content-header">

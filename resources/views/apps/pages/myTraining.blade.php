@@ -16,7 +16,7 @@ Better Work Indonesia | My Training Data
     </div>
 </section>
 <section class="content">
-	<div class="card card-primary card-outline">
+	<div class="card card-info card-outline">
 		<div class="card-body">
 			<table id="example1" class="table table-bordered table-hover">
 				<thead>
@@ -44,9 +44,11 @@ Better Work Indonesia | My Training Data
 						</td>
 						<td>{{ $value->Statuses->name }}</td>
 						<td>
+							@if(($value->status) == 'ca52a2ce-5c37-48ce-a7f2-0fd5311860c2')
 							<button type="button" href="#" value="{{ action('Apps\UserMenuController@trainingEdit',['id'=>$value->id]) }}" class="btn btn-xs btn-success modalLg" data-toggle="modal" data-target="#modalLg">
 								<i class="fa fa-edit"></i>
 							</button>
+							@endif
 						</td>
 					</tr>
 					@endforeach

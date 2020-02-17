@@ -47,12 +47,22 @@ class HumanResourcesController extends Controller
                                     ->whereDate('employee_leaves.created_at',Carbon::today()->toDateString())
                                     ->get();
 
-        $modifiedImmutable = CarbonImmutable::now()->add(7, 'day');
         $onBirthday = Employee::whereDate('date_of_birth',Carbon::today()->toDateString())->get();
-
-        
-        
-    	return view('apps.pages.humanResourceHome',compact('onLeave','onBirthday'));
+        $onAttendance = DB::table('employees')->join('employee_attendances','employee_attendances.employee_id','employees.id')
+                            ->select('employees.employee_no','employees.first_name','employees.last_name',DB::raw('sum(employee_attendances.working_hour) as Hours'))
+                            ->whereDate('employee_attendances.updated_at','>=',Carbon::now()->subDays(8))
+                            ->groupBy('employees.employee_no','employees.first_name','employees.last_name')
+                            ->get();
+                            
+        $getGender = DB::table('employees')->select(DB::raw('if(sex=1,"male","female")as Gender'),DB::raw('count(id) as Count'))
+                                ->groupBy('sex')
+                                ->get();
+        $gender[] = ['Gender','Count'];
+        foreach($getGender as $key=>$value) {
+            $gender[++$key] = [$value->Gender,(int)$value->Count];
+        }
+                           
+    	return view('apps.pages.humanResourceHome',compact('onLeave','onBirthday','onAttendance'))->with('getGender',json_encode($gender));
     }
 
     public function employeeIndex()
@@ -65,9 +75,17 @@ class HumanResourcesController extends Controller
     public function employeeCreate()
     {
         $grades = EmployeePosition::pluck('position_name','position_name')->toArray();
-        $cities = Location::pluck('city','city')->toArray();
+        $cities = Location::orderBy('city','ASC')->pluck('city','city')->toArray();
         
         return view('apps.input.employee',compact('grades','cities'));
+    }
+
+    public function searchLocation(Request $request)
+    {
+        $search = $request->get('place_of_birth');
+        $result = Location::orderBy('city','ASC')->select('city','city')->get();
+
+        return response()->json($result);
     }
 
     public function employeeStore(Request $request)
@@ -603,7 +621,9 @@ class HumanResourcesController extends Controller
     public function employeeDelete($id)
     {
         $data = Employee::find($id);
-        $user = User::where('email',$data->email)->delete();
+        $user = User::where('email',$data->email)->update([
+            'status_id' => 'bca5aaf9-c7ff-4359-9d6c-28768981b416',
+        ]);
         $data->delete();
 
         $log = 'Employee '.($data->first_name).' '.($data->last_name). ' Delete';
@@ -719,6 +739,14 @@ class HumanResourcesController extends Controller
         $data = EmployeeLeave::with('Details')->whereYEAR('created_at',$current)->get();
         
         return view('apps.pages.leaveIndex',compact('data'));
+    }
+
+    public function employeeLeaveCard($id)
+    {
+        $current = Carbon::now()->year;
+        $data = EmployeeLeave::with('Details')->where('id',$id)->whereYEAR('created_at',$current)->get();
+
+        return view('apps.show.employeeLeave',compact('data'));
     }
 
     public function appraisalIndex()
@@ -1006,7 +1034,7 @@ class HumanResourcesController extends Controller
     {
         $data = Bulletin::find($id);
 
-        return view('apps.show.bulletin');
+        return view('apps.show.bulletin',compact('data'));
     }
 
     public function bulletinEdit($id)
@@ -1271,8 +1299,23 @@ class HumanResourcesController extends Controller
                                 ->where('employee_salaries.payroll_period',$period)
                                 ->where('employee_services.is_active','1')
                                 ->get();
-                              
+                        
         return view('apps.show.employeeSalary',compact('data'));
+    }
+
+    public function salaryEmpShow($empNo)
+    {
+        $data = EmployeeSalary::join('employees','employees.employee_no','employee_salaries.employee_no')
+                                ->join('employee_services','employee_services.employee_id','employees.id')
+                                ->where('employee_salaries.employee_no',$empNo)
+                                ->where('employee_services.is_active','1')
+                                ->first();
+                                
+        $iuran = $data->jkk + $data->jkm + $data->jht + $data->jp;
+        $income = $data->nett_salary + $iuran + $data->bpjs + $data->income_tax;
+        $outcome = $iuran + $data->bpjs + $data->income_tax;
+        $nett = $income - $outcome;
+        return view('apps.show.empSalary',compact('data','iuran','income','outcome','nett'));
     }
 
     public function salaryApproval($period)

@@ -12,6 +12,12 @@ Better Work Indonesia | Update Employee
        		<div class="col-sm-6">
           		<h1>Update Employee</h1>
        		</div>
+			<div class="col-sm-6">
+				<ol class="breadcrumb float-sm-right">
+					<li class="breadcrumb-item"><a href="{{ route('employee.index') }}">Employee</a></li>
+					<li class="breadcrumb-item active">Edit Employee</li>
+				</ol>
+			</div>
        	</div>
     </div>
 </section>
@@ -333,6 +339,7 @@ Better Work Indonesia | Update Employee
 					            				<th>Grade</th>
 					            				<th>Major</th>
 					            				<th>GPA</th>
+												<th>Graduate On</th>
 					            				<th></th>
 					            			</tr>
 					            		</thead>
@@ -343,6 +350,11 @@ Better Work Indonesia | Update Employee
 					            				<td>{{ $value->degree }}</td>
 					            				<td>{{ $value->major }}</td>
 					            				<td>{{ $value->gpa }}</td>
+												<td>
+													@if(!empty($value->date_of_graduate))
+													{{date("d F Y",strtotime($value->date_of_graduate)) }}
+													@endif
+												</td>
 					            				<td>
 					            					<a class="btn btn-xs btn-success modalLg" href="#" value="{{ action('Apps\HumanResourcesController@educationEdit',['id'=>$value->id]) }}" data-toggle="modal" data-target="#modalLg"><i class="fa fa-edit"></i></a>
 					            				</td>
