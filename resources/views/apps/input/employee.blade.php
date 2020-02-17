@@ -2,9 +2,6 @@
 @section('header.title')
 Better Work Indonesia | Create New Employee
 @endsection
-@section('header.plugins')
-<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-@endsection
 @section('content')
 <section class="content-header">
 	<div class="container-fluid">
@@ -73,8 +70,8 @@ Better Work Indonesia | Create New Employee
 			    				</div>
 			    				<div class="form-group">
 			    					<label for="placeOb">Place Of Birth</label>
-									{!! Form::select('place_of_birth', [null=>'Please Select'] + $cities,[], array('class' => 'form-control')) !!}
-			    				</div>
+									{!! Form::text('place_of_birth', null, array('placeholder' => 'Place of Birth','id' => 'place_of_birth','class' => 'form-control')) !!}
+								</div>
 			    				<div class="form-group">
 			    					<label for="dateOb">Date Of Birth</label>
 			    					{!! Form::date('date_of_birth', '', array('id' => 'datepicker','class' => 'form-control')) !!}
@@ -152,4 +149,19 @@ Better Work Indonesia | Create New Employee
 		</div>
 	</div>
 </section>
+@endsection
+@section('footer.scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){ 
+    var route = "{{ route('employee.location') }}";
+    $("#place_of_birth").typeahead({
+        source:  function (place_of_birth, process) {
+            return $.get(route, { place_of_birth: place_of_birth }, function (data) {
+                    return process(data);
+                });
+            }
+      });
+	});
+</script>
 @endsection
