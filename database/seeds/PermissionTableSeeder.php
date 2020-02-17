@@ -25,9 +25,6 @@ class PermissionTableSeeder extends Seeder
             'Process Grievance',
             'Comment Grievance',
             'Create Reports',
-            'Edit All Grievance',
-            'Delete Grievance',
-            'Create Grievance Reports',
         ];
 
         foreach($permissions as $permission) {

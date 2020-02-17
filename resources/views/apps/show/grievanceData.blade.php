@@ -43,13 +43,13 @@ Better Work Indonesia | Grievance Database Show
          	<p><strong>Comments and Response</strong></p>
           @foreach($data->Child as $child)
          	<div class="card-comment">
-            <img class="img-circle img-sm" src="{{ asset('public/bower_components/admin-lte/dist/img/user4-128x128.jpg') }}" alt="User Image">
+            <img class="img-circle img-sm" src="{{ asset('public/bower_components/admin-lte/dist/img/avatar.png') }}" alt="User Image">
             <div class="comment-text">
               <span class="username">
                 @if(($child->comment_by) == ($data->employee_id))
                 Anonymous
                 @else
-                {{ $child->Responder->first_name}} {{ $child->Responder->last_name}}
+                Team Grievance
                 @endif
                 <span class="text-muted float-right">{{date("d F Y H:i",strtotime($child->created_at)) }}</span>
               </span><!-- /.username -->

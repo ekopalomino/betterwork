@@ -170,6 +170,9 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth','verified']], function
 	Route::post('grievance/database/publish/{id}','Apps\GrievanceController@grievancePublish')->name('grievanceData.publish');
 	Route::get('grievance/management-respond','Apps\GrievanceController@managementData')->name('managementGrievance.index');
 	Route::get('grievance/management-respond/show/{id}','Apps\GrievanceController@grievanceManagementShow')->name('managementGrievance.show');
+	Route::get('grievance/published-data','Apps\GrievanceController@grievancePublishData')->name('grievancePublished.index');
+	Route::get('grievance/published-data/view/{id}','Apps\GrievanceController@grievancePublishShow')->name('grievancePublished.show');
+
 	Route::get('accounting/bank-statement','Apps\AccountingController@bankIndex')->name('bank.index');
 
 	Route::get('my-menu/update-profile','Apps\UserMenuController@profileEdit')->name('profile.edit');
@@ -183,6 +186,8 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth','verified']], function
 	Route::get('my-menu/reimbursment','Apps\UserMenuController@reimbursIndex')->name('myReimburs.index');
 	Route::post('my-menu/reimbursment/create','Apps\UserMenuController@reimbursStore')->name('myReimburs.store');
 	Route::get('my-menu/grievance','Apps\UserMenuController@grievanceIndex')->name('myGrievance.index');
+	Route::get('my-menu/grievance/published-data','Apps\UserMenuController@grievancePublish')->name('myGrievancePublished.index');
+	Route::get('my-menu/grievance/published-data/view/{id}','Apps\UserMenuController@grievancePublishShow')->name('myGrievancePublished.show');
 	Route::get('my-menu/grievance/create','Apps\UserMenuController@grievanceCreate')->name('myGrievance.create');
 	Route::post('my-menu/reimbursment/store','Apps\UserMenuController@grievanceStore')->name('myGrievance.store');
 	Route::get('my-menu/grievance/edit/{id}','Apps\UserMenuController@grievanceEdit')->name('myGrievance.edit');

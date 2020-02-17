@@ -73,8 +73,7 @@ Better Work Indonesia | Create New Employee
 			    				</div>
 			    				<div class="form-group">
 			    					<label for="placeOb">Place Of Birth</label>
-									{!! Form::text('place_of_birth', null, array('placeholder' => 'Place of Birth','id' => 'location','class' => 'form-control')) !!}
-			    			
+									{!! Form::select('place_of_birth', [null=>'Please Select'] + $cities,[], array('class' => 'form-control')) !!}
 			    				</div>
 			    				<div class="form-group">
 			    					<label for="dateOb">Date Of Birth</label>
@@ -153,18 +152,4 @@ Better Work Indonesia | Create New Employee
 		</div>
 	</div>
 </section>
-@endsection
-@section('footer.scripts')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function(){ 
-    var route = "{{ route('employee.location') }}";
-    $("input[name^='place_of_birth']").typeahead({
-        source:  function (place_of_birth, process) {
-            return $.get(route, { place_of_birth: place_of_birth }, function (data) {
-                    return process(data);
-                });
-            }
-      }); 
-</script>
 @endsection

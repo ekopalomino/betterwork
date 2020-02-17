@@ -53,7 +53,7 @@ Better Work Indonesia | Grievance Database Edit
               
             </div>
           </div>
-          <button id="register" type="submit" class="btn btn-primary">Save changes</button>
+          <button id="register" type="submit" class="btn btn-sm btn-primary">Save changes</button>
         </div>
         {!! Form::close() !!}
       </div>
