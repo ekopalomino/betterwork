@@ -65,7 +65,7 @@ class UserMenuController extends Controller
         $getBirthday = Employee::whereMonth('date_of_birth',Carbon::now()->month)->get();
         
     	return view('apps.pages.userHome',compact('getBasicProfile','getEmployee','getAttendance','totalDays','getLastEdu','getSubordinate','getBulletin','getKnowledge','getCurPos','getBirthday','getSalary','getServices'));
-
+    }
     public function clockIn(Request $request)
     {
         $this->validate($request, [
