@@ -13,8 +13,35 @@ class LocationTableSeeder extends Seeder
     public function run()
     {
         $locations = [
-            'Jakarta',
-            'Bandung',
+            'Semarang',
+            'Surabaya',
+            'Aceh',
+            'Medan',
+            'Pekanbaru',
+            'Bengkulu',
+            'Padang',
+            'Jambi',
+            'Palembang',
+            'Bandar Lampung',
+            'Serang',
+            'Cilegon',
+            'Tangerang',
+            'Karawaci',
+            'Ciputat',
+            'Ciledug',
+            'Jakarta Barat',
+            'Jakarta Timur',
+            'Jakarta Selatan',
+            'Bekasi',
+            'Depok',
+            'Serpong',
+            'Bogor',
+            'Cikarang',
+            'Karawang',
+            'Cikampek',
+            'Purwakarta',
+            'Cimahi',
+            'Yogyakarta',
         ];
 
         foreach($locations as $location) {

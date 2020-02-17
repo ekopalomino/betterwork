@@ -357,7 +357,7 @@
 					<li class="nav-item {{set_open(['attReport.index','attReport.result']) }}">
 						<a href="{{ route('attReport.index') }}" class="nav-link {{set_active(['attReport.index','attReport.result','attReport.detail']) }}">
 							<i class="far fa-circle nav-icon"></i>
-							<p>Employee Attendance</p>
+							<p>Attendance and Leave</p>
 						</a>
 					</li>
 					<li class="nav-item {{set_open(['payReport.index']) }}">

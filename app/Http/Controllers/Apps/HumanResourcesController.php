@@ -75,9 +75,17 @@ class HumanResourcesController extends Controller
     public function employeeCreate()
     {
         $grades = EmployeePosition::pluck('position_name','position_name')->toArray();
-        $cities = Location::pluck('city','city')->toArray();
+        $cities = Location::orderBy('city','ASC')->pluck('city','city')->toArray();
         
         return view('apps.input.employee',compact('grades','cities'));
+    }
+
+    public function searchLocation(Request $request)
+    {
+        $search = $request->get('place_of_birth');
+        $result = Location::orderBy('city','ASC')->select('city','city')->get();
+
+        return response()->json($result);
     }
 
     public function employeeStore(Request $request)
