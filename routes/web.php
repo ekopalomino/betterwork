@@ -76,6 +76,9 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth','verified']], function
 	Route::post('configuration/grievance-category/update/{id}','Apps\ConfigurationController@grievanceCategoryUpdate')->name('grievCat.update');
 	Route::post('configuration/grievance-category/delete/{id}','Apps\ConfigurationController@grievanceCategoryDestroy')->name('grievCat.destroy');
 
+	Route::get('configuration/bank-account','Apps\ConfigurationController@bankAccountIndex')->name('bankAcc.index');
+	Route::post('configuration/bank-account/store','Apps\ConfigurationController@bankAccountStore')->name('bankAcc.store');
+
 	Route::get('configuration/chart-of-account','Apps\ConfigurationController@coaCategoryIndex')->name('coaCat.index');
 	Route::post('configuration/chart-of-account/store','Apps\ConfigurationController@coaCategoryStore')->name('coaCat.store');
 	Route::get('configuration/chart-of-account/edit/{id}','Apps\ConfigurationController@coaCategoryEdit')->name('coaCat.edit');

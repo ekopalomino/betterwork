@@ -11,6 +11,7 @@ use iteos\Models\ReimbursType;
 use iteos\Models\DocumentCategory;
 use iteos\Models\GrievanceCategory;
 use iteos\Models\ChartOfAccount;
+use iteos\Models\BankAccount;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Hash;
@@ -454,6 +455,36 @@ class ConfigurationController extends Controller
         $data->delete();
 
         return redirect()->route('coaCat.index')->with($notification);
+    }
+
+    public function bankAccountIndex()
+    {
+        $data = BankAccount::get();
+        return view('apps.pages.bankAccount',compact('data'));
+    }
+
+    public function bankAccountStore(Request $request)
+    {
+        $this->validate($request, [
+            'bank_name' => 'required',
+            'account_no' => 'required',
+        ]);
+
+        $data = BankAccount::create([
+            'bank_name' => $request->input('bank_name'),
+            'account_no' => $request->input('account_no'),
+            'created_by' => auth()->user()->employee_id,
+        ]);
+
+        $log = 'Bank Record For '.($data->bank_name).' Created';
+         \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'Bank Record For '.($data->bank_name).' Created',
+            'alert-type' => 'success'
+        );
+        $data->delete();
+
+        return redirect()->route('bankAcc.index')->with($notification);
     }
 
     public function assetCategoryIndex()
