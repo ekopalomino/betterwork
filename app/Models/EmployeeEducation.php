@@ -10,7 +10,7 @@ class EmployeeEducation extends Model
     	'employee_id',
     	'institution_name',
         'date_of_graduate',
-    	'grade',
+    	'degree',
     	'major',
     	'gpa',
     ];

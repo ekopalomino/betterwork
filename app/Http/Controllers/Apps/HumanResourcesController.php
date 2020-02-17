@@ -284,7 +284,7 @@ class HumanResourcesController extends Controller
                 'employee_id' => $request->input('employee_id'), 
                 'institution_name' => $request->input('institution_name'),
                 'date_of_graduate' => $request->input('date_of_graduate'),
-                'degree' => $request->input('degree'),
+                'degree' => $request->input('degree'), 
                 'major' => $request->input('major'),
                 'gpa' => $request->input('gpa'),
             ];
@@ -979,7 +979,7 @@ class HumanResourcesController extends Controller
 
     public function bulletinIndex()
     {
-        $data = Bulletin::orderBy('updated_at','DESC')->get();
+        $data = Bulletin::where('content_id','1')->orderBy('updated_at','DESC')->get();
 
         return view('apps.pages.bulletinIndex',compact('data'));
     }
@@ -1015,12 +1015,13 @@ class HumanResourcesController extends Controller
         $content = $dom->saveHtml();
 
         $data = Bulletin::create([
+            'content_id' => '1',
             'title' => $request->input('title'),
             'content' => $content,
-            'created_by' => Auth()->user()->id,
+            'created_by' => Auth()->user()->employee_id,
         ]);
 
-        $log = 'Bulleting'.($data->title). ' Create and Publish';
+        $log = 'Bulletin'.($data->title). ' Create and Publish';
         \LogActivity::addToLog($log);
         $notification = array (
             'message' => 'Bulleting'.($data->title). ' Create and Publish',
@@ -1089,10 +1090,10 @@ class HumanResourcesController extends Controller
             'content' => $content,
         ]);
 
-        $log = 'Bulleting'.($data->title). ' Edited';
+        $log = 'Bulletin'.($data->title). ' Edited';
         \LogActivity::addToLog($log);
         $notification = array (
-            'message' => 'Bulleting'.($data->title). ' Edited',
+            'message' => 'Bulletin'.($data->title). ' Edited',
             'alert-type' => 'success'
         );
 
@@ -1104,7 +1105,7 @@ class HumanResourcesController extends Controller
         $data = Bulletin::find($id);
         $data->delete();
 
-        $log = 'Bulleting'.($data->title). ' Deleted';
+        $log = 'Bulletin'.($data->title). ' Deleted';
         \LogActivity::addToLog($log);
         $notification = array (
             'message' => 'Bulleting'.($data->title). ' Deleted',
@@ -1116,7 +1117,7 @@ class HumanResourcesController extends Controller
 
     public function knowledgeIndex()
     {
-        $data = KnowledgeBase::orderBy('updated_at','DESC')->get();
+        $data = Bulletin::where('content_id','2')->orderBy('updated_at','DESC')->get();
 
         return view('apps.pages.knowledgeIndex',compact('data'));
     }
@@ -1156,17 +1157,19 @@ class HumanResourcesController extends Controller
             $uploadedFile = $request->file('file');
             $path = $uploadedFile->store('knowledgebase');
 
-            $data = KnowledgeBase::create([
+            $data = Bulletin::create([
+                'content_id' => '2',
                 'title' => $request->input('title'),
                 'content' => $content,
                 'file' => $path,
-                'created_by' => Auth()->user()->id,
+                'created_by' => Auth()->user()->employee_id,
             ]);
         } else {
-            $data = KnowledgeBase::create([
+            $data = Bulletin::create([
+                'content_id' => '2',
                 'title' => $request->input('title'),
                 'content' => $content,
-                'created_by' => Auth()->user()->id,
+                'created_by' => Auth()->user()->employee_id,
             ]);
         }
         
@@ -1175,14 +1178,14 @@ class HumanResourcesController extends Controller
 
     public function knowledgeShow($id)
     {
-        $data = KnowledgeBase::find($id);
+        $data = Bulletin::find($id);
 
         return view('apps.show.knowledge',compact('data'));
     }
 
     public function knowledgeEdit($id)
     {
-        $data = KnowledgeBase::find($id);
+        $data = Bulletin::find($id);
 
         return view('apps.edit.knowledge',compact('data'));
     }
@@ -1228,7 +1231,7 @@ class HumanResourcesController extends Controller
         $content = $dom->saveHTML();
 
         if($request->hasFile('file')) {
-            $data = KnowledgeBase::find($id);
+            $data = Bulletin::find($id);
             $uploadedFile = $request->file('file');
             $path = $uploadedFile->store('knowledgebase');
             $data->update([
@@ -1237,7 +1240,7 @@ class HumanResourcesController extends Controller
                 'file' => $path,
             ]);
         } else {
-            $data = KnowledgeBase::find($id);
+            $data = Bulletin::find($id);
             $data->update([
                 'title' => $request->input('title'),
                 'content' => $content,
@@ -1249,7 +1252,7 @@ class HumanResourcesController extends Controller
 
     public function knowledgeDelete($id)
     {
-        $data = KnowledgeBase::find($id);
+        $data = Bulletin::find($id);
         $data->delete();
 
         return redirect()->route('knowledge.index');

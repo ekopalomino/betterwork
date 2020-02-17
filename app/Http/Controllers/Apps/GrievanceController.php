@@ -172,11 +172,6 @@ class GrievanceController extends Controller
         return redirect()->back();
     }
 
-    public function grievanceClose(Request $request,$id)
-    {
-
-    }
-
     public function grievancePublish($id)
     {
     	$data = EmployeeGrievance::find($id);
@@ -185,5 +180,21 @@ class GrievanceController extends Controller
     	]);
 
     	return redirect()->route('grievanceData.index');
+    }
+
+    public function grievancePublishData()
+    {
+        $data = EmployeeGrievance::where('status_id','6a787298-14f6-4d19-a7ee-99a3c8ed6466')
+                                    ->where('is_public','1')
+                                    ->get();
+
+        return view('apps.pages.grievancePublished',compact('data'));
+    }
+
+    public function grievancePublishShow($id)
+    {
+        $data = EmployeeGrievance::find($id);
+
+        return view('apps.show.grievancePublished',compact('data'));
     }
 }

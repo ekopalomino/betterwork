@@ -8,8 +8,10 @@ class Bulletin extends Model
 {
     protected $fillable = [
     	'category_id',
+        'content_id',
     	'title',
     	'content',
+        'file',
     	'created_by',
     ];
 

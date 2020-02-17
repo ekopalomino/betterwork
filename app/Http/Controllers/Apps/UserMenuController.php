@@ -312,7 +312,14 @@ class UserMenuController extends Controller
 	        ]);
         }
 
-        return redirect()->route('myGrievance.index'); 
+        $log = 'Grievance'.($data->subject). ' Submitted';
+        \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'Grievance'.($data->subject). ' Submitted',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('myGrievance.index')->with($notification); 
     }
 
     public function grievanceShow($id)
@@ -401,6 +408,22 @@ class UserMenuController extends Controller
         ]);
 
         return redirect()->route('myGrievance.index');
+    }
+
+    public function grievancePublish()
+    {
+        $data = EmployeeGrievance::where('status_id','6a787298-14f6-4d19-a7ee-99a3c8ed6466')
+                                    ->where('is_public','1')
+                                    ->get();
+
+        return view('apps.pages.myGrievancePublished',compact('data'));
+    }
+
+    public function grievancePublishShow($id)
+    {
+        $data = EmployeeGrievance::find($id);
+
+        return view('apps.show.myGrievancePublished',compact('data'));
     }
 
     public function appraisalIndex()
@@ -617,7 +640,7 @@ class UserMenuController extends Controller
 
     public function bulletinIndex()
     {
-        $data = Bulletin::orderBy('created_at','DESC')->get();
+        $data = Bulletin::where('content_id','1')->orderBy('created_at','DESC')->get();
 
         return view('apps.pages.myBulletin',compact('data'));
     }
@@ -631,16 +654,16 @@ class UserMenuController extends Controller
 
     public function knowledgeIndex()
     {
-        $data = KnowledgeBase::orderBy('created_at','DESC')->get();
+        $data = Bulletin::where('content_id','2')->orderBy('created_at','DESC')->get();
 
         return view('apps.pages.myKnowledge',compact('data'));
     }
 
     public function knowledgeShow($id)
     {
-        $data = KnowledgeBase::find($id);
+        $data = Bulletin::find($id);
 
-        return view('apps.show.knowledge',compact('data'));
+        return view('apps.show.myKnowledge',compact('data'));
     }
 
     public function attendanceIndex()

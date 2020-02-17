@@ -6,7 +6,7 @@
 		<li class="nav-item d-none d-sm-inline-block">
 			<a href="{{route('userHome.index') }}" class="nav-link {{set_active(['userHome.index','myLeave.index','myReimburs.index','myGrievance.index','myGrievance.create','myGrievance.edit','myGrievance.show',
 			'myAppraisal.index','myAppraisal.create','myAppraisal.detail','myDevelopment.create','myAppraisal.show','myAppraisal.edit','myTraining.index','profile.edit','myBulletin.index','myKnowledge.index',
-			'myAttendance.index','myAttendance.search','myBulletin.show']) }}">Home</a>
+			'myAttendance.index','myAttendance.search','myBulletin.show','myGrievancePublished.index','myGrievancePublished.show']) }}">Home</a>
 		</li>
 		@can('Access Configuration')
 		<li class="nav-item d-none d-sm-inline-block">
@@ -24,7 +24,7 @@
 		@can('Access Grievance')
 		<li class="nav-item d-none d-sm-inline-block">
 			<a href="{{route('grievance.index') }}" class="nav-link {{set_active(['grievance.index','grievanceData.index','managementGrievance.index','grievanceData.edit','grievanceData.show','managementGrievance.show',
-			'grievanceData.create']) }}">Grievance</a>
+			'grievanceData.create','grievancePublished.index','grievancePublished.show']) }}">Grievance</a>
 		</li>
 		@endcan
 		@can('Access Accounting')
