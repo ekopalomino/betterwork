@@ -22,10 +22,10 @@ Better Work Indonesia | Salary Process
 				<h5><i class="fas fa-info"></i> Note:</h5>
 				Use <a class="btn btn-danger btn-xs" href="{{ asset('public/payroll.xlsx') }}">This</a> excel file to upload payroll data. Only input number into the sheet, not formula.
             </div>
-			<div class="card card-primary card-outline">
+			<div class="card card-info card-outline">
 				<div class="card-header">
 					@can('Create Payroll')
-					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#salary">
+					<button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#salary">
                   		Add New
                 	</button>
 					@endcan
@@ -46,7 +46,7 @@ Better Work Indonesia | Salary Process
 									   	{!! Form::file('salary', null, array('placeholder' => 'Employee Photo','class' => 'form-control')) !!}
 	                      			</div>
                         		</div>
-				            	<div class="modal-footer justify-content-between">
+				            	<div class="modal-footer">
 				              		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				              		<button type="submit" class="btn btn-primary">Import</button>
 				            	</div>

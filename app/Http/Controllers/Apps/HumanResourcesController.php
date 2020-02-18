@@ -83,7 +83,7 @@ class HumanResourcesController extends Controller
     public function searchLocation(Request $request)
     {
         $search = $request->get('place_of_birth');
-        $result = Location::orderBy('city','ASC')->select('city','city')->get();
+        $result = Location::where('city','LIKE','%'. $search. '%')->get();
 
         return response()->json($result);
     }

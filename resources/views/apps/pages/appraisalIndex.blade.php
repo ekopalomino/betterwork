@@ -13,7 +13,7 @@ Better Work Indonesia | Employee Appraisal
     </div>
 </section>
 <section class="content">
-	<div class="card card-primary card-outline">
+	<div class="card card-info card-outline">
 		<div class="card-body p-0">
 			<table class="table table-striped projects">
 				<thead>

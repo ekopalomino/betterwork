@@ -18,9 +18,9 @@ Better Work Indonesia | Employee Position
 <section class="content">
 	<div class="row">
 		<div class="col-12">
-			<div class="card card-primary card-outline">
+			<div class="card card-info card-outline">
 				<div class="card-header"> 
-              		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">
+              		<button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modal-default">
                   		Add New
                 	</button>
                 	<div class="modal fade" id="modal-default">
@@ -33,18 +33,18 @@ Better Work Indonesia | Employee Position
 				              		</button>
 				            	</div>
 				            	<div class="modal-body">
-                        {!! Form::open(array('route' => 'position.store','method'=>'POST', 'class' => 'form-horizontal')) !!}
-                        @csrf
+									{!! Form::open(array('route' => 'position.store','method'=>'POST', 'class' => 'form-horizontal')) !!}
+									@csrf
 				              		<label for="inputEmail" class="col-sm-12 col-form-label">Position Name</label>
                         				<div class="col-sm-12">
                           					{!! Form::text('position_name', null, array('placeholder' => 'Position Name','class' => 'form-control')) !!}
                         				</div>
 				            	</div>
-				            	<div class="modal-footer justify-content-between">
+				            	<div class="modal-footer">
 				              		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				              		<button id="register" type="submit" class="btn btn-primary">Save changes</button>
+				              		<button id="register" type="submit" class="btn btn-primary">Save</button>
 				            	</div>
-                      {!! Form::close() !!}
+								{!! Form::close() !!}
 				          	</div>
 				        </div>
 				    </div>
@@ -52,13 +52,13 @@ Better Work Indonesia | Employee Position
             	<div class="card-body">
                 @if (count($errors) > 0) 
                 <div class="alert alert-danger alert-dismissible">
-                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                  <h5><i class="icon fas fa-ban"></i> Alert!</h5>
-                  <ul>
-                    @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                    @endforeach
-                  </ul>
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+					<h5><i class="icon fas fa-ban"></i> Alert!</h5>
+					<ul>
+						@foreach ($errors->all() as $error)
+						<li>{{ $error }}</li>
+						@endforeach
+					</ul>
                 </div>
                 @endif
             		<table id="example1" class="table table-bordered table-hover">
@@ -66,32 +66,33 @@ Better Work Indonesia | Employee Position
             				<tr>
             					<th>No</th>
             					<th>Position Name</th>
-                      <th>Created By</th>
+								<th>Created By</th>
             					<th>Created At</th>
             					<th></th>
             				</tr>
             			</thead>
             			<tbody>
-                    @foreach($data as $key=>$value)
+							@foreach($data as $key=>$value)
             				<tr>
             					<td>{{ $key+1 }}</td>
             					<td>{{ $value->position_name }}</td>
             					<td>{{ $value->Author->name }}</td>
             					<td>{{date("d F Y H:i",strtotime($value->created_at)) }}</td>
-                      <td>
-                          <div class="btn-group">
-                          <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Action
-                          </button>
-                          <div class="dropdown-menu" role="menu">
-                            <a class="dropdown-item modalMd" href="#" value="{{ action('Apps\ConfigurationController@positionEdit',['id'=>$value->id]) }}" data-toggle="modal" data-target="#modalMd">Edit Data</a>
-                            {!! Form::open(['method' => 'POST','route' => ['position.destroy', $value->id],'style'=>'dropdown-item','onsubmit' => 'return ConfirmDelete()']) !!}
-                            {!! Form::button('<a>Delete Data</a>',['type'=>'submit','class' => 'dropdown-item']) !!}
-                            {!! Form::close() !!}
-                          </div>
-                      </td>
+								<td>
+									<div class="btn-group">
+										<button type="button" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											Action
+										</button>
+										<div class="dropdown-menu" role="menu">
+											<a class="dropdown-item modalMd" href="#" value="{{ action('Apps\ConfigurationController@positionEdit',['id'=>$value->id]) }}" data-toggle="modal" data-target="#modalMd">Edit Data</a>
+											{!! Form::open(['method' => 'POST','route' => ['position.destroy', $value->id],'style'=>'dropdown-item','onsubmit' => 'return ConfirmDelete()']) !!}
+											{!! Form::button('<a>Delete Data</a>',['type'=>'submit','class' => 'dropdown-item']) !!}
+											{!! Form::close() !!}
+										</div>
+									</div>
+								</td>
             				</tr>
-                    @endforeach
+							@endforeach
             			</tbody>
             		</table>
             	</div>
