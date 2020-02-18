@@ -434,7 +434,7 @@
 			@endif
 			@endcan
 			@can('Access Accounting')
-			@if(\Route::is(['accounting.index','bank.index']))
+			@if(\Route::is(['accounting.index','bank.index','account.index','accTransaction.index','accTransaction.create']))
 			<li class="nav-item {{set_open('bank.index') }}">
 				<a href="{{ route('bank.index') }}" class="nav-link {{set_active('bank.index') }}">
 					<i class="nav-icon fas fa-money-check-alt"></i>
@@ -443,11 +443,11 @@
 					</p>
 				</a>
 			</li>
-			<li class="nav-item">
-				<a href="#" class="nav-link">
+			<li class="nav-item {{set_open(['account.index','accTransaction.index','accTransaction.create']) }}">
+				<a href="{{ route('account.index') }}" class="nav-link {{set_active(['account.index','accTransaction.index','accTransaction.create']) }}">
 					<i class="nav-icon fas fa-wallet"></i>
 					<p>
-						Transaction
+						Account Statement
 					</p>
 				</a>
 			</li>

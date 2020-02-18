@@ -29,9 +29,15 @@
 		@endcan
 		@can('Access Accounting')
 		<li class="nav-item d-none d-sm-inline-block">
-			<a href="{{route('accounting.index') }}" class="nav-link {{set_active(['accounting.index','bank.index']) }}">Accounting</a>
+			<a href="{{route('accounting.index') }}" class="nav-link {{set_active(['accounting.index','bank.index','account.index','accTransaction.index','accTransaction.create']) }}">Accounting</a>
 		</li>
 		@endcan
+		<li class="nav-item d-none d-sm-inline-block">
+			<a href="" class="nav-link ">Help</a>
+		</li>
+		<li class="nav-item d-none d-sm-inline-block">
+			<a href="" class="nav-link ">Report Problem</a>
+		</li>
 	</ul>
 	<ul class="navbar-nav ml-auto">
 		<li class="nav-item dropdown">

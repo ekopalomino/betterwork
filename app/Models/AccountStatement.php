@@ -12,7 +12,14 @@ class AccountStatement extends Model
     protected $fillable = [
     	'account_period',
     	'status_id',
+    	'created_by',
+    	'updated_by',
     ];
 
     public $incrementing = false;
+
+    public function Statuses()
+    {
+    	return $this->belongsTo(Status::class,'status_id');
+    }
 }

@@ -12,4 +12,9 @@ class BankStatement extends Model
     	'balance',
     	'status_id',
     ];
+
+    public function Statuses()
+    {
+    	return $this->belongsTo(Status::class,'status_id');
+    }
 }

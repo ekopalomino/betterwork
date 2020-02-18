@@ -177,6 +177,13 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth','verified']], function
 	Route::get('grievance/published-data/view/{id}','Apps\GrievanceController@grievancePublishShow')->name('grievancePublished.show');
 
 	Route::get('accounting/bank-statement','Apps\AccountingController@bankIndex')->name('bank.index');
+	Route::post('accounting/bank-statement/save-period','Apps\AccountingController@bankPeriod')->name('bankPeriod.store');
+	Route::get('accounting/bank-statement/import/{id}','Apps\AccountingController@bankStatement')->name('bankStatement.import');
+	Route::post('accounting/bank-statement/import/{id}','Apps\AccountingController@bankStatementImport')->name('statementFile.import');
+	Route::get('accounting/account-statement','Apps\AccountingController@accountIndex')->name('account.index');
+	Route::post('accounting/account-statement/save-period','Apps\AccountingController@statementPeriod')->name('accountPeriod.store');
+	Route::get('accounting/account-statement/{id}/transaction','Apps\AccountingController@AccountTransaction')->name('accTransaction.index');
+	Route::get('accounting/account-statement/transaction/create','Apps\AccountingController@transactionCreate')->name('accTransaction.create');
 
 	Route::get('my-menu/update-profile','Apps\UserMenuController@profileEdit')->name('profile.edit');
 	Route::post('my-menu/attendance-in','Apps\UserMenuController@clockIn')->name('attendanceIn.store');
