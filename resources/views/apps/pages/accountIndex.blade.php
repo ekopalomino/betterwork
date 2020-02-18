@@ -1,13 +1,13 @@
 @extends('apps.layouts.main')
 @section('header.title')
-Better Work Indonesia | Bank Statement
+Better Work Indonesia | Account Statement
 @endsection
 @section('content')
 <section class="content-header">
 	<div class="container-fluid">
       	<div class="row mb-2">
        		<div class="col-sm-6">
-          		<h1>Bank Statement</h1>
+          		<h1>Account Statement</h1>
        		</div>
        	</div>
     </div>
@@ -21,24 +21,19 @@ Better Work Indonesia | Bank Statement
 					<button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#salary">
                   		Add New
                 	</button>
-					
 					<div class="modal fade" id="salary">
 				        <div class="modal-dialog modal-lg">
 				          	<div class="modal-content">
-								{!! Form::open(array('route' => 'bankPeriod.store','method'=>'POST')) !!}
+								{!! Form::open(array('route' => 'accountPeriod.store','method'=>'POST')) !!}
 								@csrf
 				            	<div class="modal-header">
-				             		<h4 class="modal-title">New Bank Statement Period</h4>
+				             		<h4 class="modal-title">New Statement Period</h4>
 				              		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				                		<span aria-hidden="true">&times;</span>
 				              		</button>
 				            	</div>
 				            	<div class="modal-body">
-									<label for="inputName">Bank Name</label>
-			    					<div class="input-group">
-									   	{!! Form::select('bank_id', [null=>'Please Select'] + $banks,[], array('class' => 'form-control')) !!}
-	                      			</div>
-				              		<label for="inputName">Bank Statement Period</label>
+									<label for="inputName">Account Statement Period</label>
 			    					<div class="input-group">
 									   	{!! Form::date('period', '', array('id' => 'datepicker','class' => 'form-control')) !!}
 	                      			</div>
@@ -68,7 +63,7 @@ Better Work Indonesia | Bank Statement
 						<thead>
 							<tr>
 								<th>No</th>
-								<th>Period</th>
+								<th>Statement Period</th>
 								<th>Balance</th>
 								<th>Status</th>
 								<th></th>
@@ -78,12 +73,19 @@ Better Work Indonesia | Bank Statement
 							@foreach($data as $key=>$value)
 							<tr>
 								<td>{{ $key+1 }}</td>
-								<td>{{date("F Y",strtotime($value->statement_period)) }}</td>
-								<td>{{ $value->balance }}</td>
-								<td>{{ $value->Statuses->name }}</td>
+								<td>{{date("F Y",strtotime($value->account_period)) }}</td>
+								<td></td>
 								<td>
-									<a class="btn btn-xs btn-info modalMd" href="#" value="{{ action('Apps\AccountingController@bankStatement',['id'=>$value->id]) }}" 
-									data-toggle="modal" data-target="#modalMd"><i class="fa fa-upload"></i></a>
+									@if(($value->status_id) == 'fe6f8153-a433-4a4d-a23d-201811778733')
+										<span class="badge bg-danger">{{ $value->Statuses->name }}</span>
+									@else
+										<span class="badge badge-success">{{ $value->Statuses->name }}</span>
+									@endif
+								</td>
+								<td>
+									<a button id="search" type="submit" class="btn btn-xs btn-info" href="{{ route('accTransaction.index',$value->id) }}">
+										<i class="fa fa-search"></i>
+									</a>
 								</td>
 							</tr>
 							@endforeach

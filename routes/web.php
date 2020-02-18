@@ -26,6 +26,8 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth','verified']], function
 	Route::get('human-resources','Apps\HumanResourcesController@index')->name('hr.index');
 	Route::get('grievance','Apps\GrievanceController@index')->name('grievance.index');
 	Route::get('accounting','Apps\AccountingController@index')->name('accounting.index');
+	Route::get('help','Apps\UserMenuController@helpIndex')->name('help.index');
+	Route::get('report-problem','Apps\UserMenuController@supportIndex')->name('support.index');
 	/*User Manager Sub Menu Route*/
 	Route::get('configuration/users','Apps\ConfigurationController@userIndex')->name('user.index');
 	Route::post('configuration/users','Apps\ConfigurationController@userStore')->name('user.store');
@@ -75,6 +77,9 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth','verified']], function
 	Route::get('configuration/grievance-category/edit/{id}','Apps\ConfigurationController@grievanceCategoryEdit')->name('grievCat.edit');
 	Route::post('configuration/grievance-category/update/{id}','Apps\ConfigurationController@grievanceCategoryUpdate')->name('grievCat.update');
 	Route::post('configuration/grievance-category/delete/{id}','Apps\ConfigurationController@grievanceCategoryDestroy')->name('grievCat.destroy');
+
+	Route::get('configuration/bank-account','Apps\ConfigurationController@bankAccountIndex')->name('bankAcc.index');
+	Route::post('configuration/bank-account/store','Apps\ConfigurationController@bankAccountStore')->name('bankAcc.store');
 
 	Route::get('configuration/chart-of-account','Apps\ConfigurationController@coaCategoryIndex')->name('coaCat.index');
 	Route::post('configuration/chart-of-account/store','Apps\ConfigurationController@coaCategoryStore')->name('coaCat.store');
@@ -174,6 +179,13 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth','verified']], function
 	Route::get('grievance/published-data/view/{id}','Apps\GrievanceController@grievancePublishShow')->name('grievancePublished.show');
 
 	Route::get('accounting/bank-statement','Apps\AccountingController@bankIndex')->name('bank.index');
+	Route::post('accounting/bank-statement/save-period','Apps\AccountingController@bankPeriod')->name('bankPeriod.store');
+	Route::get('accounting/bank-statement/import/{id}','Apps\AccountingController@bankStatement')->name('bankStatement.import');
+	Route::post('accounting/bank-statement/import/{id}','Apps\AccountingController@bankStatementImport')->name('statementFile.import');
+	Route::get('accounting/account-statement','Apps\AccountingController@accountIndex')->name('account.index');
+	Route::post('accounting/account-statement/save-period','Apps\AccountingController@statementPeriod')->name('accountPeriod.store');
+	Route::get('accounting/account-statement/{id}/transaction','Apps\AccountingController@AccountTransaction')->name('accTransaction.index');
+	Route::get('accounting/account-statement/transaction/create','Apps\AccountingController@transactionCreate')->name('accTransaction.create');
 
 	Route::get('my-menu/update-profile','Apps\UserMenuController@profileEdit')->name('profile.edit');
 	Route::post('my-menu/attendance-in','Apps\UserMenuController@clockIn')->name('attendanceIn.store');

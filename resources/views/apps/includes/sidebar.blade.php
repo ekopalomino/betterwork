@@ -121,7 +121,8 @@
 			</li>
 			@endif
 			@can('Access Configuration')
-			@if(\Route::is(['application.index','config.index','position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','coaCat.index','assetCat.index','user.index','logs.index','role.index','role.create','role.edit']))
+			@if(\Route::is(['application.index','config.index','position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','coaCat.index','assetCat.index','user.index','logs.index','role.index',
+			'role.create','role.edit','bankAcc.index']))
 			@can('Create Application Setting')
 			<li class="nav-item">
 				<a href="{{ route('application.index') }}" class="nav-link {{set_active('application.index') }}">
@@ -209,8 +210,8 @@
 			</li>
 			@endcan
 			@can('Create Accounting Master Data')
-			<li class="nav-item has-treeview {{set_open(['coaCat.index','assetCat.index']) }}">
-				<a href="#" class="nav-link {{set_active(['coaCat.index','assetCat.index']) }}">
+			<li class="nav-item has-treeview {{set_open(['coaCat.index','assetCat.index','bankAcc.index']) }}">
+				<a href="#" class="nav-link {{set_active(['coaCat.index','assetCat.index','bankAcc.index']) }}">
 					<i class="nav-icon fas fa-calculator"></i>
 					<p>
 						Accounting
@@ -219,15 +220,21 @@
 				</a>
 				<ul class="nav nav-treeview">
 					<li class="nav-item">
-						<a href="{{ route('coaCat.index') }}" class="nav-link {{set_active('coaCat.index') }}">
-							<i class="far fa-circle nav-icon"></i>
-							<p>Chart of Account</p>
-						</a>
-					</li>
-					<li class="nav-item">
 						<a href="{{ route('assetCat.index') }}" class="nav-link {{set_active('assetCat.index') }}">
 							<i class="far fa-circle nav-icon"></i>
 							<p>Asset Category</p>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="{{ route('bankAcc.index') }}" class="nav-link {{set_active('bankAcc.index') }}">
+							<i class="far fa-circle nav-icon"></i>
+							<p>Bank Account</p>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="{{ route('coaCat.index') }}" class="nav-link {{set_active('coaCat.index') }}">
+							<i class="far fa-circle nav-icon"></i>
+							<p>Chart of Account</p>
 						</a>
 					</li>
 				</ul>
@@ -427,7 +434,7 @@
 			@endif
 			@endcan
 			@can('Access Accounting')
-			@if(\Route::is(['accounting.index','bank.index']))
+			@if(\Route::is(['accounting.index','bank.index','account.index','accTransaction.index','accTransaction.create']))
 			<li class="nav-item {{set_open('bank.index') }}">
 				<a href="{{ route('bank.index') }}" class="nav-link {{set_active('bank.index') }}">
 					<i class="nav-icon fas fa-money-check-alt"></i>
@@ -436,11 +443,11 @@
 					</p>
 				</a>
 			</li>
-			<li class="nav-item">
-				<a href="#" class="nav-link">
+			<li class="nav-item {{set_open(['account.index','accTransaction.index','accTransaction.create']) }}">
+				<a href="{{ route('account.index') }}" class="nav-link {{set_active(['account.index','accTransaction.index','accTransaction.create']) }}">
 					<i class="nav-icon fas fa-wallet"></i>
 					<p>
-						Transaction
+						Account Statement
 					</p>
 				</a>
 			</li>

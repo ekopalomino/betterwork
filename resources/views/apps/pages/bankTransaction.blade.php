@@ -15,6 +15,10 @@ Better Work Indonesia | Bank Statement
 <section class="content">
 	<div class="row">
 		<div class="col-12">
+			<div class="callout callout-info">
+				<h5><i class="fas fa-info"></i> Note:</h5>
+				Use <a class="btn btn-danger btn-xs" href="{{ asset('public/payroll.xlsx') }}">This</a> excel file to upload bank statement.
+            </div>
 			<div class="card card-info card-outline">
 				<div class="card-header">
 					
@@ -25,29 +29,24 @@ Better Work Indonesia | Bank Statement
 					<div class="modal fade" id="salary">
 				        <div class="modal-dialog modal-lg">
 				          	<div class="modal-content">
-								{!! Form::open(array('route' => 'bankPeriod.store','method'=>'POST')) !!}
-								@csrf
+								
 				            	<div class="modal-header">
-				             		<h4 class="modal-title">New Bank Statement Period</h4>
+				             		<h4 class="modal-title">New Bank Statement File</h4>
 				              		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				                		<span aria-hidden="true">&times;</span>
 				              		</button>
 				            	</div>
 				            	<div class="modal-body">
-									<label for="inputName">Bank Name</label>
+				              		<label for="inputName">Bank Statement File</label>
 			    					<div class="input-group">
-									   	{!! Form::select('bank_id', [null=>'Please Select'] + $banks,[], array('class' => 'form-control')) !!}
-	                      			</div>
-				              		<label for="inputName">Bank Statement Period</label>
-			    					<div class="input-group">
-									   	{!! Form::date('period', '', array('id' => 'datepicker','class' => 'form-control')) !!}
+									   	{!! Form::file('salary', null, array('placeholder' => 'Employee Photo','class' => 'form-control')) !!}
 	                      			</div>
                         		</div>
 				            	<div class="modal-footer">
 				              		<button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
 				              		<button type="submit" class="btn btn-sm btn-primary">Import</button>
 				            	</div>
-								{!! Form::close() !!}
+								
 				          	</div>
 				        </div>
 				    </div>
@@ -68,25 +67,27 @@ Better Work Indonesia | Bank Statement
 						<thead>
 							<tr>
 								<th>No</th>
-								<th>Period</th>
-								<th>Balance</th>
+								<th>Transaction Date</th>
+								<th>Account No</th>
+								<th>Account Name</th>
+								<th>Payee</th>
+								<th>Description</th>
+								<th>Amount</th>
 								<th>Status</th>
 								<th></th>
 							</tr>
 						</thead>
 						<tbody>
-							@foreach($data as $key=>$value)
 							<tr>
-								<td>{{ $key+1 }}</td>
-								<td>{{date("F Y",strtotime($value->statement_period)) }}</td>
-								<td>{{ $value->balance }}</td>
-								<td>{{ $value->Statuses->name }}</td>
-								<td>
-									<a class="btn btn-xs btn-info modalMd" href="#" value="{{ action('Apps\AccountingController@bankStatement',['id'=>$value->id]) }}" 
-									data-toggle="modal" data-target="#modalMd"><i class="fa fa-upload"></i></a>
-								</td>
-							</tr>
-							@endforeach
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
 						</tbody>
 					</table>
 				</div>

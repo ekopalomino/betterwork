@@ -26,6 +26,8 @@ Better Work Indonesia | Bank Account
                 	<div class="modal fade" id="modal-default">
 				        <div class="modal-dialog">
 				          	<div class="modal-content">
+							{!! Form::open(array('route' => 'bankAcc.store','method'=>'POST')) !!}
+							@csrf
 				            	<div class="modal-header">
 				             		<h4 class="modal-title">New Account</h4>
 				              		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -34,14 +36,15 @@ Better Work Indonesia | Bank Account
 				            	</div>
 				            	<div class="modal-body">
 				              		<label for="inputEmail" class="col-sm-12 col-form-label">Bank Name</label>
-                        			<input type="password" class="form-control" id="inputEmail" placeholder="Password">
+                        			{!! Form::text('bank_name', null, array('placeholder' => 'Bank Name','class' => 'form-control')) !!}
                         			<label for="inputEmail" class="col-sm-12 col-form-label">Bank Account</label>
-                        			<input type="password" class="form-control" id="inputEmail" placeholder="Password">
+                        			{!! Form::text('account_no', null, array('placeholder' => 'Account No','class' => 'form-control')) !!}
 				            	</div>
-				            	<div class="modal-footer">
-				              		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				              		<button type="button" class="btn btn-primary">Save</button>
+				            	<div class="modal-footer justify-content-between">
+				              		<button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
+				              		<button type="submit" class="btn btn-sm btn-primary">Save changes</button>
 				            	</div>
+							{!! Form::close() !!}
 				          	</div>
 				        </div>
 				    </div>
@@ -51,18 +54,24 @@ Better Work Indonesia | Bank Account
             			<thead>
             				<tr>
             					<th>No</th>
-            					<th>Asset Category Name</th>
-            					<th>Created At</th>
+            					<th>Bank Name</th>
+								<th>Account No</th>
+            					<th>Created By</th>
+								<th>Created At</th>
             					<th></th>
             				</tr>
             			</thead>
             			<tbody>
+							@foreach($data as $key=>$bank)
             				<tr>
+            					<td>{{ $key+1 }}</td>
+            					<td>{{ $bank->bank_name }}</td>
+            					<td>{{ $bank->account_no }}</td>
             					<td></td>
-            					<td></td>
-            					<td></td>
-            					<td></td>
+								<td>{{date("d F Y H:i",strtotime($bank->created_at)) }}</td>
+								<td></td>
             				</tr>
+							@endforeach
             			</tbody>
             		</table>
             	</div>
