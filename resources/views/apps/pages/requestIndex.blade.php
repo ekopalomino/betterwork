@@ -19,51 +19,52 @@ Better Work Indonesia | Employee Request Approval
 <section class="content">
 	<div class="row">
 		<div class="col-12">
-			<div class="card card-primary card-outline">
-        <div class="card-body">
-          <table id="example2" class="table table-bordered table-hover">
-            <thead>
-              <tr>
-                <th>No</th>
-                <th>Employee ID</th>
-                <th>Employee Name</th>
-                <th>Date From</th>
-                <th>Date To</th>
-                <th>Request Type</th>
-                <th>Status</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              @foreach($data as $key=>$value)
-              <tr>
-                <td>{{ $key+1 }}</td>
-                <td>{{ $value->Parent->Employees->employee_no }}</td>
-                <td>{{ $value->Parent->Employees->first_name }} {{ $value->Parent->Employees->last_name }}</td>
-                <td>{{date("d F Y H:i",strtotime($value->leave_start)) }}</td>
-                <td>{{date("d F Y H:i",strtotime($value->leave_end)) }}</td>
-                <td>{{ $value->Types->leave_name }}</td>
-                <td>
-                    @if(($value->status_id) == 'b0a0c17d-e56a-41a7-bfb0-bd8bdc60a7be')
-                    <span class="badge badge-info">{{ $value->Statuses->name }}</span>
-                    @elseif(($value->status_id) == 'ca52a2ce-5c37-48ce-a7f2-0fd5311860c2')
-                    <span class="badge badge-success">{{ $value->Statuses->name }}</span>
-                    @else
-                    <span class="badge badge-danger">{{ $value->Statuses->name }}</span>
-                    @endif
-                </td>
-                <td>
-                    @if(($value->status_id) == 'b0a0c17d-e56a-41a7-bfb0-bd8bdc60a7be')
-                    <a class="btn btn-danger btn-sm modalMd" href="#" value="{{ action('Apps\HumanResourcesController@requestShow',['id'=>$value->id]) }}" data-toggle="modal" data-target="#modalMd"><i class="fas fa-search"></i>Show Data</a>
-                    @endif
-                </td>
-              </tr>
-              @endforeach
-            </tbody>
-          </table>
-      </div>
-    </div>
-  </div>
+			<div class="card card-info card-outline">
+				<div class="card-body">
+					<table id="example2" class="table table-bordered table-hover">
+						<thead>
+							<tr>
+								<th>No</th>
+								<th>Employee ID</th>
+								<th>Employee Name</th>
+								<th>Date From</th>
+								<th>Date To</th>
+								<th>Request Type</th>
+								<th>Status</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach($data as $key=>$value)
+							<tr>
+								<td>{{ $key+1 }}</td>
+								<td>{{ $value->Parent->Employees->employee_no }}</td>
+								<td>{{ $value->Parent->Employees->first_name }} {{ $value->Parent->Employees->last_name }}</td>
+								<td>{{date("d F Y H:i",strtotime($value->leave_start)) }}</td>
+								<td>{{date("d F Y H:i",strtotime($value->leave_end)) }}</td>
+								<td>{{ $value->Types->leave_name }}</td>
+								<td>
+									@if(($value->status_id) == 'b0a0c17d-e56a-41a7-bfb0-bd8bdc60a7be')
+									<span class="badge badge-info">{{ $value->Statuses->name }}</span>
+									@elseif(($value->status_id) == 'ca52a2ce-5c37-48ce-a7f2-0fd5311860c2')
+									<span class="badge badge-success">{{ $value->Statuses->name }}</span>
+									@else
+									<span class="badge badge-danger">{{ $value->Statuses->name }}</span>
+									@endif
+								</td>
+								<td>
+									@if(($value->status_id) == 'b0a0c17d-e56a-41a7-bfb0-bd8bdc60a7be')
+									<a class="btn btn-xs btn-danger btn-sm modalMd" href="#" value="{{ action('Apps\HumanResourcesController@requestShow',['id'=>$value->id]) }}" data-toggle="modal" data-target="#modalMd"><i class="fas fa-search"></i>Show Data</a>
+									@endif
+								</td>
+							</tr>
+							@endforeach
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
 </section>
 @endsection
 @section('footer.scripts')

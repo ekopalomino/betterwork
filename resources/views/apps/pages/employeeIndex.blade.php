@@ -14,7 +14,7 @@ Better Work Indonesia | Human Resources
 </section>
 <section class="content">
 	<div class="col-4">
-		<a class="btn btn-primary" href="{{ route('employee.create') }}">
+		<a class="btn btn-danger" href="{{ route('employee.create') }}">
 			New Employee
 		</a> 
     </div>

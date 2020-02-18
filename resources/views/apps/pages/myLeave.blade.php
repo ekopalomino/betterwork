@@ -58,7 +58,7 @@ Better Work Indonesia | My Leave Request
 										</div>
 										{!! Form::hidden('employee_id', $getEmployee->id, array('class' => 'form-control')) !!}
 									</div>
-									<div class="modal-footer justify-content-between">
+									<div class="modal-footer">
 										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 										<button id="register" type="submit" class="btn btn-primary">Save changes</button>
 									</div>

@@ -2,9 +2,6 @@
 @section('header.title')
 Better Work Indonesia | Update My Data
 @endsection
-@section('header.plugins')
-<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-@endsection
 @section('content')
 <section class="content-header">
 	<div class="container-fluid">
@@ -136,7 +133,7 @@ Better Work Indonesia | Update My Data
 			    			</div>
 			    			<div class="tab-pane fade" id="vert-tabs-family" role="tabpanel" aria-labelledby="vert-tabs-family-tab">
 			    				<div class="row">
-			    					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#family">
+			    					<button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#family">
          								Add Family
          							</button>
          							<div class="modal fade" id="family">
@@ -195,7 +192,7 @@ Better Work Indonesia | Update My Data
 								                        </div>
 								                    </div>
 								                </div>
-								                <div class="modal-footer justify-content-between">
+								                <div class="modal-footer">
 								              		<button type="close" class="btn btn-default" data-dismiss="modal">Close</button>
 								              		<button name="family" type="submit" class="btn btn-primary">Save changes</button>
 								            	</div>
@@ -250,7 +247,7 @@ Better Work Indonesia | Update My Data
 				            </div>
 				            <div class="tab-pane fade" id="vert-tabs-education" role="tabpanel" aria-labelledby="vert-tabs-education-tab">
 				            	<div class="row">
-			    					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#education">
+			    					<button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#education">
          								Add Education
          							</button>
          							<div class="modal fade" id="education">
@@ -278,6 +275,12 @@ Better Work Indonesia | Update My Data
 								                        	{!! Form::select('degree', [null=>'Please Select'] + $degrees,[], array('class' => 'form-control')) !!}
 								                        </div>
 								                    </div>
+													<div class="form-group row">
+								                      	<label for="inputEmail" class="col-sm-2 col-form-label">Date of Graduate</label>
+								                        <div class="col-sm-10"> 
+								                        	{!! Form::date('date_of_graduate', '', array('id' => 'datepicker','class' => 'form-control')) !!}
+								                        </div>
+								                    </div>
 								                    <div class="form-group row">
 								                      	<label for="inputEmail" class="col-sm-2 col-form-label">Major</label>
 								                        <div class="col-sm-10">
@@ -291,7 +294,7 @@ Better Work Indonesia | Update My Data
 								                        </div>
 								                    </div>
 								                </div>
-								                <div class="modal-footer justify-content-between">
+								                <div class="modal-footer">
 								              		<button type="close" class="btn btn-default" data-dismiss="modal">Close</button>
 								              		<button name="education" type="submit" class="btn btn-primary">Save changes</button>
 								            	</div>
