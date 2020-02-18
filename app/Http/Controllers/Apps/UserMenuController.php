@@ -691,4 +691,14 @@ class UserMenuController extends Controller
                                     
         return view('apps.pages.myAttendance',compact('data'));
     }
+
+    public function helpIndex()
+    {
+        return view('apps.pages.help');
+    }
+
+    public function supportIndex()
+    {
+        return view('apps.pages.support');
+    }
 }

@@ -26,6 +26,8 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth','verified']], function
 	Route::get('human-resources','Apps\HumanResourcesController@index')->name('hr.index');
 	Route::get('grievance','Apps\GrievanceController@index')->name('grievance.index');
 	Route::get('accounting','Apps\AccountingController@index')->name('accounting.index');
+	Route::get('help','Apps\UserMenuController@helpIndex')->name('help.index');
+	Route::get('report-problem','Apps\UserMenuController@supportIndex')->name('support.index');
 	/*User Manager Sub Menu Route*/
 	Route::get('configuration/users','Apps\ConfigurationController@userIndex')->name('user.index');
 	Route::post('configuration/users','Apps\ConfigurationController@userStore')->name('user.store');

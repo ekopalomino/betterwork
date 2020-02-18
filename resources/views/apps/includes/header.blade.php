@@ -33,10 +33,10 @@
 		</li>
 		@endcan
 		<li class="nav-item d-none d-sm-inline-block">
-			<a href="" class="nav-link ">Help</a>
+			<a href="{{route('help.index') }}" class="nav-link {{set_active(['help.index']) }}">Help</a>
 		</li>
 		<li class="nav-item d-none d-sm-inline-block">
-			<a href="" class="nav-link ">Report Problem</a>
+			<a href="{{route('support.index') }}" class="nav-link {{set_active(['support.index']) }}">Report Problem</a>
 		</li>
 	</ul>
 	<ul class="navbar-nav ml-auto">
