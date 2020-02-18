@@ -3,11 +3,12 @@
 namespace iteos\Imports;
 
 use iteos\Models\BankTransaction;
+use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToModel;
-use Illuminate\Http\Request;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Carbon\Carbon;
 
-class BankTransactionImport implements ToModel
+class BankTransactionImport implements ToModel, WithHeadingRow
 {
     /**
     * @param array $row
@@ -17,13 +18,12 @@ class BankTransactionImport implements ToModel
     public function model(array $row)
     {
         return new BankTransaction([
-            'bank_statement_id' => $request->route('id'),
-            'transaction_date' => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['Transaction_Date']),
-            'reference' => $row['Reference'],
-            'payee' => $row['Payee'],
-            'description' => $row['Description'],
-            'type' => $row['Type'],
-            'amount' => $row['Amount'],
+            'transaction_date' => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['date']),
+            'reference' => $row['reference'],
+            'payee' => $row['payee'],
+            'description' => $row['description'],
+            'type' => $row['type'],
+            'amount' => $row['amount'],
             'status_id' => 'e6cb9165-131e-406c-81c8-c2ba9a2c567e',
         ]);
     }

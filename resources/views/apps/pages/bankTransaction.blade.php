@@ -37,6 +37,10 @@ Better Work Indonesia | Bank Statement
 				              		</button>
 				            	</div>
 				            	<div class="modal-body">
+									<label for="inputName">Bank Statement Name</label>
+			    					<div class="input-group">
+									   	{!! Form::text('bank_name', null, array('placeholder' => 'Bank Name','class' => 'form-control')) !!}
+	                      			</div>
 				              		<label for="inputName">Bank Statement File</label>
 			    					<div class="input-group">
 									   	{!! Form::file('salary', null, array('placeholder' => 'Employee Photo','class' => 'form-control')) !!}

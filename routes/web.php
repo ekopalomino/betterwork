@@ -185,7 +185,7 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth','verified']], function
 	Route::get('accounting/account-statement','Apps\AccountingController@accountIndex')->name('account.index');
 	Route::post('accounting/account-statement/save-period','Apps\AccountingController@statementPeriod')->name('accountPeriod.store');
 	Route::get('accounting/account-statement/{id}/transaction','Apps\AccountingController@AccountTransaction')->name('accTransaction.index');
-	Route::get('accounting/account-statement/transaction/create','Apps\AccountingController@transactionCreate')->name('accTransaction.create');
+	Route::get('accounting/account-statement/transaction/spend-money','Apps\AccountingController@spendCreate')->name('spend.create');
 
 	Route::get('my-menu/update-profile','Apps\UserMenuController@profileEdit')->name('profile.edit');
 	Route::post('my-menu/attendance-in','Apps\UserMenuController@clockIn')->name('attendanceIn.store');

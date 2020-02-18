@@ -20,6 +20,9 @@ Better Work Indonesia | Report a Problem
 					<p>If you experience any problem in using this application, you can report to us using these link below.</p>
 					<p><a href="">iTeos Tech Support Center</a></p>
 					<p>Please make sure to complete the following data, so we can help resolve your problem.</p>
+					<ul>
+						<li>A</li>
+					</ul>
 				</div>
 			</div>
 		</div>

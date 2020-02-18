@@ -68,8 +68,9 @@ Better Work Indonesia | Bank Statement
 						<thead>
 							<tr>
 								<th>No</th>
-								<th>Period</th>
-								<th>Balance</th>
+								<th>Bank Name</th>
+								<th>Statement Balance</th>
+								<th>Account Statement</th>
 								<th>Status</th>
 								<th></th>
 							</tr>
@@ -80,6 +81,7 @@ Better Work Indonesia | Bank Statement
 								<td>{{ $key+1 }}</td>
 								<td>{{date("F Y",strtotime($value->statement_period)) }}</td>
 								<td>{{ $value->balance }}</td>
+								<td></td>
 								<td>{{ $value->Statuses->name }}</td>
 								<td>
 									<a class="btn btn-xs btn-info modalMd" href="#" value="{{ action('Apps\AccountingController@bankStatement',['id'=>$value->id]) }}" 

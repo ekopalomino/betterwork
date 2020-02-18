@@ -25,7 +25,7 @@ class AccountingController extends Controller
     	$data = BankStatement::orderBy('updated_at','DESC')->get();
     	$banks = BankAccount::pluck('bank_name','id')->toArray();
 
-    	return view('apps.pages.bankStatement',compact('data','banks'));
+    	return view('apps.pages.bankStatementNew',compact('data','banks'));
     }
 
     public function bankPeriod(Request $request)
@@ -45,15 +45,28 @@ class AccountingController extends Controller
     	return view('apps.input.bankStatement',compact('data'))->renderSections()['content'];
     }
 
-    public function bankStatementImport(Request $request,$id)
+    public function bankStatementImport(Request $request,$id) 
     {
     	$request->validate([
             'statement' => 'required|file|mimes:xlsx,xls,XLSX,XLS'
         ]);
  
         $input = $request->all();
-        Excel::import(new BankTransactionImport, $request->file('statement'));
-
+        $data = Excel::toArray(new BankTransactionImport, $request->file('statement'))[0];
+        
+        foreach($data as $value) {
+            $result = BankTransaction::create([
+                'bank_statement_id' => $request->route('id'),
+                'transaction_date' => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($value['date']),
+                'reference' => $value['reference'],
+                'payee' => $value['payee'],
+                'description' => $value['description'],
+                'type' => $value['type'],
+                'amount' => $value['amount'],
+                'status_id' => 'e6cb9165-131e-406c-81c8-c2ba9a2c567e',
+            ]);
+        }
+        
         $log = 'File Ekspor berhasil disimpan';
          \LogActivity::addToLog($log);
         $notification = array (
@@ -87,8 +100,8 @@ class AccountingController extends Controller
     	return view('apps.pages.AccountTransaction',compact('data'));
     }
 
-    public function transactionCreate()
+    public function spendCreate()
     {
-    	return view('apps.input.transaction');
+    	return view('apps.input.transactionSpend');
     }
 }
