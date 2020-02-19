@@ -482,6 +482,51 @@ class ConfigurationController extends Controller
             'message' => 'Bank Record For '.($data->bank_name).' Created',
             'alert-type' => 'success'
         );
+        
+        return redirect()->route('bankAcc.index')->with($notification);
+    }
+
+    public function bankAccountEdit($id)
+    {
+        $data = BankAccount::find($id);
+
+        return view('apps.edit.bankAccount',compact('data'))->renderSections()['content'];
+    }
+
+    public function bankAccountUpdate(Request $request,$id)
+    {
+        $this->validate($request, [
+            'bank_name' => 'required',
+            'account_no' => 'required',
+        ]);
+
+        $data = BankAccount::find($id);
+        $changes = $data->update([
+            'bank_name' => $request->input('bank_name'),
+            'account_no' => $request->input('account_no'),
+            'updated_by' => auth()->user()->employee_id,
+        ]);
+
+        $log = 'Bank Record For '.($data->bank_name).' Updated';
+         \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'Bank Record For '.($data->bank_name).' Updated',
+            'alert-type' => 'success'
+        );
+        
+        return redirect()->route('bankAcc.index')->with($notification);
+    }
+
+    public function bankAccountDelete($id)
+    {
+        $data = BankAccount::find($id);
+        $log = 'Bank Record For '.($data->bank_name).' Delete';
+         \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'Bank Record For '.($data->bank_name).' Delete',
+            'alert-type' => 'success'
+        );
+
         $data->delete();
 
         return redirect()->route('bankAcc.index')->with($notification);

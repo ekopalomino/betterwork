@@ -6,12 +6,12 @@ use Illuminate\Http\Request;
 use iteos\Http\Controllers\Controller;
 use iteos\Models\BankAccount;
 use iteos\Models\BankStatement;
-use iteos\Models\BankTransaction;
 use iteos\Models\ChartOfAccount;
 use iteos\Models\AccountStatement;
 use iteos\Models\AccountTransaction;
 use Maatwebsite\Excel\Facades\Excel;
 use iteos\Imports\BankTransactionImport;
+use DB;
 
 class AccountingController extends Controller
 {
@@ -22,10 +22,9 @@ class AccountingController extends Controller
 
     public function bankIndex()
     {
-    	$data = BankStatement::orderBy('updated_at','DESC')->get();
-    	$banks = BankAccount::pluck('bank_name','id')->toArray();
+    	$banks = BankAccount::orderBy('bank_name','ASC')->get();
 
-    	return view('apps.pages.bankStatementNew',compact('data','banks'));
+    	return view('apps.pages.bankStatementNew',compact('banks'));
     }
 
     public function bankPeriod(Request $request)
@@ -40,7 +39,7 @@ class AccountingController extends Controller
 
     public function bankStatement($id)
     {
-    	$data = BankStatement::find($id);
+    	$data = BankAccount::find($id);
 
     	return view('apps.input.bankStatement',compact('data'))->renderSections()['content'];
     }
@@ -55,8 +54,8 @@ class AccountingController extends Controller
         $data = Excel::toArray(new BankTransactionImport, $request->file('statement'))[0];
         
         foreach($data as $value) {
-            $result = BankTransaction::create([
-                'bank_statement_id' => $request->route('id'),
+            $result = BankStatement::create([
+                'account_id' => $id,
                 'transaction_date' => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($value['date']),
                 'reference' => $value['reference'],
                 'payee' => $value['payee'],
@@ -67,10 +66,10 @@ class AccountingController extends Controller
             ]);
         }
         
-        $log = 'File Ekspor berhasil disimpan';
+        $log = 'Bank Statement Successfully Import';
          \LogActivity::addToLog($log);
         $notification = array (
-            'message' => 'File Ekspor berhasil disimpan',
+            'message' => 'Bank Statement Successfully Import',
             'alert-type' => 'success'
         );
         return redirect()->route('bank.index')->with($notification);
@@ -102,6 +101,12 @@ class AccountingController extends Controller
 
     public function spendCreate()
     {
-    	return view('apps.input.transactionSpend');
+        $coas = ChartOfAccount::where('account_category','2')
+                                ->orWhere('account_category','4')
+                                ->orderBy('account_id','ASC')
+                                ->pluck('account_name','account_id')
+                                ->toArray();
+
+    	return view('apps.input.transactionSpend',compact('coas'));
     }
 }

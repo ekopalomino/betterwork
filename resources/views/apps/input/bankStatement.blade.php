@@ -5,10 +5,6 @@
 		<div class="col-12">
 			{!! Form::model($data, ['method' => 'POST','route' => ['statementFile.import', $data->id],'files'=>'true']) !!}
 			@csrf
-			<label for="name" class="col-sm-12 col-form-label">Bank Statement Name</label>
-                <div class="col-sm-12">
-                    {!! Form::text('bank_name', null, array('placeholder' => 'Bank Name','class' => 'form-control')) !!}
-                </div>
 			<label for="name" class="col-sm-12 col-form-label">Bank Statement File</label>
                 <div class="col-sm-12">
                     {!! Form::file('statement', null, array('placeholder' => 'Bank Statement File','class' => 'form-control')) !!}

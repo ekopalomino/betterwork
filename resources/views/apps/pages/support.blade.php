@@ -17,11 +17,14 @@ Better Work Indonesia | Report a Problem
 		<div class="col-12">
 			<div class="card card-info card-outline">
 				<div class="card-body">
-					<p>If you experience any problem in using this application, you can report to us using these link below.</p>
-					<p><a href="">iTeos Tech Support Center</a></p>
+					<p>If you experience any problem when using this application, you can report to us using these link below.</p>
+					<p><a href="http://support.iteos.tech" target="blank">iTeos Tech Support Center</a></p>
 					<p>Please make sure to complete the following data, so we can help resolve your problem.</p>
 					<ul>
-						<li>A</li>
+						<li>Your user access role</li>
+						<li>Action taken before problem occured</li>
+						<li>URL page which problem occured</li>
+						<li>Screenshot of the problem</li>
 					</ul>
 				</div>
 			</div>

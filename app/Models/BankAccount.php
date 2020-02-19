@@ -17,4 +17,14 @@ class BankAccount extends Model
     ];
 
     public $incrementing = false;
+
+    public function Author()
+    {
+    	return $this->belongsTo(Employee::class,'created_by');
+    }
+
+    public function Editor()
+    {
+    	return $this->belongsTo(Employee::class,'updated_by');
+    }
 }

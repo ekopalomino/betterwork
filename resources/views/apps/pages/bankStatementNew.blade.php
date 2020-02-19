@@ -15,40 +15,43 @@ Better Work Indonesia | Bank Statement
 <section class="content">
 	<div class="row">
 		<div class="col-12">
+			@if (count($errors) > 0) 
+		        <div class="alert alert-danger alert-dismissible">
+		            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		            <h5><i class="icon fas fa-ban"></i> Alert!</h5>
+		            <ul>
+		                @foreach ($errors->all() as $error)
+		                <li>{{ $error }}</li>
+		                @endforeach
+		            </ul>
+		        </div>
+		    @endif
+			@foreach($banks as $bank)
 			<div class="card card-info card-outline">
 				<div class="card-header">
 					<div class="btn-group">
-						<button type="button" class="btn btn-sm btn-danger">Manage</button>
-						<button type="button" class="btn btn-sm btn-danger dropdown-toggle dropdown-icon" data-toggle="dropdown">
-							<span class="sr-only">Toggle Dropdown</span>
-							<div class="dropdown-menu" role="menu">
-								<a class="dropdown-item" href="{{ route('spend.create') }}">Spend Money</a>
-								<a class="dropdown-item" href="#">Receive Money</a>
-								<a class="dropdown-item" href="#">Transfer Money</a>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="#">Import Statement</a>
-							</div>
-						</button>
+						<button type="button" class="btn btn-sm btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Manage</button>
+						<div class="dropdown-menu" role="menu">
+							<a class="dropdown-item" href="{{ route('spend.create') }}">Spend Money</a>
+							<a class="dropdown-item" href="#">Receive Money</a>
+							<a class="dropdown-item" href="#">Transfer Money</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item modalMd" href="#" title="Import Statement" value="{{ action('Apps\AccountingController@bankStatement',['id'=>$bank->id]) }}" data-toggle="modal" data-target="#modalMd">Import Statement</a>
+						</div>
 					</div>
 					<div class="btn-group">
-						<button type="button" class="btn btn-sm btn-danger">Find</button>
-						<button type="button" class="btn btn-sm btn-danger dropdown-toggle dropdown-icon" data-toggle="dropdown">
-							<span class="sr-only">Toggle Dropdown</span>
-							<div class="dropdown-menu" role="menu">
-								<a class="dropdown-item" href="#">Account Transaction</a>
-								<a class="dropdown-item" href="#">Bank Statement</a>
-							</div>
-						</button>
+						<button type="button" class="btn btn-sm btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Find</button>
+						<div class="dropdown-menu" role="menu">
+							<a class="dropdown-item" href="#">Account Transaction</a>
+							<a class="dropdown-item" href="#">Bank Statement</a>
+						</div>
 					</div>
 					<div class="btn-group">
-						<button type="button" class="btn btn-sm btn-danger">Reconcile</button>
-						<button type="button" class="btn btn-sm btn-danger dropdown-toggle dropdown-icon" data-toggle="dropdown">
-							<span class="sr-only">Toggle Dropdown</span>
-							<div class="dropdown-menu" role="menu">
-								<a class="dropdown-item" href="#">Account Transaction</a>
-								<a class="dropdown-item" href="#">Bank Statement</a>
-							</div>
-						</button>
+						<button type="button" class="btn btn-sm btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Reconcile</button>
+						<div class="dropdown-menu" role="menu">
+							<a class="dropdown-item" href="#">Account Transaction</a>
+							<a class="dropdown-item" href="#">Bank Statement</a>
+						</div>
 					</div>
 				</div>
 				<div class="card-body">
@@ -58,7 +61,7 @@ Better Work Indonesia | Bank Statement
 								<table>
 									<tbody>
 										<tr>
-											<td style="font-size:18px;color:#048fc2;"><strong>Bank Mandiri</strong></td>
+											<td style="font-size:18px;color:#048fc2;"><strong>{{ $bank->bank_name }}</strong></td>
 										</tr>
 									</tbody>
 								</table>
@@ -107,6 +110,7 @@ Better Work Indonesia | Bank Statement
 					</div>
 				</div>
 			</div>
+			@endforeach
 		</div>
 	</div>
 </section>

@@ -2,7 +2,7 @@
 
 namespace iteos\Imports;
 
-use iteos\Models\BankTransaction;
+use iteos\Models\BankStatement;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -17,7 +17,7 @@ class BankTransactionImport implements ToModel, WithHeadingRow
     */
     public function model(array $row)
     {
-        return new BankTransaction([
+        return new BankStatement([
             'transaction_date' => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['date']),
             'reference' => $row['reference'],
             'payee' => $row['payee'],
