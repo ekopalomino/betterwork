@@ -15,11 +15,14 @@ class CreateBankStatementsTable extends Migration
     {
         Schema::create('bank_statements', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->uuid('bank_id');
-            $table->date('statement_period');
-            $table->decimal('balance',50,2)->nullable();
+            $table->uuid('bank_account_id');
+            $table->date('transaction_date');
+            $table->string('account_name')->nullable();
+            $table->string('payee');
+            $table->string('description')->nullable();
+            $table->decimal('amount',50,2);
             $table->uuid('status_id');
-            $table->foreign('bank_id')->references('id')->on('bank_accounts')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('bank_account_id')->references('id')->on('bank_accounts')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

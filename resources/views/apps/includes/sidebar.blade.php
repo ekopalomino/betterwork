@@ -122,7 +122,7 @@
 			@endif
 			@can('Access Configuration')
 			@if(\Route::is(['application.index','config.index','position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','coaCat.index','assetCat.index','user.index','logs.index','role.index',
-			'role.create','role.edit','bankAcc.index']))
+			'role.create','role.edit','bankAcc.index','organization.index','office.index']))
 			@can('Create Application Setting')
 			<li class="nav-item">
 				<a href="{{ route('application.index') }}" class="nav-link {{set_active('application.index') }}">
@@ -167,8 +167,8 @@
 				</ul>
 			</li>
 			@can('Create HR Master Data')
-			<li class="nav-item has-treeview {{set_open(['position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index']) }}">
-				<a href="#" class="nav-link {{set_active(['position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index']) }}">
+			<li class="nav-item has-treeview {{set_open(['position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','organization.index','office.index']) }}">
+				<a href="#" class="nav-link {{set_active(['position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','organization.index','office.index']) }}">
 					<i class="nav-icon fas fa-users"></i>
 					<p>
 						Human Resources
@@ -183,9 +183,33 @@
 						</a>
 					</li>
 					<li class="nav-item">
+						<a href="" class="nav-link ">
+							<i class="far fa-circle nav-icon"></i>
+							<p>Job Title</p>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="{{ route('organization.index') }}" class="nav-link {{set_active('organization.index') }}">
+							<i class="far fa-circle nav-icon"></i>
+							<p>Organization Chart</p>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="{{ route('office.index') }}" class="nav-link {{set_active('office.index') }}">
+							<i class="far fa-circle nav-icon"></i>
+							<p>Office Location</p>
+						</a>
+					</li>
+					<li class="nav-item">
 						<a href="{{ route('leaveType.index') }}" class="nav-link {{set_active('leaveType.index') }}">
 							<i class="far fa-circle nav-icon"></i>
-							<p>Leave Type</p>
+							<p>Leave Approval</p>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="" class="nav-link ">
+							<i class="far fa-circle nav-icon"></i>
+							<p>Holiday</p>
 						</a>
 					</li>
 					<li class="nav-item">
@@ -197,7 +221,7 @@
 					<li class="nav-item">
 						<a href="{{ route('docCat.index') }}" class="nav-link {{set_active('docCat.index') }}">
 							<i class="far fa-circle nav-icon"></i>
-							<p>Document Category</p>
+							<p>Broadcast Category</p>
 						</a>
 					</li>
 					<li class="nav-item">
@@ -434,12 +458,12 @@
 			@endif
 			@endcan
 			@can('Access Accounting')
-			@if(\Route::is(['accounting.index','bank.index','account.index','accTransaction.index','accTransaction.create']))
+			@if(\Route::is(['accounting.index','bank.index','account.index','accTransaction.index','accTransaction.create','spend.create']))
 			<li class="nav-item {{set_open('bank.index') }}">
-				<a href="{{ route('bank.index') }}" class="nav-link {{set_active('bank.index') }}">
+				<a href="{{ route('bank.index') }}" class="nav-link {{set_active(['bank.index','spend.create']) }}">
 					<i class="nav-icon fas fa-money-check-alt"></i>
 					<p>
-						Bank Statement
+						Bank Account
 					</p>
 				</a>
 			</li>

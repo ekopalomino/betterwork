@@ -126,8 +126,8 @@ Better Work Indonesia | Update My Data
 	                      			</div>
 			    				</div>
 			    				<div class="form-group">
-			    					<button name="profile" type="submit" class="btn btn-primary">Save changes</button>
-	                  				<a button type="button" class="btn btn-danger" href="{{ route('employee.index') }}">Cancel</a>
+			    					<button name="profile" type="submit" class="btn btn-sm btn-primary">Save changes</button>
+	                  				<a button type="button" class="btn btn-sm btn-danger" href="{{ route('userHome.index') }}">Cancel</a>
 	                  			</div>
 	                  			{!! Form::close() !!}
 			    			</div>

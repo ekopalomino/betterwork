@@ -50,6 +50,17 @@ Better Work Indonesia | Bank Account
 				    </div>
             	</div>
             	<div class="card-body">
+					@if (count($errors) > 0) 
+					<div class="alert alert-danger alert-dismissible">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+						<h5><i class="icon fas fa-ban"></i> Alert!</h5>
+						<ul>
+							@foreach ($errors->all() as $error)
+							<li>{{ $error }}</li>
+							@endforeach
+						</ul>
+					</div>
+					@endif
             		<table id="example2" class="table table-bordered table-hover">
             			<thead>
             				<tr>
@@ -69,7 +80,13 @@ Better Work Indonesia | Bank Account
             					<td>{{ $bank->account_no }}</td>
             					<td></td>
 								<td>{{date("d F Y H:i",strtotime($bank->created_at)) }}</td>
-								<td></td>
+								<td>
+									<a class="btn btn-xs btn-info modalMd" href="#" value="{{ action('Apps\ConfigurationController@bankAccountEdit',['id'=>$bank->id]) }}" title="Edit Data" data-toggle="modal" 
+									data-target="#modalMd"><i class="fa fa-search"></i></a>
+									{!! Form::open(['method' => 'POST','route' => ['bankAcc.destroy', $bank->id],'style'=>'display:inline','onsubmit' => 'return ConfirmDelete()']) !!}
+									{!! Form::button('<i class="fas fa-user-slash"></i>',['type'=>'submit','class' => 'btn btn-xs btn-danger']) !!}
+									{!! Form::close() !!}
+								</td>
             				</tr>
 							@endforeach
             			</tbody>
@@ -94,5 +111,15 @@ Better Work Indonesia | Bank Account
       "autoWidth": false,
     });
   });
+</script>
+<script>
+    function ConfirmDelete()
+    {
+    var x = confirm("Are You Sure? All The Accounting Transaction Will Be Deleted");
+    if (x)
+        return true;
+    else
+        return false;
+    }
 </script>
 @endsection

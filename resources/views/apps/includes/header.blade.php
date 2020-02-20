@@ -11,7 +11,7 @@
 		@can('Access Configuration')
 		<li class="nav-item d-none d-sm-inline-block">
 			<a href="{{route('config.index') }}" class="nav-link {{set_active(['application.index','config.index','position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','coaCat.index',
-			'assetCat.index','user.index','logs.index','role.index','role.create','role.edit','bankAcc.index']) }}">Configuration</a>
+			'assetCat.index','user.index','logs.index','role.index','role.create','role.edit','bankAcc.index','organization.index','office.index']) }}">Configuration</a>
 		</li>
 		@endcan
 		@can('Access Human Resources')
@@ -29,7 +29,7 @@
 		@endcan
 		@can('Access Accounting')
 		<li class="nav-item d-none d-sm-inline-block">
-			<a href="{{route('accounting.index') }}" class="nav-link {{set_active(['accounting.index','bank.index','account.index','accTransaction.index','accTransaction.create']) }}">Accounting</a>
+			<a href="{{route('accounting.index') }}" class="nav-link {{set_active(['accounting.index','bank.index','account.index','accTransaction.index','accTransaction.create','spend.create']) }}">Accounting</a>
 		</li>
 		@endcan
 		<li class="nav-item d-none d-sm-inline-block">

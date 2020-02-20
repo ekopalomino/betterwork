@@ -60,7 +60,7 @@ Better Work Indonesia | My Leave Request
 									</div>
 									<div class="modal-footer">
 										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-										<button id="register" type="submit" class="btn btn-primary">Save changes</button>
+										<button id="register" type="submit" class="btn btn-primary">Submit</button>
 									</div>
 									{!! Form::close() !!}
 								</div>
@@ -86,6 +86,7 @@ Better Work Indonesia | My Leave Request
 								<thead>
 									<tr>
 										<th>No</th>
+										<th>Leave Type</th>
 										<th>Leave Start</th>
 										<th>Leave End</th>
 										<th>Status</th>
@@ -97,6 +98,7 @@ Better Work Indonesia | My Leave Request
 									@foreach($details as $key=>$value)
 									<tr>
 										<td>{{ $key+1 }}</td>
+										<td></td>
 										<td>{{date("d F Y H:i",strtotime($value->leave_start)) }}</td>
 										<td>{{date("d F Y H:i",strtotime($value->leave_end)) }}</td>
 										<td>
@@ -120,7 +122,6 @@ Better Work Indonesia | My Leave Request
 			</div>
 		</div>
 	</div>
-</div>
 </section>
 @endsection
 @section('footer.scripts')

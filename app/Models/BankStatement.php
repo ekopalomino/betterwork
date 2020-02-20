@@ -7,10 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class BankStatement extends Model
 {
     protected $fillable = [
-    	'bank_id',
-    	'statement_period',
-    	'balance',
-    	'status_id',
+    	'bank_account_id',
+    	'transaction_date',
+    	'account_name',
+    	'payee',
+        'description',
+        'amount',
+        'status_id',
     ];
 
     public function Statuses()
