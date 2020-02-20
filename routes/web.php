@@ -121,6 +121,7 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth','verified']], function
 	Route::post('configuration/organization/update/{id}','Apps\ConfigurationController@organizationUpdate')->name('organization.update');
 
 	Route::get('configuration/office','Apps\ConfigurationController@officeIndex')->name('office.index');
+	Route::get('configuration/office/cities/get_by_province', 'Apps\ConfigurationController@get_cities')->name('officeCity.index');
 	Route::post('configuration/office/store','Apps\ConfigurationController@officeStore')->name('office.store');
 	Route::get('configuration/office/edit/{id}','Apps\ConfigurationController@officeEdit')->name('office.edit');
 	Route::post('configuration/office/update/{id}','Apps\ConfigurationController@officeUpdate')->name('office.update');

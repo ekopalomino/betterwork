@@ -33,16 +33,18 @@ Better Work Indonesia | Office Location
 				              		</button>
 				            	</div>
 				            	<div class="modal-body">
-									{!! Form::open(array('route' => 'organization.store','method'=>'POST')) !!}
+									{!! Form::open(array('route' => 'office.store','method'=>'POST')) !!}
 									@csrf
 				              		<label class="col-sm-12 col-form-label">Office Name</label>
                         			{!! Form::text('office_name', null, array('placeholder' => 'Office Name','class' => 'form-control')) !!}
 									<label class="col-sm-12 col-form-label">Office Address</label>
                         			{!! Form::textarea('office_address', null, array('placeholder' => 'Office Address','class' => 'form-control')) !!}
                         			<label class="col-sm-12 col-form-label">Province</label>
-									{!! Form::select('province', [null=>'Please Select'] + $provinces,[], array('class' => 'form-control')) !!}
+									{!! Form::select('province', [null=>'Please Select'] + $provinces,[], array('id'=>'province','class' => 'form-control')) !!}
 									<label class="col-sm-12 col-form-label">City</label>
-									{!! Form::select('city', [null=>'Please Select'] + $provinces,[], array('class' => 'form-control')) !!}
+									<select name="city" id="city" class="form-control">
+										<option value="">Please Select</option>
+									</select>
 				            	</div>
 				            	<div class="modal-footer">
 				              		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -80,12 +82,12 @@ Better Work Indonesia | Office Location
 							@foreach($data as $key=>$value)
             				<tr>
             					<td>{{ $key+1 }}</td>
-								<td></td>
-								<td></td>
-								<td></td>
+								<td>{{ $value->office_name }}</td>
+								<td>{{ $value->Provinces->province_name }}</td>
+								<td>{{ $value->Cities->city_name }}</td>
 								<td></td>
             					<td>
-									<a class="btn btn-sm btn-warning modalMd" href="#" value="{{ action('Apps\ConfigurationController@organizationEdit',['id'=>$value->id]) }}" data-toggle="modal" data-target="#modalMd">Edit Data</a>
+									<a class="btn btn-sm btn-warning modalLg" href="#" value="{{ action('Apps\ConfigurationController@officeEdit',['id'=>$value->id]) }}" data-toggle="modal" data-target="#modalLg">Edit Data</a>
 								</td>
             				</tr>
 							@endforeach
@@ -99,7 +101,19 @@ Better Work Indonesia | Office Location
 @endsection
 @section('footer.scripts')
 <script src="{{ asset('public/bower_components/admin-lte/plugins/datatables/jquery.dataTables.js') }}"></script>
-<script src="{{ asset('public/bower_components/admin-lte/plugins/datatables-bs4/js/dataTables.bootstrap4.js') }}"></script><script>
+<script src="{{ asset('public/bower_components/admin-lte/plugins/datatables-bs4/js/dataTables.bootstrap4.js') }}"></script>
+<script type="text/javascript">
+        $("#province").change(function(){
+            $.ajax({
+                url: "{{ route('officeCity.index') }}?province=" + $(this).val(),
+                method: 'GET',
+                success: function(data) {
+                    $('#city').html(data.html);
+                }
+            });
+        });
+</script>
+<script>
   $(function () {
     $("#example1").DataTable();
     $('#example2').DataTable({

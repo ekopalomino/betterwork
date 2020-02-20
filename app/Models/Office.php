@@ -12,4 +12,14 @@ class Office extends Model
     	'province',
     	'city',
     ];
+
+    public function Provinces()
+    {
+    	return $this->belongsTo(Province::class,'province');
+    }
+
+    public function Cities()
+    {
+    	return $this->belongsTo(City::class,'city');
+    }
 }

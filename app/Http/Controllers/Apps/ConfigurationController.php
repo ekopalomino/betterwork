@@ -818,25 +818,40 @@ class ConfigurationController extends Controller
 
     public function officeIndex()
     {
-        $data = Office::orderBy('office_type','ASC')->get();
-        $provinces = Province::orderBy('id','ASC')->pluck('province_name','province_name')->toArray();
+        $data = Office::orderBy('id','ASC')->get();
+        $provinces = Province::orderBy('id','ASC')->pluck('province_name','id')->toArray();
 
         return view('apps.pages.office',compact('data','provinces'));
     }
 
+    public function get_cities(Request $request)
+    {
+        if (!$request->province) {
+            $html = '<option value="">Please Select</option>';
+        } else {
+            $html = '';
+            $cities = City::where('province_id', $request->province)->get();
+            foreach ($cities as $city) {
+                $html .= '<option value="'.$city->id.'">'.$city->city_name.'</option>';
+            }
+        }
+
+        return response()->json(['html' => $html]);
+    }
+
     public function officeStore(Request $request)
     {
-        $data = Organization::create([
+        $data = Office::create([
             'office_name' => $request->input('office_name'),
             'office_address' => $request->input('office_address'),
             'province' => $request->input('province'),
             'city' => $request->input('city'),
         ]);
 
-        $log = ''.($data->name).' Created';
+        $log = ''.($data->office_name).' Created';
          \LogActivity::addToLog($log);
         $notification = array (
-            'message' => ''.($data->name).' Created',
+            'message' => ''.($data->office_name).' Created',
             'alert-type' => 'success'
         ); 
         return redirect()->route('office.index')->with($notification);
@@ -845,9 +860,10 @@ class ConfigurationController extends Controller
     public function officeEdit($id)
     {
         $data = Office::find($id);
-        $provinces = Province::orderBy('id','ASC')->pluck('province_name','province_name')->toArray();
+        $provinces = Province::orderBy('id','ASC')->pluck('province_name','id')->toArray();
+        $cities = City::orderBy('id','ASC')->pluck('city_name','id')->toArray();
 
-        return view('apps.edit.office',compact('data','provinces'))->renderSections()['content'];
+        return view('apps.edit.office',compact('data','provinces','cities'))->renderSections()['content'];
     }
 
     public function officeUpdate(Request $request,$id)
@@ -860,10 +876,10 @@ class ConfigurationController extends Controller
             'city' => $request->input('city'),
         ]);
 
-        $log = ''.($data->name).' Updated';
+        $log = ''.($data->office_name).' Updated';
          \LogActivity::addToLog($log);
         $notification = array (
-            'message' => ''.($data->name).' Updated',
+            'message' => ''.($data->office_name).' Updated',
             'alert-type' => 'success'
         ); 
         return redirect()->route('office.index')->with($notification);
