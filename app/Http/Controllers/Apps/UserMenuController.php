@@ -201,8 +201,15 @@ class UserMenuController extends Controller
             'amount_requested' => $diff,
             'status_id' => 'b0a0c17d-e56a-41a7-bfb0-bd8bdc60a7be',
         ]);
+
+        $log = ''.($orig->leave_name).' Updated';
+         \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => ''.($orig->leave_name).' Updated',
+            'alert-type' => 'success'
+        );
     	
-    	return redirect()->route('myLeave.index');
+    	return redirect()->route('myLeave.index')->with($notification);
     }
 
     public function reimbursIndex()

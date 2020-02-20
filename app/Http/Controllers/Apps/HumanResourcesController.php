@@ -669,7 +669,7 @@ class HumanResourcesController extends Controller
 
     public function requestIndex()
     {
-        $data = LeaveTransaction::with('parent')->orderBy('created_at','DESC')->get();
+        $data = LeaveTransaction::with('parent')->orderBy('created_at','DESC')->get(); 
 
     	return view('apps.pages.requestIndex',compact('data'));
     }

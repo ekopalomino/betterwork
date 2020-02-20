@@ -12,6 +12,7 @@ use iteos\Models\DocumentCategory;
 use iteos\Models\GrievanceCategory;
 use iteos\Models\ChartOfAccount;
 use iteos\Models\BankAccount;
+use iteos\Models\Organization;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Hash;
@@ -111,17 +112,21 @@ class ConfigurationController extends Controller
     {
         $this->validate($request, [
             'leave_name' => 'required',
+            'first_approval' => 'required',
+            'second_approval' => 'required',
         ]);
 
         $data = LeaveType::create([
             'leave_name' => $request->input('leave_name'),
-            'created_by' => auth()->user()->id,
+            'first_approval' => $request->input('first_approval'),
+            'second_approval' => $request->input('second_approval'),
+            'created_by' => auth()->user()->employee_id,
         ]);
 
-        $log = 'Type '.($data->leave_name).' Created';
+        $log = ''.($data->leave_name).' Created';
          \LogActivity::addToLog($log);
         $notification = array (
-            'message' => 'Type '.($data->leave_name).' Created',
+            'message' => ''.($data->leave_name).' Created',
             'alert-type' => 'success'
         );
 
@@ -139,17 +144,21 @@ class ConfigurationController extends Controller
     {
         $this->validate($request, [
             'leave_name' => 'required',
+            'first_approval' => 'required',
+            'second_approval' => 'required',
         ]);
         $orig = LeaveType::find($id);
         $data = $orig->update([
             'leave_name' => $request->input('leave_name'),
-            'updated_by' => auth()->user()->id,
+            'first_approval' => $request->input('first_approval'),
+            'second_approval' => $request->input('second_approval'),
+            'updated_by' => auth()->user()->employee_id,
         ]);
 
-        $log = 'Type '.($orig->leave_name).' Updated';
+        $log = ''.($orig->leave_name).' Updated';
          \LogActivity::addToLog($log);
         $notification = array (
-            'message' => 'Type '.($orig->leave_name).' Updated',
+            'message' => ''.($orig->leave_name).' Updated',
             'alert-type' => 'success'
         );
 
@@ -753,5 +762,53 @@ class ConfigurationController extends Controller
     {
         $logs = \LogActivity::logActivityLists();
         return view('apps.pages.logActivity',compact('logs'));
+    }
+
+    public function organizationIndex()
+    {
+        $data = Organization::orderBy('id','ASC')->get();
+        $parents = Organization::orderBy('id','ASC')->pluck('name','name')->toArray();
+
+        return view('apps.pages.organization',compact('data','parents'));
+    }
+
+    public function organizationStore(Request $request)
+    {
+        $data = Organization::create([
+            'name' => $request->input('name'),
+            'parent' => $request->input('parent'),
+        ]);
+
+        $log = ''.($data->name).' Created';
+         \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => ''.($data->name).' Created',
+            'alert-type' => 'success'
+        ); 
+        return redirect()->route('organization.index')->with($notification);
+    }
+
+    public function organizationEdit($id)
+    {
+        $data = Organization::find($id);
+        $parents = Organization::orderBy('id','ASC')->pluck('name','name')->toArray();
+
+        return view('apps.edit.organization',compact('data','parents'))->renderSections()['content'];
+    }
+
+    public function organizationUpdate(Request $request,$id)
+    {
+        $data = Organization::create([
+            'name' => $request->input('name'),
+            'parent' => $request->input('parent'),
+        ]);
+
+        $log = ''.($data->name).' Updated';
+         \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => ''.($data->name).' Updated',
+            'alert-type' => 'success'
+        ); 
+        return redirect()->route('organization.index')->with($notification);
     }
 }

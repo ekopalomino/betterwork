@@ -8,17 +8,19 @@ class LeaveType extends Model
 {
     protected $fillable = [
     	'leave_name',
+        'first_approval',
+        'second_approval',
     	'created_by',
     	'updated_by',
     ];
 
     public function Author()
     {
-    	return $this->belongsTo(User::class,'created_by');
+    	return $this->belongsTo(Employee::class,'created_by');
     }
 
     public function Editor()
     {
-    	return $this->belongsTo(User::class,'updated_by');
+    	return $this->belongsTo(Employee::class,'updated_by');
     }
 }
