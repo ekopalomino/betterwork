@@ -38,6 +38,12 @@ Better Work Indonesia | Employee Attendance Report
 								</div>
 							</div>
 						</div>
+						<div class="col-md-6">
+							<div class="row">
+								<a href="{{ route('attReport.export',['ID'=>$employee->employee_no,'startDate'=>$start,'endDate'=>$end]) }}" class="btn btn-sm btn-app"><i class="fas fa-file-pdf"></i> Save as PDF</a>
+								<a href="{{ route('attReport.print',['ID'=>$employee->employee_no,'startDate'=>$start,'endDate'=>$end]) }}" target="blank" class="btn btn-sm btn-app"><i class="fas fa-print"></i> Print</a>
+							</div>
+						</div>
 					</div>		
 					<div class="row">
 						<div class="card-body table-responsive p-0" style="height: 400px;">

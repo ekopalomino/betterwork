@@ -18,9 +18,9 @@ Better Work Indonesia | Chart of Account Category
 <section class="content">
 	<div class="row">
 		<div class="col-12">
-			<div class="card">
+			<div class="card card-info card-outline">
 				<div class="card-header">
-              		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">
+              		<button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modal-default">
                   		Add New
                 	</button>
                 	<div class="modal fade" id="modal-default">
@@ -33,8 +33,8 @@ Better Work Indonesia | Chart of Account Category
 				              		</button>
 				            	</div>
 				            	<div class="modal-body">
-                        {!! Form::open(array('route' => 'coaCat.store','method'=>'POST', 'class' => 'form-horizontal')) !!}
-                        @csrf
+									{!! Form::open(array('route' => 'coaCat.store','method'=>'POST', 'class' => 'form-horizontal')) !!}
+									@csrf
 				              		<label for="inputEmail" class="col-sm-12 col-form-label">Account ID</label>
                         				<div class="col-sm-12">
                           					{!! Form::text('account_id', null, array('placeholder' => 'Account ID','class' => 'form-control')) !!}
@@ -58,11 +58,11 @@ Better Work Indonesia | Chart of Account Category
                           					{!! Form::select('account_parent', [null=>'Please Select'] + $parents,[], array('class' => 'form-control')) !!}
                         				</div>
 				            	</div>
-				            	<div class="modal-footer justify-content-between">
+				            	<div class="modal-footer">
 				              		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                          <button id="register" type="submit" class="btn btn-primary">Save changes</button>
+									<button id="register" type="submit" class="btn btn-primary">Save</button>
 				            	</div>
-                      {!! Form::close() !!}
+								{!! Form::close() !!}
 				          	</div>
 				        </div>
 				    </div>
@@ -77,52 +77,53 @@ Better Work Indonesia | Chart of Account Category
             					<th>Account Category</th>
             					<th>Account Parent</th>
             					<th>Created By</th>
-                      <th>Created At</th>
+								<th>Created At</th>
             					<th></th>
             				</tr>
             			</thead>
             			<tbody>
-                    @foreach($data as $key=>$value)
+							@foreach($data as $key=>$value)
             				<tr>
             					<td>{{ $key+1 }}</td>
             					<td>{{ $value->account_id }}</td>
             					<td>{{ $value->account_name }}</td>
             					<td>
-                          @if(($value->account_category) == 1)
-                          Asset
-                          @elseif(($value->account_category) == 2)
-                          Liabilities
-                          @elseif(($value->account_category) == 3)
-                          Revenue
-                          @elseif(($value->account_category) == 4)
-                          Expense
-                          @else
-                          No Category
-                          @endif 
-                      </td>
+									@if(($value->account_category) == 1)
+										Asset
+									@elseif(($value->account_category) == 2)
+										Liabilities
+									@elseif(($value->account_category) == 3)
+										Revenue
+									@elseif(($value->account_category) == 4)
+										Expense
+									@else
+										No Category
+									@endif 
+								</td>
             					<td>
-                          @if(!empty($value->account_parent))
-                          {{ $value->account_parent }}
-                          @else
-                          No Parent Account
-                          @endif
-                      </td>
+									@if(!empty($value->account_parent))
+										{{ $value->account_parent }}
+									@else
+										No Parent Account
+									@endif
+								</td>
             					<td>{{ $value->Author->name }}</td>
             					<td>{{date("d F Y H:i",strtotime($value->created_at)) }}</td>
-                      <td>
-                          <div class="btn-group">
-                          <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Action
-                          </button>
-                          <div class="dropdown-menu" role="menu">
-                            <a class="dropdown-item modalMd" href="#" value="{{ action('Apps\ConfigurationController@coaCategoryEdit',['id'=>$value->id]) }}" data-toggle="modal" data-target="#modalMd">Edit Data</a>
-                            {!! Form::open(['method' => 'POST','route' => ['coaCat.destroy', $value->id],'style'=>'dropdown-item','onsubmit' => 'return ConfirmDelete()']) !!}
-                            {!! Form::button('<a>Delete Data</a>',['type'=>'submit','class' => 'dropdown-item']) !!}
-                            {!! Form::close() !!}
-                          </div>
-                      </td>
+								<td>
+									<div class="btn-group">
+										<button type="button" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											Action
+										</button>
+										<div class="dropdown-menu" role="menu">
+											<a class="dropdown-item modalMd" href="#" value="{{ action('Apps\ConfigurationController@coaCategoryEdit',['id'=>$value->id]) }}" data-toggle="modal" data-target="#modalMd">Edit Data</a>
+											{!! Form::open(['method' => 'POST','route' => ['coaCat.destroy', $value->id],'style'=>'dropdown-item','onsubmit' => 'return ConfirmDelete()']) !!}
+											{!! Form::button('<a>Delete Data</a>',['type'=>'submit','class' => 'dropdown-item']) !!}
+											{!! Form::close() !!}
+										</div>
+									</div>
+								</td>
             				</tr>
-                    @endforeach
+							@endforeach
             			</tbody>
             		</table>
             	</div>

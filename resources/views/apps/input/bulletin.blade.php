@@ -36,7 +36,7 @@ Better Work Indonesia | Create Bulletin
         </div>
         @endif
 		<div class="col-12">
-			<div class="card card-outline card-info">
+			<div class="card card-outline card-danger">
 				<div class="card-header">
                 	<h3 class="card-title">Bulletin Form</h3>
               	</div>

@@ -30,7 +30,7 @@ Better Work Indonesia | Create Knowledge Base
         </div>
         @endif
 		<div class="col-12">
-			<div class="card card-outline card-info">
+			<div class="card card-outline card-danger">
 				<div class="card-header">
                 	<h3 class="card-title">Knowledge Base Form</h3>
               	</div>
@@ -48,20 +48,20 @@ Better Work Indonesia | Create Knowledge Base
 							<div class="col-12">
 								<label><strong>Content</strong></label>
 								<textarea class="textarea" name="content" placeholder="Place some text here"
-                	style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">
-                </textarea>
-              </div>
+									style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">
+								</textarea>
+							</div>
 						</div>
-            <div class="row">
-              <div class="col-6">
-                <label><strong>File</strong></label>
-                <div class="custom-file">
-                  <input type="file" class="custom-file-input" id="file" name="file">
-                  <label class="custom-file-label" for="file">Choose File</label>
-                </div>
-              </div>
-            </div>
-            <br>
+						<div class="row">
+							<div class="col-6">
+								<label><strong>File</strong></label>
+								<div class="custom-file">
+									<input type="file" class="custom-file-input" id="file" name="file">
+									<label class="custom-file-label" for="file">Choose File</label>
+								</div>
+							</div>
+						</div>
+						<br>
 						<button type="submit" class="btn btn-info">Submit</button>
 	                  	<a button type="button" class="btn btn-danger" href="{{ route('knowledge.index') }}">Cancel</a>
 	                </div>

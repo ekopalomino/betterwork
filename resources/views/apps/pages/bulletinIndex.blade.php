@@ -18,9 +18,9 @@ Better Work Indonesia | Employee Bulletin Data
 <section class="content">
 	<div class="row">
 		<div class="col-12">
-			<div class="card card-primary card-outline">
+			<div class="card card-info card-outline">
 				<div class="card-header">
-					<a class="btn btn-primary" href="{{ route('bulletin.create') }}">
+					<a class="btn btn-sm btn-danger" href="{{ route('bulletin.create') }}">
 						Add New
 					</a>
 				</div>
@@ -48,16 +48,12 @@ Better Work Indonesia | Employee Bulletin Data
 								<td>{{date("d F Y H:i",strtotime($value->created_at)) }}</td>
 								<td>
 									<div class="btn-group">
-										<button type="button" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-											Action
-										</button>
-										<div class="dropdown-menu" role="menu">
-											<a class="dropdown-item" href="{{ route('bulletin.edit',$value->id) }}">Edit Data</a>
-											<a class="dropdown-item" href="{{ route('bulletin.show',$value->id) }}">View Data</a>
-											{!! Form::open(['method' => 'POST','route' => ['bulletin.destroy', $value->id],'style'=>'dropdown-item','onsubmit' => 'return ConfirmDelete()']) !!}
-											{!! Form::button('<a>Delete Data</a>',['type'=>'submit','class' => 'dropdown-item']) !!}
-											{!! Form::close() !!}
-										</div>
+										<a button id="search" type="submit" class="btn btn-xs btn-info" href="{{ route('bulletin.edit',$value->id) }}">
+											<i class="fa fa-edit"></i>
+										</a>
+										{!! Form::open(['method' => 'POST','route' => ['bulletin.destroy', $value->id],'style'=>'display:inline','onsubmit' => 'return ConfirmDelete()']) !!}
+										{!! Form::button('<i class="fas fa-check"></i>',['type'=>'submit','class' => 'btn btn-xs btn-danger','title'=>'Delete Data']) !!}
+										{!! Form::close() !!}
 									</div>
 								</td>
 							</tr>

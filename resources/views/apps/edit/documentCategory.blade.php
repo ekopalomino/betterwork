@@ -5,13 +5,13 @@
 		<div class="col-12">
 			{!! Form::model($data, ['method' => 'POST','route' => ['docCat.update', $data->id]]) !!}
 			@csrf
-			<label for="category_name" class="col-sm-2 col-form-label">Category Name</label>
-                <div class="col-sm-10">
+			<label for="category_name" class="col-sm-12 col-form-label">Category Name</label>
+                <div class="col-sm-12">
                     {!! Form::text('category_name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
                 </div>
-            <div class="modal-footer justify-content-between">
+            <div class="modal-footer">
                 <button type="close" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button id="register" type="submit" class="btn btn-primary">Save changes</button>
+                <button id="register" type="submit" class="btn btn-primary">Save</button>
             </div>
             {!! Form::close() !!}
         </div>
