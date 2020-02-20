@@ -13,6 +13,9 @@ use iteos\Models\GrievanceCategory;
 use iteos\Models\ChartOfAccount;
 use iteos\Models\BankAccount;
 use iteos\Models\Organization;
+use iteos\Models\Office;
+use iteos\Models\Province;
+use iteos\Models\City;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Hash;
@@ -798,7 +801,8 @@ class ConfigurationController extends Controller
 
     public function organizationUpdate(Request $request,$id)
     {
-        $data = Organization::create([
+        $data = Organization::find($id);
+        $changes = $data->update([
             'name' => $request->input('name'),
             'parent' => $request->input('parent'),
         ]);
@@ -810,5 +814,58 @@ class ConfigurationController extends Controller
             'alert-type' => 'success'
         ); 
         return redirect()->route('organization.index')->with($notification);
+    }
+
+    public function officeIndex()
+    {
+        $data = Office::orderBy('office_type','ASC')->get();
+        $provinces = Province::orderBy('id','ASC')->pluck('province_name','province_name')->toArray();
+
+        return view('apps.pages.office',compact('data','provinces'));
+    }
+
+    public function officeStore(Request $request)
+    {
+        $data = Organization::create([
+            'office_name' => $request->input('office_name'),
+            'office_address' => $request->input('office_address'),
+            'province' => $request->input('province'),
+            'city' => $request->input('city'),
+        ]);
+
+        $log = ''.($data->name).' Created';
+         \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => ''.($data->name).' Created',
+            'alert-type' => 'success'
+        ); 
+        return redirect()->route('office.index')->with($notification);
+    }
+
+    public function officeEdit($id)
+    {
+        $data = Office::find($id);
+        $provinces = Province::orderBy('id','ASC')->pluck('province_name','province_name')->toArray();
+
+        return view('apps.edit.office',compact('data','provinces'))->renderSections()['content'];
+    }
+
+    public function officeUpdate(Request $request,$id)
+    {
+        $data = Office::find($id);
+        $changes = $data->update([
+            'office_name' => $request->input('office_name'),
+            'office_address' => $request->input('office_address'),
+            'province' => $request->input('province'),
+            'city' => $request->input('city'),
+        ]);
+
+        $log = ''.($data->name).' Updated';
+         \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => ''.($data->name).' Updated',
+            'alert-type' => 'success'
+        ); 
+        return redirect()->route('office.index')->with($notification);
     }
 }

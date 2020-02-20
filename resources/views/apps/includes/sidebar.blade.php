@@ -122,7 +122,7 @@
 			@endif
 			@can('Access Configuration')
 			@if(\Route::is(['application.index','config.index','position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','coaCat.index','assetCat.index','user.index','logs.index','role.index',
-			'role.create','role.edit','bankAcc.index','organization.index']))
+			'role.create','role.edit','bankAcc.index','organization.index','office.index']))
 			@can('Create Application Setting')
 			<li class="nav-item">
 				<a href="{{ route('application.index') }}" class="nav-link {{set_active('application.index') }}">
@@ -167,8 +167,8 @@
 				</ul>
 			</li>
 			@can('Create HR Master Data')
-			<li class="nav-item has-treeview {{set_open(['position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','organization.index']) }}">
-				<a href="#" class="nav-link {{set_active(['position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','organization.index']) }}">
+			<li class="nav-item has-treeview {{set_open(['position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','organization.index','office.index']) }}">
+				<a href="#" class="nav-link {{set_active(['position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','organization.index','office.index']) }}">
 					<i class="nav-icon fas fa-users"></i>
 					<p>
 						Human Resources
@@ -195,15 +195,15 @@
 						</a>
 					</li>
 					<li class="nav-item">
-						<a href="{{ route('leaveType.index') }}" class="nav-link {{set_active('leaveType.index') }}">
+						<a href="{{ route('office.index') }}" class="nav-link {{set_active('office.index') }}">
 							<i class="far fa-circle nav-icon"></i>
-							<p>Leave Approval</p>
+							<p>Office Location</p>
 						</a>
 					</li>
 					<li class="nav-item">
-						<a href="" class="nav-link ">
+						<a href="{{ route('leaveType.index') }}" class="nav-link {{set_active('leaveType.index') }}">
 							<i class="far fa-circle nav-icon"></i>
-							<p>Organization</p>
+							<p>Leave Approval</p>
 						</a>
 					</li>
 					<li class="nav-item">

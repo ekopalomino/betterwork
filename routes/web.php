@@ -119,6 +119,11 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth','verified']], function
 	Route::post('configuration/organization/store','Apps\ConfigurationController@organizationStore')->name('organization.store');
 	Route::get('configuration/organization/edit/{id}','Apps\ConfigurationController@organizationEdit')->name('organization.edit');
 	Route::post('configuration/organization/update/{id}','Apps\ConfigurationController@organizationUpdate')->name('organization.update');
+
+	Route::get('configuration/office','Apps\ConfigurationController@officeIndex')->name('office.index');
+	Route::post('configuration/office/store','Apps\ConfigurationController@officeStore')->name('office.store');
+	Route::get('configuration/office/edit/{id}','Apps\ConfigurationController@officeEdit')->name('office.edit');
+	Route::post('configuration/office/update/{id}','Apps\ConfigurationController@officeUpdate')->name('office.update');
 	
 	Route::get('configuration/grievance-category','Apps\ConfigurationController@grievanceCategoryIndex')->name('grievCat.index');
 	Route::post('configuration/grievance-category/store','Apps\ConfigurationController@grievanceCategoryStore')->name('grievCat.store');
