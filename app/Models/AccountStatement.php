@@ -2,15 +2,18 @@
 
 namespace iteos\Models;
 
-use iteos\Traits\Uuid;
 use Illuminate\Database\Eloquent\Model;
 
 class AccountStatement extends Model
 {
-    use Uuid;
-
     protected $fillable = [
-    	'account_period',
+    	'transaction_date',
+        'account_name',
+        'item',
+        'payee',
+        'description',
+        'amount',
+        'type',
     	'status_id',
     	'created_by',
     	'updated_by',
@@ -21,5 +24,10 @@ class AccountStatement extends Model
     public function Statuses()
     {
     	return $this->belongsTo(Status::class,'status_id');
+    }
+
+    public function Accounts()
+    {
+        return $this->belongsTo(ChartOfAccount::class,'account_name','account_id');
     }
 }

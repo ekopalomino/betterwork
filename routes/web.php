@@ -236,6 +236,9 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth','verified']], function
 	Route::get('grievance/published-data/view/{id}','Apps\GrievanceController@grievancePublishShow')->name('grievancePublished.show');
 
 	Route::get('accounting/bank-statement','Apps\AccountingController@bankIndex')->name('bank.index');
+	Route::get('accounting/bank-statement-to-account','Apps\AccountingController@statementToAccount')->name('statToAcc.index');
+	Route::get('accounting/bank-statement-to-account/find/{id}','Apps\AccountingController@findTransactionByDate')->name('findAcc.find');
+	Route::post('accounting/bank-statement/store/{id}','Apps\AccountingController@bankStatementMatch')->name('statToAcc.store');
 	Route::post('accounting/bank-statement/save-period','Apps\AccountingController@bankPeriod')->name('bankPeriod.store');
 	Route::get('accounting/bank-statement/import/{id}','Apps\AccountingController@bankStatement')->name('bankStatement.import');
 	Route::post('accounting/bank-statement/import/{id}','Apps\AccountingController@bankStatementImport')->name('statementFile.import');
@@ -243,6 +246,8 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth','verified']], function
 	Route::post('accounting/account-statement/save-period','Apps\AccountingController@statementPeriod')->name('accountPeriod.store');
 	Route::get('accounting/account-statement/{id}/transaction','Apps\AccountingController@AccountTransaction')->name('accTransaction.index');
 	Route::get('accounting/account-statement/transaction/spend-money','Apps\AccountingController@spendCreate')->name('spend.create');
+	Route::get('accounting/account-statement/transaction/receive-money','Apps\AccountingController@receiveCreate')->name('receive.create');
+	Route::post('accounting/account-statement/transaction/receive-money/store','Apps\AccountingController@receiveStore')->name('receive.store');
 
 	
 

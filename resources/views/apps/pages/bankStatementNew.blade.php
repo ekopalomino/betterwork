@@ -33,7 +33,7 @@ Better Work Indonesia | Bank Statement
 						<button type="button" class="btn btn-sm btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Manage</button>
 						<div class="dropdown-menu" role="menu">
 							<a class="dropdown-item" href="{{ route('spend.create') }}">Spend Money</a>
-							<a class="dropdown-item" href="#">Receive Money</a>
+							<a class="dropdown-item" href="{{ route('receive.create') }}">Receive Money</a>
 							<a class="dropdown-item" href="#">Transfer Money</a>
 							<div class="dropdown-divider"></div>
 							<a class="dropdown-item modalMd" href="#" title="Import Statement" value="{{ action('Apps\AccountingController@bankStatement',['id'=>$bank->id]) }}" data-toggle="modal" data-target="#modalMd">Import Statement</a>

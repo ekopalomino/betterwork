@@ -13,6 +13,7 @@ class BankStatement extends Model
     	'payee',
         'description',
         'amount',
+        'type',
         'status_id',
     ];
 
