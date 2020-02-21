@@ -12,6 +12,12 @@ Better Work Indonesia | Edit Bulletin
        		<div class="col-sm-6">
           		<h1>Edit Bulletin</h1>
        		</div>
+			<div class="col-sm-6">
+				<ol class="breadcrumb float-sm-right">
+					<li class="breadcrumb-item"><a href="{{ route('bulletin.index') }}">Bulletin</a></li>
+					<li class="breadcrumb-item active">Edit Bulletin</li>
+				</ol>
+			</div>
        	</div>
     </div>
 </section>
@@ -46,7 +52,7 @@ Better Work Indonesia | Edit Bulletin
 						<div class="row">
 							<div class="col-12">
 								<label><strong>Content</strong></label>
-								{!! Form::textarea('content', old('content', $data->content), array('placeholder' => 'Konten','class' => 'form-control summernote')) !!}
+								{!! Form::textarea('content', old('content', $data->content), array('placeholder' => 'Konten','class' => 'form-control textarea summernote')) !!}
                           	</div>
 						</div>
 						<button type="submit" class="btn btn-info">Submit</button>

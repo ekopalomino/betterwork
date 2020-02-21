@@ -20,6 +20,7 @@ Better Work Indonesia | Leave Type
 		<div class="col-12">
 			<div class="card card-info card-outline">
 				<div class="card-header"> 
+
               		<button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#leave">
                   		Add New
                 	</button>
@@ -35,6 +36,7 @@ Better Work Indonesia | Leave Type
 				            	<div class="modal-body">
 									{!! Form::open(array('route' => 'leaveType.store','method'=>'POST', 'class' => 'form-horizontal')) !!}
 									@csrf
+
 				              		<label class="col-sm-12 col-form-label">Leave Type Name</label>
                         				{!! Form::text('leave_name', null, array('placeholder' => 'Position Name','class' => 'form-control')) !!}
                         			<label class="col-sm-12 col-form-label">First Approval</label>
@@ -51,6 +53,7 @@ Better Work Indonesia | Leave Type
 											<option value="2">HR Officer</option>
 											<option value="3">No Approval</option>
 										</select>
+
 				            	</div>
 				            	<div class="modal-footer">
 				              		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -62,6 +65,7 @@ Better Work Indonesia | Leave Type
 				    </div>
             	</div>
             	<div class="card-body">
+
 					@if (count($errors) > 0) 
 					<div class="alert alert-danger alert-dismissible">
 						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -73,13 +77,16 @@ Better Work Indonesia | Leave Type
 						</ul>
 					</div>
 					@endif
+
             		<table id="example1" class="table table-bordered table-hover">
             			<thead>
             				<tr>
             					<th>No</th>
             					<th>Leave Type Name</th>
+
 								<th>First Approval</th>
 								<th>Second Approval</th>
+
 								<th>Created By</th>
             					<th>Created At</th>
             					<th></th>
@@ -96,7 +103,9 @@ Better Work Indonesia | Leave Type
             					<td>{{date("d F Y H:i",strtotime($value->created_at)) }}</td>
 								<td>
 									<div class="btn-group">
+
 										<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
 											Action
 										</button>
 										<div class="dropdown-menu" role="menu">
@@ -105,6 +114,8 @@ Better Work Indonesia | Leave Type
 											{!! Form::button('<a>Delete Data</a>',['type'=>'submit','class' => 'dropdown-item']) !!}
 											{!! Form::close() !!}
 										</div>
+
+
 								</td>
             				</tr>
 							@endforeach

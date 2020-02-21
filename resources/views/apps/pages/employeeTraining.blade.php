@@ -16,7 +16,7 @@ Better Work Indonesia | Employee Training Data
     </div>
 </section>
 <section class="content">
-	<div class="card card-primary card-outline">
+	<div class="card card-info card-outline">
         <div class="card-body">
 			<table id="example1" class="table table-bordered table-hover">
 				<thead>
@@ -53,7 +53,6 @@ Better Work Indonesia | Employee Training Data
 				</tbody>
 			</table>
 		</div>
-		
     </div>
 </section>
 @endsection

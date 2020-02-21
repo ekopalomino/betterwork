@@ -18,9 +18,9 @@ Better Work Indonesia | Bank Account
 <section class="content">
 	<div class="row">
 		<div class="col-12">
-			<div class="card">
+			<div class="card card-info card-outline">
 				<div class="card-header">
-              		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">
+              		<button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modal-default">
                   		Add New
                 	</button>
                 	<div class="modal fade" id="modal-default">
@@ -38,9 +38,9 @@ Better Work Indonesia | Bank Account
                         			<label for="inputEmail" class="col-sm-12 col-form-label">Bank Account</label>
                         			<input type="password" class="form-control" id="inputEmail" placeholder="Password">
 				            	</div>
-				            	<div class="modal-footer justify-content-between">
+				            	<div class="modal-footer">
 				              		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				              		<button type="button" class="btn btn-primary">Save changes</button>
+				              		<button type="button" class="btn btn-primary">Save</button>
 				            	</div>
 				          	</div>
 				        </div>
