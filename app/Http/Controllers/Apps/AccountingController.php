@@ -22,8 +22,21 @@ class AccountingController extends Controller
     public function bankIndex()
     {
     	$banks = BankAccount::orderBy('bank_name','ASC')->get();
+        $balances = BankStatement::latest('id')->first();
+        $data = DB::table('bank_statements')->select('transaction_date','balance')->get();
+        $array[] = ['transaction_date','balance'];
+        foreach($data as $key=>$value) {
+            $array[++$key] = [$value->transaction_date,(int)$value->balance];
+        }
 
-    	return view('apps.pages.bankStatementNew',compact('banks'));
+    	return view('apps.pages.bankStatementNew',compact('banks','balances'))->with('data',json_encode($array));
+    }
+
+    public function bankStatementIndex()
+    {
+        $data = BankStatement::orderBy('updated_at','DESC')->get();
+
+        return view('apps.pages.statementIndex',compact('data'));
     }
 
     public function bankPeriod(Request $request)
@@ -44,7 +57,7 @@ class AccountingController extends Controller
     }
 
     public function bankStatementImport(Request $request,$id) 
-    {
+    { 
     	$request->validate([
             'statement' => 'required|file|mimes:xlsx,xls,XLSX,XLS'
         ]);
@@ -57,11 +70,11 @@ class AccountingController extends Controller
             $result = BankStatement::create([
                 'bank_account_id' => $request->input('account_id'),
                 'transaction_date' => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($value['date']),
-                'reference' => $value['reference'],
                 'payee' => $value['payee'],
                 'description' => $value['description'],
                 'type' => $value['type'],
                 'amount' => $value['amount'],
+                'balance' => $value['balance'],
                 'status_id' => 'e6cb9165-131e-406c-81c8-c2ba9a2c567e',
             ]);
         }
@@ -78,6 +91,7 @@ class AccountingController extends Controller
     public function statementToAccount()
     {
         $data = BankStatement::where('status_id','e6cb9165-131e-406c-81c8-c2ba9a2c567e')->orderBy('created_at','ASC')->get();
+
         return view('apps.input.statementToAccount',compact('data'));
     }
 
@@ -85,7 +99,7 @@ class AccountingController extends Controller
     {
         $filter = BankStatement::find($id);
         $data = AccountStatement::where('transaction_date',$filter->transaction_date)->where('status_id','e6cb9165-131e-406c-81c8-c2ba9a2c567e')->get();
-        
+        dd($data);
         return view('apps.input.bankToAccount',compact('data','filter'))->renderSections()['content'];
     }
 
@@ -107,7 +121,7 @@ class AccountingController extends Controller
 
     }
 
-    public function accountIndex()
+    public function accountIndex() 
     {
     	$data = AccountStatement::orderBy('updated_at','DESC')->get();
 
@@ -142,6 +156,34 @@ class AccountingController extends Controller
     	return view('apps.input.transactionSpend',compact('coas'));
     }
 
+    public function spendStore(Request $request)
+    {
+        $input = $request->all();
+        
+        $items = $request->item;
+        $descriptions = $request->description;
+        $quantities = $request->quantity;
+        $prices = $request->unit_price;
+        $accounts = $request->account;
+        $taxes = $request->tax;
+        $files = $request->file;
+        foreach($items as $index=>$item) {
+            $data = AccountStatement::create([
+                'transaction_date' => $request->input('transaction_date'),
+                'account_name' => $accounts[$index],
+                'payee' => $request->input('payee'),
+                'item' => $item,
+                'description' => $descriptions[$index],
+                'amount' => $prices[$index],
+                'type' => 'Debit',
+                'status_id' => 'e6cb9165-131e-406c-81c8-c2ba9a2c567e',
+                'created_by' => auth()->user()->employee_id,
+            ]);
+        }
+
+        return redirect()->back();
+    }
+
     public function receiveCreate()
     {
         $coas = ChartOfAccount::where('account_category','2')
@@ -172,7 +214,7 @@ class AccountingController extends Controller
                 'item' => $item,
                 'description' => $descriptions[$index],
                 'amount' => $prices[$index],
-                'type' => '3',
+                'type' => 'Credit',
                 'status_id' => 'e6cb9165-131e-406c-81c8-c2ba9a2c567e',
                 'created_by' => auth()->user()->employee_id,
             ]);

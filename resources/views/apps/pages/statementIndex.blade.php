@@ -1,18 +1,18 @@
 @extends('apps.layouts.main')
 @section('header.title')
-Better Work Indonesia | Account Statement
+Better Work Indonesia | Bank Statement
 @endsection
 @section('content')
 <section class="content-header">
 	<div class="container-fluid">
       	<div class="row mb-2">
        		<div class="col-sm-6">
-          		<h1>Account Statement</h1>
+          		<h1>Bank Statement</h1>
        		</div>
 			<div class="col-sm-6">
 				<ol class="breadcrumb float-sm-right">
 					<li class="breadcrumb-item"><a href="{{ route('bank.index') }}">Bank Account</a></li>
-					<li class="breadcrumb-item active">Account Statement</li>
+					<li class="breadcrumb-item active">Bank Statement</li>
 				</ol>
 			</div>
        	</div>
@@ -24,10 +24,10 @@ Better Work Indonesia | Account Statement
 			<div class="card card-info card-outline">
 				<div class="card-body">
 					<table class="table">
+					
 						<thead>
 							<tr>
 								<th>Transaction Date</th>
-								<th>Account Name</th>
 								<th>Payee</th>
 								<th>Description</th>
 								<th>Debit</th>
@@ -39,7 +39,6 @@ Better Work Indonesia | Account Statement
 							@foreach($data as $key=>$value)
 							<tr>
 								<td>{{date("d F Y",strtotime($value->transaction_date)) }}</td>
-								<td>{{ $value->Accounts->account_name }}</td>
 								<td>{{ $value->payee }}</td>
 								<td>{{ $value->description }}</td>
 								<td>
@@ -67,6 +66,7 @@ Better Work Indonesia | Account Statement
 							</tr>
 							@endforeach
 						</tbody>
+					
 					</table>
 				</div>
 			</div>

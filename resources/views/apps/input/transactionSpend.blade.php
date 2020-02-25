@@ -9,6 +9,12 @@ Better Work Indonesia | Create Salary
        		<div class="col-sm-6">
           		<h1>Create Spend Money</h1>
        		</div>
+			<div class="col-sm-6">
+				<ol class="breadcrumb float-sm-right">
+					<li class="breadcrumb-item"><a href="{{ route('bank.index') }}">Bank Account</a></li>
+					<li class="breadcrumb-item active">Spend Money</li>
+				</ol>
+			</div>
        	</div>
     </div>
 </section>
@@ -17,7 +23,7 @@ Better Work Indonesia | Create Salary
 		<div class="col-12">
 			<div class="card card-danger card-outline">
 				<div class="card-body">
-					{!! Form::open(array('route' => 'salary.store','method'=>'POST')) !!}
+					{!! Form::open(array('route' => 'spend.store','method'=>'POST')) !!}
             		@csrf
 					<div class="row">
 						<div class="col-2">
