@@ -28,6 +28,7 @@ Better Work Indonesia | Bank Statement
 						<thead>
 							<tr>
 								<th>Transaction Date</th>
+								<th>Account Name</th>
 								<th>Payee</th>
 								<th>Description</th>
 								<th>Debit</th>
@@ -39,6 +40,7 @@ Better Work Indonesia | Bank Statement
 							@foreach($data as $key=>$value)
 							<tr>
 								<td>{{date("d F Y",strtotime($value->transaction_date)) }}</td>
+								<td></td>
 								<td>{{ $value->payee }}</td>
 								<td>{{ $value->description }}</td>
 								<td>
@@ -59,7 +61,7 @@ Better Work Indonesia | Bank Statement
 									@if(($value->status_id) == 'e6cb9165-131e-406c-81c8-c2ba9a2c567e')
 									<font color="red">{{ $value->Statuses->name }}</font>
 									@else
-									<font color="red">{{ $value->Statuses->name }}</font>
+									<font color="green">{{ $value->Statuses->name }}</font>
 									@endif
 								</td>
 								<td></td>

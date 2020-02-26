@@ -8,9 +8,11 @@ use iteos\Models\BankAccount;
 use iteos\Models\BankStatement;
 use iteos\Models\ChartOfAccount;
 use iteos\Models\AccountStatement;
+use iteos\Models\JournalEntry;
 use Maatwebsite\Excel\Facades\Excel;
 use iteos\Imports\BankTransactionImport;
 use DB;
+use Ramsey\Uuid\Uuid;
 
 class AccountingController extends Controller
 {
@@ -99,7 +101,7 @@ class AccountingController extends Controller
     {
         $filter = BankStatement::find($id);
         $data = AccountStatement::where('transaction_date',$filter->transaction_date)->where('status_id','e6cb9165-131e-406c-81c8-c2ba9a2c567e')->get();
-        dd($data);
+        
         return view('apps.input.bankToAccount',compact('data','filter'))->renderSections()['content'];
     }
 
@@ -109,21 +111,54 @@ class AccountingController extends Controller
         $data = BankStatement::where('id',$request->input('statement_id'))->first();
         $source = AccountStatement::where('id',$request->input('account_id'))->first();
         $changes = $data->update([
-            'account_name' => $source->account_name,
+            'reference_no' => $source->reference_no,
             'payee' => $source->payee,
             'status_id' => 'f6e41f5d-0f6e-4eca-a141-b6c7ce34cae6'
         ]);
+        
         $source->update([
+            'statement_id' => $data->id,
             'status_id' => 'f6e41f5d-0f6e-4eca-a141-b6c7ce34cae6'
         ]);
-
+        $sources = AccountStatement::where('id',$request->input('account_id'))->first();
+        if(($sources->trans_type) == 'Debit') {
+            $entries = AccountStatement::create([
+                'trans_group' => $sources->trans_group,
+                'transaction_date' => $sources->transaction_date,
+                'reference_no' => $sources->reference_no,
+                'bank_id' => $data->bank_account_id,
+                'payee' => $sources->payee,
+                'item' => $sources->item,
+                'description' => $sources->description,
+                'amount' => $sources->amount,
+                'trans_type' => 'Credit',
+                'status_id' => $sources->status_id,
+                'created_by' => auth()->user()->employee_id,
+            ]);
+        } else {
+            $entries = AccountStatement::create([
+                'trans_group' => $sources->trans_group,
+                'transaction_date' => $sources->transaction_date,
+                'reference_no' => $sources->reference_no,
+                'bank_id' => $data->bank_account_id,
+                'payee' => $sources->payee,
+                'item' => $sources->item,
+                'description' => $sources->description,
+                'amount' => $sources->amount,
+                'trans_type' => 'Debit',
+                'status_id' => $sources->status_id,
+                'created_by' => auth()->user()->employee_id,
+            ]);
+        }
+        
+        
         return redirect()->back();
 
     }
 
     public function accountIndex() 
     {
-    	$data = AccountStatement::orderBy('updated_at','DESC')->get();
+    	$data = AccountStatement::where('bank_id',NULL)->orderBy('updated_at','ASC')->paginate(10);
 
     	return view('apps.pages.accountIndex',compact('data'));
     }
@@ -145,12 +180,19 @@ class AccountingController extends Controller
     	return view('apps.pages.AccountTransaction',compact('data'));
     }
 
+    public function AccountTransactionShow($id)
+    {
+        $data = AccountStatement::find($id);
+        
+        return view('apps.show.accountTransaction',compact('data'));
+    }
+
     public function spendCreate()
     {
         $coas = ChartOfAccount::where('account_category','2')
                                 ->orWhere('account_category','4')
                                 ->orderBy('account_id','ASC')
-                                ->pluck('account_name','account_id')
+                                ->pluck('account_name','id')
                                 ->toArray();
 
     	return view('apps.input.transactionSpend',compact('coas'));
@@ -159,7 +201,7 @@ class AccountingController extends Controller
     public function spendStore(Request $request)
     {
         $input = $request->all();
-        
+        $lastOrder = AccountStatement::count();
         $items = $request->item;
         $descriptions = $request->description;
         $quantities = $request->quantity;
@@ -170,18 +212,20 @@ class AccountingController extends Controller
         foreach($items as $index=>$item) {
             $data = AccountStatement::create([
                 'transaction_date' => $request->input('transaction_date'),
-                'account_name' => $accounts[$index],
+                'reference_no' => ''.str_pad($lastOrder + 1, 4, "0", STR_PAD_LEFT).'',
+                'trans_group' => Uuid::uuid4()->getHex(),
+                'account_id' => $accounts[$index],
                 'payee' => $request->input('payee'),
                 'item' => $item,
                 'description' => $descriptions[$index],
                 'amount' => $prices[$index],
-                'type' => 'Debit',
+                'trans_type' => 'Debit',
                 'status_id' => 'e6cb9165-131e-406c-81c8-c2ba9a2c567e',
                 'created_by' => auth()->user()->employee_id,
             ]);
         }
 
-        return redirect()->back();
+        return redirect()->route('bank.index');
     }
 
     public function receiveCreate()
@@ -189,7 +233,7 @@ class AccountingController extends Controller
         $coas = ChartOfAccount::where('account_category','2')
                                 ->orWhere('account_category','3')
                                 ->orderBy('account_id','ASC')
-                                ->pluck('account_name','account_id')
+                                ->pluck('account_name','id')
                                 ->toArray();
 
         return view('apps.input.transactionReceive',compact('coas'));
@@ -198,7 +242,7 @@ class AccountingController extends Controller
     public function receiveStore(Request $request)
     {
         $input = $request->all();
-        
+        $lastOrder = AccountStatement::count();
         $items = $request->item;
         $descriptions = $request->description;
         $quantities = $request->quantity;
@@ -209,17 +253,19 @@ class AccountingController extends Controller
         foreach($items as $index=>$item) {
             $data = AccountStatement::create([
                 'transaction_date' => $request->input('transaction_date'),
-                'account_name' => $accounts[$index],
+                'reference_no' => ''.str_pad($lastOrder + 1, 4, "0", STR_PAD_LEFT).'',
+                'trans_group' => Uuid::uuid4()->getHex(),
+                'account_id' => $accounts[$index],
                 'payee' => $request->input('payee'),
                 'item' => $item,
                 'description' => $descriptions[$index],
                 'amount' => $prices[$index],
-                'type' => 'Credit',
+                'trans_type' => 'Credit',
                 'status_id' => 'e6cb9165-131e-406c-81c8-c2ba9a2c567e',
                 'created_by' => auth()->user()->employee_id,
             ]);
         }
 
-        return redirect()->back();
+        return redirect()->route('bank.index');
     }
 }

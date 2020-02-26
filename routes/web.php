@@ -244,6 +244,7 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth','verified']], function
 	Route::get('accounting/bank-statement/import/{id}','Apps\AccountingController@bankStatement')->name('bankStatement.import');
 	Route::post('accounting/bank-statement/import/{id}','Apps\AccountingController@bankStatementImport')->name('statementFile.import');
 	Route::get('accounting/account-statement','Apps\AccountingController@accountIndex')->name('account.index');
+	Route::get('accounting/account-statement/{id}','Apps\AccountingController@AccountTransactionShow')->name('account.show');
 	Route::post('accounting/account-statement/save-period','Apps\AccountingController@statementPeriod')->name('accountPeriod.store');
 	Route::get('accounting/account-statement/{id}/transaction','Apps\AccountingController@AccountTransaction')->name('accTransaction.index');
 	Route::get('accounting/account-statement/transaction/spend-money','Apps\AccountingController@spendCreate')->name('spend.create');

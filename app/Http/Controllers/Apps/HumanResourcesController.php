@@ -63,8 +63,13 @@ class HumanResourcesController extends Controller
         foreach($getGender as $key=>$value) {
             $gender[++$key] = [$value->Gender,(int)$value->Count];
         }
+        $getAge = DB::table('employees')->select(DB::raw('YEAR(CURRENT_DATE()) - YEAR(date_of_birth) as age'),DB::raw('COUNT(YEAR(CURRENT_DATE()) - YEAR(date_of_birth)) as count'))->groupBy('age')->get();
+        $ages[] = ['age','count'];
+        foreach($getAge as $key=>$value) {
+            $ages[++$key] = [$value->age,(int)$value->count];
+        }
                            
-    	return view('apps.pages.humanResourceHome',compact('onLeave','onBirthday','onAttendance'))->with('getGender',json_encode($gender));
+    	return view('apps.pages.humanResourceHome',compact('onLeave','onBirthday','onAttendance'))->with('getGender',json_encode($gender))->with('getAge',json_encode($ages));
     }
 
     public function employeeIndex()

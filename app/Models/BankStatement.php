@@ -9,6 +9,7 @@ class BankStatement extends Model
     protected $fillable = [
     	'bank_account_id',
     	'transaction_date',
+        'reference_no',
     	'payee',
         'description',
         'amount',

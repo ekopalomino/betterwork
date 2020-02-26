@@ -1,7 +1,7 @@
 @extends('apps.layouts.main')
 @section('header.title')
 Better Work Indonesia | Create Receive Money
-@endsection
+@endsection 
 @section('content')
 <section class="content-header">
 	<div class="container-fluid">

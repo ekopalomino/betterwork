@@ -8,18 +8,19 @@ class AccountStatement extends Model
 {
     protected $fillable = [
     	'transaction_date',
-        'account_name',
+        'trans_group',
+        'reference_no',
+        'account_id',
+        'bank_id',
         'item',
         'payee',
         'description',
         'amount',
-        'type',
+        'trans_type',
     	'status_id',
     	'created_by',
     	'updated_by',
     ];
-
-    public $incrementing = false;
 
     public function Statuses()
     {
@@ -28,6 +29,11 @@ class AccountStatement extends Model
 
     public function Accounts()
     {
-        return $this->belongsTo(ChartOfAccount::class,'account_name','account_id');
+        return $this->belongsTo(ChartOfAccount::class,'account_id');
+    }
+
+    public function Banks()
+    {
+        return $this->belongsTo(BankAccount::class,'bank_id');
     }
 }
