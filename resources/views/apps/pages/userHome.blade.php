@@ -56,7 +56,7 @@ Better Work Indonesia | User Dashboard
                 </div>
                 <div class="card card-danger">
                 	<div class="card-header">
-                		<h3 class="card-title">Attendance</h3>
+                		<h3 class="card-title"><i class="fas fa-user-clock"></i> Attendance</h3>
               		</div>
               		<div class="card-body">
               			<div class="row">
@@ -470,7 +470,7 @@ Better Work Indonesia | User Dashboard
 					<div class="col-md-6">
 						<div class="card card-info">
 							<div class="card-header">
-								<h3 class="card-title">Bulletin Board</h3>
+								<h3 class="card-title"><i class="fab fa-blogger"></i> Bulletin Board</h3>
 							</div>
 							<div class="card-body">
 								<div class="card-body table-responsive p-0" style="height: 300px;">
@@ -501,7 +501,7 @@ Better Work Indonesia | User Dashboard
 					<div class="col-md-6">
 						<div class="card card-success">
 							<div class="card-header">
-								<h3 class="card-title">This Month Birthday</h3>
+								<h3 class="card-title"><i class="fas fa-birthday-cake"></i> This Month Birthday</h3>
 							</div>
 							<div class="card-body">
 								<div class="card-body table-responsive p-0" style="height: 300px;">

@@ -9,6 +9,9 @@ use iteos\Models\BankStatement;
 use iteos\Models\ChartOfAccount;
 use iteos\Models\AccountStatement;
 use iteos\Models\JournalEntry;
+use iteos\Models\AssetCategory;
+use iteos\Models\AssetManagement;
+use iteos\Models\AssetDepreciation;
 use Maatwebsite\Excel\Facades\Excel;
 use iteos\Imports\BankTransactionImport;
 use DB;
@@ -268,4 +271,53 @@ class AccountingController extends Controller
 
         return redirect()->route('bank.index');
     }
+
+    public function assetManagementIndex()
+    {
+        $data = AssetManagement::orderBy('name','ASC')->get();
+        $categories = AssetCategory::orderBy('category_name','ASC')->pluck('category_name','id')->toArray();
+
+        return view('apps.pages.assetManagement',compact('data','categories'));
+    }
+
+    public function assetManagementStore(Request $request)
+    {
+        $this->validate($request, [
+            'asset_code' => 'required',
+            'asset_name' => 'required',
+            'category_name' => 'required',
+            'purchase_date' => 'required',
+            'purchase_price' => 'required',
+            'estimate_time' => 'required',
+            'estimate_value' => 'required',
+        ]);
+
+        $data = AssetManagement::create([
+            'asset_code' => $request->input('asset_code'),
+            'name' => $request->input('asset_name'),
+            'category_name' => $request->input('category_name'),
+            'purchase_date' => $request->input('purchase_date'),
+            'purchase_price' => $request->input('purchase_price'),
+            'estimate_time' => $request->input('estimate_time'),
+            'estimate_depreciate_value' => $request->input('estimate_value'),
+            'status_id' => 'e6cb9165-131e-406c-81c8-c2ba9a2c567e',
+        ]);
+
+        $journal = AccountStatement::create([
+            'trans_group' => Uuid::uuid4()->getHex(),
+            'transaction_date' => $data->purchase_date,
+            'reference_no' => '',
+            'account_id' => $data->Categories->chart_of_account_id,
+            'payee' => 'Tes',
+            'item' => $data->name,
+            'description' => $data->name,
+            'amount' => $data->purchase_price,
+            'trans_type' => 'Debit',
+            'status_id' => 'e6cb9165-131e-406c-81c8-c2ba9a2c567e',
+            'created_by' => auth()->user()->employee_id,
+        ]);
+
+        return redirect()->route('asset.index');
+    }
+
 }

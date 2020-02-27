@@ -20,6 +20,8 @@ class AccountStatement extends Model
     	'status_id',
     	'created_by',
     	'updated_by',
+        'checked_by',
+        'approved_by',
     ];
 
     public function Statuses()

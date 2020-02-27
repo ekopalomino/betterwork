@@ -52,6 +52,32 @@ Better Work Indonesia | Dashboard
 				</div>
 			</div>
 		</div>
+		<div class="row">
+			<div class="col-12">
+				<table class="table table-head-fixed text-nowrap">
+					<thead>
+						<tr>
+							<th>No</th>
+							<th>Subject</th>
+							<th>Description</th>
+							<th>Created At</th>
+							<th>Closing At</th>
+							<th>Rating</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
 	</div>
 </section>
 @endsection

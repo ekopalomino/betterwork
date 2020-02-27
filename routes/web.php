@@ -145,6 +145,10 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth','verified']], function
 	Route::post('configuration/chart-of-account/delete/{id}','Apps\ConfigurationController@coaCategoryDestroy')->name('coaCat.destroy');
 
 	Route::get('configuration/asset-category','Apps\ConfigurationController@assetCategoryIndex')->name('assetCat.index');
+	Route::post('configuration/asset-category/store','Apps\ConfigurationController@assetCategoryStore')->name('assetCat.store');
+	Route::get('configuration/asset-category/edit/{id}','Apps\ConfigurationController@assetCategoryEdit')->name('assetCat.edit');
+	Route::post('configuration/asset-category/update/{id}','Apps\ConfigurationController@assetCategoryUpdate')->name('assetCat.update');
+	Route::post('configuration/asset-category/delete/{id}','Apps\ConfigurationController@assetCategoryDestroy')->name('assetCat.destroy');
 
 	Route::get('human-resources/employee','Apps\HumanResourcesController@employeeIndex')->name('employee.index');
 	Route::get('human-resources/employee/create','Apps\HumanResourcesController@employeeCreate')->name('employee.create');
@@ -252,7 +256,8 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth','verified']], function
 	Route::get('accounting/account-statement/transaction/receive-money','Apps\AccountingController@receiveCreate')->name('receive.create');
 	Route::post('accounting/account-statement/transaction/receive-money/store','Apps\AccountingController@receiveStore')->name('receive.store');
 
-	
+	Route::get('accounting/asset-management','Apps\AccountingController@assetManagementIndex')->name('asset.index');
+	Route::post('accounting/asset-management/store','Apps\AccountingController@assetManagementStore')->name('asset.store');
 
 	Route::get('human-resources/reports/attendance','Apps\ReportsController@attendanceReport')->name('attReport.index');
 	Route::post('human-resources/reports/attendance/result','Apps\ReportsController@attendanceProcess')->name('attReport.result');

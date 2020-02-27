@@ -24,7 +24,7 @@ Better Work Indonesia | Bank Account
                   		Add New
                 	</button>
                 	<div class="modal fade" id="modal-default">
-				        <div class="modal-dialog">
+				        <div class="modal-dialog modal-lg">
 				          	<div class="modal-content">
 							{!! Form::open(array('route' => 'bankAcc.store','method'=>'POST')) !!}
 							@csrf
@@ -40,7 +40,7 @@ Better Work Indonesia | Bank Account
                         			<label for="inputEmail" class="col-sm-12 col-form-label">Bank Account</label>
                         			{!! Form::text('account_no', null, array('placeholder' => 'Account No','class' => 'form-control')) !!}
 				            	</div>
-				            	<div class="modal-footer justify-content-between">
+				            	<div class="modal-footer">
 				              		<button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
 				              		<button type="submit" class="btn btn-sm btn-primary">Save changes</button>
 				            	</div>

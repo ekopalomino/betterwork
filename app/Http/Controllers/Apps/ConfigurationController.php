@@ -11,6 +11,7 @@ use iteos\Models\ReimbursType;
 use iteos\Models\DocumentCategory;
 use iteos\Models\GrievanceCategory;
 use iteos\Models\ChartOfAccount;
+use iteos\Models\AssetCategory;
 use iteos\Models\BankAccount;
 use iteos\Models\Organization;
 use iteos\Models\Office;
@@ -546,7 +547,82 @@ class ConfigurationController extends Controller
 
     public function assetCategoryIndex()
     {
-    	return view('apps.pages.assetCategory');
+        $data = AssetCategory::orderBy('id','ASC')->get();
+        $accounts = ChartOfAccount::orderBy('account_id','ASC')->pluck('account_name','id')->toArray();
+
+    	return view('apps.pages.assetCategory',compact('data','accounts'));
+    }
+
+    public function assetCategoryStore(Request $request)
+    {
+        $this->validate($request, [
+            'category_name' => 'required',
+            'charts_id' => 'required',
+            'depreciate_id' => 'required',
+        ]);
+
+        $data = AssetCategory::create([
+            'category_name' => $request->input('category_name'),
+            'chart_of_account_id' => $request->input('charts_id'),
+            'depreciation_account_id' => $request->input('depreciate_id'),
+        ]);
+
+        $log = 'Asset Category '.($data->category_name).' Created';
+         \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'Asset Category '.($data->category_name).' Created',
+            'alert-type' => 'success'
+        );
+        
+        return redirect()->route('assetCat.index')->with($notification);
+    }
+
+    public function assetCategoryEdit($id)
+    {
+        $data = AssetCategory::find($id);
+        $accounts = ChartOfAccount::orderBy('account_id','ASC')->pluck('account_name','id')->toArray();
+
+        return view('apps.edit.assetCategory',compact('data','accounts'))->renderSections()['content'];
+    }
+
+    public function assetCategoryUpdate(Request $request,$id)
+    {
+        $this->validate($request, [
+            'category_name' => 'required',
+            'charts_id' => 'required',
+            'depreciate_id' => 'required',
+        ]);
+
+        $data = AssetCategory::find($id);
+        $changes = $data->update([
+            'category_name' => $request->input('category_name'),
+            'chart_of_account_id' => $request->input('charts_id'),
+            'depreciation_account_id' => $request->input('depreciate_id'),
+        ]);
+
+        $log = 'Asset Category '.($data->category_name).' Updated';
+         \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'Asset Category '.($data->category_name).' Updated',
+            'alert-type' => 'success'
+        );
+        
+        return redirect()->route('assetCat.index')->with($notification);
+    }
+
+    public function assetCategoryDestroy($id)
+    {
+        $data = AssetCategory::find($id);
+        $log = 'Asset Category '.($data->category_name).' Deleted';
+         \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'Asset Category '.($data->category_name).' Deleted',
+            'alert-type' => 'success'
+        );
+
+        $data->delete();
+
+        return redirect()->route('assetCat.index')->with($notification);
     }
 
     public function userIndex()

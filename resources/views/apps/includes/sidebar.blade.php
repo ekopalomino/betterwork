@@ -458,7 +458,7 @@
 			@endif
 			@endcan
 			@can('Access Accounting')
-			@if(\Route::is(['accounting.index','bank.index','account.index','accTransaction.index','accTransaction.create','spend.create','receive.create','bankStatement.index','account.show']))
+			@if(\Route::is(['accounting.index','bank.index','account.index','accTransaction.index','accTransaction.create','spend.create','receive.create','bankStatement.index','account.show','asset.index']))
 			<li class="nav-item {{set_open('bank.index') }}">
 				<a href="{{ route('bank.index') }}" class="nav-link {{set_active(['bank.index','spend.create','receive.create','bankStatement.index','account.index','account.show']) }}">
 					<i class="nav-icon fas fa-money-check-alt"></i>
@@ -467,8 +467,8 @@
 					</p>
 				</a>
 			</li>
-			<li class="nav-item">
-				<a href="#" class="nav-link">
+			<li class="nav-item {{set_open('asset.index') }}">
+				<a href="{{ route('asset.index') }}" class="nav-link {{set_active(['asset.index']) }}">
 					<i class="nav-icon fas fa-clipboard-list"></i>
 					<p>
 						Asset Management
@@ -488,8 +488,47 @@
 					<i class="nav-icon fas fa-chart-line"></i>
 					<p>
 						Reports
+						<i class="right fas fa-angle-left"></i>
 					</p>
 				</a>
+				<ul class="nav nav-treeview">
+					<li class="nav-item ">
+						<a href="" class="nav-link ">
+							<i class="far fa-circle nav-icon"></i>
+							<p>Activity Report</p>
+						</a>
+					</li>
+					<li class="nav-item ">
+						<a href="" class="nav-link ">
+							<i class="far fa-circle nav-icon"></i>
+							<p>Balance Sheet</p>
+						</a>
+					</li>
+					<li class="nav-item ">
+						<a href="" class="nav-link ">
+							<i class="far fa-circle nav-icon"></i>
+							<p>Cashflow Statement</p>
+						</a>
+					</li>
+					<li class="nav-item ">
+						<a href="" class="nav-link ">
+							<i class="far fa-circle nav-icon"></i>
+							<p>Net Asset</p>
+						</a>
+					</li>
+					<li class="nav-item ">
+						<a href="" class="nav-link ">
+							<i class="far fa-circle nav-icon"></i>
+							<p>Fixed Asset</p>
+						</a>
+					</li>
+					<li class="nav-item ">
+						<a href="" class="nav-link ">
+							<i class="far fa-circle nav-icon"></i>
+							<p>Budget</p>
+						</a>
+					</li>
+				</ul>
 			</li>
 			@endif
 			@endcan
