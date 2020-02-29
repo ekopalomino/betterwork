@@ -10,6 +10,7 @@
   	<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
   	<link rel="stylesheet" href="{{ asset('public/bower_components/admin-lte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
   	<link rel="stylesheet" href="{{ asset('public/bower_components/admin-lte/plugins/toastr/toastr.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('public/css/preload.css') }}">
   	@yield('header.plugins')
   	@yield('header.styles')
 </head>
@@ -71,6 +72,7 @@
 	<script src="{{ asset('public/bower_components/admin-lte/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
 	<script src="{{ asset('public/bower_components/admin-lte/plugins/toastr/toastr.min.js') }}"></script>
 	<script src="{{ asset('public/js/admin.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('public/js/preload.js') }}" type="text/javascript"></script>
 	@yield('footer.scripts')
 	<script type="text/javascript">
 		@if(Session::has('message'))

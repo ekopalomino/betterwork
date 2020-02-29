@@ -19,11 +19,11 @@ class BankTransactionImport implements ToModel, WithHeadingRow
     {
         return new BankStatement([
             'transaction_date' => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['date']),
-            'reference' => $row['reference'],
             'payee' => $row['payee'],
             'description' => $row['description'],
             'type' => $row['type'],
             'amount' => $row['amount'],
+            'balance' => $row['balance'],
             'status_id' => 'e6cb9165-131e-406c-81c8-c2ba9a2c567e',
         ]);
     }

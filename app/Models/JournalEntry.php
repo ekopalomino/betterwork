@@ -1,0 +1,31 @@
+<?php
+
+namespace iteos\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class JournalEntry extends Model
+{
+    protected $fillable = [
+    	'account_statement_id',
+    	'item',
+    	'description',
+    	'quantity',
+    	'unit_price',
+    	'account_name',
+    	'trans_type',
+    	'tax_rate',
+    	'file',
+    	'amount',
+    ];
+
+    public function Parent()
+    {
+        return $this->belongsTo(AccountStatement::class,'account_statement_id');
+    }
+
+    public function Accounts()
+    {
+        return $this->belongsTo(ChartOfAccount::class,'account_name','id');
+    }
+}

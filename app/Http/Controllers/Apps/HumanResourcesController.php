@@ -5,6 +5,8 @@ namespace iteos\Http\Controllers\Apps;
 use Illuminate\Http\Request;
 use iteos\Http\Controllers\Controller;
 use iteos\Models\Employee;
+use iteos\Models\Organization;
+use iteos\Models\Office;
 use iteos\Models\User;
 use iteos\Models\EmployeeFamily;
 use iteos\Models\EmployeeEducation;
@@ -17,7 +19,7 @@ use iteos\Models\AttendanceTransaction;
 use iteos\Models\EmployeeReimbursment;
 use iteos\Models\EmployeeLeave;
 use iteos\Models\LeaveTransaction;
-use iteos\Models\Location;
+use iteos\Models\City;
 use iteos\Models\EmployeeSalary;
 use iteos\Models\Bulletin;
 use iteos\Models\KnowledgeBase;
@@ -61,8 +63,13 @@ class HumanResourcesController extends Controller
         foreach($getGender as $key=>$value) {
             $gender[++$key] = [$value->Gender,(int)$value->Count];
         }
+        $getAge = DB::table('employees')->select(DB::raw('YEAR(CURRENT_DATE()) - YEAR(date_of_birth) as age'),DB::raw('COUNT(YEAR(CURRENT_DATE()) - YEAR(date_of_birth)) as count'))->groupBy('age')->get();
+        $ages[] = ['age','count'];
+        foreach($getAge as $key=>$value) {
+            $ages[++$key] = [$value->age,(int)$value->count];
+        }
                            
-    	return view('apps.pages.humanResourceHome',compact('onLeave','onBirthday','onAttendance'))->with('getGender',json_encode($gender));
+    	return view('apps.pages.humanResourceHome',compact('onLeave','onBirthday','onAttendance'))->with('getGender',json_encode($gender))->with('getAge',json_encode($ages));
     }
 
     public function employeeIndex()
@@ -75,7 +82,7 @@ class HumanResourcesController extends Controller
     public function employeeCreate()
     {
         $grades = EmployeePosition::pluck('position_name','position_name')->toArray();
-        $cities = Location::orderBy('city','ASC')->pluck('city','city')->toArray();
+        $cities = City::orderBy('id','ASC')->pluck('city_name','city_name')->toArray();
         
         return view('apps.input.employee',compact('grades','cities'));
     }
@@ -83,7 +90,7 @@ class HumanResourcesController extends Controller
     public function searchLocation(Request $request)
     {
         $search = $request->get('place_of_birth');
-        $result = Location::where('city','LIKE','%'. $search. '%')->get();
+        $result = City::where('city_name','LIKE','%'. $search. '%')->get();
 
         return response()->json($result);
     }
@@ -173,10 +180,11 @@ class HumanResourcesController extends Controller
         $grades = EmployeePosition::pluck('position_name','position_name')->toArray();
         $employees = Employee::select(DB::raw("CONCAT(first_name,' ',last_name) AS name"),'id')->pluck('name','id')->toArray();
         $degrees  = DB::table('education_degree')->pluck('degree_name','degree_name')->toArray();
-
-        $cities = Location::pluck('city','city')->toArray();
+        $organizations = Organization::orderBy('id','ASC')->pluck('name','name')->toArray();
+        $offices = Office::orderBy('id','ASC')->pluck('office_name','office_name')->toArray();
+        $cities = City::orderBy('id','ASC')->pluck('city_name','city_name')->toArray();
         
-        return view('apps.edit.employee',compact('grades','cities','data','employees','degrees'));
+        return view('apps.edit.employee',compact('grades','cities','data','employees','degrees','organizations','offices'));
     }
 
     public function employeeUpdate(Request $request,$id)

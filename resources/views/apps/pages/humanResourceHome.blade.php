@@ -7,6 +7,7 @@ Better Work Indonesia | Human Resources
 <script type="text/javascript">
     google.charts.load('current', {'packages':['corechart']});
     google.charts.setOnLoadCallback(drawGenderChart);
+	google.charts.setOnLoadCallback(drawAgeChart);
     function drawGenderChart() {
         var gender = <?php echo $getGender; ?>;
         var data = google.visualization.arrayToDataTable(gender);
@@ -14,6 +15,16 @@ Better Work Indonesia | Human Resources
           legend: { position: 'bottom' }
         };
         var chart = new google.visualization.PieChart(document.getElementById('Gender_chart_div'));
+        chart.draw(data, options);
+    }
+	function drawAgeChart() {
+        var ages = <?php echo $getAge; ?>;
+        var data = google.visualization.arrayToDataTable(ages);
+        var options = {
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.ColumnChart(document.getElementById('Age_chart_div'));
         chart.draw(data, options);
     }
 </script>
@@ -104,7 +115,7 @@ Better Work Indonesia | Human Resources
 						<div class="card-body box-profile">
 							<div class="text-center">
 								<p><strong>Employee by Age</strong></p>
-								
+								<div id="Age_chart_div" style="width: 100%; min-height: 250px"></div>
 							</div>
 						</div>
 					</div>
@@ -125,7 +136,7 @@ Better Work Indonesia | Human Resources
 					<div class="card card-secondary card-outline">
 						<div class="card-body box-profile">
 							<div class="text-center">
-								<p><strong>Employee by Education</strong></p>
+								<p><strong>Employee by Turnover</strong></p>
 								
 							</div>
 						</div>

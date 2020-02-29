@@ -13,7 +13,7 @@
 
 Route::get('/', function () {
     return view('apps.pages.login');
-});
+}); 
 /*Development Routes*/
 Auth::routes(['register' => false,'verify' => true]);
 Route::group(['prefix' => 'apps', 'middleware' => ['auth','verified']], function() {
@@ -145,6 +145,10 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth','verified']], function
 	Route::post('configuration/chart-of-account/delete/{id}','Apps\ConfigurationController@coaCategoryDestroy')->name('coaCat.destroy');
 
 	Route::get('configuration/asset-category','Apps\ConfigurationController@assetCategoryIndex')->name('assetCat.index');
+	Route::post('configuration/asset-category/store','Apps\ConfigurationController@assetCategoryStore')->name('assetCat.store');
+	Route::get('configuration/asset-category/edit/{id}','Apps\ConfigurationController@assetCategoryEdit')->name('assetCat.edit');
+	Route::post('configuration/asset-category/update/{id}','Apps\ConfigurationController@assetCategoryUpdate')->name('assetCat.update');
+	Route::post('configuration/asset-category/delete/{id}','Apps\ConfigurationController@assetCategoryDestroy')->name('assetCat.destroy');
 
 	Route::get('human-resources/employee','Apps\HumanResourcesController@employeeIndex')->name('employee.index');
 	Route::get('human-resources/employee/create','Apps\HumanResourcesController@employeeCreate')->name('employee.create');
@@ -236,15 +240,24 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth','verified']], function
 	Route::get('grievance/published-data/view/{id}','Apps\GrievanceController@grievancePublishShow')->name('grievancePublished.show');
 
 	Route::get('accounting/bank-statement','Apps\AccountingController@bankIndex')->name('bank.index');
+	Route::get('accounting/bank-statement/show','Apps\AccountingController@bankStatementIndex')->name('bankStatement.index');
+	Route::get('accounting/bank-statement-to-account','Apps\AccountingController@statementToAccount')->name('statToAcc.index');
+	Route::get('accounting/bank-statement-to-account/find/{id}','Apps\AccountingController@findTransactionByDate')->name('findAcc.find');
+	Route::post('accounting/bank-statement/store/{id}','Apps\AccountingController@bankStatementMatch')->name('statToAcc.store');
 	Route::post('accounting/bank-statement/save-period','Apps\AccountingController@bankPeriod')->name('bankPeriod.store');
 	Route::get('accounting/bank-statement/import/{id}','Apps\AccountingController@bankStatement')->name('bankStatement.import');
 	Route::post('accounting/bank-statement/import/{id}','Apps\AccountingController@bankStatementImport')->name('statementFile.import');
 	Route::get('accounting/account-statement','Apps\AccountingController@accountIndex')->name('account.index');
+	Route::get('accounting/account-statement/{id}','Apps\AccountingController@AccountTransactionShow')->name('account.show');
 	Route::post('accounting/account-statement/save-period','Apps\AccountingController@statementPeriod')->name('accountPeriod.store');
 	Route::get('accounting/account-statement/{id}/transaction','Apps\AccountingController@AccountTransaction')->name('accTransaction.index');
 	Route::get('accounting/account-statement/transaction/spend-money','Apps\AccountingController@spendCreate')->name('spend.create');
+	Route::post('accounting/account-statement/transaction/spend-money/store','Apps\AccountingController@spendStore')->name('spend.store');
+	Route::get('accounting/account-statement/transaction/receive-money','Apps\AccountingController@receiveCreate')->name('receive.create');
+	Route::post('accounting/account-statement/transaction/receive-money/store','Apps\AccountingController@receiveStore')->name('receive.store');
 
-	
+	Route::get('accounting/asset-management','Apps\AccountingController@assetManagementIndex')->name('asset.index');
+	Route::post('accounting/asset-management/store','Apps\AccountingController@assetManagementStore')->name('asset.store');
 
 	Route::get('human-resources/reports/attendance','Apps\ReportsController@attendanceReport')->name('attReport.index');
 	Route::post('human-resources/reports/attendance/result','Apps\ReportsController@attendanceProcess')->name('attReport.result');
@@ -253,6 +266,8 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth','verified']], function
 	Route::get('human-resources/reports/attendance/result/pdf/{ID}/{startDate}/{endDate}','Apps\ReportsController@attendancePdf')->name('attReport.export');
 
 	Route::get('human-resources/reports/payroll-and-allowance','Apps\ReportsController@financeReport')->name('payReport.index');
+
+	Route::get('accounting/reports/journal-report','Apps\ReportsController@journalReportShow')->name('journal.report');
 
 	Route::get('help/user-menu/reset-password','Apps\HelpController@resetPassIndex')->name('resetPass.index');
 	Route::get('help/user-menu/update-profile','Apps\HelpController@updateProfile')->name('updateProfile.index');

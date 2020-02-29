@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAccountStatementsTable extends Migration
+class CreateAssetManagementsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,14 @@ class CreateAccountStatementsTable extends Migration
      */
     public function up()
     {
-        Schema::create('account_statements', function (Blueprint $table) {
+        Schema::create('asset_managements', function (Blueprint $table) {
             $table->uuid('id');
-            $table->date('transaction_date');
-            $table->string('reference_no');
-            $table->string('payee');
-            $table->text('description');
+            $table->string('name');
+            $table->uuid('category_name');
+            $table->date('purchase_date');
+            $table->decimal('purchase_price',50,2);
+            $table->integer('estimate_time');
+            $table->decimal('estimate_depreciate_value',50,2);
             $table->uuid('status_id');
             $table->primary('id');
             $table->timestamps();
@@ -32,6 +34,6 @@ class CreateAccountStatementsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('account_statements');
+        Schema::dropIfExists('asset_managements');
     }
 }

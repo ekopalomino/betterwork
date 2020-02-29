@@ -29,7 +29,8 @@
 		@endcan
 		@can('Access Accounting')
 		<li class="nav-item d-none d-sm-inline-block">
-			<a href="{{route('accounting.index') }}" class="nav-link {{set_active(['accounting.index','bank.index','account.index','accTransaction.index','accTransaction.create','spend.create']) }}">Accounting</a>
+			<a href="{{route('accounting.index') }}" class="nav-link {{set_active(['accounting.index','bank.index','account.index','accTransaction.index','accTransaction.create','spend.create','receive.create',
+			'bankStatement.index','account.show','asset.index']) }}">Accounting</a>
 		</li>
 		@endcan
 		<li class="nav-item d-none d-sm-inline-block">
@@ -42,7 +43,7 @@
 	<ul class="navbar-nav ml-auto">
 		<li class="nav-item dropdown">
 			<a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-				<i class="fas fa-sign-out-alt"></i>
+				<i class="fas fa-sign-out-alt"></i> Sign Out
 			</a>
 			<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
 				@csrf

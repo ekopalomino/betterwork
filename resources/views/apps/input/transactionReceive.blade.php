@@ -1,18 +1,18 @@
 @extends('apps.layouts.main')
 @section('header.title')
-Better Work Indonesia | Create Spend Money
+Better Work Indonesia | Create Receive Money
 @endsection 
 @section('content')
 <section class="content-header">
 	<div class="container-fluid">
       	<div class="row mb-2">
        		<div class="col-sm-6">
-          		<h1>Create Spend Money</h1>
+          		<h1>Create Receive Money</h1>
        		</div>
 			<div class="col-sm-6">
 				<ol class="breadcrumb float-sm-right">
 					<li class="breadcrumb-item"><a href="{{ route('bank.index') }}">Bank Account</a></li>
-					<li class="breadcrumb-item active">Spend Money</li>
+					<li class="breadcrumb-item active">Receive Money</li>
 				</ol>
 			</div>
        	</div>
@@ -23,11 +23,11 @@ Better Work Indonesia | Create Spend Money
 		<div class="col-12">
 			<div class="card card-danger card-outline">
 				<div class="card-body">
-					{!! Form::open(array('route' => 'spend.store','method'=>'POST')) !!}
+					{!! Form::open(array('route' => 'receive.store','method'=>'POST')) !!}
             		@csrf
 					<div class="row">
 						<div class="col-2">
-							<label>To</label>
+							<label>From</label>
 							<input type="text" class="form-control" id="payee" name="payee" placeholder="Payee">
 						</div>
 						<div class="col-2">
