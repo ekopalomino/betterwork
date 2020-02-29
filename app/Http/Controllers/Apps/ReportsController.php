@@ -8,6 +8,7 @@ use iteos\Models\Employee;
 use iteos\Models\EmployeeAttendance;
 use iteos\Models\AttendanceTransaction;
 use iteos\Models\EmployeeSalary;
+use iteos\Models\AccountStatement;
 use Carbon\Carbon;
 use DB;
 use Route;
@@ -135,6 +136,15 @@ class ReportsController extends Controller
     public function financeProcess()
     {
         
+    }
+
+    public function journalReportShow()
+    {
+        $data = AccountStatement::with('Child')->where('status_id','f6e41f5d-0f6e-4eca-a141-b6c7ce34cae6')->get();
+        /*$data = DB::table('account_statements')->join('bank_statements','bank_statements.trans_group','account_statements.trans_group')->where('account_statements.status_id','f6e41f5d-0f6e-4eca-a141-b6c7ce34cae6')->get();*/
+        /*$data = DB::table('account_statements')->where('status_id','f6e41f5d-0f6e-4eca-a141-b6c7ce34cae6')->select('trans_group','transaction_date','account_id','bank_id','payee','amount','trans_type')->groupBy('trans_group','transaction_date','account_id','bank_id','payee','amount','trans_type')->get();*/
+        
+        return view('apps.reports.journalReport',compact('data'));
     }
 
 

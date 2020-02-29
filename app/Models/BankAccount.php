@@ -12,6 +12,7 @@ class BankAccount extends Model
     protected $fillable = [
     	'bank_name',
     	'account_no',
+        'chart_id',
     	'created_by',
     	'updated_by',
     ];

@@ -15,13 +15,11 @@ class CreateJournalEntriesTable extends Migration
     {
         Schema::create('journal_entries', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->date('transaction_date');
-            $table->string('reference_no');
+            $table->uuid('account_statement_id');
             $table->string('account_name');
-            $table->string('payee');
-            $table->text('description');
             $table->string('trans_type');
             $table->decimal('amount',50,2);
+            $table->foreign('account_statement_id')->references('id')->on('account_statements')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

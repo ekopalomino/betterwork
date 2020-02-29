@@ -27,7 +27,7 @@ Better Work Indonesia | Create Receive Money
             		@csrf
 					<div class="row">
 						<div class="col-2">
-							<label>To</label>
+							<label>From</label>
 							<input type="text" class="form-control" id="payee" name="payee" placeholder="Payee">
 						</div>
 						<div class="col-2">

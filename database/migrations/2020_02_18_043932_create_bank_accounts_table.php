@@ -17,6 +17,7 @@ class CreateBankAccountsTable extends Migration
             $table->uuid('id');
             $table->string('bank_name');
             $table->string('account_no');
+            $table->uuid('chart_of_account_id');
             $table->uuid('created_by');
             $table->uuid('updated_by')->nullable();
             $table->primary('id');

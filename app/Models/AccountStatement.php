@@ -2,27 +2,25 @@
 
 namespace iteos\Models;
 
+use iteos\Traits\Uuid;
 use Illuminate\Database\Eloquent\Model;
 
 class AccountStatement extends Model
 {
+    use Uuid;
+
     protected $fillable = [
     	'transaction_date',
-        'trans_group',
         'reference_no',
-        'account_id',
-        'bank_id',
-        'item',
         'payee',
-        'description',
-        'amount',
-        'trans_type',
-    	'status_id',
+        'status_id',
     	'created_by',
-    	'updated_by',
-        'checked_by',
+    	'checked_by',
         'approved_by',
+        'posted_by',
     ];
+
+    public $incrementing = false;
 
     public function Statuses()
     {
@@ -34,8 +32,8 @@ class AccountStatement extends Model
         return $this->belongsTo(ChartOfAccount::class,'account_id');
     }
 
-    public function Banks()
+    public function Child()
     {
-        return $this->belongsTo(BankAccount::class,'bank_id');
+        return $this->hasMany(JournalEntry::class,'account_statement_id');
     }
 }

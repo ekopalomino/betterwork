@@ -267,6 +267,8 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth','verified']], function
 
 	Route::get('human-resources/reports/payroll-and-allowance','Apps\ReportsController@financeReport')->name('payReport.index');
 
+	Route::get('accounting/reports/journal-report','Apps\ReportsController@journalReportShow')->name('journal.report');
+
 	Route::get('help/user-menu/reset-password','Apps\HelpController@resetPassIndex')->name('resetPass.index');
 	Route::get('help/user-menu/update-profile','Apps\HelpController@updateProfile')->name('updateProfile.index');
 

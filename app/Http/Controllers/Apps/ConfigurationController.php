@@ -473,7 +473,9 @@ class ConfigurationController extends Controller
     public function bankAccountIndex()
     {
         $data = BankAccount::get();
-        return view('apps.pages.bankAccount',compact('data'));
+        $accounts = ChartOfAccount::where('account_category','1')->pluck('account_name','id')->toArray();
+
+        return view('apps.pages.bankAccount',compact('data','accounts'));
     }
 
     public function bankAccountStore(Request $request)
@@ -481,11 +483,13 @@ class ConfigurationController extends Controller
         $this->validate($request, [
             'bank_name' => 'required',
             'account_no' => 'required',
+            'chart_id' => 'required',
         ]);
 
         $data = BankAccount::create([
             'bank_name' => $request->input('bank_name'),
             'account_no' => $request->input('account_no'),
+            'chart_id' => $request->input('chart_id'),
             'created_by' => auth()->user()->employee_id,
         ]);
 
@@ -511,12 +515,14 @@ class ConfigurationController extends Controller
         $this->validate($request, [
             'bank_name' => 'required',
             'account_no' => 'required',
+            'chart_id' => 'required',
         ]);
 
         $data = BankAccount::find($id);
         $changes = $data->update([
             'bank_name' => $request->input('bank_name'),
             'account_no' => $request->input('account_no'),
+            'chart_id' => $request->input('chart_id'),
             'updated_by' => auth()->user()->employee_id,
         ]);
 

@@ -14,14 +14,13 @@ class CreateAccountStatementsTable extends Migration
     public function up()
     {
         Schema::create('account_statements', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->uuid('id');
             $table->date('transaction_date');
-            $table->uuid('account_name');
+            $table->string('reference_no');
             $table->string('payee');
             $table->text('description');
-            $table->decimal('amount',50,2);
-            $table->integer('type');
             $table->uuid('status_id');
+            $table->primary('id');
             $table->timestamps();
         });
     }
