@@ -38,7 +38,7 @@ Better Work Indonesia | Update Employee
 		        @endif
 		    </div>
 		</div>
-		<div class="card card-primary card-outline">
+		<div class="card card-success card-outline">
 			<div class="card-body">
 				<div class="row">
 					<div class="col-1 col-sm-1">
@@ -160,7 +160,7 @@ Better Work Indonesia | Update Employee
 			    			</div>
 			    			<div class="tab-pane fade" id="vert-tabs-family" role="tabpanel" aria-labelledby="vert-tabs-family-tab">
 			    				<div class="row">
-			    					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#family">
+			    					<button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#family">
          								Add Family
          							</button>
          							<div class="modal fade" id="family">
@@ -219,7 +219,7 @@ Better Work Indonesia | Update Employee
 								                        </div>
 								                    </div>
 								                </div>
-								                <div class="modal-footer justify-content-between">
+								                <div class="modal-footer">
 								              		<button type="close" class="btn btn-default" data-dismiss="modal">Close</button>
 								              		<button name="family" type="submit" class="btn btn-primary">Save changes</button>
 								            	</div>
@@ -475,7 +475,7 @@ Better Work Indonesia | Update Employee
 				            </div>
 				            <div class="tab-pane fade" id="vert-tabs-services" role="tabpanel" aria-labelledby="vert-tabs-services-tab">
 				            	<div class="row">
-			    					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#services">
+			    					<button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#services">
          								Add Record
          							</button>
          							<div class="modal fade" id="services">
@@ -492,7 +492,7 @@ Better Work Indonesia | Update Employee
                   									@csrf
                   									{!! Form::hidden('employee_id',$data->id) !!}
 								            		<div class="form-group row">
-								                      	<label for="inputEmail" class="col-sm-2 col-form-label">Position</label>
+								                      	<label class="col-sm-2 col-form-label">Position</label>
 								                        <div class="col-sm-10">
 								                          {!! Form::select('position', [null=>'Please Select'] + $grades,[], array('class' => 'form-control')) !!}
 								                        </div>
@@ -507,6 +507,18 @@ Better Work Indonesia | Update Employee
 								                      	<label for="inputEmail" class="col-sm-2 col-form-label">Job Title</label>
 								                        <div class="col-sm-10">
 								                          {!! Form::text('job_title', null, array('placeholder' => 'Job Title','class' => 'form-control')) !!}
+								                        </div>
+								                    </div>
+													<div class="form-group row">
+								                      	<label for="inputEmail" class="col-sm-2 col-form-label">Organization</label>
+								                        <div class="col-sm-10">
+								                          {!! Form::select('report_to', [null=>'Please Select'] + $organizations,[], array('class' => 'form-control')) !!}
+								                        </div>
+								                    </div>
+													<div class="form-group row">
+								                      	<label for="inputEmail" class="col-sm-2 col-form-label">Office</label>
+								                        <div class="col-sm-10">
+								                          {!! Form::select('report_to', [null=>'Please Select'] + $offices,[], array('class' => 'form-control')) !!}
 								                        </div>
 								                    </div>
 								                    <div class="form-group row">
@@ -539,7 +551,7 @@ Better Work Indonesia | Update Employee
 								                        </div>
 								                    </div>
 								                </div>
-								                <div class="modal-footer justify-content-between">
+								                <div class="modal-footer">
 								              		<button type="close" class="btn btn-default" data-dismiss="modal">Close</button>
 								              		<button name="service" type="submit" class="btn btn-primary">Save changes</button>
 								            	</div>
@@ -577,12 +589,15 @@ Better Work Indonesia | Update Employee
 					            				<td>
 					            					@if(!empty($service->to))
 					            					{{date("d F Y",strtotime($service->to)) }}
-					            					@endif
+					            					@else
+													Current
+													@endif
 					            				</td>
 					            				<td>{{ number_format($service->salary,2,',','.')}}</td>
 					            				<td>{{$service->contract}}</td>
 					            				<td>
-					            					<a class="btn btn-xs btn-success modalLg" href="#" value="{{ action('Apps\HumanResourcesController@serviceEdit',['id'=>$service->id]) }}" data-toggle="modal" data-target="#modalLg"><i class="fa fa-edit"></i></a>
+					            					<a class="btn btn-xs btn-success modalLg" href="#" value="{{ action('Apps\HumanResourcesController@serviceEdit',['id'=>$service->id]) }}" 
+													data-toggle="modal" data-target="#modalLg" title="Edit Services">Edit</a>
 					            				</td>
 					            			</tr>
 					            			@endforeach

@@ -35,7 +35,7 @@ Better Work Indonesia | Create New Employee
 		        @endif
 		    </div>
 		</div>
-		<div class="card card-primary card-outline">
+		<div class="card card-danger card-outline">
 			<div class="card-body">
 				<div class="row">
 					<div class="col-1 col-sm-1">
@@ -70,7 +70,7 @@ Better Work Indonesia | Create New Employee
 			    				</div>
 			    				<div class="form-group">
 			    					<label for="placeOb">Place Of Birth</label>
-									{!! Form::text('place_of_birth', null, array('placeholder' => 'Place of Birth','id' => 'place_of_birth','class' => 'form-control')) !!}
+									{!! Form::select('place_of_birth', [null=>'Please Select'] + $cities,[], array('class' => 'form-control','required')) !!}
 								</div>
 			    				<div class="form-group">
 			    					<label for="dateOb">Date Of Birth</label>
@@ -96,7 +96,7 @@ Better Work Indonesia | Create New Employee
 			    				</div>
 			    				<div class="form-group">
 			    					<label for="idCard">Tax No</label>
-			    					{!! Form::text('tax_no', null, array('placeholder' => 'ID Card (KTP)','class' => 'form-control')) !!}
+			    					{!! Form::text('tax_no', null, array('placeholder' => 'Tax (NPWP)','class' => 'form-control')) !!}
 			    				</div>
 			    				<div class="form-group">
 			    					<label for="sex">Sex</label>
@@ -149,19 +149,4 @@ Better Work Indonesia | Create New Employee
 		</div>
 	</div>
 </section>
-@endsection
-@section('footer.scripts')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
-<script type="text/javascript">
-    $(document).ready(function(){ 
-    var route = "{{ route('employee.location') }}";
-    $("#place_of_birth").typeahead({
-        source:  function (place_of_birth, process) {
-            return $.get(route, { place_of_birth: place_of_birth }, function (data) {
-                    return process(data);
-                });
-            }
-      });
-	});
-</script>
 @endsection

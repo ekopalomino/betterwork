@@ -24,7 +24,7 @@ Better Work Indonesia | Bank Account
                   		Add New
                 	</button>
                 	<div class="modal fade" id="modal-default">
-				        <div class="modal-dialog">
+				        <div class="modal-dialog modal-lg">
 				          	<div class="modal-content">
 							{!! Form::open(array('route' => 'bankAcc.store','method'=>'POST')) !!}
 							@csrf
@@ -35,12 +35,14 @@ Better Work Indonesia | Bank Account
 				              		</button>
 				            	</div>
 				            	<div class="modal-body">
-				              		<label for="inputEmail" class="col-sm-12 col-form-label">Bank Name</label>
+				              		<label class="col-sm-12 col-form-label">Bank Name</label>
                         			{!! Form::text('bank_name', null, array('placeholder' => 'Bank Name','class' => 'form-control')) !!}
-                        			<label for="inputEmail" class="col-sm-12 col-form-label">Bank Account</label>
+                        			<label class="col-sm-12 col-form-label">Bank Account</label>
                         			{!! Form::text('account_no', null, array('placeholder' => 'Account No','class' => 'form-control')) !!}
+									<label class="col-sm-12 col-form-label">Chart of Account</label>
+									{!! Form::select('chart_id', [null=>'Please Select'] + $accounts,[], array('class' => 'form-control')) !!}
 				            	</div>
-				            	<div class="modal-footer justify-content-between">
+				            	<div class="modal-footer">
 				              		<button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
 				              		<button type="submit" class="btn btn-sm btn-primary">Save changes</button>
 				            	</div>
@@ -50,6 +52,17 @@ Better Work Indonesia | Bank Account
 				    </div>
             	</div>
             	<div class="card-body">
+					@if (count($errors) > 0) 
+					<div class="alert alert-danger alert-dismissible">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+						<h5><i class="icon fas fa-ban"></i> Alert!</h5>
+						<ul>
+							@foreach ($errors->all() as $error)
+							<li>{{ $error }}</li>
+							@endforeach
+						</ul>
+					</div>
+					@endif
             		<table id="example2" class="table table-bordered table-hover">
             			<thead>
             				<tr>
@@ -69,7 +82,13 @@ Better Work Indonesia | Bank Account
             					<td>{{ $bank->account_no }}</td>
             					<td></td>
 								<td>{{date("d F Y H:i",strtotime($bank->created_at)) }}</td>
-								<td></td>
+								<td>
+									<a class="btn btn-xs btn-info modalMd" href="#" value="{{ action('Apps\ConfigurationController@bankAccountEdit',['id'=>$bank->id]) }}" title="Edit Data" data-toggle="modal" 
+									data-target="#modalMd"><i class="fa fa-search"></i></a>
+									{!! Form::open(['method' => 'POST','route' => ['bankAcc.destroy', $bank->id],'style'=>'display:inline','onsubmit' => 'return ConfirmDelete()']) !!}
+									{!! Form::button('<i class="fas fa-user-slash"></i>',['type'=>'submit','class' => 'btn btn-xs btn-danger']) !!}
+									{!! Form::close() !!}
+								</td>
             				</tr>
 							@endforeach
             			</tbody>
@@ -94,5 +113,15 @@ Better Work Indonesia | Bank Account
       "autoWidth": false,
     });
   });
+</script>
+<script>
+    function ConfirmDelete()
+    {
+    var x = confirm("Are You Sure? All The Accounting Transaction Will Be Deleted");
+    if (x)
+        return true;
+    else
+        return false;
+    }
 </script>
 @endsection

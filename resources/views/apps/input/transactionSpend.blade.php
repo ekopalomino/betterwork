@@ -1,7 +1,7 @@
 @extends('apps.layouts.main')
 @section('header.title')
-Better Work Indonesia | Create Salary
-@endsection
+Better Work Indonesia | Create Spend Money
+@endsection 
 @section('content')
 <section class="content-header">
 	<div class="container-fluid">
@@ -9,6 +9,12 @@ Better Work Indonesia | Create Salary
        		<div class="col-sm-6">
           		<h1>Create Spend Money</h1>
        		</div>
+			<div class="col-sm-6">
+				<ol class="breadcrumb float-sm-right">
+					<li class="breadcrumb-item"><a href="{{ route('bank.index') }}">Bank Account</a></li>
+					<li class="breadcrumb-item active">Spend Money</li>
+				</ol>
+			</div>
        	</div>
     </div>
 </section>
@@ -17,12 +23,12 @@ Better Work Indonesia | Create Salary
 		<div class="col-12">
 			<div class="card card-danger card-outline">
 				<div class="card-body">
-					{!! Form::open(array('route' => 'salary.store','method'=>'POST')) !!}
+					{!! Form::open(array('route' => 'spend.store','method'=>'POST')) !!}
             		@csrf
 					<div class="row">
 						<div class="col-2">
 							<label>To</label>
-							<input type="text" class="form-control" id="empolyeeID" name="employee_id" placeholder="Employee ID">
+							<input type="text" class="form-control" id="payee" name="payee" placeholder="Payee">
 						</div>
 						<div class="col-2">
 							<label>Date</label>
@@ -30,11 +36,16 @@ Better Work Indonesia | Create Salary
 						</div>
 						<div class="col-2">
 							<label>Reference</label>
-							<input type="text" class="form-control" id="employeeLastName" name="last_name" placeholder="Employee Last Name">
+							<input type="text" class="form-control" id="reference" name="reference" placeholder="Reference">
 						</div>
 						<div class="col-2">
 							<label>Amounts Are</label>
-							<input type="text" class="form-control" id="employeeLastName" name="last_name" placeholder="Employee Last Name">
+							<select name="contract_status" class="form-control">
+                          		<option value="0">Please Select</option>
+						        <option value="1">Tax Inclusive</option>
+						        <option value="2">Tax Exclusive</option>
+								<option value="3">No Tax</option>
+						    </select>
 						</div>
 					</div>
 					<br>
@@ -49,18 +60,19 @@ Better Work Indonesia | Create Salary
 										<th>Unit Price</th>
 										<th>Account</th>
 										<th>Tax Rate</th>
+										<th>Files</th>
 										<th></th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr>
-										<td>{!! Form::text('item[]', null, array('id' => 'item', 'class' => 'form-control','required')) !!}
-										</td>
-										<td>{!! Form::date('payroll_period[]', '', array('id' => 'datepicker','class' => 'form-control')) !!}</td>
-										<td>{!! Form::number('nett_salary[]', null, array('placeholder' => 'Nett Salary','class' => 'form-control','required')) !!}</td>
-										<td>{!! Form::number('leave_balance[]', null, array('placeholder' => 'Leave Balance','class' => 'form-control','required')) !!}</td>
-										<td>{!! Form::number('reward[]', null, array('placeholder' => 'Reward','class' => 'form-control','required')) !!}</td>
-										<td>{!! Form::number('expense[]', null, array('placeholder' => 'Occasional Expense','class' => 'form-control','required')) !!}</td>
+										<td>{!! Form::text('item[]', null, array('id' => 'item', 'class' => 'form-control','required')) !!}</td>
+										<td>{!! Form::text('description[]', null, array('class' => 'form-control','required')) !!}</td>
+										<td>{!! Form::number('quantity[]', null, array('placeholder' => 'Quantity','class' => 'form-control','required')) !!}</td>
+										<td>{!! Form::number('unit_price[]', null, array('placeholder' => 'Unit Price','class' => 'form-control','required')) !!}</td>
+										<td>{!! Form::select('account[]', [null=>'Please Select'] + $coas,[], array('class' => 'form-control','required')) !!}</td>
+										<td>{!! Form::number('tax[]', null, array('placeholder' => 'Tax Rate','class' => 'form-control','required')) !!}</td>
+										<td>{!! Form::file('file[]', null, array('placeholder' => 'File','class' => 'form-control')) !!}</td>
 										<td><button type="button" name="add" id="add" class="btn btn-success">Add</button></td>
 									</tr>
 								</tbody>
@@ -70,7 +82,7 @@ Better Work Indonesia | Create Salary
 					<br>
 					<div class="form-group">
 				    	<button type="submit" class="btn btn-sm btn-info">Submit</button>
-		                <a button type="button" class="btn btn-sm btn-danger" href="{{ route('salary.index') }}">Cancel</a>
+		                <a button type="button" class="btn btn-sm btn-danger" href="{{ route('bank.index') }}">Cancel</a>
 		            </div>
 		            {!! Form::close() !!}
 				</div>
@@ -85,7 +97,8 @@ Better Work Indonesia | Create Salary
       	var i=1;  
       	$('#add').click(function(){  
            	i++;  
-           	$('#salary').append('<tr id="row'+i+'" class="dynamic-added"><td>{!! Form::text('item[]', null, array('id' => 'item','class' => 'form-control','required')) !!}</td><td>{!! Form::date('payroll_period[]', '', array('id' => 'datepicker','class' => 'form-control')) !!}</td><td>{!! Form::number('nett_salary[]', null, array('placeholder' => 'Nett Salary','class' => 'form-control','required')) !!}</td><td>{!! Form::number('leave_balance[]', null, array('placeholder' => 'Leave Balance','class' => 'form-control','required')) !!}</td><td>{!! Form::number('reward[]', null, array('placeholder' => 'Reward','class' => 'form-control','required')) !!}</td><td>{!! Form::number('expense[]', null, array('placeholder' => 'Occasional Expense','class' => 'form-control','required')) !!}</td><td><button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove">X</button></td></tr>')
+           	$('#salary').append(
+			'<tr id="row'+i+'" class="dynamic-added"><td>{!! Form::text('item[]', null, array('id' => 'item','class' => 'form-control','required')) !!}</td><td>{!! Form::text('description[]', null, array('class' => 'form-control','required')) !!}</td><td>{!! Form::number('quantity[]', null, array('placeholder' => 'Quantity','class' => 'form-control','required')) !!}</td><td>{!! Form::number('unit_price[]', null, array('placeholder' => 'Unit Price','class' => 'form-control','required')) !!}</td><td>{!! Form::select('account[]', [null=>'Please Select'] + $coas,[], array('class' => 'form-control','required')) !!}</td><td>{!! Form::number('tax[]', null, array('placeholder' => 'Tax Rate','class' => 'form-control','required')) !!}</td><td>{!! Form::file('file[]', null, array('placeholder' => 'File','class' => 'form-control')) !!}</td><td><button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove">X</button></td></tr>')
             });
         });  
       

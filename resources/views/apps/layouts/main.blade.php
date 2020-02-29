@@ -10,6 +10,7 @@
   	<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
   	<link rel="stylesheet" href="{{ asset('public/bower_components/admin-lte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
   	<link rel="stylesheet" href="{{ asset('public/bower_components/admin-lte/plugins/toastr/toastr.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('public/css/preload.css') }}">
   	@yield('header.plugins')
   	@yield('header.styles')
 </head>
@@ -24,8 +25,8 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
+			<h4 class="modal-title" id="modalMdTitle"></h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="modalMdTitle"></h4>
           </div>
           <div class="modal-body">
             <div class="modalError"></div>
@@ -38,8 +39,8 @@
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
+			<h4 class="modal-title" id="modalLgTitle"></h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="modalLgTitle"></h4>
           </div>
           <div class="modal-body">
             <div class="modalError"></div>
@@ -71,6 +72,7 @@
 	<script src="{{ asset('public/bower_components/admin-lte/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
 	<script src="{{ asset('public/bower_components/admin-lte/plugins/toastr/toastr.min.js') }}"></script>
 	<script src="{{ asset('public/js/admin.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('public/js/preload.js') }}" type="text/javascript"></script>
 	@yield('footer.scripts')
 	<script type="text/javascript">
 		@if(Session::has('message'))

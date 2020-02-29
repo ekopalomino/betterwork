@@ -57,7 +57,7 @@ class UserMenuController extends Controller
         $getSubordinate = EmployeeService::with('Parent')->where('report_to',auth()->user()->employee_id)->get();
         $getSalary = EmployeeSalary::where('employee_no',$getEmployee->employee_no)->where('status_id','ca52a2ce-5c37-48ce-a7f2-0fd5311860c2')
                                     ->orderBy('payroll_period','DESC')->get();
-        $getServices = EmployeeService::where('employee_id',$getEmployee->id)->orderBy('from','ASC')->first();
+	 $getServices = EmployeeService::where('employee_id',$getEmployee->id)->orderBy('from','ASC')->first();
         /*Query for Bulletin Board*/
         $getBulletin = Bulletin::orderBy('updated_at','DESC')->get();
         $getKnowledge = KnowledgeBase::orderBy('updated_at','DESC')->get();
@@ -66,7 +66,6 @@ class UserMenuController extends Controller
         
     	return view('apps.pages.userHome',compact('getBasicProfile','getEmployee','getAttendance','totalDays','getLastEdu','getSubordinate','getBulletin','getKnowledge','getCurPos','getBirthday','getSalary','getServices'));
     }
-
     public function clockIn(Request $request)
     {
         $this->validate($request, [
@@ -201,8 +200,15 @@ class UserMenuController extends Controller
             'amount_requested' => $diff,
             'status_id' => 'b0a0c17d-e56a-41a7-bfb0-bd8bdc60a7be',
         ]);
+
+        $log = ''.($orig->leave_name).' Updated';
+         \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => ''.($orig->leave_name).' Updated',
+            'alert-type' => 'success'
+        );
     	
-    	return redirect()->route('myLeave.index');
+    	return redirect()->route('myLeave.index')->with($notification);
     }
 
     public function reimbursIndex()
@@ -264,7 +270,7 @@ class UserMenuController extends Controller
     	$getEmployee = Employee::where('email',Auth()->user()->email)->first();
     	$types = GrievanceCategory::pluck('category_name','id')->toArray();
 
-    	return view('apps.input.employeeGrievance',compact('getEmployee','types'));
+    	return view('apps.input.myGrievance',compact('getEmployee','types'));
     }
 
     public function grievanceStore(Request $request)

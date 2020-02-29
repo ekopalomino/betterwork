@@ -15,7 +15,10 @@ class CreateAccountStatementsTable extends Migration
     {
         Schema::create('account_statements', function (Blueprint $table) {
             $table->uuid('id');
-            $table->date('account_period');
+            $table->date('transaction_date');
+            $table->string('reference_no');
+            $table->string('payee');
+            $table->text('description');
             $table->uuid('status_id');
             $table->primary('id');
             $table->timestamps();

@@ -27,9 +27,9 @@
                 <div class="col-sm-12">
                     {!! Form::select('account_parent', $parents,old('account_parent'), array('class' => 'form-control')) !!}
                 </div>
-            <div class="modal-footer justify-content-between">
+            <div class="modal-footer">
                 <button type="close" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button id="register" type="submit" class="btn btn-primary">Save changes</button>
+                <button id="register" type="submit" class="btn btn-primary">Save</button>
             </div>
             {!! Form::close() !!}
         </div>
