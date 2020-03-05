@@ -41,6 +41,10 @@ Better Work Indonesia | Bank Account
                         			{!! Form::text('account_no', null, array('placeholder' => 'Account No','class' => 'form-control')) !!}
 									<label class="col-sm-12 col-form-label">Chart of Account</label>
 									{!! Form::select('chart_id', [null=>'Please Select'] + $accounts,[], array('class' => 'form-control')) !!}
+									<label class="col-sm-12 col-form-label">Opening Balance</label>
+                        			{!! Form::number('opening_balance', null, array('placeholder' => 'Opening Balance','class' => 'form-control')) !!}
+									<label class="col-sm-12 col-form-label">Opening Date</label>
+                        			{!! Form::date('opening_date', '', array('id' => 'datepicker','class' => 'form-control')) !!}
 				            	</div>
 				            	<div class="modal-footer">
 				              		<button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>

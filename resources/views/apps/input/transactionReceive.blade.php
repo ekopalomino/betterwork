@@ -29,6 +29,7 @@ Better Work Indonesia | Create Receive Money
 						<div class="col-2">
 							<label>From</label>
 							<input type="text" class="form-control" id="payee" name="payee" placeholder="Payee">
+							{!! Form::hidden('bank', $bank->id, array('class' => 'form-control')) !!}
 						</div>
 						<div class="col-2">
 							<label>Date</label>
@@ -40,7 +41,7 @@ Better Work Indonesia | Create Receive Money
 						</div>
 						<div class="col-2">
 							<label>Amounts Are</label>
-							<select name="contract_status" class="form-control">
+							<select name="tax_reference" class="form-control">
                           		<option value="0">Please Select</option>
 						        <option value="1">Tax Inclusive</option>
 						        <option value="2">Tax Exclusive</option>

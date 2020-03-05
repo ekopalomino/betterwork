@@ -45,17 +45,11 @@ Better Work Indonesia | Chart of Account Category
                         				</div>
                         			<label for="inputEmail" class="col-sm-12 col-form-label">Account Category</label>
                         				<div class="col-sm-12">
-                          					<select name="account_category" class="form-control">
-                          					<option value="0">Please Select</option>
-						                        <option value="1">Asset</option>
-						                        <option value="2">Liabilities</option>
-						                        <option value="3">Revenue</option>
-						                        <option value="4">Expense</option>
-						                    </select>
+                          					{!! Form::select('account_category', [null=>'Please Select'] + $categories,[], array('class' => 'form-control')) !!}
                         				</div>
-                        			<label for="inputEmail" class="col-sm-12 col-form-label">Account Parent</label>
+									<label for="inputEmail" class="col-sm-12 col-form-label">Opening Balance</label>
                         				<div class="col-sm-12">
-                          					{!! Form::select('account_parent', [null=>'Please Select'] + $parents,[], array('class' => 'form-control')) !!}
+                          					{!! Form::number('opening_balance', null, array('placeholder' => 'Opening Balance','class' => 'form-control')) !!}
                         				</div>
 				            	</div>
 				            	<div class="modal-footer">
@@ -75,7 +69,7 @@ Better Work Indonesia | Chart of Account Category
             					<th>Account ID</th>
             					<th>Account Name</th>
             					<th>Account Category</th>
-            					<th>Account Parent</th>
+            					<th>Opening Balance</th>
             					<th>Created By</th>
 								<th>Created At</th>
             					<th></th>
@@ -87,27 +81,9 @@ Better Work Indonesia | Chart of Account Category
             					<td>{{ $key+1 }}</td>
             					<td>{{ $value->account_id }}</td>
             					<td>{{ $value->account_name }}</td>
-            					<td>
-									@if(($value->account_category) == 1)
-										Asset
-									@elseif(($value->account_category) == 2)
-										Liabilities
-									@elseif(($value->account_category) == 3)
-										Revenue
-									@elseif(($value->account_category) == 4)
-										Expense
-									@else
-										No Category
-									@endif 
-								</td>
-            					<td>
-									@if(!empty($value->account_parent))
-										{{ $value->account_parent }}
-									@else
-										No Parent Account
-									@endif
-								</td>
-            					<td>{{ $value->Author->name }}</td>
+            					<td>{{ $value->Parent->category_name }}</td>
+            					<td>{{ number_format($value->opening_balance,2,',','.')}}</td>
+            					<td>{{ $value->Author->first_name }} {{ $value->Author->last_name }}</td>
             					<td>{{date("d F Y H:i",strtotime($value->created_at)) }}</td>
 								<td>
 									<div class="btn-group">
