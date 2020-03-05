@@ -13,6 +13,8 @@ class BankAccount extends Model
     	'bank_name',
     	'account_no',
         'chart_id',
+        'opening_balance',
+        'opening_date',
     	'created_by',
     	'updated_by',
     ];

@@ -49,8 +49,8 @@ Better Work Indonesia | Bank Statement
 					<div class="btn-group">
 						<button type="button" class="btn btn-sm btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Manage</button>
 						<div class="dropdown-menu" role="menu">
-							<a class="dropdown-item" href="{{ route('spend.create') }}">Spend Money</a>
-							<a class="dropdown-item" href="{{ route('receive.create') }}">Receive Money</a>
+							<a class="dropdown-item" href="{{ route('spend.create',$bank->id) }}">Spend Money</a>
+							<a class="dropdown-item" href="{{ route('receive.create',$bank->id) }}">Receive Money</a>
 							<a class="dropdown-item" href="#">Transfer Money</a>
 							<div class="dropdown-divider"></div>
 							<a class="dropdown-item modalLg" href="#" title="Import Statement" value="{{ action('Apps\AccountingController@bankStatement',['id'=>$bank->id]) }}" data-toggle="modal" data-target="#modalLg">Import Statement</a>
@@ -59,7 +59,7 @@ Better Work Indonesia | Bank Statement
 					<div class="btn-group">
 						<button type="button" class="btn btn-sm btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Find</button>
 						<div class="dropdown-menu" role="menu">
-							<a class="dropdown-item" href="{{ route('account.index') }}">Account Transaction</a>
+							<a class="dropdown-item" href="{{ route('accountTransaction.index',$bank->id) }}">Account Transaction</a>
 							<a class="dropdown-item" href="{{ route('bankStatement.index') }}">Bank Statement</a>
 						</div>
 					</div>

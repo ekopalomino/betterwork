@@ -26,15 +26,15 @@ Better Work Indonesia | Account Transaction
 					<div class="btn-group">
 						<button type="button" class="btn btn-sm btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Manage</button>
 						<div class="dropdown-menu" role="menu">
-							<a class="dropdown-item" href="{{ route('spend.create') }}">Spend Money</a>
-							<a class="dropdown-item" href="{{ route('receive.create') }}">Receive Money</a>
+							<a class="dropdown-item" href="{{ route('spend.create',$bank->id) }}">Spend Money</a>
+							<a class="dropdown-item" href="{{ route('receive.create',$bank->id) }}">Receive Money</a>
 							<a class="dropdown-item" href="#">Transfer Money</a>
 						</div>
 					</div>
 					<div class="btn-group">
 						<button type="button" class="btn btn-sm btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Find</button>
 						<div class="dropdown-menu" role="menu">
-							<a class="dropdown-item" href="{{ route('account.index') }}">Account Transaction</a>
+							<a class="dropdown-item" href="{{ route('accountTransaction.index',$bank->id) }}">Account Transaction</a>
 							<a class="dropdown-item" href="{{ route('bankStatement.index') }}">Bank Statement</a>
 						</div>
 					</div>
@@ -56,9 +56,10 @@ Better Work Indonesia | Account Transaction
 										<th>Account ID</th>
 										<th>Account Name</th>
 										<th>Payee</th>
-										<th>Description</th>
-										<th>Spend</th>
+										<th>Item</th>
+										<th>Spent</th>
 										<th>Receive</th>
+										<th>Balance</th>
 										<th>Status</th>
 										<th></th>
 									</tr>
@@ -68,44 +69,52 @@ Better Work Indonesia | Account Transaction
 									<tr>
 										<td>{{date("d F Y",strtotime($value->transaction_date)) }}</td>
 										<td>
-											@if(!empty($value->account_id))
-											{{ $value->Accounts->account_id }}
-											@else
-											{{ $value->Banks->account_no }}
-											@endif
+											@foreach($value->Child as $child)
+											<li>{{ $child->Accounts->account_id }}</li>
+											@endforeach
 										</td>
 										<td>
-											@if(!empty($value->account_id))
-											{{ $value->Accounts->account_name }}
-											@else
-											{{ $value->Banks->bank_name }}
-											@endif
+											@foreach($value->Child as $child)
+											<li>{{ $child->Accounts->account_name }}</li>
+											@endforeach
 										</td>
 										<td>{{ $value->payee }}</td>
-										<td>{{ $value->description }}</td>
 										<td>
-											@if(($value->trans_type) == 'Debit')
-											{{ number_format($value->amount,2,',','.')}}
-											@else
-											0
-											@endif
+											@foreach($value->Child as $child)
+											<li>{{ $child->item }}</li>
+											@endforeach
 										</td>
 										<td>
-											@if(($value->trans_type) == 'Credit')
-											{{ number_format($value->amount,2,',','.')}}
+											@foreach($value->Child as $child)
+											@if(($child->trans_type) == 'Debit')
+											<li>{{ number_format($child->amount,2,',','.')}}</li>
 											@else
-											0
 											@endif
+											@endforeach
 										</td>
 										<td>
-											@if(($value->status_id) == 'e6cb9165-131e-406c-81c8-c2ba9a2c567e')
+											@foreach($value->Child as $child)
+											@if(($child->trans_type) == 'Credit')
+											<li>{{ number_format($child->amount,2,',','.')}}</li>
+											@else
+											@endif
+											@endforeach
+										</td>
+										<td>{{ number_format($value->balance,2,',','.')}}</td>
+										<td>
+											@if(($value->status_id) == '1f2967a5-9a88-4d44-a66b-5339c771aca0')
+											<font color="red">{{ $value->Statuses->name }}</font>
+											@elseif(($value->status_id) == 'edcb2ad8-df07-4854-8260-383aaec4a061')
+											<font color="red">{{ $value->Statuses->name }}</font>
+											@elseif(($value->status_id) == 'e6cb9165-131e-406c-81c8-c2ba9a2c567e')
 											<font color="red">{{ $value->Statuses->name }}</font>
 											@else
 											<font color="green">{{ $value->Statuses->name }}</font>
 											@endif
 										</td>
 										<td>
-											<a class="btn btn-xs btn-success" href="{{ route('account.show',['id'=>$value->id]) }} " title="Show Transaction" ><i class="fa fa-search"></i></a>
+											<a class="btn btn-xs btn-success" href="{{ route('account.show',['bank'=>$bank->id,'id'=>$value->id]) }} " title="Show Transaction" ><i class="fa fa-search"></i></a>
+											<a class="btn btn-xs btn-warning" href="{{ route('accTransaction.edit',['id'=>$value->id]) }} " title="Edit Transaction" ><i class="fa fa-edit"></i></a>
 										</td>
 									</tr>
 									@endforeach

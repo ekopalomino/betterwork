@@ -15,6 +15,7 @@ class AssetManagement extends Model
     	'category_name',
     	'purchase_date',
     	'purchase_price',
+        'purchase_from',
     	'estimate_time',
     	'estimate_depreciate_value',
     	'status_id',

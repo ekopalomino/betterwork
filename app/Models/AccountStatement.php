@@ -13,6 +13,9 @@ class AccountStatement extends Model
     	'transaction_date',
         'reference_no',
         'payee',
+        'total',
+        'balance',
+        'tax_reference',
         'status_id',
     	'created_by',
     	'checked_by',
@@ -27,13 +30,28 @@ class AccountStatement extends Model
     	return $this->belongsTo(Status::class,'status_id');
     }
 
-    public function Accounts()
-    {
-        return $this->belongsTo(ChartOfAccount::class,'account_id');
-    }
-
     public function Child()
     {
         return $this->hasMany(JournalEntry::class,'account_statement_id');
+    }
+
+    public function Creator()
+    {
+        return $this->belongsTo(Employee::class,'created_by');
+    }
+
+    public function Checker()
+    {
+        return $this->belongsTo(Employee::class,'checked_by');
+    }
+
+    public function Approval()
+    {
+        return $this->belongsTo(Employee::class,'approved_by');
+    }
+
+    public function Posted()
+    {
+        return $this->belongsTo(Employee::class,'posted_by');
     }
 }
