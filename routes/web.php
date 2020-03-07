@@ -90,6 +90,7 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth','verified']], function
 	Route::get('configuration/log-activity','Apps\ConfigurationController@logActivity')->name('logs.index');
 	/*Application Setting Sub Menu Route*/
 	Route::get('configuration/application','Apps\ConfigurationController@applicationIndex')->name('application.index');
+	Route::get('configuration/accounting-setting','Apps\ConfigurationController@accountingSetIndex')->name('accSet.index');
 	/*Employee Position Sub Menu Route*/
 	Route::get('configuration/employee-position','Apps\ConfigurationController@positionIndex')->name('position.index');
 	Route::post('configuration/employee-position/store','Apps\ConfigurationController@positionStore')->name('position.store');
