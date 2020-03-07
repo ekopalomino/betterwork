@@ -122,13 +122,13 @@
 			@endif
 			@can('Access Configuration')
 			@if(\Route::is(['application.index','config.index','position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','coaCat.index','assetCat.index','user.index','logs.index','role.index',
-			'role.create','role.edit','bankAcc.index','organization.index','office.index']))
+			'role.create','role.edit','bankAcc.index','organization.index','office.index','accSet.index']))
 			@can('Create Application Setting')
 			<li class="nav-item">
 				<a href="{{ route('application.index') }}" class="nav-link {{set_active('application.index') }}">
 					<i class="nav-icon fas fa-cog"></i>
 					<p>
-						Application
+						General Setting
 					</p>
 				</a>
 			</li>
@@ -234,8 +234,8 @@
 			</li>
 			@endcan
 			@can('Create Accounting Master Data')
-			<li class="nav-item has-treeview {{set_open(['coaCat.index','assetCat.index','bankAcc.index']) }}">
-				<a href="#" class="nav-link {{set_active(['coaCat.index','assetCat.index','bankAcc.index']) }}">
+			<li class="nav-item has-treeview {{set_open(['coaCat.index','assetCat.index','bankAcc.index','accSet.index']) }}">
+				<a href="#" class="nav-link {{set_active(['coaCat.index','assetCat.index','bankAcc.index','accSet.index']) }}">
 					<i class="nav-icon fas fa-calculator"></i>
 					<p>
 						Accounting
@@ -259,6 +259,12 @@
 						<a href="{{ route('coaCat.index') }}" class="nav-link {{set_active('coaCat.index') }}">
 							<i class="far fa-circle nav-icon"></i>
 							<p>Chart of Account</p>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="{{ route('accSet.index') }}" class="nav-link {{set_active('accSet.index') }}">
+							<i class="far fa-circle nav-icon"></i>
+							<p>Setting</p>
 						</a>
 					</li>
 				</ul>
@@ -458,9 +464,10 @@
 			@endif
 			@endcan
 			@can('Access Accounting')
-			@if(\Route::is(['accounting.index','bank.index','account.index','accTransaction.index','accTransaction.create','spend.create','receive.create','bankStatement.index','account.show','asset.index']))
+			@if(\Route::is(['accounting.index','bank.index','accountTransaction.index','accTransaction.index','accTransaction.create','spend.create','receive.create','bankStatement.index','account.show','asset.index',
+			'journal.index','journal.report','budget.index','budgetDetail.create','budgetDetail.edit']))
 			<li class="nav-item {{set_open('bank.index') }}">
-				<a href="{{ route('bank.index') }}" class="nav-link {{set_active(['bank.index','spend.create','receive.create','bankStatement.index','account.index','account.show']) }}">
+				<a href="{{ route('bank.index') }}" class="nav-link {{set_active(['bank.index','spend.create','receive.create','bankStatement.index','accountTransaction.index','account.show']) }}">
 					<i class="nav-icon fas fa-money-check-alt"></i>
 					<p>
 						Bank Account
@@ -475,16 +482,16 @@
 					</p>
 				</a>
 			</li>
-			<li class="nav-item">
-				<a href="#" class="nav-link">
+			<li class="nav-item {{set_open(['budget.index','budgetDetail.create','budgetDetail.edit']) }}">
+				<a href="{{ route('budget.index') }}" class="nav-link {{set_active(['budget.index','budgetDetail.create']) }}">
 					<i class="nav-icon fas fa-file-invoice"></i>
 					<p>
 						Budget Manager
 					</p>
 				</a>
 			</li>
-			<li class="nav-item">
-				<a href="#" class="nav-link">
+			<li class="nav-item has-treeview {{set_open(['journal.index','journal.report']) }}">
+				<a href="#" class="nav-link {{set_active(['journal.index','journal.report']) }}">
 					<i class="nav-icon fas fa-chart-line"></i>
 					<p>
 						Reports
@@ -492,8 +499,8 @@
 					</p>
 				</a>
 				<ul class="nav nav-treeview">
-					<li class="nav-item ">
-						<a href="{{ route('journal.report') }}" class="nav-link ">
+					<li class="nav-item {{set_open(['journal.index','journal.report']) }}">
+						<a href="{{ route('journal.index') }}" class="nav-link {{set_active(['journal.index','journal.report']) }}">
 							<i class="far fa-circle nav-icon"></i>
 							<p>Journal Report</p>
 						</a>
@@ -525,7 +532,7 @@
 					<li class="nav-item ">
 						<a href="" class="nav-link ">
 							<i class="far fa-circle nav-icon"></i>
-							<p>Budget</p>
+							<p>Budget Variance</p>
 						</a>
 					</li>
 				</ul>

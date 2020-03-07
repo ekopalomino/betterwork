@@ -15,8 +15,10 @@ class JournalEntry extends Model
     	'account_name',
     	'trans_type',
     	'tax_rate',
+        'tax_amount',
     	'file',
     	'amount',
+        'source',
     ];
 
     public function Parent()

@@ -90,6 +90,7 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth','verified']], function
 	Route::get('configuration/log-activity','Apps\ConfigurationController@logActivity')->name('logs.index');
 	/*Application Setting Sub Menu Route*/
 	Route::get('configuration/application','Apps\ConfigurationController@applicationIndex')->name('application.index');
+	Route::get('configuration/accounting-setting','Apps\ConfigurationController@accountingSetIndex')->name('accSet.index');
 	/*Employee Position Sub Menu Route*/
 	Route::get('configuration/employee-position','Apps\ConfigurationController@positionIndex')->name('position.index');
 	Route::post('configuration/employee-position/store','Apps\ConfigurationController@positionStore')->name('position.store');
@@ -239,25 +240,35 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth','verified']], function
 	Route::get('grievance/published-data','Apps\GrievanceController@grievancePublishData')->name('grievancePublished.index');
 	Route::get('grievance/published-data/view/{id}','Apps\GrievanceController@grievancePublishShow')->name('grievancePublished.show');
 
-	Route::get('accounting/bank-statement','Apps\AccountingController@bankIndex')->name('bank.index');
-	Route::get('accounting/bank-statement/show','Apps\AccountingController@bankStatementIndex')->name('bankStatement.index');
-	Route::get('accounting/bank-statement-to-account','Apps\AccountingController@statementToAccount')->name('statToAcc.index');
-	Route::get('accounting/bank-statement-to-account/find/{id}','Apps\AccountingController@findTransactionByDate')->name('findAcc.find');
-	Route::post('accounting/bank-statement/store/{id}','Apps\AccountingController@bankStatementMatch')->name('statToAcc.store');
-	Route::post('accounting/bank-statement/save-period','Apps\AccountingController@bankPeriod')->name('bankPeriod.store');
-	Route::get('accounting/bank-statement/import/{id}','Apps\AccountingController@bankStatement')->name('bankStatement.import');
-	Route::post('accounting/bank-statement/import/{id}','Apps\AccountingController@bankStatementImport')->name('statementFile.import');
-	Route::get('accounting/account-statement','Apps\AccountingController@accountIndex')->name('account.index');
-	Route::get('accounting/account-statement/{id}','Apps\AccountingController@AccountTransactionShow')->name('account.show');
+	Route::get('accounting/bank','Apps\AccountingController@bankIndex')->name('bank.index');
+	Route::get('accounting/bank/bank-statement/show','Apps\AccountingController@bankStatementIndex')->name('bankStatement.index');
+	Route::get('accounting/bank/bank-statement-to-account','Apps\AccountingController@statementToAccount')->name('statToAcc.index');
+	Route::get('accounting/bank/bank-statement-to-account/find/{id}','Apps\AccountingController@findTransactionByDate')->name('findAcc.find');
+	Route::post('accounting/bank/bank-statement/store/{id}','Apps\AccountingController@bankStatementMatch')->name('statToAcc.store');
+	Route::get('accounting/bank/bank-statement/import/{id}','Apps\AccountingController@bankStatement')->name('bankStatement.import');
+	Route::post('accounting/bank/bank-statement/import/{id}','Apps\AccountingController@bankStatementImport')->name('statementFile.import');
+	Route::get('accounting/bank/account-transaction/{id}','Apps\AccountingController@accountIndex')->name('accountTransaction.index');
+	Route::get('accounting/bank/account-transaction/{bank}/show/{id}','Apps\AccountingController@AccountTransactionShow')->name('account.show');
 	Route::post('accounting/account-statement/save-period','Apps\AccountingController@statementPeriod')->name('accountPeriod.store');
-	Route::get('accounting/account-statement/{id}/transaction','Apps\AccountingController@AccountTransaction')->name('accTransaction.index');
-	Route::get('accounting/account-statement/transaction/spend-money','Apps\AccountingController@spendCreate')->name('spend.create');
+	Route::get('accounting/bank/transaction/cash-paid/{id}','Apps\AccountingController@spendCreate')->name('spend.create');
 	Route::post('accounting/account-statement/transaction/spend-money/store','Apps\AccountingController@spendStore')->name('spend.store');
-	Route::get('accounting/account-statement/transaction/receive-money','Apps\AccountingController@receiveCreate')->name('receive.create');
+	Route::get('accounting/bank/transaction/cash-receipt/{id}','Apps\AccountingController@receiveCreate')->name('receive.create');
 	Route::post('accounting/account-statement/transaction/receive-money/store','Apps\AccountingController@receiveStore')->name('receive.store');
-
+	Route::get('accounting/account-statement/edit/{id}','Apps\AccountingController@transactionEdit')->name('accTransaction.edit');
+	Route::post('accounting/account-statement/update/{id}','Apps\AccountingController@transactionUpdate')->name('accTransaction.update');
+	Route::post('accounting/account-statement/checked/{id}','Apps\AccountingController@AccountChecked')->name('accTransaction.checked');
+	Route::post('accounting/account-statement/approved/{id}','Apps\AccountingController@AccountApprove')->name('accTransaction.approve');
+	Route::post('accounting/account-statement/posted/{id}','Apps\AccountingController@AccountPosted')->name('accTransaction.posted');
+	Route::post('accounting/account-statement/reconcile/{id}','Apps\AccountingController@AccountReconcile')->name('accTransaction.reconcile');
 	Route::get('accounting/asset-management','Apps\AccountingController@assetManagementIndex')->name('asset.index');
 	Route::post('accounting/asset-management/store','Apps\AccountingController@assetManagementStore')->name('asset.store');
+
+	Route::get('accounting/budget-manager','Apps\AccountingController@budgetManagerIndex')->name('budget.index');
+	Route::post('accounting/budget-manager/store','Apps\AccountingController@budgetNewStore')->name('budget.store');
+	Route::get('accounting/budget-manager/detail/{id}','Apps\AccountingController@budgetDetailCreate')->name('budgetDetail.create');
+	Route::post('accounting/budget-manager/detail/store','Apps\AccountingController@budgetDetailStore')->name('budgetDetail.store');
+	Route::get('accounting/budget-manager/detail/edit/{id}','Apps\AccountingController@budgetDetailEdit')->name('budgetDetail.edit');
+	Route::get('accounting/budget-manager/detail/update/{id}','Apps\AccountingController@budgetDetailUpdate')->name('budgetDetail.update');
 
 	Route::get('human-resources/reports/attendance','Apps\ReportsController@attendanceReport')->name('attReport.index');
 	Route::post('human-resources/reports/attendance/result','Apps\ReportsController@attendanceProcess')->name('attReport.result');
@@ -267,7 +278,8 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth','verified']], function
 
 	Route::get('human-resources/reports/payroll-and-allowance','Apps\ReportsController@financeReport')->name('payReport.index');
 
-	Route::get('accounting/reports/journal-report','Apps\ReportsController@journalReportShow')->name('journal.report');
+	Route::get('accounting/reports/journal-report','Apps\ReportsController@journalReportIndex')->name('journal.index');
+	Route::post('accounting/reports/journal-report/show','Apps\ReportsController@journalReportShow')->name('journal.report');
 
 	Route::get('help/user-menu/reset-password','Apps\HelpController@resetPassIndex')->name('resetPass.index');
 	Route::get('help/user-menu/update-profile','Apps\HelpController@updateProfile')->name('updateProfile.index');
@@ -278,6 +290,6 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth','verified']], function
 
 
 
-Auth::routes();
+/*Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home');*/

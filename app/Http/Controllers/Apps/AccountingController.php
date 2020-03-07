@@ -7,15 +7,19 @@ use iteos\Http\Controllers\Controller;
 use iteos\Models\BankAccount;
 use iteos\Models\BankStatement;
 use iteos\Models\ChartOfAccount;
+use iteos\Models\CoaCategory;
 use iteos\Models\AccountStatement;
 use iteos\Models\JournalEntry;
 use iteos\Models\AssetCategory;
 use iteos\Models\AssetManagement;
 use iteos\Models\AssetDepreciation;
+use iteos\Models\BudgetPeriod;
+use iteos\Models\BudgetDetail;
 use Maatwebsite\Excel\Facades\Excel;
 use iteos\Imports\BankTransactionImport;
 use DB;
 use Ramsey\Uuid\Uuid;
+use Carbon\CarbonPeriod;
 
 class AccountingController extends Controller
 {
@@ -44,16 +48,6 @@ class AccountingController extends Controller
         return view('apps.pages.statementIndex',compact('data'));
     }
 
-    public function bankPeriod(Request $request)
-    {
-    	$data = BankStatement::create([
-    		'bank_id' => $request->input('bank_id'),
-    		'statement_period' => $request->input('period'),
-    	]);
-
-    	return redirect()->route('bank.index');
-    }
-
     public function bankStatement($id)
     {
     	$data = BankAccount::find($id);
@@ -72,16 +66,18 @@ class AccountingController extends Controller
         $data = Excel::toArray(new BankTransactionImport, $request->file('statement'))[0];
         
         foreach($data as $value) {
-            $result = BankStatement::create([
-                'bank_account_id' => $request->input('account_id'),
-                'transaction_date' => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($value['date']),
-                'payee' => $value['payee'],
-                'description' => $value['description'],
-                'type' => $value['type'],
-                'amount' => $value['amount'],
-                'balance' => $value['balance'],
-                'status_id' => 'e6cb9165-131e-406c-81c8-c2ba9a2c567e',
-            ]);
+            if(!empty($value)) {
+                $result = BankStatement::create([
+                    'bank_account_id' => $request->input('account_id'),
+                    'transaction_date' => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($value['date']),
+                    'payee' => $value['payee'],
+                    'description' => $value['description'],
+                    'type' => $value['type'],
+                    'amount' => $value['amount'],
+                    'balance' => $value['balance'],
+                    'status_id' => 'e6cb9165-131e-406c-81c8-c2ba9a2c567e',
+                ]);
+            }
         }
         
         $log = 'Bank Statement Successfully Import';
@@ -124,27 +120,32 @@ class AccountingController extends Controller
             'status_id' => 'f6e41f5d-0f6e-4eca-a141-b6c7ce34cae6'
         ]);
         $returnState = AccountStatement::with('Child')->where('id',$request->input('account_id'))->first();
-        if(($data->type) == 'Receive') {
-            $bankJournal = JournalEntry::create([
-                'account_statement_id' => $returnState->id,
-                'item' => $returnState->item,
-                'description' => $returnState->description,
-                'quantity' => $returnState->quantity,
-                'unit_price' => $returnState->unit_price,
-                'account_name' => $data->Banks->chart_id,
-                'trans_type' => 'Debit',
-            ]);
-        } else {
-            $bankJournal = JournalEntry::create([
-                'account_statement_id' => $returnState->id,
-                'item' => $returnState->item,
-                'description' => $returnState->description,
-                'quantity' => $returnState->quantity,
-                'unit_price' => $returnState->unit_price,
-                'account_name' => $data->Banks->chart_id,
-                'trans_type' => 'Credit',
-            ]);
+        foreach($returnState->Child as $Child) {
+            if(($data->type) == 'Receive') {
+                $bankJournal = JournalEntry::create([
+                    'account_statement_id' => $returnState->id,
+                    'item' => $Child->item,
+                    'description' => $Child->description,
+                    'quantity' => $Child->quantity,
+                    'unit_price' => $Child->unit_price,
+                    'account_name' => $data->Banks->chart_id,
+                    'trans_type' => 'Debit',
+                    'amount' => ($Child->quantity)*($Child->unit_price),
+                ]);
+            } else {
+                $bankJournal = JournalEntry::create([
+                    'account_statement_id' => $returnState->id,
+                    'item' => $Child->item,
+                    'description' => $Child->description,
+                    'quantity' => $Child->quantity,
+                    'unit_price' => $Child->unit_price,
+                    'account_name' => $data->Banks->chart_id,
+                    'trans_type' => 'Credit',
+                    'amount' => ($Child->quantity)*($Child->unit_price),
+                ]);
+            }
         }
+        
         
         /*$sources = AccountStatement::where('id',$request->input('account_id'))->first();
         if(($sources->trans_type) == 'Debit') {
@@ -182,11 +183,14 @@ class AccountingController extends Controller
 
     }
 
-    public function accountIndex() 
+    public function accountIndex($id) 
     {
-    	$data = AccountStatement::where('bank_id',NULL)->orderBy('updated_at','ASC')->paginate(10);
-
-    	return view('apps.pages.accountIndex',compact('data'));
+        $bank = BankAccount::find($id);
+        $data = AccountStatement::with(['Child' => function($query) {
+            $query->where('source','User');
+        }])->orderBy('updated_at','DESC')->paginate(10);
+    	
+    	return view('apps.pages.accountIndex',compact('data','bank'));
     }
 
     public function statementPeriod(Request $request)
@@ -201,36 +205,88 @@ class AccountingController extends Controller
 
     public function AccountTransaction($id)
     {
+        $bank = BankAccount::find($id);
     	$data  = AccountStatement::find($id);
 
-    	return view('apps.pages.AccountTransaction',compact('data'));
+    	return view('apps.pages.AccountTransaction',compact('data','bank'));
     }
 
-    public function AccountTransactionShow($id)
+    public function AccountTransactionShow($bank,$id)
+    {
+        $bank = BankAccount::where('id',$bank)->first();
+        $data = AccountStatement::with(['Child' => function($query) {
+            $query->where('source','User');
+        }])->where('id',$id)->first();
+        
+        return view('apps.show.accountTransaction',compact('bank','data'));
+    }
+
+    public function AccountChecked(Request $request,$id)
     {
         $data = AccountStatement::find($id);
-        
-        return view('apps.show.accountTransaction',compact('data'));
+        $checked = $data->update([
+            'status_id' => 'edcb2ad8-df07-4854-8260-383aaec4a061',
+            'checked_by' => auth()->user()->employee_id,
+        ]);
+
+        return redirect()->back();
     }
 
-    public function spendCreate()
+    public function AccountApprove(Request $request,$id)
     {
-        $coas = ChartOfAccount::where('account_category','1')
-                                ->orWhere('account_category','4')
+        $data = AccountStatement::find($id);
+        $approved = $data->update([
+            'status_id' => 'ca52a2ce-5c37-48ce-a7f2-0fd5311860c2',
+            'approved_by' => auth()->user()->employee_id,
+        ]);
+
+        return redirect()->back();
+    }
+
+    public function AccountPosted(Request $request,$id)
+    {
+        $data = AccountStatement::find($id);
+        $posted = $data->update([
+            'status_id' => 'e6cb9165-131e-406c-81c8-c2ba9a2c567e',
+            'posted_by' => auth()->user()->employee_id,
+        ]);
+
+        return redirect()->back();
+    }
+
+    public function AccountReconcile(Request $request,$id)
+    {
+
+    }
+
+    public function spendCreate($id)
+    {
+        $bank = BankAccount::find($id);
+        $coas = ChartOfAccount::where('account_category','2')
+                                ->orWhere('account_category','5')
                                 ->orderBy('account_id','ASC')
                                 ->pluck('account_name','id')
                                 ->toArray();
 
-    	return view('apps.input.transactionSpend',compact('coas'));
+    	return view('apps.input.transactionSpend',compact('coas','bank'));
     }
 
     public function spendStore(Request $request)
     {
+        $bank = BankAccount::where('id',$request->input('bank'))->first();
+        $prevData = AccountStatement::where('transaction_date','<=',$request->input('transaction_date'))->first();
+        if(!empty($prevData)) {
+            $savePrev = $prevData->balance;
+        } else {
+            $savePrev = '0';
+        }
+
         $dataM = AccountStatement::create([
             'transaction_date' => $request->input('transaction_date'),
             'reference_no' => $request->input('reference_no'),
             'payee' => $request->input('payee'),
-            'status_id' => 'e6cb9165-131e-406c-81c8-c2ba9a2c567e',
+            'tax_reference' => $request->input('tax_reference'),
+            'status_id' => '1f2967a5-9a88-4d44-a66b-5339c771aca0',
             'created_by' => auth()->user()->employee_id,
         ]);
         
@@ -241,6 +297,7 @@ class AccountingController extends Controller
         $accounts = $request->account;
         $taxes = $request->tax;
         $files = $request->file;
+        $total = 0;
         
         foreach($items as $index=>$item) {
             if($request->hasFile('file')) {
@@ -258,6 +315,18 @@ class AccountingController extends Controller
                         'file' => $path,
                         'amount' => ($quantities[$index])*($prices[$index]),
                     ]);
+                    $dataB = JournalEntry::create([
+                        'account_statement_id' => $dataM->id,
+                        'item' => $item,
+                        'description' => $descriptions[$index],
+                        'quantity' => $quantities[$index],
+                        'unit_price' => $prices[$index],
+                        'account_name' => $bank->chart_id,
+                        'trans_type' => 'Credit',
+                        'file' => $path,
+                        'amount' => ($quantities[$index])*($prices[$index]),
+                        'source' => 'Bank',
+                    ]);
                 } else {
                     $dataE = JournalEntry::create([
                         'account_statement_id' => $dataM->id,
@@ -268,8 +337,23 @@ class AccountingController extends Controller
                         'account_name' => $accounts[$index],
                         'trans_type' => 'Debit',
                         'tax_rate' => $taxes[$index],
+                        'tax_amount' => ($quantities[$index]*$prices[$index])*$taxes[$index]/100,
                         'file' => $path,
-                        'amount' => ($quantities[$index])*($prices[$index]),
+                        'amount' => (($quantities[$index])*($prices[$index]))+((($quantities[$index])*($prices[$index]))*($taxes[$index])/100),
+                    ]);
+                    $dataB = JournalEntry::create([
+                        'account_statement_id' => $dataM->id,
+                        'item' => $item,
+                        'description' => $descriptions[$index],
+                        'quantity' => $quantities[$index],
+                        'unit_price' => $prices[$index],
+                        'account_name' => $bank->chart_id,
+                        'trans_type' => 'Credit',
+                        'tax_rate' => $taxes[$index],
+                        'tax_amount' => ($quantities[$index]*$prices[$index])*$taxes[$index]/100,
+                        'file' => $path,
+                        'amount' => (($quantities[$index])*($prices[$index]))+((($quantities[$index])*($prices[$index]))*($taxes[$index])/100),
+                        'source' => 'Bank',
                     ]);
                 }
                 
@@ -282,8 +366,19 @@ class AccountingController extends Controller
                         'quantity' => $quantities[$index],
                         'unit_price' => $prices[$index],
                         'account_name' => $accounts[$index],
+                        'trans_type' => 'Debit',
+                        'amount' => ($quantities[$index])*($prices[$index]),
+                    ]);
+                    $dataB = JournalEntry::create([
+                        'account_statement_id' => $dataM->id,
+                        'item' => $item,
+                        'description' => $descriptions[$index],
+                        'quantity' => $quantities[$index],
+                        'unit_price' => $prices[$index],
+                        'account_name' => $bank->chart_id,
                         'trans_type' => 'Credit',
                         'amount' => ($quantities[$index])*($prices[$index]),
+                        'source' => 'Bank',
                     ]);
                 } else {
                     $dataE = JournalEntry::create([
@@ -293,74 +388,66 @@ class AccountingController extends Controller
                         'quantity' => $quantities[$index],
                         'unit_price' => $prices[$index],
                         'account_name' => $accounts[$index],
+                        'trans_type' => 'Debit',
+                        'tax_rate' => $taxes[$index],
+                        'tax_amount' => ($quantities[$index]*$prices[$index])*$taxes[$index]/100,
+                        'amount' => (($quantities[$index])*($prices[$index]))+((($quantities[$index])*($prices[$index]))*($taxes[$index])/100),
+                    ]);
+                    $dataB = JournalEntry::create([
+                        'account_statement_id' => $dataM->id,
+                        'item' => $item,
+                        'description' => $descriptions[$index],
+                        'quantity' => $quantities[$index],
+                        'unit_price' => $prices[$index],
+                        'account_name' => $bank->chart_id,
                         'trans_type' => 'Credit',
                         'tax_rate' => $taxes[$index],
-                        'amount' => ($quantities[$index])*($prices[$index]),
+                        'tax_amount' => ($quantities[$index]*$prices[$index])*$taxes[$index]/100,
+                        'amount' => (($quantities[$index])*($prices[$index]))+((($quantities[$index])*($prices[$index]))*($taxes[$index])/100),
+                        'source' => 'Bank',
                     ]);
                 }
             }
-            
-            /*$data = AccountStatement::create([
-                'transaction_date' => $request->input('transaction_date'),
-                'reference_no' => ''.str_pad($lastOrder + 1, 4, "0", STR_PAD_LEFT).'',
-                'trans_group' => Uuid::uuid4()->getHex(),
-                'account_id' => $accounts[$index],
-                'payee' => $request->input('payee'),
-                'item' => $item,
-                'description' => $descriptions[$index],
-                'amount' => $prices[$index],
-                'trans_type' => 'Credit',
-                'status_id' => 'e6cb9165-131e-406c-81c8-c2ba9a2c567e',
-                'created_by' => auth()->user()->employee_id,
-            ]);*/
+            $total+=$dataE->amount;
         }
 
-        /*$input = $request->all();
-        $lastOrder = AccountStatement::count();
-        $items = $request->item;
-        $descriptions = $request->description;
-        $quantities = $request->quantity;
-        $prices = $request->unit_price;
-        $accounts = $request->account;
-        $taxes = $request->tax;
-        $files = $request->file;
-        foreach($items as $index=>$item) {
-            $data = AccountStatement::create([
-                'transaction_date' => $request->input('transaction_date'),
-                'reference_no' => ''.str_pad($lastOrder + 1, 4, "0", STR_PAD_LEFT).'',
-                'trans_group' => Uuid::uuid4()->getHex(),
-                'account_id' => $accounts[$index],
-                'payee' => $request->input('payee'),
-                'item' => $item,
-                'description' => $descriptions[$index],
-                'amount' => $prices[$index],
-                'trans_type' => 'Debit',
-                'status_id' => 'e6cb9165-131e-406c-81c8-c2ba9a2c567e',
-                'created_by' => auth()->user()->employee_id,
-            ]);
-        }*/
+        $sum = AccountStatement::where('id',$dataM->id)->first();
+        $updateSum = $sum->update([
+            'balance' => ($savePrev) - ($total),
+            'total' => $total,
+        ]);
 
-        return redirect()->route('bank.index');
+        return redirect()->route('accountTransaction.index',$bank->id);
     }
 
-    public function receiveCreate()
+    public function receiveCreate($id)
     {
-        $coas = ChartOfAccount::where('account_category','2')
-                                ->orWhere('account_category','3')
+        $bank = BankAccount::find($id);
+        $coas = ChartOfAccount::where('account_category','4')
                                 ->orderBy('account_id','ASC')
                                 ->pluck('account_name','id')
                                 ->toArray();
 
-        return view('apps.input.transactionReceive',compact('coas'));
+        return view('apps.input.transactionReceive',compact('bank','coas'));
     }
 
     public function receiveStore(Request $request)
     {
+        $bank = BankAccount::where('id',$request->input('bank'))->first();
+        $prevData = AccountStatement::where('transaction_date','<=',$request->input('transaction_date'))->first();
+
+        if(!empty($prevData)) {
+            $savePrev = $prevData->balance;
+        } else {
+            $savePrev = '0';
+        }
+        
         $dataM = AccountStatement::create([
             'transaction_date' => $request->input('transaction_date'),
             'reference_no' => $request->input('reference_no'),
             'payee' => $request->input('payee'),
-            'status_id' => 'e6cb9165-131e-406c-81c8-c2ba9a2c567e',
+            'tax_reference' => $request->input('tax_reference'),
+            'status_id' => '1f2967a5-9a88-4d44-a66b-5339c771aca0',
             'created_by' => auth()->user()->employee_id,
         ]);
         
@@ -371,6 +458,7 @@ class AccountingController extends Controller
         $accounts = $request->account;
         $taxes = $request->tax;
         $files = $request->file;
+        $total = 0;
 
         foreach($items as $index=>$item) {
             if($request->hasFile('file')) {
@@ -388,6 +476,18 @@ class AccountingController extends Controller
                         'file' => $path,
                         'amount' => ($quantities[$index])*($prices[$index]),
                     ]);
+                    $dataB = JournalEntry::create([
+                        'account_statement_id' => $dataM->id,
+                        'item' => $item,
+                        'description' => $descriptions[$index],
+                        'quantity' => $quantities[$index],
+                        'unit_price' => $prices[$index],
+                        'account_name' => $bank->chart_id,
+                        'trans_type' => 'Debit',
+                        'file' => $path,
+                        'amount' => ($quantities[$index])*($prices[$index]),
+                        'source' => 'Bank',
+                    ]);
                 } else {
                     $dataE = JournalEntry::create([
                         'account_statement_id' => $dataM->id,
@@ -395,11 +495,23 @@ class AccountingController extends Controller
                         'description' => $descriptions[$index],
                         'quantity' => $quantities[$index],
                         'unit_price' => $prices[$index],
+                        'account_name' => $bank->chart_id,
                         'account_name' => $accounts[$index],
                         'trans_type' => 'Credit',
-                        'tax_rate' => $taxes[$index],
                         'file' => $path,
                         'amount' => ($quantities[$index])*($prices[$index]),
+                    ]);
+                    $dataB = JournalEntry::create([
+                        'account_statement_id' => $dataM->id,
+                        'item' => $item,
+                        'description' => $descriptions[$index],
+                        'quantity' => $quantities[$index],
+                        'unit_price' => $prices[$index],
+                        'account_name' => $bank->chart_id,
+                        'trans_type' => 'Debit',
+                        'file' => $path,
+                        'amount' => ($quantities[$index])*($prices[$index]),
+                        'source' => 'Bank',
                     ]);
                 }
                 
@@ -415,6 +527,17 @@ class AccountingController extends Controller
                         'trans_type' => 'Credit',
                         'amount' => ($quantities[$index])*($prices[$index]),
                     ]);
+                    $dataB = JournalEntry::create([
+                        'account_statement_id' => $dataM->id,
+                        'item' => $item,
+                        'description' => $descriptions[$index],
+                        'quantity' => $quantities[$index],
+                        'unit_price' => $prices[$index],
+                        'account_name' => $bank->chart_id,
+                        'trans_type' => 'Debit',
+                        'amount' => ($quantities[$index])*($prices[$index]),
+                        'source' => 'Bank',
+                    ]);
                 } else {
                     $dataE = JournalEntry::create([
                         'account_statement_id' => $dataM->id,
@@ -427,25 +550,45 @@ class AccountingController extends Controller
                         'tax_rate' => $taxes[$index],
                         'amount' => ($quantities[$index])*($prices[$index]),
                     ]);
+                    $dataB = JournalEntry::create([
+                        'account_statement_id' => $dataM->id,
+                        'item' => $item,
+                        'description' => $descriptions[$index],
+                        'quantity' => $quantities[$index],
+                        'unit_price' => $prices[$index],
+                        'account_name' => $bank->chart_id,
+                        'trans_type' => 'Debit',
+                        'tax_rate' => $taxes[$index],
+                        'amount' => ($quantities[$index])*($prices[$index]),
+                        'source' => 'Bank',
+                    ]);
                 }
             }
-            
-            /*$data = AccountStatement::create([
-                'transaction_date' => $request->input('transaction_date'),
-                'reference_no' => ''.str_pad($lastOrder + 1, 4, "0", STR_PAD_LEFT).'',
-                'trans_group' => Uuid::uuid4()->getHex(),
-                'account_id' => $accounts[$index],
-                'payee' => $request->input('payee'),
-                'item' => $item,
-                'description' => $descriptions[$index],
-                'amount' => $prices[$index],
-                'trans_type' => 'Credit',
-                'status_id' => 'e6cb9165-131e-406c-81c8-c2ba9a2c567e',
-                'created_by' => auth()->user()->employee_id,
-            ]);*/
+            $total+=$dataE->amount;
         }
 
-        return redirect()->route('bank.index');
+        $sum = AccountStatement::where('id',$dataM->id)->first();
+
+        $updateSum = $sum->update([
+            'balance' => ($savePrev) + ($total),
+            'total' => $total,
+        ]);
+
+        return redirect()->route('accountTransaction.index',$bank->id);
+    }
+
+    public function transactionEdit($id)
+    {
+        $data = AccountStatement::find($id);
+        $detail = JournalEntry::where('account_statement_id',$data->id)->where('source','User')->get();
+        $coas = ChartOfAccount::pluck('account_name','id')->toArray();
+
+        return view('apps.edit.accountTransaction',compact('data','detail','coas'));
+    }
+
+    public function transactionUpdate(Request $request,$id)
+    {
+
     }
 
     public function assetManagementIndex()
@@ -464,6 +607,7 @@ class AccountingController extends Controller
             'category_name' => 'required',
             'purchase_date' => 'required',
             'purchase_price' => 'required',
+            'purchase_from' => 'required',
             'estimate_time' => 'required',
             'estimate_value' => 'required',
         ]);
@@ -474,9 +618,25 @@ class AccountingController extends Controller
             'category_name' => $request->input('category_name'),
             'purchase_date' => $request->input('purchase_date'),
             'purchase_price' => $request->input('purchase_price'),
+            'purchase_from' => $request->input('purchase_from'),
             'estimate_time' => $request->input('estimate_time'),
             'estimate_depreciate_value' => $request->input('estimate_value'),
             'status_id' => 'e6cb9165-131e-406c-81c8-c2ba9a2c567e',
+        ]);
+
+        $statements = AccountStatement::create([
+            'transaction_date' => $data->purchase_date,
+            'payee' => $data->purchase_from,
+            'balance' =>'',
+            'tax_reference' => '',
+            'status_id' => '',
+        ]);
+
+        $journal = JournalEntry::create([
+            'account_statement_id' => $statements->id,
+            'item' => $data->name,
+            'description' => $data->name,
+            
         ]);
 
         $journal = AccountStatement::create([
@@ -494,6 +654,86 @@ class AccountingController extends Controller
         ]);
 
         return redirect()->route('asset.index');
+    }
+
+    public function budgetManagerIndex()
+    {
+        $data = BudgetPeriod::orderBy('updated_at','DESC')->get();
+
+        return view('apps.pages.budgetManager',compact('data'));
+    }
+
+    public function budgetNewStore(Request $request)
+    {
+        $this->validate($request, [
+            'budget_title' => 'required',
+            'budget_start' => 'required',
+            'budget_end' => 'required',
+        ]);
+
+        $data = BudgetPeriod::create([
+            'budget_title' => $request->input('budget_title'),
+            'budget_start' => $request->input('budget_start'),
+            'budget_end' => $request->input('budget_end'),
+            'status_id' => '1f2967a5-9a88-4d44-a66b-5339c771aca0',
+            'created_by' => auth()->user()->employee_id,
+        ]);
+
+        return redirect()->route('budget.index');
+    }
+
+    public function budgetDetailCreate($id)
+    {
+        $parent = BudgetPeriod::find($id);
+        $accounts = CoaCategory::with('Child')->where('category_name','Revenue')->orWhere('category_name','Expense')->orderBy('id')->get();
+        $budgetRange = CarbonPeriod::create($parent->budget_start,'1 month',$parent->budget_end);
+        
+        return view('apps.input.budgetDetail',compact('parent','accounts','budgetRange'));
+
+    }
+
+    public function budgetOptionStore(Request $request)
+    {
+
+    }
+
+    public function budgetDetailStore(Request $request)
+    {
+        $parent = BudgetPeriod::where('id',$request->input('budget_id'))->first();
+        $input = $request->all();
+
+        $accounts = $request->account_name;
+        $categories = $request->account_category;
+        $periods = $request->budget_period;
+        $amounts = $request->amount;
+        foreach($accounts as $index=>$account) {
+            $data = BudgetDetail::create([
+                'budget_id' => $parent->id,
+                'account_name' => $account,
+                'account_category' => $categories[$index],
+                'budget_period' => $periods[$index],
+                'budget_amount' => $amounts[$index],
+            ]);
+        }
+
+        return redirect()->route('budget.index');
+    }
+
+    public function budgetDetailEdit($id)
+    {
+        $parent = BudgetPeriod::find($id);
+        $incomes = BudgetDetail::where('budget_id',$parent->id)->where('account_category','4')->get();
+        $expenses = BudgetDetail::where('budget_id',$parent->id)->where('account_category','5')->get();
+        $accounts = CoaCategory::with('Child')->where('category_name','Revenue')->orWhere('category_name','Expense')->orderBy('id')->get();
+        $budgetRange = CarbonPeriod::create($parent->budget_start,'1 month',$parent->budget_end);
+        $groupedIncome = $incomes->groupBy('account_name')->toArray();
+        $groupedExpense = $expenses->groupBy('account_name')->toArray();
+        return view('apps.edit.budgetDetail',compact('parent','groupedIncome','groupedExpense','expenses','accounts','budgetRange'));
+    }
+
+    public function budgetDetailUpdate(Request $request,$id)
+    {
+
     }
 
 }

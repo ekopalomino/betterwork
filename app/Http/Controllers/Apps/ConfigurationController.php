@@ -11,8 +11,10 @@ use iteos\Models\ReimbursType;
 use iteos\Models\DocumentCategory;
 use iteos\Models\GrievanceCategory;
 use iteos\Models\ChartOfAccount;
+use iteos\Models\CoaCategory;
 use iteos\Models\AssetCategory;
 use iteos\Models\BankAccount;
+use iteos\Models\BankStatement;
 use iteos\Models\Organization;
 use iteos\Models\Office;
 use iteos\Models\Province;
@@ -396,9 +398,9 @@ class ConfigurationController extends Controller
     public function coaCategoryIndex()
     {
         $data = ChartOfAccount::orderBy('account_id','ASC')->get();
-        $parents = ChartOfAccount::pluck('account_name','account_name')->toArray();
-
-    	return view('apps.pages.coaCategory',compact('data','parents'));
+        $categories = CoaCategory::orderBy('id','ASC')->pluck('category_name','id')->toArray();
+        
+    	return view('apps.pages.coaCategory',compact('data','categories'));
     }
 
     public function coaCategoryStore(Request $request)
@@ -413,8 +415,8 @@ class ConfigurationController extends Controller
             'account_id' => $request->input('account_id'),
             'account_name' => $request->input('account_name'),
             'account_category' => $request->input('account_category'),
-            'account_parent' => $request->input('account_parent'),
-            'created_by' => auth()->user()->id,
+            'opening_balance' => $request->input('opening_balance'),
+            'created_by' => auth()->user()->employee_id,
         ]);
 
         $log = 'Category '.($data->account_name).' Created';
@@ -484,13 +486,29 @@ class ConfigurationController extends Controller
             'bank_name' => 'required',
             'account_no' => 'required',
             'chart_id' => 'required',
+            'opening_balance' => 'required',
+            'opening_date' => 'required',
         ]);
 
         $data = BankAccount::create([
             'bank_name' => $request->input('bank_name'),
             'account_no' => $request->input('account_no'),
             'chart_id' => $request->input('chart_id'),
+            'opening_balance' => $request->input('opening_balance'),
+            'opening_date' => $request->input('opening_date'),
             'created_by' => auth()->user()->employee_id,
+        ]);
+
+        $statement = BankStatement::create([
+            'bank_account_id' => $data->id,
+            'transaction_date' => $data->opening_date,
+            'amount' => $data->opening_balance,
+            'balance' => $data->opening_balance,
+            'status_id' => 'f6e41f5d-0f6e-4eca-a141-b6c7ce34cae6',
+        ]);
+
+        $updateBalance = ChartOfAccount::where('id',$data->chart_id)->update([
+            'opening_balance' => $data->opening_balance,
         ]);
 
         $log = 'Bank Record For '.($data->bank_name).' Created';
@@ -629,6 +647,11 @@ class ConfigurationController extends Controller
         $data->delete();
 
         return redirect()->route('assetCat.index')->with($notification);
+    }
+
+    public function accountingSetIndex()
+    {
+        return view('apps.pages.accountingSetting');
     }
 
     public function userIndex()

@@ -13,7 +13,7 @@ class ChartOfAccount extends Model
     	'account_id',
     	'account_name',
     	'account_category',
-    	'account_parent',
+    	'opening_balance',
     	'created_by',
     	'updated_by',
     ];
@@ -22,11 +22,16 @@ class ChartOfAccount extends Model
 
     public function Author()
     {
-    	return $this->belongsTo(User::class,'created_by');
+    	return $this->belongsTo(Employee::class,'created_by');
     }
 
     public function Editor()
     {
-    	return $this->belongsTo(User::class,'updated_by');
+    	return $this->belongsTo(Employee::class,'updated_by');
+    }
+
+    public function Parent()
+    {
+        return $this->belongsTo(CoaCategory::class,'account_category','id');
     }
 }

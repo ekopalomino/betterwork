@@ -20,9 +20,11 @@ Better Work Indonesia | User Database
 		<div class="col-12">
 			<div class="card card-info card-outline">
 				<div class="card-header">
+					@can('disable')
 					<button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modal-lg">
 						Add New
 					</button>
+					@endcan
 					<div class="modal fade" id="modal-lg">
 						<div class="modal-dialog modal-lg">
 							<div class="modal-content">

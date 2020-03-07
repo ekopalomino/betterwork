@@ -138,13 +138,20 @@ class ReportsController extends Controller
         
     }
 
-    public function journalReportShow()
+    public function journalReportIndex()
     {
-        $data = AccountStatement::with('Child')->where('status_id','f6e41f5d-0f6e-4eca-a141-b6c7ce34cae6')->get();
+        return view('apps.pages.journalReport');
+    }
+
+    public function journalReportShow(Request $request)
+    {
+        $dateStart = $request->input('start');
+        $dateEnd = $request->input('end');
+        $data = AccountStatement::with('Child')->where('transaction_date','>=',$dateStart)->where('transaction_date','<=',$dateEnd)->get();
         /*$data = DB::table('account_statements')->join('bank_statements','bank_statements.trans_group','account_statements.trans_group')->where('account_statements.status_id','f6e41f5d-0f6e-4eca-a141-b6c7ce34cae6')->get();*/
         /*$data = DB::table('account_statements')->where('status_id','f6e41f5d-0f6e-4eca-a141-b6c7ce34cae6')->select('trans_group','transaction_date','account_id','bank_id','payee','amount','trans_type')->groupBy('trans_group','transaction_date','account_id','bank_id','payee','amount','trans_type')->get();*/
         
-        return view('apps.reports.journalReport',compact('data'));
+        return view('apps.reports.journalReport',compact('data','dateStart','dateEnd'));
     }
 
 

@@ -11,7 +11,7 @@ Better Work Indonesia | Transaction Detail
        		</div>
 			<div class="col-sm-6">
 				<ol class="breadcrumb float-sm-right">
-					<li class="breadcrumb-item"><a href="{{ route('account.index') }}">Account Transaction</a></li>
+					<li class="breadcrumb-item"><a href="{{ route('accountTransaction.index',$bank->id) }}">Account Transaction</a></li>
 					<li class="breadcrumb-item active">Transaction Detail</li>
 				</ol>
 			</div>
@@ -28,9 +28,23 @@ Better Work Indonesia | Transaction Detail
 							<h4>
 								<img src="{{ asset('public/assets/img/logo.png') }}" style="opacity: .8">
 								<small class="float-right">
-									<button type="submit" class="btn btn-sm btn-info">Checked</button>
-									<button type="submit" class="btn btn-sm btn-info">Approved</button>
-									<button type="submit" class="btn btn-sm btn-info">Reconcile</button>
+									@if(($data->status_id) == '1f2967a5-9a88-4d44-a66b-5339c771aca0')
+									{!! Form::open(['method' => 'POST','route' => ['accTransaction.checked', $data->id],'style'=>'display:inline','onsubmit' => 'return ConfirmDelete()']) !!}
+									{!! Form::button('Checked',['type'=>'submit','class' => 'btn btn-sm btn-info','title'=>'Checked']) !!}
+									{!! Form::close() !!}
+									@elseif(($data->status_id) == 'edcb2ad8-df07-4854-8260-383aaec4a061')
+									{!! Form::open(['method' => 'POST','route' => ['accTransaction.approve', $data->id],'style'=>'display:inline','onsubmit' => 'return ConfirmDelete()']) !!}
+									{!! Form::button('Approve',['type'=>'submit','class' => 'btn btn-sm btn-info','title'=>'Checked']) !!}
+									{!! Form::close() !!}
+									@elseif(($data->status_id) == 'ca52a2ce-5c37-48ce-a7f2-0fd5311860c2')
+									{!! Form::open(['method' => 'POST','route' => ['accTransaction.posted', $data->id],'style'=>'display:inline','onsubmit' => 'return ConfirmDelete()']) !!}
+									{!! Form::button('Posted',['type'=>'submit','class' => 'btn btn-sm btn-info','title'=>'Checked']) !!}
+									{!! Form::close() !!}
+									@elseif(($data->status_id) == 'e6cb9165-131e-406c-81c8-c2ba9a2c567e')
+									{!! Form::open(['method' => 'POST','route' => ['accTransaction.reconcile', $data->id],'style'=>'display:inline','onsubmit' => 'return ConfirmDelete()']) !!}
+									{!! Form::button('Reconcile',['type'=>'submit','class' => 'btn btn-sm btn-danger','title'=>'Checked']) !!}
+									{!! Form::close() !!}
+									@endif
 								</small>
 							</h4>
 						</div>
@@ -38,10 +52,12 @@ Better Work Indonesia | Transaction Detail
 					<div class="row invoice-info">
 						<div class="col-sm-4 invoice-col">
 							<address>
-								<strong>To : {{ $data->payee }} </strong><br>
+								<strong>Payee : {{ $data->payee }} </strong><br>
 								<strong>Transaction Date : {{date("d F Y",strtotime($data->transaction_date)) }}</strong><br>
 								<strong>Reference No :{{$data->reference_no}}</strong><br>
-								<strong>Status : <font color="green">{{$data->Statuses->name}}</font></strong>
+								<strong>Status : @if(($data->status_id) == 'f6e41f5d-0f6e-4eca-a141-b6c7ce34cae6')<font color="green">{{$data->Statuses->name}}</font>@else<font color="red">{{$data->Statuses->name}}</font>
+								@endif</strong><br>
+								<strong>Amounts Are : @if(($data->tax_reference) == '1')Tax Inclusive @elseif(($data->tax_reference) == '2')Tax Exclusive @else No Tax @endif</strong>
 							</address>	
 						</div>
 					</div>
@@ -58,20 +74,20 @@ Better Work Indonesia | Transaction Detail
 								</tr>
 							</thead>
 							<tbody>
+								@foreach($data->Child as $child)
 								<tr>
-									<td>{{ $data->description }}</td>
-									<td></td>
-									<td>{{ number_format($data->amount,2,',','.')}}</td>
+									<td>{{ $child->description }}</td>
+									<td>{{ $child->quantity }}</td>
+									<td>{{ number_format($child->unit_price,2,',','.')}}</td>
 									<td>
-										@if(!empty($data->account_id))
-										{{ $data->Accounts->account_name }}
-										@else
-										{{ $data->Banks->bank_name }}
+										@if(!empty($child->account_name))
+										{{ $child->Accounts->account_name }}
 										@endif
 									</td>
-									<td></td>
-									<td></td>
+									<td>{{ $child->tax_rate }}</td>
+									<td>{{ number_format($child->amount,2,',','.')}}</td>
 								</tr>
+								@endforeach
 							</tbody>
 						</table>
 					</div>
@@ -79,7 +95,8 @@ Better Work Indonesia | Transaction Detail
 						<div class="col-6">
 						</div>
 						<div class="col-6" style="text-align:right;">
-							<td><strong style="font-size:20px;">Total : {{ number_format($data->amount,2,',','.')}}</strong></td>
+							<td><strong style="font-size:16px;">Tax : {{ number_format($child->tax_amount,2,',','.')}}</strong></td><br>
+							<td><strong style="font-size:20px;">Total : {{ number_format($data->total,2,',','.')}}</strong></td>
 						</div>
 					</div>
 					<br>
@@ -100,24 +117,28 @@ Better Work Indonesia | Transaction Detail
 										<p>&nbsp;</p>
 										<p>&nbsp;</p>
 										<p>&nbsp;</p>
+										<p style="text-align:center;">({{$data->Creator->first_name}} {{$data->Creator->last_name}})</p>
 									</td>
 									<td>
 										<p>&nbsp;</p>
 										<p>&nbsp;</p>
 										<p>&nbsp;</p>
 										<p>&nbsp;</p>
+										@isset($data->checked_by)<p style="text-align:center;">({{$data->Checker->first_name}} {{$data->Checker->last_name}})</p>@endisset
 									</td>
 									<td>
 										<p>&nbsp;</p>
 										<p>&nbsp;</p>
 										<p>&nbsp;</p>
 										<p>&nbsp;</p>
+										@isset($data->approved_by)<p style="text-align:center;">({{$data->Approval->first_name}} {{$data->Approval->last_name}})</p>@endisset
 									</td>
 									<td>
 										<p>&nbsp;</p>
 										<p>&nbsp;</p>
 										<p>&nbsp;</p>
 										<p>&nbsp;</p>
+										@isset($data->posted_by)<p style="text-align:center;">({{$data->Posted->first_name}} {{$data->Posted->last_name}})</p>@endisset
 									</td>
 								</tr>
 							</tbody>
