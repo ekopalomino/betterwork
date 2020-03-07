@@ -66,16 +66,18 @@ class AccountingController extends Controller
         $data = Excel::toArray(new BankTransactionImport, $request->file('statement'))[0];
         
         foreach($data as $value) {
-            $result = BankStatement::create([
-                'bank_account_id' => $request->input('account_id'),
-                'transaction_date' => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($value['date']),
-                'payee' => $value['payee'],
-                'description' => $value['description'],
-                'type' => $value['type'],
-                'amount' => $value['amount'],
-                'balance' => $value['balance'],
-                'status_id' => 'e6cb9165-131e-406c-81c8-c2ba9a2c567e',
-            ]);
+            if(!empty($value)) {
+                $result = BankStatement::create([
+                    'bank_account_id' => $request->input('account_id'),
+                    'transaction_date' => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($value['date']),
+                    'payee' => $value['payee'],
+                    'description' => $value['description'],
+                    'type' => $value['type'],
+                    'amount' => $value['amount'],
+                    'balance' => $value['balance'],
+                    'status_id' => 'e6cb9165-131e-406c-81c8-c2ba9a2c567e',
+                ]);
+            }
         }
         
         $log = 'Bank Statement Successfully Import';

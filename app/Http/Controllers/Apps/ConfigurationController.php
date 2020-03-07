@@ -649,6 +649,11 @@ class ConfigurationController extends Controller
         return redirect()->route('assetCat.index')->with($notification);
     }
 
+    public function accountingSetIndex()
+    {
+        return view('apps.pages.accountingSetting');
+    }
+
     public function userIndex()
     {
         $data = User::orderBy('id','ASC')->get();
