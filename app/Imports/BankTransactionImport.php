@@ -15,7 +15,7 @@ class BankTransactionImport implements ToModel, WithHeadingRow
     *
     * @return \Illuminate\Database\Eloquent\Model|null
     */
-    public function model(array $row)
+    public function model(array $row) 
     {
         return new BankStatement([
             'transaction_date' => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['date']),

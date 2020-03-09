@@ -14,10 +14,13 @@ class AssetManagement extends Model
         'asset_code',
     	'category_name',
     	'purchase_date',
+        'warranty_expire',
     	'purchase_price',
         'purchase_from',
+        'depreciation_start',
     	'estimate_time',
-    	'estimate_depreciate_value',
+    	'residual_value',
+        'method_id',
     	'status_id',
     ];
 

@@ -91,6 +91,7 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth','verified']], function
 	/*Application Setting Sub Menu Route*/
 	Route::get('configuration/application','Apps\ConfigurationController@applicationIndex')->name('application.index');
 	Route::get('configuration/accounting-setting','Apps\ConfigurationController@accountingSetIndex')->name('accSet.index');
+	Route::get('configuration/human-resources-setting','Apps\ConfigurationController@hrSetIndex')->name('hrSet.index');
 	/*Employee Position Sub Menu Route*/
 	Route::get('configuration/employee-position','Apps\ConfigurationController@positionIndex')->name('position.index');
 	Route::post('configuration/employee-position/store','Apps\ConfigurationController@positionStore')->name('position.store');
@@ -120,6 +121,11 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth','verified']], function
 	Route::post('configuration/organization/store','Apps\ConfigurationController@organizationStore')->name('organization.store');
 	Route::get('configuration/organization/edit/{id}','Apps\ConfigurationController@organizationEdit')->name('organization.edit');
 	Route::post('configuration/organization/update/{id}','Apps\ConfigurationController@organizationUpdate')->name('organization.update');
+
+	Route::get('configuration/holiday','Apps\ConfigurationController@holidayIndex')->name('holiday.index');
+	Route::post('configuration/holiday/store','Apps\ConfigurationController@holidayStore')->name('holiday.store');
+	Route::get('configuration/holiday/edit/{id}','Apps\ConfigurationController@holidayEdit')->name('holiday.edit');
+	Route::post('configuration/holiday/update/{id}','Apps\ConfigurationController@holidayUpdate')->name('holiday.update');
 
 	Route::get('configuration/office','Apps\ConfigurationController@officeIndex')->name('office.index');
 	Route::get('configuration/office/cities/get_by_province', 'Apps\ConfigurationController@get_cities')->name('officeCity.index');
@@ -219,8 +225,8 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth','verified']], function
 	Route::get('human-resources/salary','Apps\HumanResourcesController@salaryIndex')->name('salary.index');
 	Route::post('human-resources/salary/store','Apps\HumanResourcesController@salaryProcess')->name('salary.store');
 	Route::get('human-resources/salary/show-detail/{period}','Apps\HumanResourcesController@salaryShow')->name('salary.show');
-	Route::post('human-resources/salary/approve/{period}','Apps\HumanResourcesController@salaryApproval')->name('salary.approve');
-	Route::post('human-resources/salary/approve/{period}','Apps\HumanResourcesController@salaryReject')->name('salary.reject');
+	Route::post('human-resources/salary/approve/{period}','Apps\HumanResourcesController@salaryApproval')->name('empSalary.approve');
+	Route::post('human-resources/salary/reject/{period}','Apps\HumanResourcesController@salaryReject')->name('empSalary.reject');
 	Route::get('human-resources/salary/show-slip/{empNo}','Apps\HumanResourcesController@salaryEmpShow')->name('salarySlips.show');
 
 	Route::get('human-resources/reimbursment','Apps\HumanResourcesController@reimbursIndex')->name('reimburs.index');
