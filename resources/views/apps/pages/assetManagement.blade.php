@@ -43,12 +43,20 @@ Better Work Indonesia | Asset Management
 									{!! Form::select('category_name', [null=>'Please Select'] + $categories,[], array('class' => 'form-control')) !!}
 									<label class="col-sm-12 col-form-label">Purchase Date</label>
 									{!! Form::date('purchase_date', '', array('id' => 'datepicker','class' => 'form-control')) !!}
+									<label class="col-sm-12 col-form-label">Warranty Expire</label>
+									{!! Form::date('warranty_expire', '', array('id' => 'datepicker','class' => 'form-control')) !!}
 									<label class="col-sm-12 col-form-label">Purchase Price</label>
 									{!! Form::number('purchase_price', null, array('placeholder' => 'Purchase Price','class' => 'form-control')) !!}
-									<label class="col-sm-12 col-form-label">Estimate Lifespan (in month)</label>
+									<label class="col-sm-12 col-form-label">Purchase From</label>
+									{!! Form::text('purchase_from', null, array('placeholder' => 'Purchase From','class' => 'form-control')) !!}
+									<label class="col-sm-12 col-form-label">Depreciation Start Date</label>
+									{!! Form::date('depreciation_start', '', array('id' => 'datepicker','class' => 'form-control')) !!}
+									<label class="col-sm-12 col-form-label">Economical Lifespan</label>
 									{!! Form::number('estimate_time', null, array('placeholder' => 'Estimate Lifespan','class' => 'form-control')) !!}
-									<label class="col-sm-12 col-form-label">Estimate Depreciation Value</label>
-									{!! Form::number('estimate_value', null, array('placeholder' => 'Estimate Depreciation Value','class' => 'form-control')) !!}
+									<label class="col-sm-12 col-form-label">Residual Value</label>
+									{!! Form::number('residual_value', null, array('placeholder' => 'Estimate Lifespan','class' => 'form-control')) !!}
+									<label class="col-sm-12 col-form-label">Depreciation Method</label>
+									{!! Form::select('method_id', [null=>'Please Select'] + $depreciations,[], array('class' => 'form-control')) !!}
                         		</div>
 				            	<div class="modal-footer">
 				              		<button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>

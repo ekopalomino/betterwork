@@ -13,6 +13,7 @@ use iteos\Models\JournalEntry;
 use iteos\Models\AssetCategory;
 use iteos\Models\AssetManagement;
 use iteos\Models\AssetDepreciation;
+use iteos\Models\DepreciationMethod;
 use iteos\Models\BudgetPeriod;
 use iteos\Models\BudgetDetail;
 use iteos\Models\EmployeeSalary;
@@ -606,8 +607,8 @@ class AccountingController extends Controller
     {
         $data = AssetManagement::orderBy('name','ASC')->get();
         $categories = AssetCategory::orderBy('category_name','ASC')->pluck('category_name','id')->toArray();
-
-        return view('apps.pages.assetManagement',compact('data','categories'));
+        $depreciations = DepreciationMethod::orderBy('id','ASC')->pluck('name','id')->toArray();
+        return view('apps.pages.assetManagement',compact('data','categories','depreciations'));
     }
 
     public function assetManagementStore(Request $request)
@@ -628,40 +629,14 @@ class AccountingController extends Controller
             'name' => $request->input('asset_name'),
             'category_name' => $request->input('category_name'),
             'purchase_date' => $request->input('purchase_date'),
+            'warranty_expire' => $request->input('warranty_expire'),
             'purchase_price' => $request->input('purchase_price'),
             'purchase_from' => $request->input('purchase_from'),
+            'depreciation_start' => $request->input('depreciation_start'),
             'estimate_time' => $request->input('estimate_time'),
-            'estimate_depreciate_value' => $request->input('estimate_value'),
+            'residual_value' => $request->input('residual_value'),
+            'method_id' => $request->input('method_id'),
             'status_id' => 'e6cb9165-131e-406c-81c8-c2ba9a2c567e',
-        ]);
-
-        $statements = AccountStatement::create([
-            'transaction_date' => $data->purchase_date,
-            'payee' => $data->purchase_from,
-            'balance' =>'',
-            'tax_reference' => '',
-            'status_id' => '',
-        ]);
-
-        $journal = JournalEntry::create([
-            'account_statement_id' => $statements->id,
-            'item' => $data->name,
-            'description' => $data->name,
-            
-        ]);
-
-        $journal = AccountStatement::create([
-            'trans_group' => Uuid::uuid4()->getHex(),
-            'transaction_date' => $data->purchase_date,
-            'reference_no' => '',
-            'account_id' => $data->Categories->chart_of_account_id,
-            'payee' => 'Tes',
-            'item' => $data->name,
-            'description' => $data->name,
-            'amount' => $data->purchase_price,
-            'trans_type' => 'Debit',
-            'status_id' => 'e6cb9165-131e-406c-81c8-c2ba9a2c567e',
-            'created_by' => auth()->user()->employee_id,
         ]);
 
         return redirect()->route('asset.index');
