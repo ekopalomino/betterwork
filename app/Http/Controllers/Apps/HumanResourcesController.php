@@ -30,6 +30,8 @@ use iteos\Models\AppraisalTarget;
 use iteos\Models\AppraisalSoftGoal;
 use iteos\Models\AppraisalComment;
 use iteos\Models\AppraisalAdditionalRole;
+use iteos\Models\AccountStatement;
+use iteos\Models\JournalEntry;
 use iteos\Imports\SalaryImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Hash;
@@ -1275,8 +1277,8 @@ class HumanResourcesController extends Controller
 
     public function salaryIndex()
     {
-        $data = EmployeeSalary::select(DB::raw('date(payroll_period) as Period'),DB::raw('sum(nett_salary+jkk+jkm+jht+jp+bpjs) as Total'),
-                        DB::raw('sum(nett_salary) as Salary'),DB::raw('sum(jkk+jkm+jht+jp) as tk'),DB::raw('sum(bpjs) as bpjs'),
+        $data = EmployeeSalary::select(DB::raw('date(payroll_period) as Period'),DB::raw('sum(nett_salary+jkk+jkm+jht_e+jp_e+bpjs_e) as Total'),
+                        DB::raw('sum(nett_salary) as Salary'),DB::raw('sum(jkk+jkm+jht_c+jp_c) as tk'),DB::raw('sum(bpjs_c) as bpjs'),
                         DB::raw('sum(income_tax) as tax'),'status_id','created_by','approved_by')
                     ->orderBy('created_at','DESC')
                     ->groupBy(DB::raw('date(payroll_period)'),'created_at','status_id','created_by','approved_by')
@@ -1290,17 +1292,48 @@ class HumanResourcesController extends Controller
         $request->validate([
             'salary' => 'required|file|mimes:xlsx,xls,XLSX,XLS'
         ]);
- 
+  
         $input = $request->all();
-        Excel::import(new SalaryImport, $request->file('salary'));
+        $data = Excel::toArray(new SalaryImport, $request->file('salary'))[0];
+        foreach($data as $value) {
+            if(isset($value['period'])) {
+                $salaries = EmployeeSalary::create([
+                    'payroll_period' => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($value['period']),
+                    'employee_no' => $value['id'],
+                    'employee_name' => $value['name'],
+                    'nett_salary' => $value['nett_salary'],
+                    'jkk' => $value['jkk'],
+                    'jkm' => $value['jkm'],
+                    'leave_balance' => $value['leave_balance'],
+                    'rewards' => $value['annual_rewards'],
+                    'expense' => $value['occational_expense'],
+                    'bpjs_c' => $value['pay_bpjs_c'],
+                    'bpjs_e' => $value['pay_bpjs_e'],
+                    'jht_c' => $value['pay_jht_c'],
+                    'jht_e' => $value['pay_jht_e'],
+                    'jp_c' => $value['pay_jp_c'],
+                    'jp_e' => $value['pay_jp_e'],
+                    'dplk' => $value['pay_dplk'],
+                    'income_tax' => $value['tax_month'],
+                    'receive_payroll' => $value['thp'],
+                    'created_by' => auth()->user()->employee_id,
+                ]);
 
-        $log = 'File Ekspor berhasil disimpan';
-         \LogActivity::addToLog($log);
-        $notification = array (
-            'message' => 'File Ekspor berhasil disimpan',
-            'alert-type' => 'success'
-        );
-        return back()->with($notification);
+                $log = 'File'.($salaries->payroll_period). ' Uploaded';
+                \LogActivity::addToLog($log);
+                $notification = array (
+                    'message' => 'File'.($salaries->payroll_period). ' Uploaded',
+                    'alert-type' => 'success'
+                );
+                return redirect()->route('salary.index')->with($notification);
+            } else {
+                $notification = array (
+                    'message' => 'Please check your salary import file.',
+                    'alert-type' => 'error'
+                );
+                return redirect()->route('salary.index')->with($notification);
+            }
+        }
     }
 
     public function salaryShow($period)

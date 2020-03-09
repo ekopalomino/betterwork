@@ -1,6 +1,6 @@
 @extends('apps.layouts.main')
 @section('header.title')
-Better Work Indonesia | Salary Process
+Better Work Indonesia | Bank Statement Reconciliation
 @endsection
 @section('header.plugins')
 <link rel="stylesheet" href="{{ asset('public/bower_components/admin-lte/plugins/datatables-bs4/css/dataTables.bootstrap4.css') }}">
@@ -10,7 +10,7 @@ Better Work Indonesia | Salary Process
 	<div class="container-fluid">
       	<div class="row mb-2">
        		<div class="col-sm-6">
-          		<h1>Employee Salary Process</h1>
+          		<h1>Bank Statement Reconciliation</h1>
        		</div>
        	</div>
     </div>
@@ -56,8 +56,17 @@ Better Work Indonesia | Salary Process
 								<td>{{ $value->Statuses->name }}</td>
 								<td>
 									<div class="btn-group">
-										<a class="btn btn-sm btn-warning modalLg" title="Find Matching Transaction" href="#" value="{{ action('Apps\AccountingController@findTransactionByDate',['id'=>$value->id]) }}" data-toggle="modal" data-target="#modalLg">Find</a>
+										<a class="btn btn-sm btn-warning modalLg" title="Find Matching Transaction" href="#" value="{{ action('Apps\AccountingController@findTransactionByDate',['id'=>$value->id]) }}" data-toggle="modal" data-target="#modalLg">Match</a>
 									</div>
+									@if(($value->type) == 'Receive')
+									<div class="btn-group">
+										<a class="btn btn-sm btn-danger" href="{{ route('receive.create',$value->bank_account_id) }}" >Create</a>
+									</div>
+									@elseif(($value->type) == 'Spend')
+									<div class="btn-group">
+										<a class="btn btn-sm btn-danger" href="{{ route('spend.create',$value->bank_account_id) }}" >Create</a>
+									</div>
+									@endif
 								</td>
 							</tr>
 							@endforeach

@@ -41,9 +41,6 @@ Better Work Indonesia | Budget Detail
 						<thead>
 							<tr>
 								<th>
-									<button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modal-lg">
-										Budget Option
-									</button>
 								</th>
 								@foreach($budgetRange as $month)
 								<th>{{date("M-y",strtotime($month)) }}</th>

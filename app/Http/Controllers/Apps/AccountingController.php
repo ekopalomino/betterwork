@@ -15,6 +15,7 @@ use iteos\Models\AssetManagement;
 use iteos\Models\AssetDepreciation;
 use iteos\Models\BudgetPeriod;
 use iteos\Models\BudgetDetail;
+use iteos\Models\EmployeeSalary;
 use Maatwebsite\Excel\Facades\Excel;
 use iteos\Imports\BankTransactionImport;
 use DB;
@@ -25,6 +26,8 @@ class AccountingController extends Controller
 {
     public function index()
     {
+        $salaries = EmployeeSalary::where('status_id','1f2967a5-9a88-4d44-a66b-5339c771aca0')->get();
+        
     	return view('apps.pages.accountingHome');
     }
 
@@ -66,7 +69,7 @@ class AccountingController extends Controller
         $data = Excel::toArray(new BankTransactionImport, $request->file('statement'))[0];
         
         foreach($data as $value) {
-            if(!empty($value)) {
+            if(isset($value['date'])) {
                 $result = BankStatement::create([
                     'bank_account_id' => $request->input('account_id'),
                     'transaction_date' => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($value['date']),
@@ -77,16 +80,24 @@ class AccountingController extends Controller
                     'balance' => $value['balance'],
                     'status_id' => 'e6cb9165-131e-406c-81c8-c2ba9a2c567e',
                 ]);
+
+                $log = 'Bank Statement Successfully Import';
+                \LogActivity::addToLog($log);
+                $notification = array (
+                    'message' => 'Bank Statement Successfully Import, Please reconcile with current account transaction',
+                    'alert-type' => 'success'
+                );
+                return redirect()->route('statToAcc.index')->with($notification);
+            } else {
+                $notification = array (
+                    'message' => 'Please check your statement file, it appears some or all transaction is empty',
+                    'alert-type' => 'error'
+                );
+                return redirect()->route('bank.index')->with($notification);
             }
         }
         
-        $log = 'Bank Statement Successfully Import';
-         \LogActivity::addToLog($log);
-        $notification = array (
-            'message' => 'Bank Statement Successfully Import',
-            'alert-type' => 'success'
-        );
-        return redirect()->route('statToAcc.index')->with($notification);
+        
     }
 
     public function statementToAccount()

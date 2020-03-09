@@ -19,6 +19,7 @@ use iteos\Models\Organization;
 use iteos\Models\Office;
 use iteos\Models\Province;
 use iteos\Models\City;
+use iteos\Models\Holiday;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Hash;
@@ -654,6 +655,11 @@ class ConfigurationController extends Controller
         return view('apps.pages.accountingSetting');
     }
 
+    public function hrSetIndex()
+    {
+        return view('apps.pages.hrSetting');
+    }
+
     public function userIndex()
     {
         $data = User::orderBy('id','ASC')->get();
@@ -988,5 +994,39 @@ class ConfigurationController extends Controller
             'alert-type' => 'success'
         ); 
         return redirect()->route('office.index')->with($notification);
+    }
+
+    public function holidayIndex()
+    {
+        $data = Holiday::orderBy('holiday_start','ASC')->get();
+
+        return view('apps.pages.holidayIndex',compact('data'));
+    }
+
+    public function holidayStore(Request $request)
+    {
+        $data = Holiday::create([
+            'holiday_name' => $request->input('name'),
+            'holiday_start' => $request->input('holiday_start'),
+            'holiday_end' => $request->input('holiday_end'),
+            'leave_status' => $request->input('leave_status'),
+        ]);
+
+        return redirect()->route('holiday.index');
+    }
+
+    public function holidayEdit($id)
+    {
+
+    }
+
+    public function holidayUpdate(Request $request,$id)
+    {
+
+    }
+
+    public function holidayDelete($id)
+    {
+
     }
 }

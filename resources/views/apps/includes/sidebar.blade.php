@@ -122,7 +122,7 @@
 			@endif
 			@can('Access Configuration')
 			@if(\Route::is(['application.index','config.index','position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','coaCat.index','assetCat.index','user.index','logs.index','role.index',
-			'role.create','role.edit','bankAcc.index','organization.index','office.index','accSet.index']))
+			'role.create','role.edit','bankAcc.index','organization.index','office.index','accSet.index','holiday.index','hrSet.index']))
 			@can('Create Application Setting')
 			<li class="nav-item">
 				<a href="{{ route('application.index') }}" class="nav-link {{set_active('application.index') }}">
@@ -167,68 +167,96 @@
 				</ul>
 			</li>
 			@can('Create HR Master Data')
-			<li class="nav-item has-treeview {{set_open(['position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','organization.index','office.index']) }}">
-				<a href="#" class="nav-link {{set_active(['position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','organization.index','office.index']) }}">
+			<li class="nav-item has-treeview {{set_open(['position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','organization.index','office.index','holiday.index','hrSet.index']) }}">
+				<a href="#" class="nav-link {{set_active(['position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','organization.index','office.index','holiday.index','hrSet.index']) }}">
 					<i class="nav-icon fas fa-users"></i>
 					<p>
 						Human Resources
 						<i class="right fas fa-angle-left"></i>
 					</p>
 				</a>
-				<ul class="nav nav-treeview">
-					<li class="nav-item">
-						<a href="{{ route('position.index') }}" class="nav-link {{set_active('position.index') }}">
+				<ul class="nav nav-treeview ">
+					<li class="nav-item has-treeview {{set_open(['position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','organization.index','office.index','holiday.index']) }}">
+						<a href="#" class="nav-link {{set_active(['position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','organization.index','office.index','holiday.index']) }}">
 							<i class="far fa-circle nav-icon"></i>
-							<p>Employee Position</p>
+							<p>Master Data <i class="right fas fa-angle-left"></i></p>
 						</a>
+						<ul class="nav nav-treeview">
+							<li class="nav-item">
+								<a href="{{ route('position.index') }}" class="nav-link {{set_active('position.index') }}">
+									<i class="far fa-circle nav-icon"></i>
+									<p>Employee Position</p>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="" class="nav-link ">
+									<i class="far fa-circle nav-icon"></i>
+									<p>Job Title</p>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="{{ route('organization.index') }}" class="nav-link {{set_active('organization.index') }}">
+									<i class="far fa-circle nav-icon"></i>
+									<p>Organization Chart</p>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="{{ route('office.index') }}" class="nav-link {{set_active('office.index') }}">
+									<i class="far fa-circle nav-icon"></i>
+									<p>Office Location</p>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="{{ route('leaveType.index') }}" class="nav-link {{set_active('leaveType.index') }}">
+									<i class="far fa-circle nav-icon"></i>
+									<p>Leave Approval</p>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="{{ route('holiday.index') }}" class="nav-link {{set_active('holiday.index') }}">
+									<i class="far fa-circle nav-icon"></i>
+									<p>Holiday</p>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="{{ route('reimbursType.index') }}" class="nav-link {{set_active('reimbursType.index') }}">
+									<i class="far fa-circle nav-icon"></i>
+									<p>Reimbursment Type</p>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="{{ route('docCat.index') }}" class="nav-link {{set_active('docCat.index') }}">
+									<i class="far fa-circle nav-icon"></i>
+									<p>Broadcast Category</p>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="{{ route('grievCat.index') }}" class="nav-link {{set_active('grievCat.index') }}">
+									<i class="far fa-circle nav-icon"></i>
+									<p>Grievance Category</p>
+								</a>
+							</li>
+						</ul>
 					</li>
 					<li class="nav-item">
-						<a href="" class="nav-link ">
+						<a href="{{ route('hrSet.index') }}" class="nav-link {{set_active('hrSet.index') }}">
 							<i class="far fa-circle nav-icon"></i>
-							<p>Job Title</p>
+							<p>Setting <i class="right fas fa-angle-left"></i></p>
 						</a>
-					</li>
-					<li class="nav-item">
-						<a href="{{ route('organization.index') }}" class="nav-link {{set_active('organization.index') }}">
-							<i class="far fa-circle nav-icon"></i>
-							<p>Organization Chart</p>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a href="{{ route('office.index') }}" class="nav-link {{set_active('office.index') }}">
-							<i class="far fa-circle nav-icon"></i>
-							<p>Office Location</p>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a href="{{ route('leaveType.index') }}" class="nav-link {{set_active('leaveType.index') }}">
-							<i class="far fa-circle nav-icon"></i>
-							<p>Leave Approval</p>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a href="" class="nav-link ">
-							<i class="far fa-circle nav-icon"></i>
-							<p>Holiday</p>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a href="{{ route('reimbursType.index') }}" class="nav-link {{set_active('reimbursType.index') }}">
-							<i class="far fa-circle nav-icon"></i>
-							<p>Reimbursment Type</p>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a href="{{ route('docCat.index') }}" class="nav-link {{set_active('docCat.index') }}">
-							<i class="far fa-circle nav-icon"></i>
-							<p>Broadcast Category</p>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a href="{{ route('grievCat.index') }}" class="nav-link {{set_active('grievCat.index') }}">
-							<i class="far fa-circle nav-icon"></i>
-							<p>Grievance Category</p>
-						</a>
+						<ul class="nav nav-treeview">
+							<li class="nav-item">
+								<a href="" class="nav-link ">
+									<i class="far fa-circle nav-icon"></i>
+									<p>Working Time</p>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="" class="nav-link ">
+									<i class="far fa-circle nav-icon"></i>
+									<p>Payroll Send</p>
+								</a>
+							</li>
+						</ul>
 					</li>
 				</ul>
 			</li>
@@ -243,29 +271,57 @@
 					</p>
 				</a>
 				<ul class="nav nav-treeview">
-					<li class="nav-item">
-						<a href="{{ route('assetCat.index') }}" class="nav-link {{set_active('assetCat.index') }}">
+					<li class="nav-item has-treeview ">
+						<a href="#" class="nav-link ">
 							<i class="far fa-circle nav-icon"></i>
-							<p>Asset Category</p>
+							<p>Master Data <i class="right fas fa-angle-left"></i></p>
 						</a>
-					</li>
-					<li class="nav-item">
-						<a href="{{ route('bankAcc.index') }}" class="nav-link {{set_active('bankAcc.index') }}">
-							<i class="far fa-circle nav-icon"></i>
-							<p>Bank Account</p>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a href="{{ route('coaCat.index') }}" class="nav-link {{set_active('coaCat.index') }}">
-							<i class="far fa-circle nav-icon"></i>
-							<p>Chart of Account</p>
-						</a>
+						<ul class="nav nav-treeview">
+							<li class="nav-item">
+								<a href="{{ route('assetCat.index') }}" class="nav-link {{set_active('assetCat.index') }}">
+									<i class="far fa-circle nav-icon"></i>
+									<p>Asset Category</p>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="{{ route('bankAcc.index') }}" class="nav-link {{set_active('bankAcc.index') }}">
+									<i class="far fa-circle nav-icon"></i>
+									<p>Bank Account</p>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="{{ route('coaCat.index') }}" class="nav-link {{set_active('coaCat.index') }}">
+									<i class="far fa-circle nav-icon"></i>
+									<p>Chart of Account</p>
+								</a>
+							</li>
+						</ul>
 					</li>
 					<li class="nav-item">
 						<a href="{{ route('accSet.index') }}" class="nav-link {{set_active('accSet.index') }}">
 							<i class="far fa-circle nav-icon"></i>
-							<p>Setting</p>
+							<p>Setting <i class="right fas fa-angle-left"></i></p>
 						</a>
+						<ul class="nav nav-treeview">
+							<li class="nav-item">
+								<a href="" class="nav-link ">
+									<i class="far fa-circle nav-icon"></i>
+									<p>Default Account</p>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="" class="nav-link ">
+									<i class="far fa-circle nav-icon"></i>
+									<p>Depreciation Method</p>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="" class="nav-link ">
+									<i class="far fa-circle nav-icon"></i>
+									<p>Budget Method</p>
+								</a>
+							</li>
+						</ul>
 					</li>
 				</ul>
 			</li>
@@ -465,9 +521,9 @@
 			@endcan
 			@can('Access Accounting')
 			@if(\Route::is(['accounting.index','bank.index','accountTransaction.index','accTransaction.index','accTransaction.create','spend.create','receive.create','bankStatement.index','account.show','asset.index',
-			'journal.index','journal.report','budget.index','budgetDetail.create','budgetDetail.edit']))
+			'journal.index','journal.report','budget.index','budgetDetail.create','budgetDetail.edit','statToAcc.index']))
 			<li class="nav-item {{set_open('bank.index') }}">
-				<a href="{{ route('bank.index') }}" class="nav-link {{set_active(['bank.index','spend.create','receive.create','bankStatement.index','accountTransaction.index','account.show']) }}">
+				<a href="{{ route('bank.index') }}" class="nav-link {{set_active(['bank.index','spend.create','receive.create','bankStatement.index','accountTransaction.index','account.show','statToAcc.index']) }}">
 					<i class="nav-icon fas fa-money-check-alt"></i>
 					<p>
 						Bank Account
@@ -509,6 +565,12 @@
 						<a href="" class="nav-link ">
 							<i class="far fa-circle nav-icon"></i>
 							<p>Balance Sheet</p>
+						</a>
+					</li>
+					<li class="nav-item ">
+						<a href="" class="nav-link ">
+							<i class="far fa-circle nav-icon"></i>
+							<p>Activity Report</p>
 						</a>
 					</li>
 					<li class="nav-item ">
