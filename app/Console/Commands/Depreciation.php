@@ -109,6 +109,49 @@ class Depreciation extends Command
                         ]);
                     }
                 }
+            } elseif(($asset->method_id) == '4') {
+                $yearPercent = 200 / $getCurItem->estimate_time;
+                $yearValue = ($asset->purchase_price - $asset->residual_value) * ($yearPercent/100);
+                $monthValue = $yearValue/12;
+
+                if(isset($getCurRecord)) {
+                    $depValue = AssetDepreciation::create([
+                        'asset_id' => $asset->id,
+                        'depreciate_period' => Carbon::now()->toDateTimeString(),
+                        'opening_value' => $asset->purchase_price,
+                        'depreciate_value' => $monthValue,
+                        'closing_value' => $asset->purchase_price - $monthValue, 
+                    ]);
+                    if(($depValue->closing_value) == '0') {
+                        $update = $getCurItem->update([
+                            'status_id' => '99d1e6f4-51be-4fef-a82f-16b86ca9f086',
+                        ]);
+                    }
+                } else {
+                    $depValue = AssetDepreciation::create([
+                        'asset_id' => $asset->id,
+                        'depreciate_period' => Carbon::now()->toDateTimeString(),
+                        'opening_value' => $asset->purchase_price,
+                        'depreciate_value' => $monthValue,
+                        'closing_value' => $asset->purchase_price - $monthValue, 
+                    ]);
+                    if(($depValue->closing_value) == '0') {
+                        $update = $getCurItem->update([
+                            'status_id' => '99d1e6f4-51be-4fef-a82f-16b86ca9f086',
+                        ]);
+                    }
+                }
+            } elseif(($asset->method_id) == '5') {
+                $depValue = AssetDepreciation::create([
+                    'asset_id' => $asset->id,
+                    'depreciate_period' => Carbon::now()->toDateTimeString(),
+                    'opening_value' => $asset->purchase_price,
+                    'depreciate_value' => $monthValue,
+                    'closing_value' => $asset->purchase_price - $monthValue, 
+                ]);
+                $update = $getCurItem->update([
+                    'status_id' => '99d1e6f4-51be-4fef-a82f-16b86ca9f086',
+                ]);
             }
         }
     }
