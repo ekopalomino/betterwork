@@ -30,9 +30,10 @@ Better Work Indonesia | Asset Depreciation Details
 						<thead>
 							<tr>
 								<th>Depreciation Period</th>
-								<th>Opening Value</th>
-								<th>Depreciation Value</th>
-								<th>Closing Value</th>
+								<th>Purchase Price</th>
+								<th>Depreciation Expense</th>
+								<th>Depreciation Accumulation</th>
+								<th>Book Value</th>
 								<th>Account</th>
 							</tr>
 						</thead>
@@ -40,8 +41,9 @@ Better Work Indonesia | Asset Depreciation Details
 							@foreach($details as $key=>$value)
 							<tr>
 								<td>{{date("F Y",strtotime($value->depreciate_period)) }}</td>
-								<td>{{ number_format($value->opening_value,0,',','.')}}</td>
+								<td>{{ number_format($data->purchase_price,0,',','.')}}</td>
 								<td>{{ number_format($value->depreciate_value,0,',','.')}}</td>
+								<td>{{ number_format($value->accumulate_value,0,',','.')}}</td>
 								<td>{{ number_format($value->closing_value,0,',','.')}}</td>
 								<td></td>
 							</tr>

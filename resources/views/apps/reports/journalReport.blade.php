@@ -33,7 +33,9 @@ Better Work Indonesia | Account Transaction
 							<table class="table">
 								<thead>
 									<tr>
+										@isset($value->created_by)
 										<th colspan="2">{{ $value->payee }} (posted by {{$value->Creator->first_name}} on {{date("d F Y",strtotime($value->created_at)) }})</th>
+										@endisset
 										<th style="text-align:right;font-weight:200;">{{date("d F Y",strtotime($value->transaction_date)) }}</th>
 									</tr>
 									<tr>

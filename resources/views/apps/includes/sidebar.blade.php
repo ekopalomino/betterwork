@@ -271,8 +271,8 @@
 					</p>
 				</a>
 				<ul class="nav nav-treeview">
-					<li class="nav-item has-treeview ">
-						<a href="#" class="nav-link ">
+					<li class="nav-item has-treeview {{set_open(['coaCat.index','assetCat.index','bankAcc.index','accSet.index']) }}">
+						<a href="#" class="nav-link {{set_active(['coaCat.index','assetCat.index','bankAcc.index','accSet.index']) }}">
 							<i class="far fa-circle nav-icon"></i>
 							<p>Master Data <i class="right fas fa-angle-left"></i></p>
 						</a>

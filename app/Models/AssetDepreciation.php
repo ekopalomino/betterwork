@@ -11,6 +11,7 @@ class AssetDepreciation extends Model
     	'depreciate_period',
     	'opening_value',
     	'depreciate_value',
+    	'accumulate_value',
     	'closing_value',
     ];
 }
