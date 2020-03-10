@@ -621,7 +621,7 @@ class AccountingController extends Controller
             'purchase_price' => 'required',
             'purchase_from' => 'required',
             'estimate_time' => 'required',
-            'estimate_value' => 'required',
+            'residual_value' => 'required',
         ]);
 
         $data = AssetManagement::create([
@@ -636,7 +636,25 @@ class AccountingController extends Controller
             'estimate_time' => $request->input('estimate_time'),
             'residual_value' => $request->input('residual_value'),
             'method_id' => $request->input('method_id'),
-            'status_id' => 'e6cb9165-131e-406c-81c8-c2ba9a2c567e',
+            'status_id' => '81828ad9-fea7-41ff-b6d2-769fbc47c3fa',
+        ]);
+
+        return redirect()->route('asset.index');
+    }
+
+    public function assetManagementShow($id)
+    {
+        $data = AssetManagement::find($id);
+        $details = AssetDepreciation::where('asset_id',$id)->orderBy('created_at','ASC')->get();
+
+        return view('apps.show.assetDepreciation',compact('data','details'));
+    }
+
+    public function assetManagementDelete($id)
+    {
+        $data = AssetManagement::find($id);
+        $data->update([
+            'status_id' => '',
         ]);
 
         return redirect()->route('asset.index');

@@ -30,4 +30,9 @@ class AssetManagement extends Model
     {
     	return $this->belongsTo(AssetCategory::class,'category_name','id');
     }
+
+    public function Statuses()
+    {
+        return $this->belongsTo(Status::class,'status_id');
+    }
 }

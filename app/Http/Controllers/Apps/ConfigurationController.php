@@ -573,9 +573,9 @@ class ConfigurationController extends Controller
     public function assetCategoryIndex()
     {
         $data = AssetCategory::orderBy('id','ASC')->get();
-        $accounts = ChartOfAccount::orderBy('account_id','ASC')->pluck('account_name','id')->toArray();
-
-    	return view('apps.pages.assetCategory',compact('data','accounts'));
+        $depAccounts = ChartOfAccount::where('account_category','2')->orderBy('account_id','ASC')->pluck('account_name','id')->toArray();
+        $expAccounts = ChartOfAccount::where('account_category','5')->orderBy('account_id','ASC')->pluck('account_name','id')->toArray();
+    	return view('apps.pages.assetCategory',compact('data','depAccounts','expAccounts'));
     }
 
     public function assetCategoryStore(Request $request)

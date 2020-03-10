@@ -37,10 +37,10 @@ Better Work Indonesia | Asset Category
 				            	<div class="modal-body">
 				              		<label class="col-sm-12 col-form-label">Category Name</label>
                         			{!! Form::text('category_name', null, array('placeholder' => 'Category Name','class' => 'form-control')) !!}
-									<label for="inputEmail" class="col-sm-12 col-form-label">Chart of Account</label>
-									{!! Form::select('charts_id', [null=>'Please Select'] + $accounts,[], array('class' => 'form-control')) !!}
-                        			<label for="inputEmail" class="col-sm-12 col-form-label">Depreciation Account</label>
-                        			{!! Form::select('depreciate_id', [null=>'Please Select'] + $accounts,[], array('class' => 'form-control')) !!}
+									<label for="inputEmail" class="col-sm-12 col-form-label">Depreciation Accumulate Account</label>
+									{!! Form::select('charts_id', [null=>'Please Select'] + $depAccounts,[], array('class' => 'form-control')) !!}
+                        			<label for="inputEmail" class="col-sm-12 col-form-label">Depreciation Expense Account</label>
+                        			{!! Form::select('depreciate_id', [null=>'Please Select'] + $expAccounts,[], array('class' => 'form-control')) !!}
 				            	</div>
 				            	<div class="modal-footer">
 				              		<button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>

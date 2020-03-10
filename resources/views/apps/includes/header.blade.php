@@ -30,7 +30,7 @@
 		@can('Access Accounting')
 		<li class="nav-item d-none d-sm-inline-block">
 			<a href="{{route('accounting.index') }}" class="nav-link {{set_active(['accounting.index','bank.index','accountTransaction.index','accTransaction.index','accTransaction.create','spend.create','receive.create',
-			'bankStatement.index','account.show','asset.index','journal.index','journal.report','budget.index','budgetDetail.create','budgetDetail.edit','statToAcc.index']) }}">Accounting</a>
+			'bankStatement.index','account.show','asset.index','journal.index','journal.report','budget.index','budgetDetail.create','budgetDetail.edit','statToAcc.index','asset.show']) }}">Accounting</a>
 		</li>
 		@endcan
 		<li class="nav-item d-none d-sm-inline-block">
