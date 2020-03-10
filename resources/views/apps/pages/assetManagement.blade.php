@@ -24,7 +24,7 @@ Better Work Indonesia | Asset Management
                   		Add New
                 	</button>
 					<div class="modal fade" id="modal-default">
-				        <div class="modal-dialog modal-lg">
+				        <div class="modal-dialog modal-xl">
 				          	<div class="modal-content">
 								{!! Form::open(array('route' => 'asset.store','method'=>'POST')) !!}
 								@csrf
@@ -35,28 +35,34 @@ Better Work Indonesia | Asset Management
 				              		</button>
 				            	</div>
 				            	<div class="modal-body">
-									<label class="col-sm-12 col-form-label">Asset Code</label>
-									{!! Form::text('asset_code', null, array('placeholder' => 'Asset Code','class' => 'form-control')) !!}
-				              		<label class="col-sm-12 col-form-label">Asset Name</label>
-                        			{!! Form::text('asset_name', null, array('placeholder' => 'Asset Name','class' => 'form-control')) !!}
-									<label class="col-sm-12 col-form-label">Asset Category</label>
-									{!! Form::select('category_name', [null=>'Please Select'] + $categories,[], array('class' => 'form-control')) !!}
-									<label class="col-sm-12 col-form-label">Purchase Date</label>
-									{!! Form::date('purchase_date', '', array('id' => 'datepicker','class' => 'form-control')) !!}
-									<label class="col-sm-12 col-form-label">Warranty Expire</label>
-									{!! Form::date('warranty_expire', '', array('id' => 'datepicker','class' => 'form-control')) !!}
-									<label class="col-sm-12 col-form-label">Purchase Price</label>
-									{!! Form::number('purchase_price', null, array('placeholder' => 'Purchase Price','class' => 'form-control')) !!}
-									<label class="col-sm-12 col-form-label">Purchase From</label>
-									{!! Form::text('purchase_from', null, array('placeholder' => 'Purchase From','class' => 'form-control')) !!}
-									<label class="col-sm-12 col-form-label">Depreciation Start Date</label>
-									{!! Form::date('depreciation_start', '', array('id' => 'datepicker','class' => 'form-control')) !!}
-									<label class="col-sm-12 col-form-label">Economical Lifespan</label>
-									{!! Form::number('estimate_time', null, array('placeholder' => 'Estimate Lifespan','class' => 'form-control')) !!}
-									<label class="col-sm-12 col-form-label">Residual Value</label>
-									{!! Form::number('residual_value', null, array('placeholder' => 'Estimate Lifespan','class' => 'form-control')) !!}
-									<label class="col-sm-12 col-form-label">Depreciation Method</label>
-									{!! Form::select('method_id', [null=>'Please Select'] + $depreciations,[], array('class' => 'form-control')) !!}
+									<div class="row">
+										<div class="col-6">
+											<label class="col-sm-12 col-form-label">Asset Code</label>
+											{!! Form::text('asset_code', null, array('placeholder' => 'Asset Code','class' => 'form-control')) !!}
+											<label class="col-sm-12 col-form-label">Asset Name</label>
+											{!! Form::text('asset_name', null, array('placeholder' => 'Asset Name','class' => 'form-control')) !!}
+											<label class="col-sm-12 col-form-label">Asset Category</label>
+											{!! Form::select('category_name', [null=>'Please Select'] + $categories,[], array('class' => 'form-control')) !!}
+											<label class="col-sm-12 col-form-label">Purchase Date</label>
+											{!! Form::date('purchase_date', '', array('id' => 'datepicker','class' => 'form-control')) !!}
+											<label class="col-sm-12 col-form-label">Warranty Expire</label>
+											{!! Form::date('warranty_expire', '', array('id' => 'datepicker','class' => 'form-control')) !!}
+											<label class="col-sm-12 col-form-label">Purchase Price</label>
+											{!! Form::number('purchase_price', null, array('placeholder' => 'Purchase Price','class' => 'form-control')) !!}
+										</div>
+										<div class="col-6">
+											<label class="col-sm-12 col-form-label">Purchase From</label>
+											{!! Form::text('purchase_from', null, array('placeholder' => 'Purchase From','class' => 'form-control')) !!}
+											<label class="col-sm-12 col-form-label">Depreciation Start Date</label>
+											{!! Form::date('depreciation_start', '', array('id' => 'datepicker','class' => 'form-control')) !!}
+											<label class="col-sm-12 col-form-label">Economical Lifespan</label>
+											{!! Form::number('estimate_time', null, array('placeholder' => 'Economical Lifespan','class' => 'form-control')) !!}
+											<label class="col-sm-12 col-form-label">Residual Value</label>
+											{!! Form::number('residual_value', null, array('placeholder' => 'Residual Value','class' => 'form-control')) !!}
+											<label class="col-sm-12 col-form-label">Depreciation Method</label>
+											{!! Form::select('method_id', [null=>'Please Select'] + $depreciations,[], array('class' => 'form-control')) !!}
+										</div>
+									</div>
                         		</div>
 				            	<div class="modal-footer">
 				              		<button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
@@ -88,7 +94,9 @@ Better Work Indonesia | Asset Management
 								<th>Category</th>
 								<th>Purchase Date</th>
 								<th>Purchase Price</th>
+								<th>Current Value</th>
 								<th>Created At</th>
+								<th>Status</th>
 								<th></th>
 							</tr>
 						</thead>
@@ -101,8 +109,14 @@ Better Work Indonesia | Asset Management
 								<td>{{ $value->Categories->category_name }}</td>
 								<td>{{date("d F Y",strtotime($value->purchase_date)) }}</td>
 								<td>{{ number_format($value->purchase_price,0,',','.')}}</td>
-								<td>{{date("d F Y H:i",strtotime($value->created_at)) }}</td>
 								<td></td>
+								<td>{{date("d F Y H:i",strtotime($value->created_at)) }}</td>
+								<td>{{ $value->Statuses->name }}</td>
+								<td>
+									<a button id="search" type="submit" class="btn btn-xs btn-info" href="{{ route('asset.show',$value->id) }}">
+										<i class="fa fa-search"></i>
+									</a>
+								</td>
 							</tr>
 							@endforeach
 						</tbody>

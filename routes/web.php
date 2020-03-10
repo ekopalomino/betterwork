@@ -268,6 +268,7 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth','verified']], function
 	Route::post('accounting/account-statement/reconcile/{id}','Apps\AccountingController@AccountReconcile')->name('accTransaction.reconcile');
 	Route::get('accounting/asset-management','Apps\AccountingController@assetManagementIndex')->name('asset.index');
 	Route::post('accounting/asset-management/store','Apps\AccountingController@assetManagementStore')->name('asset.store');
+	Route::get('accounting/asset-management/depreciation-record/{id}','Apps\AccountingController@assetManagementShow')->name('asset.show');
 
 	Route::get('accounting/budget-manager','Apps\AccountingController@budgetManagerIndex')->name('budget.index');
 	Route::post('accounting/budget-manager/store','Apps\AccountingController@budgetNewStore')->name('budget.store');

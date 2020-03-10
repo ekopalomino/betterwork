@@ -297,6 +297,7 @@
 							</li>
 						</ul>
 					</li>
+					@can('disable')
 					<li class="nav-item">
 						<a href="{{ route('accSet.index') }}" class="nav-link {{set_active('accSet.index') }}">
 							<i class="far fa-circle nav-icon"></i>
@@ -323,6 +324,7 @@
 							</li>
 						</ul>
 					</li>
+					@endcan
 				</ul>
 			</li>
 			@endcan
@@ -521,7 +523,7 @@
 			@endcan
 			@can('Access Accounting')
 			@if(\Route::is(['accounting.index','bank.index','accountTransaction.index','accTransaction.index','accTransaction.create','spend.create','receive.create','bankStatement.index','account.show','asset.index',
-			'journal.index','journal.report','budget.index','budgetDetail.create','budgetDetail.edit','statToAcc.index']))
+			'journal.index','journal.report','budget.index','budgetDetail.create','budgetDetail.edit','statToAcc.index','asset.show']))
 			<li class="nav-item {{set_open('bank.index') }}">
 				<a href="{{ route('bank.index') }}" class="nav-link {{set_active(['bank.index','spend.create','receive.create','bankStatement.index','accountTransaction.index','account.show','statToAcc.index']) }}">
 					<i class="nav-icon fas fa-money-check-alt"></i>
@@ -530,8 +532,8 @@
 					</p>
 				</a>
 			</li>
-			<li class="nav-item {{set_open('asset.index') }}">
-				<a href="{{ route('asset.index') }}" class="nav-link {{set_active(['asset.index']) }}">
+			<li class="nav-item {{set_open(['asset.index','asset.show']) }}">
+				<a href="{{ route('asset.index') }}" class="nav-link {{set_active(['asset.index','asset.show']) }}">
 					<i class="nav-icon fas fa-clipboard-list"></i>
 					<p>
 						Asset Management

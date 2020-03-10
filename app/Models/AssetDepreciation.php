@@ -9,6 +9,8 @@ class AssetDepreciation extends Model
     protected $fillable = [
     	'asset_id',
     	'depreciate_period',
+    	'opening_value',
     	'depreciate_value',
+    	'closing_value',
     ];
 }
