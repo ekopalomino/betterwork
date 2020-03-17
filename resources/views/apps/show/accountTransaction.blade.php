@@ -117,7 +117,7 @@ Better Work Indonesia | Transaction Detail
 										<p>&nbsp;</p>
 										<p>&nbsp;</p>
 										<p>&nbsp;</p>
-										<p style="text-align:center;">({{$data->Creator->first_name}} {{$data->Creator->last_name}})</p>
+										@isset($data->created_by)<p style="text-align:center;">({{$data->Creator->first_name}} {{$data->Creator->last_name}})</p>@endisset
 									</td>
 									<td>
 										<p>&nbsp;</p>

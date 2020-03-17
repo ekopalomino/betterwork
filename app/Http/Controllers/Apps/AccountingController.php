@@ -596,7 +596,7 @@ class AccountingController extends Controller
         $coas = ChartOfAccount::pluck('account_name','id')->toArray();
 
         return view('apps.edit.accountTransaction',compact('data','detail','coas'));
-    }
+    } 
 
     public function transactionUpdate(Request $request,$id)
     {

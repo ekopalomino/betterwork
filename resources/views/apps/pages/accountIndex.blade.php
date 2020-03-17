@@ -114,7 +114,7 @@ Better Work Indonesia | Account Transaction
 										</td>
 										<td>
 											<a class="btn btn-xs btn-success" href="{{ route('account.show',['bank'=>$bank->id,'id'=>$value->id]) }} " title="Show Transaction" ><i class="fa fa-search"></i></a>
-											<a class="btn btn-xs btn-warning" href="{{ route('accTransaction.edit',['id'=>$value->id]) }} " title="Edit Transaction" ><i class="fa fa-edit"></i></a>
+											@if(($value->status_id)== '1f2967a5-9a88-4d44-a66b-5339c771aca0')<a class="btn btn-xs btn-warning" href="{{ route('accTransaction.edit',['id'=>$value->id]) }} " title="Edit Transaction" ><i class="fa fa-edit"></i></a>@endif
 										</td>
 									</tr>
 									@endforeach

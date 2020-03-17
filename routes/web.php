@@ -260,7 +260,7 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth','verified']], function
 	Route::post('accounting/account-statement/transaction/spend-money/store','Apps\AccountingController@spendStore')->name('spend.store');
 	Route::get('accounting/bank/transaction/cash-receipt/{id}','Apps\AccountingController@receiveCreate')->name('receive.create');
 	Route::post('accounting/account-statement/transaction/receive-money/store','Apps\AccountingController@receiveStore')->name('receive.store');
-	Route::get('accounting/account-statement/edit/{id}','Apps\AccountingController@transactionEdit')->name('accTransaction.edit');
+	Route::get('accounting/account-statement/edit/{id}','Apps\AccountingController@transactionEdit')->name('accTransaction.edit'); 
 	Route::post('accounting/account-statement/update/{id}','Apps\AccountingController@transactionUpdate')->name('accTransaction.update');
 	Route::post('accounting/account-statement/checked/{id}','Apps\AccountingController@AccountChecked')->name('accTransaction.checked');
 	Route::post('accounting/account-statement/approved/{id}','Apps\AccountingController@AccountApprove')->name('accTransaction.approve');
