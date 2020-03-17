@@ -9,12 +9,6 @@ Better Work Indonesia | Edit Account Transaction
        		<div class="col-sm-6">
           		<h1>Edit Account Transaction</h1>
        		</div>
-			<div class="col-sm-6">
-				<ol class="breadcrumb float-sm-right">
-					<li class="breadcrumb-item"><a href="{{ route('account.index') }}">Account Transaction</a></li>
-					<li class="breadcrumb-item active">Edit Account Transaction</li>
-				</ol>
-			</div>
        	</div>
     </div>
 </section>
@@ -71,7 +65,7 @@ Better Work Indonesia | Edit Account Transaction
 										<td>{!! Form::text('description[]', $value->description, array('class' => 'form-control','required')) !!}</td>
 										<td>{!! Form::number('quantity[]', $value->quantity, array('placeholder' => 'Quantity','class' => 'form-control','required')) !!}</td>
 										<td>{!! Form::number('unit_price[]', $value->unit_price, array('placeholder' => 'Unit Price','class' => 'form-control','required')) !!}</td>
-										<td>{!! Form::select('account[]', $coas,old('$value->account_name'), array('class' => 'form-control','required')) !!}</td>
+										<td>{!! Form::select('account[]', $coas,$value->account_name, array('class' => 'form-control','required')) !!}</td>
 										<td>{!! Form::number('tax[]', $value->tax_rate, array('placeholder' => 'Tax Rate','class' => 'form-control')) !!}</td>
 										<td>{!! Form::file('file[]', null, array('placeholder' => 'File','class' => 'form-control')) !!}</td>
 										<td>
@@ -85,7 +79,7 @@ Better Work Indonesia | Edit Account Transaction
 										<td>{!! Form::text('description[]', null, array('class' => 'form-control','required')) !!}</td>
 										<td>{!! Form::number('quantity[]', null, array('placeholder' => 'Quantity','class' => 'form-control','required')) !!}</td>
 										<td>{!! Form::number('unit_price[]', null, array('placeholder' => 'Unit Price','class' => 'form-control','required')) !!}</td>
-										<td>{!! Form::select('account[]', [null=>'Please Select'] + $coas,[], array('class' => 'form-control','required')) !!}</td>
+										<td>{!! Form::select('account[]', $coas,$value->account_name, array('class' => 'form-control','required')) !!}</td>
 										<td>{!! Form::number('tax[]', null, array('placeholder' => 'Tax Rate','class' => 'form-control','required')) !!}</td>
 										<td>{!! Form::file('file[]', null, array('placeholder' => 'File','class' => 'form-control')) !!}</td>
 										<td>
@@ -97,7 +91,7 @@ Better Work Indonesia | Edit Account Transaction
 										<td>{!! Form::text('description[]', null, array('class' => 'form-control','required')) !!}</td>
 										<td>{!! Form::number('quantity[]', null, array('placeholder' => 'Quantity','class' => 'form-control','required')) !!}</td>
 										<td>{!! Form::number('unit_price[]', null, array('placeholder' => 'Unit Price','class' => 'form-control','required')) !!}</td>
-										<td>{!! Form::select('account[]', [null=>'Please Select'] + $coas,[], array('class' => 'form-control','required')) !!}</td>
+										<td>{!! Form::select('account[]', $coas,$value->account_name, array('class' => 'form-control','required')) !!}</td>
 										<td>{!! Form::number('tax[]', null, array('placeholder' => 'Tax Rate','class' => 'form-control','required')) !!}</td>
 										<td>{!! Form::file('file[]', null, array('placeholder' => 'File','class' => 'form-control')) !!}</td>
 										<td>
@@ -109,7 +103,7 @@ Better Work Indonesia | Edit Account Transaction
 										<td>{!! Form::text('description[]', null, array('class' => 'form-control','required')) !!}</td>
 										<td>{!! Form::number('quantity[]', null, array('placeholder' => 'Quantity','class' => 'form-control','required')) !!}</td>
 										<td>{!! Form::number('unit_price[]', null, array('placeholder' => 'Unit Price','class' => 'form-control','required')) !!}</td>
-										<td>{!! Form::select('account[]', [null=>'Please Select'] + $coas,[], array('class' => 'form-control','required')) !!}</td>
+										<td>{!! Form::select('account[]', $coas,$value->account_name, array('class' => 'form-control','required')) !!}</td>
 										<td>{!! Form::number('tax[]', null, array('placeholder' => 'Tax Rate','class' => 'form-control','required')) !!}</td>
 										<td>{!! Form::file('file[]', null, array('placeholder' => 'File','class' => 'form-control')) !!}</td>
 										<td>
@@ -121,7 +115,7 @@ Better Work Indonesia | Edit Account Transaction
 										<td>{!! Form::text('description[]', null, array('class' => 'form-control','required')) !!}</td>
 										<td>{!! Form::number('quantity[]', null, array('placeholder' => 'Quantity','class' => 'form-control','required')) !!}</td>
 										<td>{!! Form::number('unit_price[]', null, array('placeholder' => 'Unit Price','class' => 'form-control','required')) !!}</td>
-										<td>{!! Form::select('account[]', [null=>'Please Select'] + $coas,[], array('class' => 'form-control','required')) !!}</td>
+										<td>{!! Form::select('account[]', $coas,$value->account_name, array('class' => 'form-control','required')) !!}</td>
 										<td>{!! Form::number('tax[]', null, array('placeholder' => 'Tax Rate','class' => 'form-control','required')) !!}</td>
 										<td>{!! Form::file('file[]', null, array('placeholder' => 'File','class' => 'form-control')) !!}</td>
 										<td>
@@ -133,7 +127,7 @@ Better Work Indonesia | Edit Account Transaction
 										<td>{!! Form::text('description[]', null, array('class' => 'form-control','required')) !!}</td>
 										<td>{!! Form::number('quantity[]', null, array('placeholder' => 'Quantity','class' => 'form-control','required')) !!}</td>
 										<td>{!! Form::number('unit_price[]', null, array('placeholder' => 'Unit Price','class' => 'form-control','required')) !!}</td>
-										<td>{!! Form::select('account[]', [null=>'Please Select'] + $coas,[], array('class' => 'form-control','required')) !!}</td>
+										<td>{!! Form::select('account[]', $coas,$value->account_name, array('class' => 'form-control','required')) !!}</td>
 										<td>{!! Form::number('tax[]', null, array('placeholder' => 'Tax Rate','class' => 'form-control','required')) !!}</td>
 										<td>{!! Form::file('file[]', null, array('placeholder' => 'File','class' => 'form-control')) !!}</td>
 										<td>
@@ -147,7 +141,7 @@ Better Work Indonesia | Edit Account Transaction
 					<br>
 					<div class="form-group">
 				    	<button type="submit" class="btn btn-sm btn-info">Submit</button>
-		                <a button type="button" class="btn btn-sm btn-danger" href="{{ route('account.index') }}">Cancel</a>
+		                <a button type="button" class="btn btn-sm btn-danger" href="{{ url()->previous() }}">Cancel</a>
 		            </div>
 		            {!! Form::close() !!}
 				</div>
