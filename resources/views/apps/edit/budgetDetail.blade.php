@@ -41,22 +41,12 @@ Better Work Indonesia | Budget Detail
 						<thead>
 							<tr>
 								<th>
-									<button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modal-lg">
-										Budget Option
-									</button>
 								</th>
 								@foreach($budgetRange as $month)
 								<th>{{date("M-y",strtotime($month)) }}</th>
 								@endforeach
 							</tr>
 						</thead>
-						<!--<tbody>
-							<tr>
-								<td>Tes</td>
-								<td>{!! Form::number('amount', null, array('class' => 'form-control')) !!}</td>
-								<td>{!! Form::number('amount', null, array('class' => 'form-control')) !!}</td>
-							</tr>
-						</tbody>-->
 						<tbody>
 							{!! Form::model($parent, ['method' => 'POST','route' => ['budgetDetail.update', $parent->id]]) !!}
 							@csrf
@@ -97,51 +87,6 @@ Better Work Indonesia | Budget Detail
 							</tr>
 						</tbody>
 					</table>
-					<!--<div class="modal fade" id="modal-lg">
-						<div class="modal-dialog modal-lg">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h4 class="modal-title">Budget Option</h4>
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									</button>
-								</div>
-								<div class="modal-body">
-									{!! Form::open(array('route' => 'user.store','method'=>'POST', 'class' => 'form-horizontal')) !!}
-									@csrf
-									<div class="form-group row">
-										<div class="col-sm-10">
-											<div class="custom-control custom-radio">
-												<input class="custom-control-input" type="radio" id="customRadio1" name="customRadio">
-												<label for="customRadio1" class="custom-control-label">Same Amount Every Month</label>
-											</div>
-										</div>
-									</div>
-									<div class="form-group row">
-										<div class="col-sm-10">
-											<div class="custom-control custom-radio">
-												<input class="custom-control-input" type="radio" id="customRadio1" name="customRadio">
-												<label for="customRadio1" class="custom-control-label">Same Amount Every Month</label>
-											</div>
-										</div>
-									</div>
-									<div class="form-group row">
-										<div class="col-sm-10">
-											<div class="custom-control custom-radio">
-												<input class="custom-control-input" type="radio" id="customRadio1" name="customRadio">
-												<label for="customRadio1" class="custom-control-label">Same Amount Every Month</label>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="modal-footer justify-content-between">
-									<button type="close" class="btn btn-default" data-dismiss="modal">Close</button>
-									<button id="register" type="submit" class="btn btn-primary">Save changes</button>
-								</div>
-								{!! Form::close() !!}
-							</div>
-						</div>
-					</div>-->
 					<br>
 					<div class="col-3">
 						<button type="submit" class="btn btn-sm btn-primary">Save Change</button>

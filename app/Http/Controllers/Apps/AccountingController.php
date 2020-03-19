@@ -97,8 +97,6 @@ class AccountingController extends Controller
                 return redirect()->route('bank.index')->with($notification);
             }
         }
-        
-        
     }
 
     public function statementToAccount()
@@ -683,7 +681,7 @@ class AccountingController extends Controller
             'created_by' => auth()->user()->employee_id,
         ]);
 
-        return redirect()->route('budget.index');
+        return redirect()->route('budgetDetail.create',$data->id);
     }
 
     public function budgetDetailCreate($id)
@@ -732,12 +730,30 @@ class AccountingController extends Controller
         $budgetRange = CarbonPeriod::create($parent->budget_start,'1 month',$parent->budget_end);
         $groupedIncome = $incomes->groupBy('account_name')->toArray();
         $groupedExpense = $expenses->groupBy('account_name')->toArray();
+        
         return view('apps.edit.budgetDetail',compact('parent','groupedIncome','groupedExpense','expenses','accounts','budgetRange'));
     }
 
     public function budgetDetailUpdate(Request $request,$id)
     {
+        $input = $request->all();
+       
 
+        $parent = BudgetPeriod::where('id',$request->input('budget_id'))->first();
+        $input = $request->all();
+
+        $accounts = $request->account_name;
+        $categories = $request->account_category;
+        $periods = $request->budget_period;
+        $amounts = $request->amount;
+        
+        foreach($amounts as $index=>$amount) {
+            $data = BudgetDetail::where('budget_id',$parent->id)->where('account_name',$accounts[$index])->update([
+                'budget_amount' => $amount,
+            ]);
+        }
+
+        return redirect()->route('budget.index');
     }
 
 }

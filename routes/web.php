@@ -275,7 +275,7 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth','verified']], function
 	Route::get('accounting/budget-manager/detail/{id}','Apps\AccountingController@budgetDetailCreate')->name('budgetDetail.create');
 	Route::post('accounting/budget-manager/detail/store','Apps\AccountingController@budgetDetailStore')->name('budgetDetail.store');
 	Route::get('accounting/budget-manager/detail/edit/{id}','Apps\AccountingController@budgetDetailEdit')->name('budgetDetail.edit');
-	Route::get('accounting/budget-manager/detail/update/{id}','Apps\AccountingController@budgetDetailUpdate')->name('budgetDetail.update');
+	Route::post('accounting/budget-manager/detail/update/{id}','Apps\AccountingController@budgetDetailUpdate')->name('budgetDetail.update');
 
 	Route::get('human-resources/reports/attendance','Apps\ReportsController@attendanceReport')->name('attReport.index');
 	Route::post('human-resources/reports/attendance/result','Apps\ReportsController@attendanceProcess')->name('attReport.result');
