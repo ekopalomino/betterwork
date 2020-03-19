@@ -97,9 +97,9 @@ Better Work Indonesia | Budget Manager
 									@endisset
 								</td>
 								<td>
-									<a button id="search" type="submit" class="btn btn-xs btn-info" href="{{ route('budgetDetail.create',$value->id) }}">
+									<!--<a button id="search" type="submit" class="btn btn-xs btn-info" href="{{ route('budgetDetail.create',$value->id) }}">
 										<i class="fa fa-search"></i>
-									</a>
+									</a>-->
 									<a button id="search" type="submit" class="btn btn-xs btn-info" href="{{ route('budgetDetail.edit',$value->id) }}">
 										<i class="fa fa-edit"></i>
 									</a>
