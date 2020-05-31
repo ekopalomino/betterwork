@@ -3,8 +3,8 @@
 Better Work Indonesia | Employee Attendance Reports
 @endsection
 @section('header.plugins')
-<link rel="stylesheet" href="{{ asset('public/bower_components/admin-lte/plugins/datatables-bs4/css/dataTables.bootstrap4.css') }}">
-<link rel="stylesheet" href="{{ asset('public/bower_components/admin-lte/plugins/daterangepicker/daterangepicker.css') }}">
+<link rel="stylesheet" href="{{ asset('bower_components/admin-lte/plugins/datatables-bs4/css/dataTables.bootstrap4.css') }}">
+<link rel="stylesheet" href="{{ asset('bower_components/admin-lte/plugins/daterangepicker/daterangepicker.css') }}">
 @endsection
 @section('content')
 <section class="content-header">
@@ -51,10 +51,10 @@ Better Work Indonesia | Employee Attendance Reports
 </section>
 @endsection
 @section('footer.scripts')
-<script src="{{ asset('public/bower_components/admin-lte/plugins/datatables/jquery.dataTables.js') }}"></script>
-<script src="{{ asset('public/bower_components/admin-lte/plugins/datatables-bs4/js/dataTables.bootstrap4.js') }}"></script>
-<script src="{{ asset('public/bower_components/admin-lte/plugins/moment/moment.min.js') }}"></script>
-<script src="{{ asset('public/bower_components/admin-lte/plugins/daterangepicker/daterangepicker.js') }}"></script>
+<script src="{{ asset('bower_components/admin-lte/plugins/datatables/jquery.dataTables.js') }}"></script>
+<script src="{{ asset('bower_components/admin-lte/plugins/datatables-bs4/js/dataTables.bootstrap4.js') }}"></script>
+<script src="{{ asset('bower_components/admin-lte/plugins/moment/moment.min.js') }}"></script>
+<script src="{{ asset('bower_components/admin-lte/plugins/daterangepicker/daterangepicker.js') }}"></script>
 <script>
   $(function () {
     $("#example1").DataTable();

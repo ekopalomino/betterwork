@@ -3,7 +3,7 @@
 Better Work Indonesia | Grievance Database Edit
 @endsection
 @section('header.styles')
-<link rel="stylesheet" href="{{ asset('public/bower_components/admin-lte/plugins/summernote/summernote-bs4.css') }}">
+<link rel="stylesheet" href="{{ asset('bower_components/admin-lte/plugins/summernote/summernote-bs4.css') }}">
 @endsection
 @section('content')
 <section class="content-header">
@@ -62,7 +62,7 @@ Better Work Indonesia | Grievance Database Edit
 </section>
 @endsection
 @section('footer.scripts')
-<script src="{{ asset('public/bower_components/admin-lte/plugins/summernote/summernote-bs4.min.js') }}"></script>
+<script src="{{ asset('bower_components/admin-lte/plugins/summernote/summernote-bs4.min.js') }}"></script>
 <script type="text/javascript">
    $(document).ready(function() {
     $('.summernote').summernote({

@@ -3,7 +3,7 @@
 Better Work Indonesia | Create Knowledge Base
 @endsection
 @section('header.styles')
-<link rel="stylesheet" href="{{ asset('public/bower_components/admin-lte/plugins/summernote/summernote-bs4.css') }}">
+<link rel="stylesheet" href="{{ asset('bower_components/admin-lte/plugins/summernote/summernote-bs4.css') }}">
 <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 @endsection
 @section('content')
@@ -72,14 +72,14 @@ Better Work Indonesia | Create Knowledge Base
 </section>
 @endsection
 @section('footer.scripts')
-<script src="{{ asset('public/bower_components/admin-lte/plugins/summernote/summernote-bs4.min.js') }}"></script>
+<script src="{{ asset('bower_components/admin-lte/plugins/summernote/summernote-bs4.min.js') }}"></script>
 <script>
   $(function () {
     // Summernote
     $('.textarea').summernote()
   })
 </script>
-<script src="{{ asset('public/bower_components/admin-lte/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
+<script src="{{ asset('bower_components/admin-lte/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
 <script type="text/javascript">
 $(document).ready(function () {
     bsCustomFileInput.init();

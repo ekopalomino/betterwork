@@ -1,13 +1,13 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
 	<a href="index3.html" class="brand-link">
-		<img src="{{ asset('public/assets/img/logo_resize.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+		<img src="{{ asset('assets/img/logo_resize.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
-		<span class="brand-text font-weight-light"><img src="{{ asset('public/assets/img/logo.png') }}" style="opacity: .8"></span>
+		<span class="brand-text font-weight-light"><img src="{{ asset('assets/img/logo.png') }}" style="opacity: .8"></span>
 	</a>
     <div class="sidebar">
     	<div class="user-panel mt-3 pb-3 mb-3 d-flex">
 	        <div class="image">
-				<img src="http://betterwork.iteos.tech/public/employees/{{Auth::user()->avatar}}" class="img-circle elevation-2" alt="User Image">
+				<img src="http://119.18.157.77/public/employees/{{Auth::user()->avatar}}" class="img-circle elevation-2" alt="User Image">
 				<!--<img src="http://betterwork.local/public/employees/{{Auth::user()->avatar}}" class="img-circle elevation-2" alt="User Image">-->
 	        </div>
 	        <div class="info">

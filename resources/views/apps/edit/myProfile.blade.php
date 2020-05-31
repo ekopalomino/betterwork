@@ -340,7 +340,7 @@ Better Work Indonesia | Update My Data
 </section>
 @endsection
 @section('footer.scripts')
-<script src="{{ asset('public/bower_components/admin-lte/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
+<script src="{{ asset('bower_components/admin-lte/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
 <script type="text/javascript">
 $(document).ready(function () {
   	bsCustomFileInput.init();

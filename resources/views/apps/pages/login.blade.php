@@ -9,17 +9,17 @@
         <meta content="" name="author" />
         
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
-        <link href="{{ asset('public/assets/login/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
-        <link href="{{ asset('public/assets/login/simple-line-icons/simple-line-icons.min.css') }}" rel="stylesheet" type="text/css" />
-        <link href="{{ asset('public/assets/login/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-        <link href="{{ asset('public/assets/login/bootstrap-switch/css/bootstrap-switch.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('assets/login/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('assets/login/simple-line-icons/simple-line-icons.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('assets/login/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('assets/login/bootstrap-switch/css/bootstrap-switch.min.css') }}" rel="stylesheet" type="text/css" />
         
-        <link href="{{ asset('public/assets/login/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-        <link href="{{ asset('public/assets/login/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('assets/login/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('assets/login/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-        <link href="{{ asset('public/assets/login/css/components-rounded.min.css') }}" rel="stylesheet" id="style_components" type="text/css" />
-        <link href="{{ asset('public/assets/login/css/plugins.min.css') }}" rel="stylesheet" type="text/css" />
-        <link href="{{ asset('public/assets/login/css/login-5.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('assets/login/css/components-rounded.min.css') }}" rel="stylesheet" id="style_components" type="text/css" />
+        <link href="{{ asset('assets/login/css/plugins.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('assets/login/css/login-5.min.css') }}" rel="stylesheet" type="text/css" />
         <link rel="shortcut icon" href="favicon.ico" /> 
     </head>
     
@@ -27,8 +27,8 @@
         <div class="user-login-5">
             <div class="row bs-reset">
                 <div class="col-md-6 bs-reset mt-login-5-bsfix">
-                    <div class="login-bg" style="background-image:url({{ asset('public/assets/img/login_back.jpg') }})">
-                        <img class="login-logo" src="{{ asset('public/assets/img/logo.png') }}" /> </div>
+                    <div class="login-bg" style="background-image:url({{ asset('assets/img/login_back.jpg') }})">
+                        <img class="login-logo" src="{{ asset('assets/img/logo.png') }}" /> </div>
                 </div>
                 <div class="col-md-6 login-container bs-reset mt-login-5-bsfix">
                     <div class="login-content">
@@ -109,24 +109,24 @@
 <script src="../assets/global/plugins/ie8.fix.min.js"></script> 
 <![endif]-->
         <!-- BEGIN CORE PLUGINS -->
-        <script src="{{ asset('public/assets/login/jquery/jquery.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('public/assets/login/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('public/assets/login/jquery/js.cookie.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('public/assets/login/jquery-slimscroll/jquery.slimscroll.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('public/assets/login/jquery/jquery.blockui.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('public/assets/login/bootstrap-switch/js/bootstrap-switch.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('assets/login/jquery/jquery.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/login/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/login/jquery/js.cookie.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/login/jquery-slimscroll/jquery.slimscroll.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/login/jquery/jquery.blockui.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/login/bootstrap-switch/js/bootstrap-switch.min.js') }}" type="text/javascript"></script>
         <!-- END CORE PLUGINS -->
         <!-- BEGIN PAGE LEVEL PLUGINS -->
-        <script src="{{ asset('public/assets/login/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('public/assets/login/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('public/assets/login/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('public/assets/login/backstretch/jquery.backstretch.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('assets/login/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/login/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/login/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/login/backstretch/jquery.backstretch.min.js') }}" type="text/javascript"></script>
         <!-- END PAGE LEVEL PLUGINS -->
         <!-- BEGIN THEME GLOBAL SCRIPTS -->
-        <script src="{{ asset('public/assets/login/jquery/app.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('assets/login/jquery/app.min.js') }}" type="text/javascript"></script>
         <!-- END THEME GLOBAL SCRIPTS -->
         <!-- BEGIN PAGE LEVEL SCRIPTS -->
-        <script src="{{ asset('public/assets/login/jquery/login-5.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('assets/login/jquery/login-5.js') }}" type="text/javascript"></script>
         <!-- END PAGE LEVEL SCRIPTS -->
         <!-- BEGIN THEME LAYOUT SCRIPTS -->
         <!-- END THEME LAYOUT SCRIPTS -->

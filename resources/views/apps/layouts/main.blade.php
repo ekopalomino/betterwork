@@ -5,12 +5,12 @@
   	<meta name="viewport" content="width=device-width, initial-scale=1">
   	<meta http-equiv="x-ua-compatible" content="ie=edge">
   	<title>@yield('header.title')</title>
-  	<link rel="stylesheet" href="{{ asset('public/bower_components/admin-lte/plugins/fontawesome-free/css/all.min.css') }}">
-  	<link rel="stylesheet" href="{{ asset('public/bower_components/admin-lte/dist/css/adminlte.min.css') }}">
+  	<link rel="stylesheet" href="{{ asset('bower_components/admin-lte/plugins/fontawesome-free/css/all.min.css') }}">
+  	<link rel="stylesheet" href="{{ asset('bower_components/admin-lte/dist/css/adminlte.min.css') }}">
   	<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-  	<link rel="stylesheet" href="{{ asset('public/bower_components/admin-lte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
-  	<link rel="stylesheet" href="{{ asset('public/bower_components/admin-lte/plugins/toastr/toastr.min.css') }}">
-	<link rel="stylesheet" href="{{ asset('public/css/preload.css') }}">
+  	<link rel="stylesheet" href="{{ asset('bower_components/admin-lte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
+  	<link rel="stylesheet" href="{{ asset('bower_components/admin-lte/plugins/toastr/toastr.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/preload.css') }}">
   	@yield('header.plugins')
   	@yield('header.styles')
 </head>
@@ -66,13 +66,13 @@
     
 		@include('apps.includes.footer')
 	</div>
-  <script src="{{ asset('public/bower_components/admin-lte/plugins/jquery/jquery.min.js') }}"></script>
-	<script src="{{ asset('public/bower_components/admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-	<script src="{{ asset('public/bower_components/admin-lte/dist/js/adminlte.min.js') }}"></script>
-	<script src="{{ asset('public/bower_components/admin-lte/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
-	<script src="{{ asset('public/bower_components/admin-lte/plugins/toastr/toastr.min.js') }}"></script>
-	<script src="{{ asset('public/js/admin.js') }}" type="text/javascript"></script>
-	<script src="{{ asset('public/js/preload.js') }}" type="text/javascript"></script>
+  <script src="{{ asset('bower_components/admin-lte/plugins/jquery/jquery.min.js') }}"></script>
+	<script src="{{ asset('bower_components/admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+	<script src="{{ asset('bower_components/admin-lte/dist/js/adminlte.min.js') }}"></script>
+	<script src="{{ asset('bower_components/admin-lte/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+	<script src="{{ asset('bower_components/admin-lte/plugins/toastr/toastr.min.js') }}"></script>
+	<script src="{{ asset('js/admin.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('js/preload.js') }}" type="text/javascript"></script>
 	@yield('footer.scripts')
 	<script type="text/javascript">
 		@if(Session::has('message'))
