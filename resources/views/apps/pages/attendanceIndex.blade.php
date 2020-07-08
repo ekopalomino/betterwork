@@ -109,7 +109,7 @@ Better Work Indonesia | Employee Attendance
       "searching": false,
       "ordering": true,
       "info": true,
-      "autoWidth": false,
+      "autoWidth": true,
     });
     $('#reservation').daterangepicker()
   });

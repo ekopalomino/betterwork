@@ -32,7 +32,7 @@ class AccountingController extends Controller
     	return view('apps.pages.accountingHome');
     }
 
-    public function bankIndex()
+    public function bankIndex() 
     {
     	$banks = BankAccount::orderBy('bank_name','ASC')->get();
         $balances = BankStatement::latest('id')->first();
@@ -193,9 +193,9 @@ class AccountingController extends Controller
 
     }
 
-    public function accountIndex($id) 
+    public function accountIndex() 
     {
-        $bank = BankAccount::find($id);
+        $bank = BankAccount::first();
         $data = AccountStatement::with(['Child' => function($query) {
             $query->where('source','User');
         }])->orderBy('updated_at','DESC')->paginate(10);

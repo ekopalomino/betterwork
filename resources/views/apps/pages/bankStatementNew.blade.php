@@ -26,7 +26,7 @@ Better Work Indonesia | Bank Statement
        		<div class="col-sm-6">
           		<h1>Bank Account</h1>
        		</div>
-       	</div>
+       	</div> 
     </div>
 </section>
 <section class="content">

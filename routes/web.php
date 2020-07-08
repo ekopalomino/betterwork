@@ -145,11 +145,11 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth','verified']], function
 	Route::post('configuration/bank-account/update/{id}','Apps\ConfigurationController@bankAccountUpdate')->name('bankAcc.update');
 	Route::post('configuration/bank-account/delete/{id}','Apps\ConfigurationController@bankAccountDelete')->name('bankAcc.destroy');
 
-	Route::get('configuration/chart-of-account','Apps\ConfigurationController@coaCategoryIndex')->name('coaCat.index');
-	Route::post('configuration/chart-of-account/store','Apps\ConfigurationController@coaCategoryStore')->name('coaCat.store');
-	Route::get('configuration/chart-of-account/edit/{id}','Apps\ConfigurationController@coaCategoryEdit')->name('coaCat.edit');
-	Route::post('configuration/chart-of-account/update/{id}','Apps\ConfigurationController@coaCategoryUpdate')->name('coaCat.update');
-	Route::post('configuration/chart-of-account/delete/{id}','Apps\ConfigurationController@coaCategoryDestroy')->name('coaCat.destroy');
+	Route::get('finance/accounting/chart-of-account','Apps\ConfigurationController@coaCategoryIndex')->name('coaCat.index');
+	Route::post('finance/accounting/chart-of-account/store','Apps\ConfigurationController@coaCategoryStore')->name('coaCat.store');
+	Route::get('finance/accounting/chart-of-account/edit/{id}','Apps\ConfigurationController@coaCategoryEdit')->name('coaCat.edit');
+	Route::post('finance/accounting/chart-of-account/update/{id}','Apps\ConfigurationController@coaCategoryUpdate')->name('coaCat.update');
+	Route::post('finance/accounting/chart-of-account/delete/{id}','Apps\ConfigurationController@coaCategoryDestroy')->name('coaCat.destroy');
 
 	Route::get('configuration/asset-category','Apps\ConfigurationController@assetCategoryIndex')->name('assetCat.index');
 	Route::post('configuration/asset-category/store','Apps\ConfigurationController@assetCategoryStore')->name('assetCat.store');
@@ -253,7 +253,7 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth','verified']], function
 	Route::post('accounting/bank/bank-statement/store/{id}','Apps\AccountingController@bankStatementMatch')->name('statToAcc.store');
 	Route::get('accounting/bank/bank-statement/import/{id}','Apps\AccountingController@bankStatement')->name('bankStatement.import');
 	Route::post('accounting/bank/bank-statement/import/{id}','Apps\AccountingController@bankStatementImport')->name('statementFile.import');
-	Route::get('accounting/bank/account-transaction/{id}','Apps\AccountingController@accountIndex')->name('accountTransaction.index');
+	Route::get('finance/bank/account-transaction','Apps\AccountingController@accountIndex')->name('accountTransaction.index'); 
 	Route::get('accounting/bank/account-transaction/{bank}/show/{id}','Apps\AccountingController@AccountTransactionShow')->name('account.show');
 	Route::post('accounting/account-statement/save-period','Apps\AccountingController@statementPeriod')->name('accountPeriod.store');
 	Route::get('accounting/bank/transaction/cash-paid/{id}','Apps\AccountingController@spendCreate')->name('spend.create');

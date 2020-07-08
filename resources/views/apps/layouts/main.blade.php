@@ -18,7 +18,7 @@
 	<div class="wrapper">
 		@include('apps.includes.header')
 		@include('apps.includes.sidebar')
-		<div class="content-wrapper">
+		<div class="content-wrapper" style="font-size: 14px;">
 			@yield('content')
 		</div>
 		<div class="modal fade" id="modalMd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

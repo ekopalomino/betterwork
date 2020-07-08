@@ -1,4 +1,4 @@
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
+<aside class="main-sidebar sidebar-dark-primary elevation-4" style="font-size: 14px;">
 	<a href="index3.html" class="brand-link">
 		<img src="{{ asset('assets/img/logo_resize.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
@@ -120,8 +120,8 @@
 				</ul>
 			</li>
 			@endif
-			@can('Access Configuration')
-			@if(\Route::is(['application.index','config.index','position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','coaCat.index','assetCat.index','user.index','logs.index','role.index',
+			@can('Access Configuration') 
+			@if(\Route::is(['application.index','config.index','position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','assetCat.index','user.index','logs.index','role.index',
 			'role.create','role.edit','bankAcc.index','organization.index','office.index','accSet.index','holiday.index','hrSet.index']))
 			@can('Create Application Setting')
 			<li class="nav-item">
@@ -523,81 +523,306 @@
 			@endcan
 			@can('Access Accounting')
 			@if(\Route::is(['accounting.index','bank.index','accountTransaction.index','accTransaction.index','accTransaction.create','spend.create','receive.create','bankStatement.index','account.show','asset.index',
-			'journal.index','journal.report','budget.index','budgetDetail.create','budgetDetail.edit','statToAcc.index','asset.show']))
-			<li class="nav-item {{set_open('bank.index') }}">
-				<a href="{{ route('bank.index') }}" class="nav-link {{set_active(['bank.index','spend.create','receive.create','bankStatement.index','accountTransaction.index','account.show','statToAcc.index']) }}">
-					<i class="nav-icon fas fa-money-check-alt"></i>
+			'journal.index','journal.report','budget.index','budgetDetail.create','budgetDetail.edit','statToAcc.index','asset.show','coaCat.index',]))
+			<li class="nav-item has-treeview ">
+				<a href="#" class="nav-link">
 					<p>
-						Bank Account
-					</p>
-				</a>
-			</li>
-			<li class="nav-item {{set_open(['asset.index','asset.show']) }}">
-				<a href="{{ route('asset.index') }}" class="nav-link {{set_active(['asset.index','asset.show']) }}">
-					<i class="nav-icon fas fa-clipboard-list"></i>
-					<p>
-						Asset Management
-					</p>
-				</a>
-			</li>
-			<li class="nav-item {{set_open(['budget.index','budgetDetail.create','budgetDetail.edit']) }}">
-				<a href="{{ route('budget.index') }}" class="nav-link {{set_active(['budget.index','budgetDetail.create']) }}">
-					<i class="nav-icon fas fa-file-invoice"></i>
-					<p>
-						Budget Manager
-					</p>
-				</a>
-			</li>
-			<li class="nav-item has-treeview {{set_open(['journal.index','journal.report']) }}">
-				<a href="#" class="nav-link {{set_active(['journal.index','journal.report']) }}">
-					<i class="nav-icon fas fa-chart-line"></i>
-					<p>
-						Reports
+						Bank
 						<i class="right fas fa-angle-left"></i>
 					</p>
 				</a>
 				<ul class="nav nav-treeview">
-					<li class="nav-item {{set_open(['journal.index','journal.report']) }}">
-						<a href="{{ route('journal.index') }}" class="nav-link {{set_active(['journal.index','journal.report']) }}">
-							<i class="far fa-circle nav-icon"></i>
-							<p>Journal Report</p>
+					<li class="nav-item ">
+						<a href="" class="nav-link ">
+							<i class="nav-icon fas fa-search"></i>
+							<p>Find</p>
+							<i class="right fas fa-angle-left"></i>
 						</a>
+						<ul class="nav nav-treeview">
+							<li class="nav-item ">
+								<a href="{{ route('accountTransaction.index') }}" class="nav-link ">
+									<i class="far fa-circle nav-icon"></i>
+									<p>Account Transactions</p>
+								</a>
+							</li>
+							<li class="nav-item ">
+								<a href="" class="nav-link ">
+									<i class="far fa-circle nav-icon"></i>
+									<p>Bank Statements</p>
+								</a>
+							</li>
+						</ul>
 					</li>
 					<li class="nav-item ">
 						<a href="" class="nav-link ">
-							<i class="far fa-circle nav-icon"></i>
-							<p>Balance Sheet</p>
+							<i class="nav-icon fas fa-plus"></i>
+							<p>New</p>
+							<i class="right fas fa-angle-left"></i>
 						</a>
+						<ul class="nav nav-treeview">
+							<li class="nav-item ">
+								<a href="" class="nav-link ">
+									<i class="far fa-circle nav-icon"></i>
+									<p>Spend Money</p>
+								</a>
+							</li>
+							<li class="nav-item ">
+								<a href="" class="nav-link ">
+									<i class="far fa-circle nav-icon"></i>
+									<p>Receive Money</p>
+								</a>
+							</li>
+						</ul>
 					</li>
 					<li class="nav-item ">
 						<a href="" class="nav-link ">
-							<i class="far fa-circle nav-icon"></i>
-							<p>Activity Report</p>
+							<i class="nav-icon fas fa-equals"></i>
+							<p>Reconcile</p>
+							<i class="right fas fa-angle-left"></i>
 						</a>
+						<ul class="nav nav-treeview">
+							<li class="nav-item ">
+								<a href="" class="nav-link ">
+									<i class="far fa-circle nav-icon"></i>
+									<p>Reconcile Account</p>
+								</a>
+							</li>
+							<li class="nav-item ">
+								<a href="" class="nav-link ">
+									<i class="far fa-circle nav-icon"></i>
+									<p>Bank Rules</p>
+								</a>
+							</li>
+							<li class="nav-item ">
+								<a href="" class="nav-link ">
+									<i class="far fa-circle nav-icon"></i>
+									<p>Reconciliation Report</p>
+								</a>
+							</li>
+							<li class="nav-item ">
+								<a href="" class="nav-link ">
+									<i class="far fa-circle nav-icon"></i>
+									<p>Import Statement</p>
+								</a>
+							</li>
+						</ul>
 					</li>
+				</ul>
+			</li>
+			<li class="nav-item has-treeview {{set_open(['coaCat.index']) }}">
+				<a href="#" class="nav-link">
+					<p>
+						Accounting
+						<i class="right fas fa-angle-left"></i>
+					</p>
+				</a>
+				<ul class="nav nav-treeview">
 					<li class="nav-item ">
 						<a href="" class="nav-link ">
-							<i class="far fa-circle nav-icon"></i>
-							<p>Cashflow Statement</p>
+							<i class="nav-icon fas fa-table"></i>
+							<p>Reports</p>
+							<i class="right fas fa-angle-left"></i>
 						</a>
+						<ul class="nav nav-treeview">
+							<li class="nav-item ">
+								<a href="" class="nav-link ">
+									<p>Financial
+										<i class="right fas fa-angle-left"></i>
+									</p>
+								</a>
+								<ul class="nav nav-treeview">
+									<li class="nav-item ">
+										<a href="" class="nav-link ">
+											<i class="far fa-circle nav-icon"></i>
+											<p>Balance Sheet</p>
+										</a>
+									</li>
+									<li class="nav-item ">
+										<a href="" class="nav-link ">
+											<i class="far fa-circle nav-icon"></i>
+											<p>Budget Manager</p>
+										</a>
+									</li>
+									<li class="nav-item ">
+										<a href="" class="nav-link ">
+											<i class="far fa-circle nav-icon"></i>
+											<p>Budget Variance</p>
+										</a>
+									</li>
+									<li class="nav-item ">
+										<a href="" class="nav-link ">
+											<i class="far fa-circle nav-icon"></i>
+											<p>Cash Summary</p>
+										</a>
+									</li>
+									<li class="nav-item ">
+										<a href="" class="nav-link ">
+											<i class="far fa-circle nav-icon"></i>
+											<p>Movement in Equity</p>
+										</a>
+									</li>
+									<li class="nav-item ">
+										<a href="" class="nav-link ">
+											<i class="far fa-circle nav-icon"></i>
+											<p>Activity Report</p>
+										</a>
+									</li>
+									<li class="nav-item ">
+										<a href="" class="nav-link ">
+											<i class="far fa-circle nav-icon"></i>
+											<p>Statement of Cash Flow</p>
+										</a>
+									</li>
+								</ul>
+							</li>
+							<li class="nav-item ">
+								<a href="" class="nav-link ">
+									<p>Accounting
+										<i class="right fas fa-angle-left"></i>
+									</p>
+								</a>
+								<ul class="nav nav-treeview">
+									<li class="nav-item ">
+										<a href="" class="nav-link ">
+											<i class="far fa-circle nav-icon"></i>
+											<p>General Ledger</p>
+										</a>
+									</li>
+									<li class="nav-item ">
+										<a href="" class="nav-link ">
+											<i class="far fa-circle nav-icon"></i>
+											<p>Journal Report</p>
+										</a>
+									</li>
+									<li class="nav-item ">
+										<a href="" class="nav-link ">
+											<i class="far fa-circle nav-icon"></i>
+											<p>Trial Balance</p>
+										</a>
+									</li>
+									<li class="nav-item ">
+										<a href="" class="nav-link ">
+											<i class="far fa-circle nav-icon"></i>
+											<p>Detail Account Transaction</p>
+										</a>
+									</li>
+								</ul>
+							</li>
+							<li class="nav-item ">
+								<a href="" class="nav-link ">
+									<p>Fixed Assets
+										<i class="right fas fa-angle-left"></i>
+									</p>
+								</a>
+								<ul class="nav nav-treeview">
+									<li class="nav-item ">
+										<a href="" class="nav-link ">
+											<i class="far fa-circle nav-icon"></i>
+											<p>Depreciation Schedule</p>
+										</a>
+									</li>
+									<li class="nav-item ">
+										<a href="" class="nav-link ">
+											<i class="far fa-circle nav-icon"></i>
+											<p>Fixed Assets Reconciliation</p>
+										</a>
+									</li>
+									<li class="nav-item ">
+										<a href="" class="nav-link ">
+											<i class="far fa-circle nav-icon"></i>
+											<p>Disposal Sechedule</p>
+										</a>
+									</li>
+									<li class="nav-item ">
+										<a href="" class="nav-link ">
+											<i class="far fa-circle nav-icon"></i>
+											<p>Detail Account Transaction</p>
+										</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
 					</li>
-					<li class="nav-item ">
+					<li class="nav-item has-treeview {{set_open(['coaCat.index']) }}">
 						<a href="" class="nav-link ">
-							<i class="far fa-circle nav-icon"></i>
-							<p>Net Asset</p>
+							<i class="nav-icon fas fa-tools"></i>
+							<p>Advance</p>
+							<i class="right fas fa-angle-left"></i>
 						</a>
-					</li>
-					<li class="nav-item ">
-						<a href="" class="nav-link ">
-							<i class="far fa-circle nav-icon"></i>
-							<p>Fixed Asset</p>
-						</a>
-					</li>
-					<li class="nav-item ">
-						<a href="" class="nav-link ">
-							<i class="far fa-circle nav-icon"></i>
-							<p>Budget Variance</p>
-						</a>
+						<ul class="nav nav-treeview">
+							<li class="nav-item ">
+								<a href="" class="nav-link ">
+									<p>Advance Features
+										<i class="right fas fa-angle-left"></i>
+									</p>
+								</a>
+								<ul class="nav nav-treeview">
+									<li class="nav-item ">
+										<a href="" class="nav-link ">
+											<i class="far fa-circle nav-icon"></i>
+											<p>Find and Recode</p>
+										</a>
+									</li>
+									<li class="nav-item ">
+										<a href="" class="nav-link ">
+											<i class="far fa-circle nav-icon"></i>
+											<p>Manual Journals</p>
+										</a>
+									</li>
+									<li class="nav-item ">
+										<a href="" class="nav-link ">
+											<i class="far fa-circle nav-icon"></i>
+											<p>Fixed Assets</p>
+										</a>
+									</li>
+									<li class="nav-item ">
+										<a href="" class="nav-link ">
+											<i class="far fa-circle nav-icon"></i>
+											<p>Assurance Dashboard</p>
+										</a>
+									</li>
+									<li class="nav-item ">
+										<a href="" class="nav-link ">
+											<i class="far fa-circle nav-icon"></i>
+											<p>History and Notes</p>
+										</a>
+									</li>
+								</ul>
+							</li>
+							<li class="nav-item has-treeview {{set_open(['coaCat.index']) }}">
+								<a href="" class="nav-link ">
+									<p>Advance Settings
+										<i class="right fas fa-angle-left"></i>
+									</p>
+								</a>
+								<ul class="nav nav-treeview">
+									<li class="nav-item ">
+										<a href="" class="nav-link ">
+											<i class="far fa-circle nav-icon"></i>
+											<p>Financial Settings</p>
+										</a>
+									</li>
+									<li class="nav-item ">
+										<a href="{{ route('coaCat.index') }}" class="nav-link {{set_active('coaCat.index') }}">
+											<i class="far fa-circle nav-icon"></i>
+											<p>Chart of Account</p>
+										</a>
+									</li>
+									<li class="nav-item ">
+										<a href="" class="nav-link ">
+											<i class="far fa-circle nav-icon"></i>
+											<p>Tax Rates</p>
+										</a>
+									</li>
+									<li class="nav-item ">
+										<a href="" class="nav-link ">
+											<i class="far fa-circle nav-icon"></i>
+											<p>Fixed Assets Settings</p>
+										</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
 					</li>
 				</ul>
 			</li>

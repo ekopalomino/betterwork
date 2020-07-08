@@ -49,11 +49,11 @@ Better Work Indonesia | Create New Employee
 		            			{!! Form::open(array('route' => 'employee.store','method'=>'POST','files'=>'true')) !!}
                   				@csrf
 		            			<div class="form-group">
-			    					<label for="employeeID">Employee ID</label>
+			    					<label for="employeeID">Employee ID *</label>
 			    					{!! Form::text('employee_no', null, array('placeholder' => 'Employee ID','class' => 'form-control')) !!}
 			    				</div>
 			    				<div class="form-group">
-			    					<label for="maritalStatus">Employee Status</label>
+			    					<label for="maritalStatus">Employee Status *</label>
 			    					<select name="contract_status" class="form-control">
                           				<option value="0">Please Select</option>
 						                <option value="c0bfb25c-b965-4972-95fd-ed5803318d93">Contract</option>
@@ -61,27 +61,27 @@ Better Work Indonesia | Create New Employee
 						            </select>
 			    				</div>
 			    				<div class="form-group">
-			    					<label for="firstName">First Name</label>
+			    					<label for="firstName">First Name *</label>
 			    					{!! Form::text('first_name', null, array('placeholder' => 'First Name','class' => 'form-control')) !!}
 			    				</div>
 			    				<div class="form-group">
-			    					<label for="lastName">Last Name</label>
+			    					<label for="lastName">Last Name *</label>
 			    					{!! Form::text('last_name', null, array('placeholder' => 'Last Name','class' => 'form-control')) !!}
 			    				</div>
 			    				<div class="form-group">
-			    					<label for="placeOb">Place Of Birth</label>
+			    					<label for="placeOb">Place Of Birth *</label>
 									{!! Form::select('place_of_birth', [null=>'Please Select'] + $cities,[], array('class' => 'form-control','required')) !!}
 								</div>
 			    				<div class="form-group">
-			    					<label for="dateOb">Date Of Birth</label>
+			    					<label for="dateOb">Date Of Birth *</label>
 			    					{!! Form::date('date_of_birth', '', array('id' => 'datepicker','class' => 'form-control')) !!}
 			    				</div>
 			    				<div class="form-group">
-			    					<label for="idCard">ID Card (KTP)</label>
+			    					<label for="idCard">ID Card *</label>
 			    					{!! Form::text('id_card', null, array('placeholder' => 'ID Card (KTP)','class' => 'form-control')) !!}
 			    				</div>
 			    				<div class="form-group">
-			    					<label for="sex">Tax Category</label>
+			    					<label for="sex">Tax Category *</label>
 			    					<select name="tax_category" class="form-control">
                           				<option value="0">Please Select</option>
 						                <option value="1">S0</option>
@@ -95,11 +95,11 @@ Better Work Indonesia | Create New Employee
 						            </select>
 			    				</div>
 			    				<div class="form-group">
-			    					<label for="idCard">Tax No</label>
+			    					<label for="idCard">Tax No *</label>
 			    					{!! Form::text('tax_no', null, array('placeholder' => 'Tax (NPWP)','class' => 'form-control')) !!}
 			    				</div>
 			    				<div class="form-group">
-			    					<label for="sex">Sex</label>
+			    					<label for="sex">Gender *</label>
 			    					<select name="sex" class="form-control">
                           				<option value="0">Please Select</option>
 						                <option value="1">Male</option>
@@ -117,7 +117,7 @@ Better Work Indonesia | Create New Employee
 						            </select>
 			    				</div>
 			    				<div class="form-group">
-			    					<label for="address">Address</label>
+			    					<label for="address">Address *</label>
 			    					{!! Form::textarea('address', null, array('id' => 'address','class' => 'form-control')) !!}
 			    				</div>
 			    				<div class="form-group">
@@ -125,15 +125,15 @@ Better Work Indonesia | Create New Employee
 			    					{!! Form::text('phone', null, array('placeholder' => 'Phone Number','class' => 'form-control')) !!}
 			    				</div>
 			    				<div class="form-group">
-			    					<label for="mobile">Mobile Number</label>
+			    					<label for="mobile">Mobile Number *</label>
 			    					{!! Form::text('mobile', null, array('placeholder' => 'Mobile Number','class' => 'form-control')) !!}
 			    				</div>
 			    				<div class="form-group">
-			    					<label for="inputName">Email</label>
+			    					<label for="inputName">Email *</label>
 			    					{!! Form::text('email', null, array('placeholder' => 'Email','class' => 'form-control')) !!}
 			    				</div>
 			    				<div class="form-group">
-			    					<label for="inputName">Photo</label>
+			    					<label for="inputName">Photo *</label>
 			    					{!! Form::file('picture', null, array('placeholder' => 'Employee Photo','class' => 'form-control')) !!}
 			    				</div>
 			    				<div class="form-group">

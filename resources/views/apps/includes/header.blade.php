@@ -10,7 +10,7 @@
 		</li>
 		@can('Access Configuration')
 		<li class="nav-item d-none d-sm-inline-block">
-			<a href="{{route('config.index') }}" class="nav-link {{set_active(['application.index','config.index','position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','coaCat.index',
+			<a href="{{route('config.index') }}" class="nav-link {{set_active(['application.index','config.index','position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index',
 			'assetCat.index','user.index','logs.index','role.index','role.create','role.edit','bankAcc.index','organization.index','office.index','accSet.index','holiday.index','hrSet.index']) }}">Configuration</a>
 		</li>
 		@endcan
@@ -30,7 +30,7 @@
 		@can('Access Accounting')
 		<li class="nav-item d-none d-sm-inline-block">
 			<a href="{{route('accounting.index') }}" class="nav-link {{set_active(['accounting.index','bank.index','accountTransaction.index','accTransaction.index','accTransaction.create','spend.create','receive.create',
-			'bankStatement.index','account.show','asset.index','journal.index','journal.report','budget.index','budgetDetail.create','budgetDetail.edit','statToAcc.index','asset.show']) }}">Accounting</a>
+			'bankStatement.index','account.show','asset.index','journal.index','journal.report','budget.index','budgetDetail.create','budgetDetail.edit','statToAcc.index','asset.show','coaCat.index',]) }}">Finance</a>
 		</li>
 		@endcan
 		<li class="nav-item d-none d-sm-inline-block">

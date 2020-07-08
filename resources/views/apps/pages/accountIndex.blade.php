@@ -24,11 +24,10 @@ Better Work Indonesia | Account Transaction
 			<div class="card card-info card-outline">
 				<div class="card-header">
 					<div class="btn-group">
-						<button type="button" class="btn btn-sm btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Manage</button>
+						<button type="button" class="btn btn-sm btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">New</button>
 						<div class="dropdown-menu" role="menu">
 							<a class="dropdown-item" href="{{ route('spend.create',$bank->id) }}">Spend Money</a>
 							<a class="dropdown-item" href="{{ route('receive.create',$bank->id) }}">Receive Money</a>
-							<a class="dropdown-item" href="#">Transfer Money</a>
 						</div>
 					</div>
 					<div class="btn-group">
