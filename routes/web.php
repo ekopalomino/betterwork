@@ -256,9 +256,9 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth','verified']], function
 	Route::get('finance/bank/account-transaction','Apps\AccountingController@accountIndex')->name('accountTransaction.index'); 
 	Route::get('accounting/bank/account-transaction/{bank}/show/{id}','Apps\AccountingController@AccountTransactionShow')->name('account.show');
 	Route::post('accounting/account-statement/save-period','Apps\AccountingController@statementPeriod')->name('accountPeriod.store');
-	Route::get('accounting/bank/transaction/cash-paid/{id}','Apps\AccountingController@spendCreate')->name('spend.create');
+	Route::get('finance/bank/new/spend-money','Apps\AccountingController@spendCreate')->name('spend.create');
 	Route::post('accounting/account-statement/transaction/spend-money/store','Apps\AccountingController@spendStore')->name('spend.store');
-	Route::get('accounting/bank/transaction/cash-receipt/{id}','Apps\AccountingController@receiveCreate')->name('receive.create');
+	Route::get('finance/bank/new/receive-money','Apps\AccountingController@receiveCreate')->name('receive.create');
 	Route::post('accounting/account-statement/transaction/receive-money/store','Apps\AccountingController@receiveStore')->name('receive.store');
 	Route::get('accounting/account-statement/edit/{id}','Apps\AccountingController@transactionEdit')->name('accTransaction.edit'); 
 	Route::post('accounting/account-statement/update/{id}','Apps\AccountingController@transactionUpdate')->name('accTransaction.update');

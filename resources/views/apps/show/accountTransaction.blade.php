@@ -11,7 +11,7 @@ Better Work Indonesia | Transaction Detail
        		</div>
 			<div class="col-sm-6">
 				<ol class="breadcrumb float-sm-right">
-					<li class="breadcrumb-item"><a href="{{ route('accountTransaction.index',$bank->id) }}">Account Transaction</a></li>
+					<li class="breadcrumb-item"><a href="{{ route('accountTransaction.index') }}">Account Transaction</a></li>
 					<li class="breadcrumb-item active">Transaction Detail</li>
 				</ol>
 			</div>

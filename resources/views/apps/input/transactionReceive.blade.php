@@ -29,7 +29,6 @@ Better Work Indonesia | Create Receive Money
 						<div class="col-2">
 							<label>From</label>
 							<input type="text" class="form-control" id="payee" name="payee" placeholder="Payee">
-							{!! Form::hidden('bank', $bank->id, array('class' => 'form-control')) !!}
 						</div>
 						<div class="col-2">
 							<label>Date</label>
@@ -47,6 +46,10 @@ Better Work Indonesia | Create Receive Money
 						        <option value="2">Tax Exclusive</option>
 								<option value="3">No Tax</option>
 						    </select>
+						</div>
+						<div class="col-2">
+							<label>Bank Account</label>
+							{!! Form::select('bank', [null=>'Please Select'] + $bank,[], array('class' => 'form-control')) !!}
 						</div>
 					</div>
 					<br>
@@ -83,7 +86,7 @@ Better Work Indonesia | Create Receive Money
 					<br>
 					<div class="form-group">
 				    	<button type="submit" class="btn btn-sm btn-info">Submit</button>
-		                <a button type="button" class="btn btn-sm btn-danger" href="{{ route('bank.index') }}">Cancel</a>
+		                <a button type="button" class="btn btn-sm btn-danger" href="{{ route('accountTransaction.index') }}">Cancel</a>
 		            </div>
 		            {!! Form::close() !!}
 				</div>

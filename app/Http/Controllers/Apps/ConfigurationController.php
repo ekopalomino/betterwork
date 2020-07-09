@@ -497,6 +497,7 @@ class ConfigurationController extends Controller
             'chart_id' => $request->input('chart_id'),
             'opening_balance' => $request->input('opening_balance'),
             'opening_date' => $request->input('opening_date'),
+            'active' => '1',
             'created_by' => auth()->user()->employee_id,
         ]);
 

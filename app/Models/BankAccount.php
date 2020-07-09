@@ -15,6 +15,7 @@ class BankAccount extends Model
         'chart_id',
         'opening_balance',
         'opening_date',
+        'active',
     	'created_by',
     	'updated_by',
     ];

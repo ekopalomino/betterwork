@@ -198,7 +198,7 @@ class AccountingController extends Controller
         $bank = BankAccount::first();
         $data = AccountStatement::with(['Child' => function($query) {
             $query->where('source','User');
-        }])->orderBy('updated_at','DESC')->paginate(10);
+        }])->orderBy('created_at','DESC')->paginate(10);
     	
     	return view('apps.pages.accountIndex',compact('data','bank'));
     }
@@ -269,9 +269,9 @@ class AccountingController extends Controller
 
     }
 
-    public function spendCreate($id)
+    public function spendCreate()
     {
-        $bank = BankAccount::find($id);
+        $bank = BankAccount::where('active','1')->pluck('bank_name','id')->toArray();
         $coas = ChartOfAccount::where('account_category','2')
                                 ->orWhere('account_category','5')
                                 ->orderBy('account_id','ASC')
@@ -430,9 +430,9 @@ class AccountingController extends Controller
         return redirect()->route('accountTransaction.index',$bank->id);
     }
 
-    public function receiveCreate($id)
+    public function receiveCreate()
     {
-        $bank = BankAccount::find($id);
+        $bank = BankAccount::where('active','1')->pluck('bank_name','id')->toArray();
         $coas = ChartOfAccount::where('account_category','4')
                                 ->orderBy('account_id','ASC')
                                 ->pluck('account_name','id')

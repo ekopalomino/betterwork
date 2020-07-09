@@ -524,23 +524,23 @@
 			@can('Access Accounting')
 			@if(\Route::is(['accounting.index','bank.index','accountTransaction.index','accTransaction.index','accTransaction.create','spend.create','receive.create','bankStatement.index','account.show','asset.index',
 			'journal.index','journal.report','budget.index','budgetDetail.create','budgetDetail.edit','statToAcc.index','asset.show','coaCat.index',]))
-			<li class="nav-item has-treeview ">
-				<a href="#" class="nav-link">
+			<li class="nav-item has-treeview {{set_open(['accountTransaction.index','spend.create','receive.create']) }}">
+				<a href="#" class="nav-link {{set_active(['accountTransaction.index','spend.create','receive.create']) }}">
 					<p>
 						Bank
 						<i class="right fas fa-angle-left"></i>
 					</p>
 				</a>
 				<ul class="nav nav-treeview">
-					<li class="nav-item ">
-						<a href="" class="nav-link ">
+					<li class="nav-item {{set_open(['accountTransaction.index']) }}">
+						<a href="" class="nav-link {{set_active(['accountTransaction.index']) }}">
 							<i class="nav-icon fas fa-search"></i>
 							<p>Find</p>
 							<i class="right fas fa-angle-left"></i>
 						</a>
-						<ul class="nav nav-treeview">
-							<li class="nav-item ">
-								<a href="{{ route('accountTransaction.index') }}" class="nav-link ">
+						<ul class="nav nav-treeview {{set_open(['accountTransaction.index']) }}">
+							<li class="nav-item {{set_active(['accountTransaction.index']) }}">
+								<a href="{{ route('accountTransaction.index') }}" class="nav-link {{set_active(['accountTransaction.index']) }}">
 									<i class="far fa-circle nav-icon"></i>
 									<p>Account Transactions</p>
 								</a>
@@ -553,21 +553,21 @@
 							</li>
 						</ul>
 					</li>
-					<li class="nav-item ">
-						<a href="" class="nav-link ">
+					<li class="nav-item {{set_open(['spend.create','receive.create']) }}">
+						<a href="" class="nav-link {{set_active(['spend.create','receive.create']) }}">
 							<i class="nav-icon fas fa-plus"></i>
 							<p>New</p>
 							<i class="right fas fa-angle-left"></i>
 						</a>
-						<ul class="nav nav-treeview">
-							<li class="nav-item ">
-								<a href="" class="nav-link ">
+						<ul class="nav nav-treeview {{set_open(['spend.create','receive.create']) }}">
+							<li class="nav-item {{set_active(['spend.create']) }}">
+								<a href="{{ route('spend.create') }}" class="nav-link {{set_active(['spend.create']) }}">
 									<i class="far fa-circle nav-icon"></i>
 									<p>Spend Money</p>
 								</a>
 							</li>
-							<li class="nav-item ">
-								<a href="" class="nav-link ">
+							<li class="nav-item {{set_active(['receive.create']) }}">
+								<a href="{{ route('receive.create') }}" class="nav-link {{set_active(['receive.create']) }}">
 									<i class="far fa-circle nav-icon"></i>
 									<p>Receive Money</p>
 								</a>

@@ -26,7 +26,7 @@ Better Work Indonesia | Account Transaction
 					<div class="btn-group">
 						<button type="button" class="btn btn-sm btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">New</button>
 						<div class="dropdown-menu" role="menu">
-							<a class="dropdown-item" href="{{ route('spend.create',$bank->id) }}">Spend Money</a>
+							<a class="dropdown-item" href="{{ route('spend.create') }}">Spend Money</a>
 							<a class="dropdown-item" href="{{ route('receive.create',$bank->id) }}">Receive Money</a>
 						</div>
 					</div>
