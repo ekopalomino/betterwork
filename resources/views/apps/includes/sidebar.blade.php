@@ -523,9 +523,9 @@
 			@endcan
 			@can('Access Accounting')
 			@if(\Route::is(['accounting.index','bank.index','accountTransaction.index','accTransaction.index','accTransaction.create','spend.create','receive.create','bankStatement.index','account.show','asset.index',
-			'journal.index','journal.report','budget.index','budgetDetail.create','budgetDetail.edit','statToAcc.index','asset.show','coaCat.index','bankStatement.import']))
-			<li class="nav-item has-treeview {{set_open(['accountTransaction.index','spend.create','receive.create','bankStatement.import']) }}">
-				<a href="#" class="nav-link {{set_active(['accountTransaction.index','spend.create','receive.create','bankStatement.import']) }}">
+			'journal.index','journal.report','budget.index','budgetDetail.create','budgetDetail.edit','statToAcc.index','asset.show','coaCat.index','bankStatement.import','statToAcc.index']))
+			<li class="nav-item has-treeview {{set_open(['accountTransaction.index','spend.create','receive.create','bankStatement.import','statToAcc.index']) }}">
+				<a href="#" class="nav-link {{set_active(['accountTransaction.index','spend.create','receive.create','bankStatement.import','statToAcc.index']) }}">
 					<p>
 						Bank
 						<i class="right fas fa-angle-left"></i>
@@ -574,15 +574,15 @@
 							</li>
 						</ul>
 					</li>
-					<li class="nav-item {{set_open(['bankStatement.import']) }}">
-						<a href="" class="nav-link {{set_active(['bankStatement.import']) }}">
+					<li class="nav-item {{set_open(['bankStatement.import','statToAcc.index']) }}">
+						<a href="" class="nav-link {{set_active(['bankStatement.import','statToAcc.index']) }}">
 							<i class="nav-icon fas fa-equals"></i>
 							<p>Reconcile</p>
 							<i class="right fas fa-angle-left"></i>
 						</a>
 						<ul class="nav nav-treeview">
-							<li class="nav-item ">
-								<a href="" class="nav-link ">
+							<li class="nav-item {{set_open(['statToAcc.index']) }}">
+								<a href="" class="nav-link {{set_active(['statToAcc.index']) }}">
 									<i class="far fa-circle nav-icon"></i>
 									<p>Reconcile Account</p>
 								</a>
