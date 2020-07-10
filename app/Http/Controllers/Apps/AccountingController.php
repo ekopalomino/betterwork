@@ -59,7 +59,7 @@ class AccountingController extends Controller
     	return view('apps.input.bankStatement',compact('bank'));
     }
 
-    public function bankStatementImport(Request $request,$id) 
+    public function bankStatementImport(Request $request) 
     { 
     	$request->validate([
             'statement' => 'required|file|mimes:xlsx,xls,XLSX,XLS'
@@ -72,7 +72,7 @@ class AccountingController extends Controller
         foreach($data as $value) {
             if(isset($value['date'])) {
                 $result = BankStatement::create([
-                    'bank_account_id' => $request->input('account_id'),
+                    'bank_account_id' => $request->input('bank_id'),
                     'transaction_date' => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($value['date']),
                     'payee' => $value['payee'],
                     'description' => $value['description'],

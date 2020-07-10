@@ -21,7 +21,7 @@ Better Work Indonesia | Import Bank Statement
 <section class="content">
     <div class="callout callout-info">
         <h5><i class="fas fa-info"></i> Note:</h5>
-        Use <a class="btn btn-danger btn-xs" href="{{ asset('public/BankStatement.xlsx') }}">This</a> excel file to upload statement data. Only input number into the sheet, not formula.<br>
+        Use <a class="btn btn-danger btn-xs" href="{{ asset('apps/public/BankStatement.xlsx') }}">This</a> excel file to upload statement data. Only input number into the sheet, not formula.<br>
         Upload maximum of 100 bank statement lines at a time.
     </div>
     <div class="row">
@@ -35,7 +35,7 @@ Better Work Indonesia | Import Bank Statement
             <br>
             <label for="name" class="col-sm-12 col-form-label">Bank Account</label>
                 <div class="col-2">
-                    {!! Form::select('bank', [null=>'Please Select'] + $bank,[], array('class' => 'form-control')) !!}
+                    {!! Form::select('bank_id', [null=>'Please Select'] + $bank,[], array('class' => 'form-control')) !!}
                 </div>
             <div class="modal-footer">
                 <button type="close" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
