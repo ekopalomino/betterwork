@@ -251,8 +251,8 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth','verified']], function
 	Route::get('accounting/bank/bank-statement-to-account','Apps\AccountingController@statementToAccount')->name('statToAcc.index');
 	Route::get('accounting/bank/bank-statement-to-account/find/{id}','Apps\AccountingController@findTransactionByDate')->name('findAcc.find');
 	Route::post('accounting/bank/bank-statement/store/{id}','Apps\AccountingController@bankStatementMatch')->name('statToAcc.store');
-	Route::get('accounting/bank/bank-statement/import/{id}','Apps\AccountingController@bankStatement')->name('bankStatement.import');
-	Route::post('accounting/bank/bank-statement/import/{id}','Apps\AccountingController@bankStatementImport')->name('statementFile.import');
+	Route::get('accounting/bank/bank-statement/import','Apps\AccountingController@bankStatement')->name('bankStatement.import');
+	Route::post('accounting/bank/bank-statement/import/process','Apps\AccountingController@bankStatementImport')->name('statementFile.import');
 	Route::get('finance/bank/account-transaction','Apps\AccountingController@accountIndex')->name('accountTransaction.index'); 
 	Route::get('accounting/bank/account-transaction/{bank}/show/{id}','Apps\AccountingController@AccountTransactionShow')->name('account.show');
 	Route::post('accounting/account-statement/save-period','Apps\AccountingController@statementPeriod')->name('accountPeriod.store');

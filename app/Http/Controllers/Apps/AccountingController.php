@@ -52,11 +52,11 @@ class AccountingController extends Controller
         return view('apps.pages.statementIndex',compact('data'));
     }
 
-    public function bankStatement($id)
+    public function bankStatement()
     {
-    	$data = BankAccount::find($id);
+    	$bank = BankAccount::where('active','1')->pluck('bank_name','id')->toArray();
 
-    	return view('apps.input.bankStatement',compact('data'))->renderSections()['content'];
+    	return view('apps.input.bankStatement',compact('bank'));
     }
 
     public function bankStatementImport(Request $request,$id) 

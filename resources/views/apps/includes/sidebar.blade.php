@@ -523,9 +523,9 @@
 			@endcan
 			@can('Access Accounting')
 			@if(\Route::is(['accounting.index','bank.index','accountTransaction.index','accTransaction.index','accTransaction.create','spend.create','receive.create','bankStatement.index','account.show','asset.index',
-			'journal.index','journal.report','budget.index','budgetDetail.create','budgetDetail.edit','statToAcc.index','asset.show','coaCat.index',]))
-			<li class="nav-item has-treeview {{set_open(['accountTransaction.index','spend.create','receive.create']) }}">
-				<a href="#" class="nav-link {{set_active(['accountTransaction.index','spend.create','receive.create']) }}">
+			'journal.index','journal.report','budget.index','budgetDetail.create','budgetDetail.edit','statToAcc.index','asset.show','coaCat.index','bankStatement.import']))
+			<li class="nav-item has-treeview {{set_open(['accountTransaction.index','spend.create','receive.create','bankStatement.import']) }}">
+				<a href="#" class="nav-link {{set_active(['accountTransaction.index','spend.create','receive.create','bankStatement.import']) }}">
 					<p>
 						Bank
 						<i class="right fas fa-angle-left"></i>
@@ -574,8 +574,8 @@
 							</li>
 						</ul>
 					</li>
-					<li class="nav-item ">
-						<a href="" class="nav-link ">
+					<li class="nav-item {{set_open(['bankStatement.import']) }}">
+						<a href="" class="nav-link {{set_active(['bankStatement.import']) }}">
 							<i class="nav-icon fas fa-equals"></i>
 							<p>Reconcile</p>
 							<i class="right fas fa-angle-left"></i>
@@ -599,8 +599,8 @@
 									<p>Reconciliation Report</p>
 								</a>
 							</li>
-							<li class="nav-item ">
-								<a href="" class="nav-link ">
+							<li class="nav-item {{set_active(['bankStatement.import']) }}">
+								<a href="{{ route('bankStatement.import') }}" class="nav-link {{set_active(['bankStatement.import']) }}">
 									<i class="far fa-circle nav-icon"></i>
 									<p>Import Statement</p>
 								</a>
