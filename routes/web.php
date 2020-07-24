@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('apps.pages.login');
 }); 
 /*Development Routes*/
-Auth::routes(['register' => false,'verify' => true]);
+Auth::routes(['register' => false]);
 Route::group(['prefix' => 'apps', 'middleware' => ['auth','verified']], function() {
 	Route::get('change-password','Apps\DashboardController@changePasswordIndex')->name('changePass.index');
 	Route::post('change-password/store','Apps\DashboardController@changePasswd')->name('changePass.store');

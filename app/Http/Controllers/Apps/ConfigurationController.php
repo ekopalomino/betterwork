@@ -823,16 +823,16 @@ class ConfigurationController extends Controller
 
     public function roleEdit($id)
     {
-        $data = Role::find($id);
-        $permission = Permission::get();
-        $roles = Role::join('role_has_permissions','role_has_permissions.role_id','=','roles.id')
-                       ->where('roles.id',$id)
-                       ->get();
-        $rolePermissions = DB::table("role_has_permissions")->where("role_has_permissions.role_id",$id)
-            /*->pluck('role_has_permissions.permission_id','role_has_permissions.permission_id')*/
-            ->get();
-        
-        return view('apps.edit.roles',compact('data','rolePermissions','roles'));
+            $data = Role::find($id);
+            $permission = Permission::get();
+            $roles = Role::join('role_has_permissions','role_has_permissions.role_id','=','roles.id')
+                           ->where('roles.id',$id)
+                           ->get();
+            $rolePermissions = DB::table("role_has_permissions")->where("role_has_permissions.role_id",$id)
+                /*->pluck('role_has_permissions.permission_id','role_has_permissions.permission_id')*/
+                ->get();
+            
+            return view('apps.edit.roles',compact('data','rolePermissions','roles'));
     }
 
     public function roleUpdate(Request $request, $id)
