@@ -66,7 +66,7 @@ Better Work Indonesia | Create Bulletin
         </div>
     </div>
 </section>
-@endsection
+@endsection 
 @section('footer.scripts')
 <script src="{{ asset('bower_components/admin-lte/plugins/summernote/summernote-bs4.min.js') }}"></script>
 <script>
