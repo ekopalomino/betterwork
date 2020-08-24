@@ -7,7 +7,7 @@
     <div class="sidebar">
     	<div class="user-panel mt-3 pb-3 mb-3 d-flex">
 	        <div class="image">
-				<img src="http://119.18.157.77/public/employees/{{Auth::user()->avatar}}" class="img-circle elevation-2" alt="User Image">
+				<img src="/employees/{{Auth::user()->avatar}}" class="img-circle elevation-2" alt="User Image">
 				<!--<img src="http://betterwork.local/public/employees/{{Auth::user()->avatar}}" class="img-circle elevation-2" alt="User Image">-->
 	        </div>
 	        <div class="info">
