@@ -79,6 +79,7 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::post('configuration/users/password/update','Apps\ConfigurationController@updatePassword')->name('userPassword.update');
 	Route::post('configuration/users/suspend/{id}','Apps\ConfigurationController@userSuspend')->name('user.suspend');
 	Route::post('configuration/users/delete/{id}','Apps\ConfigurationController@userDestroy')->name('user.destroy');
+	Route::post('configuration/users/restore/{id}','Apps\ConfigurationController@userReActivate')->name('user.reactivate');
 	/*Role Manager Sub Menu Route*/
 	Route::get('configuration/access-roles','Apps\ConfigurationController@roleIndex')->name('role.index');
 	Route::get('configuration/access-roles/create','Apps\ConfigurationController@roleCreate')->name('role.create');

@@ -20,7 +20,7 @@ Better Work Indonesia | Salary Process
 		<div class="col-12">
 			<div class="callout callout-info">
 				<h5><i class="fas fa-info"></i> Note:</h5>
-				Use <a class="btn btn-danger btn-xs" href="{{ asset('public/payroll.xlsx') }}">This</a> excel file to upload payroll data. Only input number into the sheet, not formula.
+				Use <a class="btn btn-danger btn-xs" href="{{ asset('payroll.xlsx') }}">This</a> excel file to upload payroll data. Only input number into the sheet, not formula.
             </div>
 			<div class="card card-info card-outline">
 				<div class="card-header">

@@ -136,6 +136,11 @@ Better Work Indonesia | User Database
 								<td>{{date("d F Y H:i",strtotime($user->created_at)) }}</td>
 								<td>
 									<a class="btn btn-xs btn-info modalMd" href="#" value="{{ action('Apps\ConfigurationController@userEdit',['id'=>$user->id]) }}" data-toggle="modal" data-target="#modalMd"><i class="fa fa-search"></i></a>
+									@if(($user->status_id) == 'bca5aaf9-c7ff-4359-9d6c-28768981b416' )
+									{!! Form::open(['method' => 'POST','route' => ['user.reactivate', $user->id],'style'=>'display:inline','onsubmit' => 'return ConfirmActive()']) !!}
+									{!! Form::button('<i class="fas fa-user"></i>',['type'=>'submit','class' => 'btn btn-xs btn-warning']) !!}
+									{!! Form::close() !!}
+									@endif
 									{!! Form::open(['method' => 'POST','route' => ['user.suspend', $user->id],'style'=>'display:inline','onsubmit' => 'return ConfirmSuspend()']) !!}
 									{!! Form::button('<i class="fas fa-user-slash"></i>',['type'=>'submit','class' => 'btn btn-xs btn-danger']) !!}
 									{!! Form::close() !!}
@@ -164,6 +169,16 @@ Better Work Indonesia | User Database
       "autoWidth": false,
     });
   });
+</script>
+<script>
+    function ConfirmActive()
+    {
+    var x = confirm("User Re Activate?");
+    if (x)
+        return true;
+    else
+        return false;
+    }
 </script>
 <script>
     function ConfirmSuspend()

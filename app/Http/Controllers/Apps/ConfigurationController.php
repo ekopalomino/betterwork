@@ -758,6 +758,22 @@ class ConfigurationController extends Controller
         return back()->with($notification);
     }
 
+    public function userReActivate($id)
+    {
+        $input = ['status_id' => '13ca0601-de87-4d58-8ccd-d1f01dba78d8'];
+        $user = User::find($id);
+        $user->update($input);
+        
+        $log = 'User '.($user->name).' Re Activate';
+         \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'User '.($user->name).' Re Activate',
+            'alert-type' => 'success'
+        );
+        return redirect()->route('user.index')
+                        ->with($notification);
+    }
+
     public function userSuspend($id)
     {
         $input = ['status_id' => 'bca5aaf9-c7ff-4359-9d6c-28768981b416'];
