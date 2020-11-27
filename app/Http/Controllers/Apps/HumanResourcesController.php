@@ -70,7 +70,7 @@ class HumanResourcesController extends Controller
         foreach($getAge as $key=>$value) {
             $ages[++$key] = [$value->age,(int)$value->count];
         }
-                           
+                  
     	return view('apps.pages.humanResourceHome',compact('onLeave','onBirthday','onAttendance'))->with('getGender',json_encode($gender))->with('getAge',json_encode($ages));
     }
 

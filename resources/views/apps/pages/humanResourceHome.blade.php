@@ -87,9 +87,9 @@ Better Work Indonesia | Human Resources
 									<tbody>
 										@foreach($onBirthday as $date)
 										<tr>
-											<td>{{ $date->Employees->employee_no }}</td>
-											<td>{{ $date->Employees->first_name }} {{ $date->Employees->last_name }}</td>
-											<td>{{date("d F Y H:i",strtotime($date->date_of_birth)) }}</td>
+											<td>{{ $date->employee_no }}</td>
+											<td>{{ $date->first_name }} {{ $date->last_name }}</td>
+											<td>{{date("d F Y",strtotime($date->date_of_birth)) }}</td>
 										</tr>
 										@endforeach
 									</tbody>

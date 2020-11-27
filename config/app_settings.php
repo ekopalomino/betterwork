@@ -70,7 +70,7 @@ return [
     'flash_partial' => 'app_settings::_flash',
 
     // Setting section class setting
-    'section_class' => 'card mb-3',
+    'section_class' => 'card card-info card-outline',
     'section_heading_class' => 'card-header',
     'section_body_class' => 'card-body',
 

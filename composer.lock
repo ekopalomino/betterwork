@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f7ae379e26e9fdcc1574897decab2e3e",
+    "content-hash": "20574249ccae41dd50b140851e3121c4",
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -2781,6 +2781,10 @@
                 "qcod",
                 "setting ui"
             ],
+            "support": {
+                "issues": "https://github.com/qcod/laravel-app-settings/issues",
+                "source": "https://github.com/qcod/laravel-app-settings/tree/1.4.0"
+            },
             "time": "2020-09-14T01:26:02+00:00"
         },
         {
@@ -7270,5 +7274,5 @@
         "php": "^7.1.3"
     },
     "platform-dev": [],
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.0.0"
 }
