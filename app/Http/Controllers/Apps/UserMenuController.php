@@ -39,32 +39,36 @@ class UserMenuController extends Controller
     {
         /*Master Query*/
         $getEmployee = Employee::where('id',Auth()->user()->employee_id)->first();
-        /*Query for Profile Card*/
-        $getBasicProfile = Employee::join('employee_services','employee_services.employee_id','employees.id')
+        if($getEmployee == null) {
+            return view('apps.pages.dashboard');
+        } else {
+            /*Query for Profile Card*/
+            $getBasicProfile = Employee::join('employee_services','employee_services.employee_id','employees.id')
                                     ->join('employee_leaves','employee_leaves.employee_id','employees.id')
                                     ->where('employees.id',auth()->user()->employee_id)
                                     ->orderBy('employee_services.from','ASC')
                                     ->first();
-        $tDate = Carbon::now();
-        $interval = $tDate->diff($getBasicProfile->from);
-        $totalDays = $interval->format('%a');
-        $getCurPos = EmployeeService::where('employee_id',auth()->user()->employee_id)->orderBy('from','DESC')->first(); 
-        /*Query for Attendance Card*/
-        $getAttendance = EmployeeAttendance::where('employee_id',$getEmployee->id)->whereDate('updated_at',Carbon::today())->first();
-        /*Query for User Card*/
-        $getLastEdu = EmployeeEducation::where('employee_id',auth()->user()->employee_id)->orderBy('date_of_graduate','DESC')->first();
-        $getTraining = EmployeeTraining::where('employee_id',auth()->user()->employee_id)->where('status','caf3f6a0-3aef-4984-8a87-1684579c5e45')->get();
-        $getSubordinate = EmployeeService::with('Parent')->where('report_to',auth()->user()->employee_id)->get();
-        $getSalary = EmployeeSalary::where('employee_no',$getEmployee->employee_no)->where('status_id','ca52a2ce-5c37-48ce-a7f2-0fd5311860c2')
-                                    ->orderBy('payroll_period','DESC')->get();
-	 $getServices = EmployeeService::where('employee_id',$getEmployee->id)->orderBy('from','ASC')->first();
-        /*Query for Bulletin Board*/
-        $getBulletin = Bulletin::orderBy('updated_at','DESC')->get();
-        $getKnowledge = KnowledgeBase::orderBy('updated_at','DESC')->get();
-        /*Query for Birthday Card*/
-        $getBirthday = Employee::whereMonth('date_of_birth',Carbon::now()->month)->get();
-        
-    	return view('apps.pages.userHome',compact('getBasicProfile','getEmployee','getAttendance','totalDays','getLastEdu','getSubordinate','getBulletin','getKnowledge','getCurPos','getBirthday','getSalary','getServices'));
+            $tDate = Carbon::now();
+            $interval = $tDate->diff($getBasicProfile->from);
+            $totalDays = $interval->format('%a');
+            $getCurPos = EmployeeService::where('employee_id',auth()->user()->employee_id)->orderBy('from','DESC')->first(); 
+            /*Query for Attendance Card*/
+            $getAttendance = EmployeeAttendance::where('employee_id',$getEmployee->id)->whereDate('updated_at',Carbon::today())->first();
+            /*Query for User Card*/
+            $getLastEdu = EmployeeEducation::where('employee_id',auth()->user()->employee_id)->orderBy('date_of_graduate','DESC')->first();
+            $getTraining = EmployeeTraining::where('employee_id',auth()->user()->employee_id)->where('status','caf3f6a0-3aef-4984-8a87-1684579c5e45')->get();
+            $getSubordinate = EmployeeService::with('Parent')->where('report_to',auth()->user()->employee_id)->get();
+            $getSalary = EmployeeSalary::where('employee_no',$getEmployee->employee_no)->where('status_id','ca52a2ce-5c37-48ce-a7f2-0fd5311860c2')
+                    ->orderBy('payroll_period','DESC')->get();
+            $getServices = EmployeeService::where('employee_id',$getEmployee->id)->orderBy('from','ASC')->first();
+            /*Query for Bulletin Board*/
+            $getBulletin = Bulletin::orderBy('updated_at','DESC')->get();
+            $getKnowledge = KnowledgeBase::orderBy('updated_at','DESC')->get();
+            /*Query for Birthday Card*/
+            $getBirthday = Employee::whereMonth('date_of_birth',Carbon::now()->month)->get();
+
+            return view('apps.pages.userHome',compact('getBasicProfile','getEmployee','getAttendance','totalDays','getLastEdu','getSubordinate','getBulletin','getKnowledge','getCurPos','getBirthday','getSalary','getServices'));
+        }  
     }
     public function clockIn(Request $request)
     {

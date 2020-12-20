@@ -2,7 +2,7 @@
 
 namespace iteos\Http\Controllers\Auth;
 
-use iteos\User;
+use iteos\Models\User;
 use iteos\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
