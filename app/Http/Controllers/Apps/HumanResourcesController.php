@@ -112,7 +112,7 @@ class HumanResourcesController extends Controller
                 'mobile' => 'required|numeric',
                 'email' => 'required|email:rfc,dns|unique:employees,email',
                 'contract_status' => 'required',
-                'picture' => 'required|image'
+                'picture' => 'required'
             ]);
 
             $file = $request->file('picture');
@@ -121,7 +121,7 @@ class HumanResourcesController extends Controller
             $ext = $file->getClientOriginalExtension();
             $destinationPath = public_path('/employees');
             $extension = $file->getClientOriginalExtension();
-            $filename=$file_name.''.$extension;
+            $filename=$file_name.'.'.$extension;
             $uploadSuccess = $request->file('picture')
             ->move($destinationPath, $filename);
 
@@ -173,7 +173,6 @@ class HumanResourcesController extends Controller
             );
 
             return redirect()->route('employee.index')->with($notification);
-        
     }
 
     public function employeeEdit($id)
@@ -182,11 +181,10 @@ class HumanResourcesController extends Controller
         $grades = EmployeePosition::pluck('position_name','position_name')->toArray();
         $employees = Employee::select(DB::raw("CONCAT(first_name,' ',last_name) AS name"),'id')->pluck('name','id')->toArray();
         $degrees  = DB::table('education_degree')->pluck('degree_name','degree_name')->toArray();
-        $organizations = Organization::orderBy('id','ASC')->pluck('name','name')->toArray();
-        $offices = Office::orderBy('id','ASC')->pluck('office_name','office_name')->toArray();
-        $cities = City::orderBy('id','ASC')->pluck('city_name','city_name')->toArray();
+        $organizations = Organization::orderBy('id','ASC')->pluck('name','id')->toArray();
+        $offices = Office::orderBy('id','ASC')->pluck('office_name','id')->toArray();
         
-        return view('apps.edit.employee',compact('grades','cities','data','employees','degrees','organizations','offices'));
+        return view('apps.edit.employee',compact('grades','data','employees','degrees','organizations','offices'));
     }
 
     public function employeeUpdate(Request $request,$id)
@@ -354,6 +352,8 @@ class HumanResourcesController extends Controller
                         'employee_id' => $request->input('employee_id'), 
                         'position' => $request->input('position'),
                         'report_to' => $request->input('report_to'),
+                        'org_id' => $request->input('org_id'),
+                        'office_id' => $request->input('offices'),
                         'grade' => $request->input('job_title'),
                         'from' => $request->input('from'),
                         'salary' => $request->input('salary'),
@@ -366,6 +366,8 @@ class HumanResourcesController extends Controller
                         'employee_id' => $request->input('employee_id'), 
                         'position' => $request->input('position'),
                         'report_to' => $request->input('report_to'),
+                        'org_id' => $request->input('org_id'),
+                        'office_id' => $request->input('offices'),
                         'grade' => $request->input('job_title'),
                         'from' => $request->input('from'),
                         'to' => $request->input('to'),
@@ -382,6 +384,8 @@ class HumanResourcesController extends Controller
                         'employee_id' => $request->input('employee_id'), 
                         'position' => $request->input('position'),
                         'report_to' => $request->input('report_to'),
+                        'org_id' => $request->input('org_id'),
+                        'office_id' => $request->input('offices'),
                         'grade' => $request->input('job_title'),
                         'from' => $request->input('from'),
                         'salary' => $request->input('salary'),
@@ -394,6 +398,8 @@ class HumanResourcesController extends Controller
                         'employee_id' => $request->input('employee_id'), 
                         'position' => $request->input('position'),
                         'report_to' => $request->input('report_to'),
+                        'org_id' => $request->input('org_id'),
+                        'office_id' => $request->input('offices'),
                         'grade' => $request->input('job_title'),
                         'from' => $request->input('from'),
                         'to' => $request->input('to'),

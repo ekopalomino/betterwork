@@ -14,7 +14,7 @@ Better Work Indonesia | Human Resources
 </section>
 <section class="content">
 	<div class="col-4">
-		<a class="btn btn-danger" href="{{ route('employee.create') }}">
+		<a class="btn btn-sm btn-danger" href="{{ route('employee.create') }}">
 			New Employee
 		</a> 
     </div>
@@ -51,7 +51,7 @@ Better Work Indonesia | Human Resources
 	                      			</ul>
 	                    		</div>
 	                    		<div class="col-5 text-center">
-									<img src="http://betterwork.local/public/employees/{{$employee->picture}}" alt="" class="img-circle img-fluid">
+									<img src="http://betterwork.local/employees/{{$employee->picture}}" alt="" class="img-circle img-fluid">
 	                      			<!--<img src="http://betterwork.iteos.tech/public/employees/{{$employee->picture}}" alt="" class="img-circle img-fluid">-->
 	                    		</div>
 	                  		</div>

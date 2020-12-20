@@ -38,12 +38,12 @@ Better Work Indonesia | Create New Employee
 		<div class="card card-danger card-outline">
 			<div class="card-body">
 				<div class="row">
-					<div class="col-1 col-sm-1">
+					<div class="col-2 col-sm-2">
 		                <div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist" aria-orientation="vertical">
-		                	<a class="nav-link active" id="vert-tabs-profile-tab" data-toggle="pill" href="#vert-tabs-profile" role="tab" aria-controls="vert-tabs-profile" aria-selected="true">Profile</a>
+		                	<a class="nav-link active" id="vert-tabs-profile-tab" data-toggle="pill" href="#vert-tabs-profile" role="tab" aria-controls="vert-tabs-profile" aria-selected="true"><strong>Profile</strong></a>
 		                </div>
 		            </div>
-		            <div class="col-11 col-sm-11">
+		            <div class="col-10 col-sm-10">
 		            	<div class="tab-content" id="vert-tabs-tabContent">
 		            		<div class="tab-pane text-left fade show active" id="vert-tabs-profile" role="tabpanel" aria-labelledby="vert-tabs-profile-tab">
 		            			{!! Form::open(array('route' => 'employee.store','method'=>'POST','files'=>'true')) !!}
@@ -70,7 +70,7 @@ Better Work Indonesia | Create New Employee
 			    				</div>
 			    				<div class="form-group">
 			    					<label for="placeOb">Place Of Birth *</label>
-									{!! Form::select('place_of_birth', [null=>'Please Select'] + $cities,[], array('class' => 'form-control','required')) !!}
+			    					{!! Form::text('place_of_birth', null, array('placeholder' => 'Place of Birth','class' => 'form-control')) !!}
 								</div>
 			    				<div class="form-group">
 			    					<label for="dateOb">Date Of Birth *</label>
@@ -134,11 +134,16 @@ Better Work Indonesia | Create New Employee
 			    				</div>
 			    				<div class="form-group">
 			    					<label for="inputName">Photo *</label>
-			    					{!! Form::file('picture', null, array('placeholder' => 'Employee Photo','class' => 'form-control')) !!}
+			    					<div class="input-group">
+									   	<div class="custom-file">
+	                        				<input type="file" class="custom-file-input" id="picture" name="picture">
+	                        				<label class="custom-file-label" for="picture">Choose Photo</label>
+	                      				</div>
+	                      			</div>
 			    				</div>
 			    				<div class="form-group">
-			    					<button type="submit" name="profile" class="btn btn-info">Submit</button>
-	                  				<a button type="button" class="btn btn-danger" href="{{ route('employee.index') }}">Cancel</a>
+			    					<button type="submit" name="profile" class="btn btn-sm btn-info">Submit</button>
+	                  				<a button type="button" class="btn btn-sm btn-danger" href="{{ route('employee.index') }}">Cancel</a>
 	                  			</div>
 	                  			{!! Form::close() !!}
 			    			</div>
@@ -149,4 +154,12 @@ Better Work Indonesia | Create New Employee
 		</div>
 	</div>
 </section>
+@endsection
+@section('footer.scripts')
+<script src="{{ asset('bower_components/admin-lte/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+  	bsCustomFileInput.init();
+});
+</script>
 @endsection

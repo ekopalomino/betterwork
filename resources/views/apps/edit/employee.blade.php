@@ -41,16 +41,16 @@ Better Work Indonesia | Update Employee
 		<div class="card card-success card-outline">
 			<div class="card-body">
 				<div class="row">
-					<div class="col-1 col-sm-1">
+					<div class="col-2 col-sm-2">
 		                <div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist" aria-orientation="vertical">
-		                	<a class="nav-link active" id="vert-tabs-profile-tab" data-toggle="pill" href="#vert-tabs-profile" role="tab" aria-controls="vert-tabs-profile" aria-selected="true">Profile</a>
-		                	<a class="nav-link" id="vert-tabs-family-tab" data-toggle="pill" href="#vert-tabs-family" role="tab" aria-controls="vert-tabs-family" aria-selected="false">Family</a>
-		                	<a class="nav-link" id="vert-tabs-education-tab" data-toggle="pill" href="#vert-tabs-education" role="tab" aria-controls="vert-tabs-education" aria-selected="false">Education</a>
-		                	<a class="nav-link" id="vert-tabs-training-tab" data-toggle="pill" href="#vert-tabs-training" role="tab" aria-controls="vert-tabs-training" aria-selected="false">Training</a>
-		                	<a class="nav-link" id="vert-tabs-services-tab" data-toggle="pill" href="#vert-tabs-services" role="tab" aria-controls="vert-tabs-services" aria-selected="false">Services</a>
+		                	<a class="nav-link active" id="vert-tabs-profile-tab" data-toggle="pill" href="#vert-tabs-profile" role="tab" aria-controls="vert-tabs-profile" aria-selected="true"><strong>Profile</strong></a>
+		                	<a class="nav-link" id="vert-tabs-family-tab" data-toggle="pill" href="#vert-tabs-family" role="tab" aria-controls="vert-tabs-family" aria-selected="false"><strong>Family</strong></a>
+		                	<a class="nav-link" id="vert-tabs-education-tab" data-toggle="pill" href="#vert-tabs-education" role="tab" aria-controls="vert-tabs-education" aria-selected="false"><strong>Education</strong></a>
+		                	<a class="nav-link" id="vert-tabs-training-tab" data-toggle="pill" href="#vert-tabs-training" role="tab" aria-controls="vert-tabs-training" aria-selected="false"><strong>Training</strong></a>
+		                	<a class="nav-link" id="vert-tabs-services-tab" data-toggle="pill" href="#vert-tabs-services" role="tab" aria-controls="vert-tabs-services" aria-selected="false"><strong>Services</strong></a>
 		                </div>
 		            </div>
-		            <div class="col-11 col-sm-11">
+		            <div class="col-10 col-sm-10">
 		            	<div class="tab-content" id="vert-tabs-tabContent">
 		            		<div class="tab-pane text-left fade show active" id="vert-tabs-profile" role="tabpanel" aria-labelledby="vert-tabs-profile-tab">
 		            			{!! Form::model($data, ['method' => 'POST','route' => ['employee.update', $data->id],'files'=> 'true']) !!}
@@ -81,7 +81,7 @@ Better Work Indonesia | Update Employee
 			    				</div>
 			    				<div class="form-group">
 			    					<label for="placeOb">Place Of Birth</label>
-			    					{!! Form::select('place_of_birth', $cities,old('place_of_birth'), array('class' => 'form-control')) !!}
+			    					{!! Form::text('place_of_birth', null, array('placeholder' => 'Last Name','class' => 'form-control')) !!}
 			    				</div>
 			    				<div class="form-group">
 			    					<label for="dateOb">Date Of Birth</label>
@@ -153,8 +153,8 @@ Better Work Indonesia | Update Employee
 	                      			</div>
 			    				</div>
 			    				<div class="form-group">
-			    					<button name="profile" type="submit" class="btn btn-primary">Save changes</button>
-	                  				<a button type="button" class="btn btn-danger" href="{{ route('employee.index') }}">Cancel</a>
+			    					<button name="profile" type="submit" class="btn btn-sm btn-primary">Save changes</button>
+	                  				<a button type="button" class="btn btn-sm btn-danger" href="{{ route('employee.index') }}">Cancel</a>
 	                  			</div>
 	                  			{!! Form::close() !!}
 			    			</div>
@@ -220,8 +220,8 @@ Better Work Indonesia | Update Employee
 								                    </div>
 								                </div>
 								                <div class="modal-footer">
-								              		<button type="close" class="btn btn-default" data-dismiss="modal">Close</button>
-								              		<button name="family" type="submit" class="btn btn-primary">Save changes</button>
+								              		<button type="close" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+								              		<button name="family" type="submit" class="btn btn-sm btn-primary">Save changes</button>
 								            	</div>
 								            	{!! Form::close() !!}
 								            </div>
@@ -274,7 +274,7 @@ Better Work Indonesia | Update Employee
 				            </div>
 				            <div class="tab-pane fade" id="vert-tabs-education" role="tabpanel" aria-labelledby="vert-tabs-education-tab">
 				            	<div class="row">
-			    					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#education">
+			    					<button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#education">
          								Add Education
          							</button>
          							<div class="modal fade" id="education">
@@ -321,9 +321,9 @@ Better Work Indonesia | Update Employee
 								                        </div>
 								                    </div>
 								                </div>
-								                <div class="modal-footer justify-content-between">
-								              		<button type="close" class="btn btn-default" data-dismiss="modal">Close</button>
-								              		<button name="education" type="submit" class="btn btn-primary">Save changes</button>
+								                <div class="modal-footer">
+								              		<button type="close" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+								              		<button name="family" type="submit" class="btn btn-sm btn-primary">Save changes</button>
 								            	</div>
 								            	{!! Form::close() !!}
 								            </div>
@@ -366,7 +366,7 @@ Better Work Indonesia | Update Employee
 				            </div>
 				            <div class="tab-pane fade" id="vert-tabs-training" role="tabpanel" aria-labelledby="vert-tabs-training-tab">
 				            	<div class="row">
-			    					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#training">
+			    					<button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#training">
          								Add Training
          							</button>
          							<div class="modal fade" id="training">
@@ -424,9 +424,9 @@ Better Work Indonesia | Update Employee
 								                        </div>
 								                    </div>
 								                </div>
-								                <div class="modal-footer justify-content-between">
-								              		<button type="close" class="btn btn-default" data-dismiss="modal">Close</button>
-								              		<button name="training" type="submit" class="btn btn-primary">Save changes</button>
+								                <div class="modal-footer">
+								              		<button type="close" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+								              		<button name="family" type="submit" class="btn btn-sm btn-primary">Save changes</button>
 								            	</div>
 								            	{!! Form::close() !!}
 								            </div>
@@ -512,13 +512,13 @@ Better Work Indonesia | Update Employee
 													<div class="form-group row">
 								                      	<label for="inputEmail" class="col-sm-2 col-form-label">Organization</label>
 								                        <div class="col-sm-10">
-								                          {!! Form::select('report_to', [null=>'Please Select'] + $organizations,[], array('class' => 'form-control')) !!}
+								                          {!! Form::select('org_id', [null=>'Please Select'] + $organizations,[], array('class' => 'form-control')) !!}
 								                        </div>
 								                    </div>
 													<div class="form-group row">
 								                      	<label for="inputEmail" class="col-sm-2 col-form-label">Office</label>
 								                        <div class="col-sm-10">
-								                          {!! Form::select('report_to', [null=>'Please Select'] + $offices,[], array('class' => 'form-control')) !!}
+								                          {!! Form::select('offices', [null=>'Please Select'] + $offices,[], array('class' => 'form-control')) !!}
 								                        </div>
 								                    </div>
 								                    <div class="form-group row">
@@ -552,8 +552,8 @@ Better Work Indonesia | Update Employee
 								                    </div>
 								                </div>
 								                <div class="modal-footer">
-								              		<button type="close" class="btn btn-default" data-dismiss="modal">Close</button>
-								              		<button name="service" type="submit" class="btn btn-primary">Save changes</button>
+								              		<button type="close" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+								              		<button name="family" type="submit" class="btn btn-sm btn-primary">Save changes</button>
 								            	</div>
 								            	{!! Form::close() !!}
 								            </div>

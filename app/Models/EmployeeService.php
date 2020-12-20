@@ -9,7 +9,9 @@ class EmployeeService extends Model
     protected $fillable = [
     	'employee_id',
     	'position',
-    	'report_to',
+        'report_to',
+        'org_id',
+        'office_id',
     	'grade',
     	'from',
     	'to',
