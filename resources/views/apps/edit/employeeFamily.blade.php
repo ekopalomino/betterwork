@@ -35,9 +35,9 @@
                 <div class="col-sm-12">
                     {!! Form::text('mobile', null, array('placeholder' => 'Mobile','class' => 'form-control')) !!}
                 </div>
-            <div class="modal-footer justify-content-between">
-                <button type="close" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button id="register" type="submit" class="btn btn-primary">Save changes</button>
+            <div class="modal-footer">
+                <button type="close" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+                <button id="register" type="submit" class="btn btn-sm btn-primary">Save changes</button>
             </div>
             {!! Form::close() !!}
         </div>

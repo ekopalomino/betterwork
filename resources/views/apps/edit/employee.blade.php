@@ -203,7 +203,7 @@ Better Work Indonesia | Update Employee
 								                    <div class="form-group row">
 								                      	<label for="inputEmail" class="col-sm-2 col-form-label">Address</label>
 								                        <div class="col-sm-10">
-								                          	<input type="text" name="address" placeholder="Address" class="form-control">
+								                          	{!! Form::textarea('address', null, array('placeholder' => 'Address','class' => 'form-control')) !!}
 								                        </div>
 								                    </div>
 								                    <div class="form-group row">
@@ -264,7 +264,7 @@ Better Work Indonesia | Update Employee
 					            				<td>{{ $child->phone}}</td>
 					            				<td>{{ $child->mobile}}</td>
 					            				<td>
-					            					<a class="btn btn-xs btn-success modalLg" href="#" value="{{ action('Apps\HumanResourcesController@familyEdit',['id'=>$child->id]) }}" data-toggle="modal" data-target="#modalLg"><i class="fa fa-edit"></i></a>
+					            					<a class="btn btn-xs btn-success modalLg" href="#" title="Edit Data" value="{{ action('Apps\HumanResourcesController@familyEdit',['id'=>$child->id]) }}" data-toggle="modal" data-target="#modalLg"><i class="fa fa-edit"></i></a>
 					            				</td>
 					            			</tr>
 					            			@endforeach

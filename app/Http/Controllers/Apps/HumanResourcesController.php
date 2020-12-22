@@ -168,11 +168,11 @@ class HumanResourcesController extends Controller
             $log = 'Employee '.($result->first_name).' '.($result->last_name). ' Created';
             \LogActivity::addToLog($log);
             $notification = array (
-                'message' => 'Employee '.($result->first_name).' '.($result->last_name). ' Created',
+                'message' => 'Employee '.($result->first_name).' '.($result->last_name). ' Created, Please Update Other Detail',
                 'alert-type' => 'success'
             );
 
-            return redirect()->route('employee.index')->with($notification);
+            return redirect()->route('employee.edit',$result->id)->with($notification);
     }
 
     public function employeeEdit($id)
@@ -637,9 +637,7 @@ class HumanResourcesController extends Controller
     public function employeeDelete($id)
     {
         $data = Employee::find($id);
-        $user = User::where('email',$data->email)->update([
-            'status_id' => 'bca5aaf9-c7ff-4359-9d6c-28768981b416',
-        ]);
+        $user = User::where('email',$data->email)->delete();
         $data->delete();
 
         $log = 'Employee '.($data->first_name).' '.($data->last_name). ' Delete';
