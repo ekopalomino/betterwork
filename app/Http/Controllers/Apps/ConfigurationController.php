@@ -111,8 +111,10 @@ class ConfigurationController extends Controller
     public function leaveTypeIndex()
     {
         $data = LeaveType::orderBy('id','ASC')->get();
+        $firsts = User::pluck('name','employee_id')->toArray();
+        $seconds = User::pluck('name','employee_id')->toArray();
 
-    	return view('apps.pages.leaveType',compact('data'));
+    	return view('apps.pages.leaveType',compact('data','firsts','seconds'));
     }
 
     public function leaveTypeStore(Request $request)
@@ -120,7 +122,6 @@ class ConfigurationController extends Controller
         $this->validate($request, [
             'leave_name' => 'required',
             'first_approval' => 'required',
-            'second_approval' => 'required',
         ]);
 
         $data = LeaveType::create([
@@ -143,8 +144,10 @@ class ConfigurationController extends Controller
     public function leaveTypeEdit($id)
     {
         $data = LeaveType::find($id);
+        $firsts = User::pluck('name','employee_id')->toArray();
+        $seconds = User::pluck('name','employee_id')->toArray();
 
-        return view('apps.edit.leaveType',compact('data'))->renderSections()['content'];
+        return view('apps.edit.leaveType',compact('data','firsts','seconds'))->renderSections()['content'];
     }
 
     public function leaveTypeUpdate(Request $request,$id)

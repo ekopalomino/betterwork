@@ -76,7 +76,8 @@ Better Work Indonesia | Employee Position
             				<tr>
             					<td>{{ $key+1 }}</td>
             					<td>{{ $value->position_name }}</td>
-            					<td>{{ $value->Author->name }}</td>
+            					<td>
+                        {{ $value->Author->first_name }} {{ $value->Author->last_name }}</td>
             					<td>{{date("d F Y H:i",strtotime($value->created_at)) }}</td>
 								<td>
 									<div class="btn-group">

@@ -23,4 +23,14 @@ class LeaveType extends Model
     {
     	return $this->belongsTo(Employee::class,'updated_by');
     }
+
+    public function First()
+    {
+        return $this->belongsTo(Employee::class,'first_approval');
+    }
+
+    public function Second()
+    {
+        return $this->belongsTo(Employee::class,'second_approval');
+    }
 }

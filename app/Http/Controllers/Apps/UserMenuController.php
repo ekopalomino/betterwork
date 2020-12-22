@@ -38,8 +38,8 @@ class UserMenuController extends Controller
     public function index()
     {
         /*Master Query*/
-        $getEmployee = Employee::where('id',Auth()->user()->employee_id)->first();
-        if($getEmployee == null) {
+        $getEmployee = Employee::with('Services')->where('id',Auth()->user()->employee_id)->first();
+        if($getEmployee->from == null) {
             return view('apps.pages.dashboard');
         } else {
             /*Query for Profile Card*/

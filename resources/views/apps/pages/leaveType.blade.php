@@ -36,24 +36,12 @@ Better Work Indonesia | Leave Type
 				            	<div class="modal-body">
 									{!! Form::open(array('route' => 'leaveType.store','method'=>'POST', 'class' => 'form-horizontal')) !!}
 									@csrf
-
 				              		<label class="col-sm-12 col-form-label">Leave Type Name</label>
                         				{!! Form::text('leave_name', null, array('placeholder' => 'Position Name','class' => 'form-control')) !!}
                         			<label class="col-sm-12 col-form-label">First Approval</label>
-										<select name="contract_status" class="form-control">
-											<option value="0">Please Select</option>
-											<option value="1">Direct Supervisor</option>
-											<option value="2">HR Officer</option>
-											<option value="3">No Approval</option>
-										</select>
+                        				{!! Form::select('first_approval', [null=>'Please Select'] + $firsts,[], array('class' => 'form-control')) !!}
 									<label class="col-sm-12 col-form-label">Second Approval</label>
-										<select name="contract_status" class="form-control">
-											<option value="0">Please Select</option>
-											<option value="1">Direct Supervisor</option>
-											<option value="2">HR Officer</option>
-											<option value="3">No Approval</option>
-										</select>
-
+										{!! Form::select('second_approval', [null=>'Please Select'] + $seconds,[], array('class' => 'form-control')) !!}
 				            	</div>
 				            	<div class="modal-footer">
 				              		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -83,10 +71,8 @@ Better Work Indonesia | Leave Type
             				<tr>
             					<th>No</th>
             					<th>Leave Type Name</th>
-
 								<th>First Approval</th>
 								<th>Second Approval</th>
-
 								<th>Created By</th>
             					<th>Created At</th>
             					<th></th>
@@ -97,25 +83,19 @@ Better Work Indonesia | Leave Type
             				<tr>
             					<td>{{ $key+1 }}</td>
             					<td>{{ $value->leave_name }}</td>
-								<td></td>
-								<td></td>
-            					<td>{{ $value->Author->name }}</td>
+								<td>{{ $value->First->first_name }} {{ $value->First->last_name }}</td>
+								<td>
+									@isset($value->second_approval)
+									{{ $value->Second->first_name }} {{ $value->Second->last_name }}
+									@endisset
+								</td>
+            					<td>{{ $value->Author->first_name }} {{ $value->Author->last_name }}</td>
             					<td>{{date("d F Y H:i",strtotime($value->created_at)) }}</td>
 								<td>
-									<div class="btn-group">
-
-										<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-
-											Action
-										</button>
-										<div class="dropdown-menu" role="menu">
-											<a class="dropdown-item modalMd" href="#" value="{{ action('Apps\ConfigurationController@leaveTypeEdit',['id'=>$value->id]) }}" data-toggle="modal" data-target="#modalMd">Edit Data</a>
-											{!! Form::open(['method' => 'POST','route' => ['leaveType.destroy', $value->id],'style'=>'dropdown-item','onsubmit' => 'return ConfirmDelete()']) !!}
-											{!! Form::button('<a>Delete Data</a>',['type'=>'submit','class' => 'dropdown-item']) !!}
-											{!! Form::close() !!}
-										</div>
-
-
+									<a class="btn btn-xs btn-info modalLg" href="#" title="View Data" value="{{ action('Apps\ConfigurationController@leaveTypeEdit',['id'=>$value->id]) }}" data-toggle="modal" data-target="#modalLg"><i class="fas fa-edit"></i></a>
+									{!! Form::open(['method' => 'POST','route' => ['leaveType.destroy', $value->id],'style'=>'display:inline','onsubmit' => 'return ConfirmDelete()']) !!}
+									{!! Form::button('<i class="far fa-trash-alt"></i>',['type'=>'submit','class' => 'btn btn-xs btn-danger','title'=>'Suspend User']) !!}
+									{!! Form::close() !!}
 								</td>
             				</tr>
 							@endforeach
@@ -145,7 +125,7 @@ Better Work Indonesia | Leave Type
 <script>
     function ConfirmDelete()
     {
-    var x = confirm("Data Delete?");
+    var x = confirm("Confirm Data Delete?");
     if (x)
         return true;
     else

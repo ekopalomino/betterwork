@@ -361,6 +361,15 @@ class HumanResourcesController extends Controller
                         'contract' => $path,
                     ];
                     $data = EmployeeService::create($input);
+
+                    $log = 'Employee '.($data->first_name).' '.($data->last_name). ' Create Service Data';
+                    \LogActivity::addToLog($log);
+                    $notification = array (
+                        'message' => 'Employee '.($data->first_name).' '.($data->last_name). ' Create Service Data',
+                        'alert-type' => 'success'
+                    );
+
+                    return redirect()->back()->with($notification);
                 } else {
                     $input = [
                         'employee_id' => $request->input('employee_id'), 
@@ -376,7 +385,16 @@ class HumanResourcesController extends Controller
                         'contract' => $path,
                     ];
                     
-                    $data = EmployeeService::create($input); 
+                    $data = EmployeeService::create($input);
+                    
+                    $log = 'Employee '.($data->first_name).' '.($data->last_name). ' Create Service Data';
+                    \LogActivity::addToLog($log);
+                    $notification = array (
+                        'message' => 'Employee '.($data->first_name).' '.($data->last_name). ' Create Service Data',
+                        'alert-type' => 'success'
+                    );
+
+                    return redirect()->back()->with($notification);
                 }
             } else {
                 if(($request->input('to')) === null) {
@@ -393,6 +411,15 @@ class HumanResourcesController extends Controller
                     ];
                     
                     $data = EmployeeService::create($input);
+
+                    $log = 'Employee '.($data->first_name).' '.($data->last_name). ' Create Service Data';
+                    \LogActivity::addToLog($log);
+                    $notification = array (
+                        'message' => 'Employee '.($data->first_name).' '.($data->last_name). ' Create Service Data',
+                        'alert-type' => 'success'
+                    );
+
+                    return redirect()->back()->with($notification);
                 } else {
                     $input = [
                         'employee_id' => $request->input('employee_id'), 
@@ -408,16 +435,18 @@ class HumanResourcesController extends Controller
                     ];
                     
                     $data = EmployeeService::create($input);
+
+                    $log = 'Employee '.($data->first_name).' '.($data->last_name). ' Create Service Data';
+                    \LogActivity::addToLog($log);
+                    $notification = array (
+                        'message' => 'Employee '.($data->first_name).' '.($data->last_name). ' Create Service Data',
+                        'alert-type' => 'success'
+                    );
+
+                    return redirect()->back()->with($notification);
                 }
             }
-            $log = 'Employee '.($data->first_name).' '.($data->last_name). ' Create Service Data';
-            \LogActivity::addToLog($log);
-            $notification = array (
-                'message' => 'Employee '.($data->first_name).' '.($data->last_name). ' Create Service Data',
-                'alert-type' => 'success'
-            );
-
-            return redirect()->back()->with($notification); 
+             
         }
         
     }
