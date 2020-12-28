@@ -1,6 +1,6 @@
 @extends('apps.layouts.main')
 @section('header.title')
-Better Work Indonesia | Employee Request Approval
+Better Work Indonesia | Employee Time Off Approval
 @endsection
 @section('header.plugins')
 <link rel="stylesheet" href="{{ asset('public/bower_components/admin-lte/plugins/datatables-bs4/css/dataTables.bootstrap4.css') }}">
@@ -11,7 +11,7 @@ Better Work Indonesia | Employee Request Approval
 	<div class="container-fluid">
     <div class="row mb-2">
     	<div class="col-sm-6">
-     		<h1>Employee Request Approval</h1>
+     		<h1>Employee Time Off Approval</h1>
     	</div>
     </div>
   </div>

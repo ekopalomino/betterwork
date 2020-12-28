@@ -146,7 +146,7 @@
 			@can('Access Configuration') 
 			@if(\Route::is(['application.index','config.index','position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','assetCat.index','user.index','logs.index','role.index',
 			'role.create','role.edit','bankAcc.index','organization.index','office.index','accSet.index','holiday.index','hrSet.index']))
-			@can('Create Application Setting')
+			@can('Disable')
 			<li class="nav-item">
 				<a href="{{ route('application.index') }}" class="nav-link {{set_active('application.index') }}">
 					<i class="nav-icon fas fa-cog"></i>
@@ -387,7 +387,7 @@
 					<li class="nav-item {{set_open(['request.index']) }}">
 						<a href="{{ route('request.index') }}" class="nav-link {{set_active('request.index') }}">
 							<i class="far fa-circle nav-icon"></i>
-							<p>Request Approval</p>
+							<p>Time Off Approval</p>
 						</a>
 					</li>
 					@endcan

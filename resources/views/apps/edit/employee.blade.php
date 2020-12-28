@@ -161,16 +161,16 @@ Better Work Indonesia | Update Employee
 			    			<div class="tab-pane fade" id="vert-tabs-family" role="tabpanel" aria-labelledby="vert-tabs-family-tab">
 			    				<div class="row">
 			    					<button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#family">
-         								Add Family
+         								Add Data
          							</button>
          							<div class="modal fade" id="family">
          								<div class="modal-dialog modal-lg">
          									<div class="modal-content">
-         										{!! Form::open(array('route' => 'myFamily.store','method'=>'POST', 'class' => 'form-horizontal')) !!}
+         										{!! Form::open(array('route' => 'employeeFamily.store','method'=>'POST', 'class' => 'form-horizontal')) !!}
                   								@csrf
                   								{!! Form::hidden('employee_id',$data->id) !!}
          										<div class="modal-header">
-								             		<h4 class="modal-title">New Family Member</h4>
+								             		<h4 class="modal-title">New Data</h4>
 								              		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 								                		<span aria-hidden="true">&times;</span>
 								              		</button>
@@ -222,7 +222,7 @@ Better Work Indonesia | Update Employee
 								                </div>
 								                <div class="modal-footer">
 								              		<button type="close" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
-								              		<button name="family" type="submit" class="btn btn-sm btn-primary">Save changes</button>
+								              		<button name="family" type="submit" class="btn btn-sm btn-success">Save changes</button>
 								            	</div>
 								            	{!! Form::close() !!}
 								            </div>
@@ -276,16 +276,16 @@ Better Work Indonesia | Update Employee
 				            <div class="tab-pane fade" id="vert-tabs-education" role="tabpanel" aria-labelledby="vert-tabs-education-tab">
 				            	<div class="row">
 			    					<button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#education">
-         								Add Education
+         								Add Data
          							</button>
          							<div class="modal fade" id="education">
          								<div class="modal-dialog modal-lg">
          									<div class="modal-content">
-         										{!! Form::open(array('route' => 'myEducation.store','method'=>'POST', 'class' => 'form-horizontal')) !!}
+         										{!! Form::open(array('route' => 'employeeEducation.store','method'=>'POST', 'class' => 'form-horizontal')) !!}
                   								@csrf
                   								{!! Form::hidden('employee_id',$data->id) !!}
          										<div class="modal-header">
-								             		<h4 class="modal-title">New Education</h4>
+								             		<h4 class="modal-title">New Data</h4>
 								              		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 								                		<span aria-hidden="true">&times;</span>
 								              		</button>
@@ -324,7 +324,7 @@ Better Work Indonesia | Update Employee
 								                </div>
 								                <div class="modal-footer">
 								              		<button type="close" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
-								              		<button name="family" type="submit" class="btn btn-sm btn-primary">Save changes</button>
+								              		<button name="family" type="submit" class="btn btn-sm btn-success">Save changes</button>
 								            	</div>
 								            	{!! Form::close() !!}
 								            </div>
@@ -357,7 +357,7 @@ Better Work Indonesia | Update Employee
 													@endif
 												</td>
 					            				<td>
-					            					<a class="btn btn-xs btn-success modalLg" href="#" value="{{ action('Apps\HumanResourcesController@educationEdit',['id'=>$value->id]) }}" data-toggle="modal" data-target="#modalLg"><i class="fa fa-edit"></i></a>
+					            					<a class="btn btn-xs btn-success modalLg" href="#" title="Edit Data" value="{{ action('Apps\HumanResourcesController@educationEdit',['id'=>$value->id]) }}" data-toggle="modal" data-target="#modalLg"><i class="fa fa-edit"></i></a>
 					            				</td>
 					            			</tr>
 					            			@endforeach
@@ -373,8 +373,8 @@ Better Work Indonesia | Update Employee
          							<div class="modal fade" id="training">
          								<div class="modal-dialog modal-lg">
          									<div class="modal-content">
-         										{!! Form::model($data, ['method' => 'POST','route' => ['employee.update', $data->id],'files'=> true]) !!}
-                  								@csrf
+         										{!! Form::open(array('route' => 'employeeTraining.store','method'=>'POST', 'class' => 'form-horizontal','files'=> 'true')) !!}
+         										@csrf
                   								{!! Form::hidden('employee_id',$data->id) !!}
          										<div class="modal-header">
 								             		<h4 class="modal-title">New Training</h4>
@@ -450,23 +450,23 @@ Better Work Indonesia | Update Employee
 					            			</tr>
 					            		</thead>
 					            		<tbody>
-					            			@foreach($data->Trainings as $training)
+					            			@foreach($data->Trainings as $value)
 					            			<tr>
-					            				<td>{{ $training->training_provider }}</td>
-					            				<td>{{ $training->training_title }}</td>
-					            				<td>{{ $training->location }}</td>
-					            				<td>{{date("d F Y H:i",strtotime($training->from)) }}</td>
-					            				<td>{{date("d F Y H:i",strtotime($training->to)) }}</td>
-					            				<td>{{ $training->Statuses->name }}</td>
+					            				<td>{{ $value->training_provider }}</td>
+					            				<td>{{ $value->training_title }}</td>
+					            				<td>{{ $value->location }}</td>
+					            				<td>{{date("d F Y H:i",strtotime($value->from)) }}</td>
+					            				<td>{{date("d F Y H:i",strtotime($value->to)) }}</td>
+					            				<td>{{ $value->Statuses->name }}</td>
 					            				<td>
 					            					<ul>
-					            						<li>Certificate : <a href="http://betterwork.local/public/storage/{{$training->certification}}">{{$training->certification}}</a></li>
-					            						<li><a href="">Reports : <a href="http://betterwork.local/public/storage/{{$training->reports}}">{{$training->reports}}</a></li>
-					            						<li><a href="">Materials : <a href="http://betterwork.local/public/storage/{{$training->materials}}">{{$training->materials}}</a></li>
+					            						<li>Certificate : <a href="http://betterwork.local/public/storage/{{$value->certification}}">{{$value->certification}}</a></li>
+					            						<li><a href="">Reports : <a href="http://betterwork.local/public/storage/{{$value->reports}}">{{$value->reports}}</a></li>
+					            						<li><a href="">Materials : <a href="http://betterwork.local/public/storage/{{$value->materials}}">{{$value->materials}}</a></li>
 					            					</ul>
 					            				</td>
 					            				<td>
-					            					<a class="btn btn-xs btn-success modalLg" href="#" value="{{ action('Apps\HumanResourcesController@trainingEdit',['id'=>$training->id]) }}" data-toggle="modal" data-target="#modalLg"><i class="fa fa-edit"></i></a>
+					            					<a class="btn btn-xs btn-success modalLg" href="#" title="Edit Data" value="{{ action('Apps\HumanResourcesController@trainingEdit',['id'=>$value->id]) }}" data-toggle="modal" data-target="#modalLg"><i class="fa fa-edit"></i></a>
 					            				</td>
 					            			</tr>
 					            			@endforeach
@@ -477,7 +477,7 @@ Better Work Indonesia | Update Employee
 				            <div class="tab-pane fade" id="vert-tabs-services" role="tabpanel" aria-labelledby="vert-tabs-services-tab">
 				            	<div class="row">
 			    					<button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#services">
-         								Add Record
+         								Add Data
          							</button>
          							<div class="modal fade" id="services">
          								<div class="modal-dialog modal-lg">
@@ -554,7 +554,7 @@ Better Work Indonesia | Update Employee
 								                </div>
 								                <div class="modal-footer">
 								              		<button type="close" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
-								              		<button name="family" type="submit" class="btn btn-sm btn-primary">Save changes</button>
+								              		<button name="family" type="submit" class="btn btn-sm btn-success">Save changes</button>
 								            	</div>
 								            	{!! Form::close() !!}
 								            </div>
@@ -577,28 +577,27 @@ Better Work Indonesia | Update Employee
 					            			</tr>
 					            		</thead>
 					            		<tbody>
-					            			@foreach($data->Services as $service)
+					            			@foreach($data->Services as $value)
 					            			<tr>
-					            				<td>{{$service->position}}</td>
+					            				<td>{{$value->position}}</td>
 					            				<td>
-					            					@if(!empty($service->report_to))
-					            					{{$service->Reporting->first_name}}
+					            					@if(!empty($value->report_to))
+					            					{{$value->Reporting->first_name}}
 					            					@endif
 					            				</td>
-					            				<td>{{$service->grade}}</td>
-					            				<td>{{date("d F Y",strtotime($service->from)) }}</td>
+					            				<td>{{$value->grade}}</td>
+					            				<td>{{date("d F Y",strtotime($value->from)) }}</td>
 					            				<td>
-					            					@if(!empty($service->to))
-					            					{{date("d F Y",strtotime($service->to)) }}
+					            					@if(!empty($value->to))
+					            					{{date("d F Y",strtotime($value->to)) }}
 					            					@else
 													Current
 													@endif
 					            				</td>
-					            				<td>{{ number_format($service->salary,2,',','.')}}</td>
-					            				<td>{{$service->contract}}</td>
+					            				<td>{{ number_format($value->salary,2,',','.')}}</td>
+					            				<td>{{$value->contract}}</td>
 					            				<td>
-					            					<a class="btn btn-xs btn-success modalLg" href="#" value="{{ action('Apps\HumanResourcesController@serviceEdit',['id'=>$service->id]) }}" 
-													data-toggle="modal" data-target="#modalLg" title="Edit Services">Edit</a>
+					            					<a class="btn btn-xs btn-success modalLg" href="#" title="Edit Data" value="{{ action('Apps\HumanResourcesController@serviceEdit',['id'=>$value->id]) }}" data-toggle="modal" data-target="#modalLg"><i class="fa fa-edit"></i></a>
 					            				</td>
 					            			</tr>
 					            			@endforeach

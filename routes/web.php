@@ -169,10 +169,13 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::get('human-resources/employee/edit/{id}','Apps\HumanResourcesController@employeeEdit')->name('employee.edit');
 	Route::post('human-resources/employee/update/{id}','Apps\HumanResourcesController@employeeUpdate')->name('employee.update');
 	Route::post('human-resources/employee/delete/{id}','Apps\HumanResourcesController@employeeDelete')->name('employee.destroy');
+	Route::post('human-resources/employee/family/store','Apps\HumanResourcesController@familyCreate')->name('employeeFamily.store');
 	Route::get('human-resources/employee/family/edit/{id}','Apps\HumanResourcesController@familyEdit')->name('employeeFamily.edit');
 	Route::post('human-resources/employee/family/update/{id}','Apps\HumanResourcesController@familyUpdate')->name('employeeFamily.update');
+	Route::post('human-resources/employee/education/store','Apps\HumanResourcesController@educationCreate')->name('employeeEducation.store');
 	Route::get('human-resources/employee/education/edit/{id}','Apps\HumanResourcesController@educationEdit')->name('employeeEducation.edit');
 	Route::post('human-resources/employee/education/update/{id}','Apps\HumanResourcesController@educationUpdate')->name('employeeEducation.update');
+	Route::post('human-resources/employee/training/store','Apps\HumanResourcesController@trainingCreate')->name('employeeTraining.store');
 	Route::get('human-resources/employee/training/edit/{id}','Apps\HumanResourcesController@trainingEdit')->name('employeeTraining.edit');
 	Route::post('human-resources/employee/training/update/{id}','Apps\HumanResourcesController@trainingUpdate')->name('employeeTraining.update');
 	Route::get('human-resources/employee/service/edit/{id}','Apps\HumanResourcesController@serviceEdit')->name('employeeService.edit');

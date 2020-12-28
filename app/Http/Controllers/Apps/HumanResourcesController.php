@@ -206,58 +206,68 @@ class HumanResourcesController extends Controller
     public function employeeUpdate(Request $request,$id)
     {
         $data = Employee::find($id);
-        if($request->has('profile')) {
-            if ($request->hasFile('picture')) {
-                $file = $request->file('picture');
-                $file_name = $request->input('employee_id');
-                $size = $file->getSize();
-                $ext = $file->getClientOriginalExtension();
-                $destinationPath = public_path('/employees');
-                $extension = $file->getClientOriginalExtension();
-                $filename=$file_name.'.'.$extension;
-                $uploadSuccess = $request->file('picture')
-                ->move($destinationPath, $filename);
-                $input = [
-                    'employee_id' => $request->input('employee_id'), 
-                    'first_name' => $request->input('first_name'),
-                    'last_name' => $request->input('last_name'),
-                    'address' => $request->input('address'),
-                    'sex' => $request->input('sex'),
-                    'marital_status' => $request->input('marital_status'),
-                    'place_of_birth' => $request->input('place_of_birth'),
-                    'date_of_birth' => $request->input('date_of_birth'),
-                    'id_card' => $request->input('id_card'),
-                    'tax_category' => $request->input('tax_category'),
-                    'tax_no' => $request->input('tax_no'),
-                    'picture' => $filename,
-                    'address' => $request->input('address'),
-                    'phone' => $request->input('phone'),
-                    'mobile' => $request->input('mobile'),
-                    'email' => $request->input('email'),
-                    'leave_amount' => $request->input('leave_amount'),
-                    'updated_by' => auth()->user()->id,
-                ];
-            } else {
-                $input = [
-                    'employee_id' => $request->input('employee_id'), 
-                    'first_name' => $request->input('first_name'),
-                    'last_name' => $request->input('last_name'),
-                    'address' => $request->input('address'),
-                    'sex' => $request->input('sex'),
-                    'marital_status' => $request->input('marital_status'),
-                    'place_of_birth' => $request->input('place_of_birth'),
-                    'date_of_birth' => $request->input('date_of_birth'),
-                    'id_card' => $request->input('id_card'),
-                    'tax_category' => $request->input('tax_category'),
-                    'tax_no' => $request->input('tax_no'),
-                    'address' => $request->input('address'),
-                    'phone' => $request->input('phone'),
-                    'mobile' => $request->input('mobile'),
-                    'email' => $request->input('email'),
-                    'leave_amount' => $request->input('leave_amount'),
-                    'updated_by' => auth()->user()->id,
-                ];
-            }
+        if ($request->hasFile('picture')) {
+            $file = $request->file('picture');
+            $file_name = $request->input('employee_id');
+            $size = $file->getSize();
+            $ext = $file->getClientOriginalExtension();
+            $destinationPath = public_path('/employees');
+            $extension = $file->getClientOriginalExtension();
+            $filename=$file_name.'.'.$extension;
+            $uploadSuccess = $request->file('picture')
+            ->move($destinationPath, $filename);
+            $input = [
+                'employee_id' => $request->input('employee_id'), 
+                'first_name' => $request->input('first_name'),
+                'last_name' => $request->input('last_name'),
+                'address' => $request->input('address'),
+                'sex' => $request->input('sex'),
+                'marital_status' => $request->input('marital_status'),
+                'place_of_birth' => $request->input('place_of_birth'),
+                'date_of_birth' => $request->input('date_of_birth'),
+                'id_card' => $request->input('id_card'),
+                'tax_category' => $request->input('tax_category'),
+                'tax_no' => $request->input('tax_no'),
+                'picture' => $filename,
+                'address' => $request->input('address'),
+                'phone' => $request->input('phone'),
+                'mobile' => $request->input('mobile'),
+                'email' => $request->input('email'),
+                'leave_amount' => $request->input('leave_amount'),
+                'updated_by' => auth()->user()->id,
+            ];
+
+            $updateEmployee = $data->update($input);
+
+            $log = 'Employee '.($data->first_name).' '.($data->last_name). ' Edited';
+            \LogActivity::addToLog($log);
+            $notification = array (
+                'message' => 'Employee '.($data->first_name).' '.($data->last_name). ' Edited',
+                'alert-type' => 'success'
+            );
+            return redirect()->back()->with($notification);
+
+        } else {
+            $input = [
+                'employee_id' => $request->input('employee_id'), 
+                'first_name' => $request->input('first_name'),
+                'last_name' => $request->input('last_name'),
+                'address' => $request->input('address'),
+                'sex' => $request->input('sex'),
+                'marital_status' => $request->input('marital_status'),
+                'place_of_birth' => $request->input('place_of_birth'),
+                'date_of_birth' => $request->input('date_of_birth'),
+                'id_card' => $request->input('id_card'),
+                'tax_category' => $request->input('tax_category'),
+                'tax_no' => $request->input('tax_no'),
+                'address' => $request->input('address'),
+                'phone' => $request->input('phone'),
+                'mobile' => $request->input('mobile'),
+                'email' => $request->input('email'),
+                'leave_amount' => $request->input('leave_amount'),
+                'updated_by' => auth()->user()->id,
+            ];
+
             $updateEmployee = $data->update($input);
 
             $log = 'Employee '.($data->first_name).' '.($data->last_name). ' Edited';
@@ -268,203 +278,6 @@ class HumanResourcesController extends Controller
             );
             return redirect()->back()->with($notification);
         }
-
-        if($request->has('family')) {
-            $this->validate($request, [
-                'first_name' => 'required',
-                'last_name' => 'required',
-                'relations' => 'required',
-                'mobile' => 'required|numeric',
-            ]);
-            $input = [
-                'employee_id' => $request->input('employee_id'), 
-                'first_name' => $request->input('first_name'),
-                'last_name' => $request->input('last_name'),
-                'address' => $request->input('address'),
-                'relations' => $request->input('relations'),
-                'phone' => $request->input('phone'),
-                'mobile' => $request->input('mobile'),
-            ];
-
-            $families = EmployeeFamily::create($input);
-            $log = 'Employee '.($data->first_name).' '.($data->last_name). ' Create Family Member';
-            \LogActivity::addToLog($log);
-            $notification = array (
-                'message' => 'Employee '.($data->first_name).' '.($data->last_name). ' Create Family Member',
-                'alert-type' => 'success'
-            );
-
-            return redirect()->back()->with($notification);
-        }
-
-        if($request->has('education')) {
-            $this->validate($request, [
-                'institution_name' => 'required',
-                'degree' => 'required',
-                'major' => 'required',
-                'gpa' => 'required',
-            ]);
-            $input = [
-                'employee_id' => $request->input('employee_id'), 
-                'institution_name' => $request->input('institution_name'),
-                'date_of_graduate' => $request->input('date_of_graduate'),
-                'degree' => $request->input('degree'), 
-                'major' => $request->input('major'),
-                'gpa' => $request->input('gpa'),
-            ];
-
-            $education = EmployeeEducation::create($input);
-            $log = 'Employee '.($data->first_name).' '.($data->last_name). ' Create Education Data';
-            \LogActivity::addToLog($log);
-            $notification = array (
-                'message' => 'Employee '.($data->first_name).' '.($data->last_name). ' Create Education Data',
-                'alert-type' => 'success'
-            );
-
-            return redirect()->back()->with($notification);
-        }
-
-        if($request->has('training')) {
-            $this->validate($request, [
-                'training_provider' => 'required',
-                'training_title' => 'required',
-                'training_start' => 'required|date'
-            ]);
-            
-            $input = [
-                'employee_id' => $request->input('employee_id'), 
-                'training_provider' => $request->input('training_provider'),
-                'training_title' => $request->input('training_title'),
-                'location' => $request->input('location'),
-                'from' => $request->input('training_start'),
-                'to' => $request->input('training_end'),
-                'status' => $request->input('status'),
-            ];
-            
-            $data = EmployeeTraining::create($input);
-            $log = 'Employee '.($data->first_name).' '.($data->last_name). ' Create Training Data';
-            \LogActivity::addToLog($log);
-            $notification = array (
-                'message' => 'Employee '.($data->first_name).' '.($data->last_name). ' Create Training Data',
-                'alert-type' => 'success'
-            );
-
-            return redirect()->back()->with($notification);    
-        }
-
-        if($request->has('service')) {
-            $this->validate($request, [
-                'position' => 'required',
-                'from' => 'required|date',
-                'job_title' => 'required',
-                'salary' => 'required',
-            ]);
-
-            if($request->hasFile('contract')) {
-                $uploadedFile = $request->file('contract');
-                $path = $uploadedFile->store('employee_contract');
-                if(($request->input('to')) === null) {
-                    $input = [
-                        'employee_id' => $request->input('employee_id'), 
-                        'position' => $request->input('position'),
-                        'report_to' => $request->input('report_to'),
-                        'org_id' => $request->input('org_id'),
-                        'office_id' => $request->input('offices'),
-                        'grade' => $request->input('job_title'),
-                        'from' => $request->input('from'),
-                        'salary' => $request->input('salary'),
-                        'is_active' => '1',
-                        'contract' => $path,
-                    ];
-                    $data = EmployeeService::create($input);
-
-                    $log = 'Employee '.($data->first_name).' '.($data->last_name). ' Create Service Data';
-                    \LogActivity::addToLog($log);
-                    $notification = array (
-                        'message' => 'Employee '.($data->first_name).' '.($data->last_name). ' Create Service Data',
-                        'alert-type' => 'success'
-                    );
-
-                    return redirect()->back()->with($notification);
-                } else {
-                    $input = [
-                        'employee_id' => $request->input('employee_id'), 
-                        'position' => $request->input('position'),
-                        'report_to' => $request->input('report_to'),
-                        'org_id' => $request->input('org_id'),
-                        'office_id' => $request->input('offices'),
-                        'grade' => $request->input('job_title'),
-                        'from' => $request->input('from'),
-                        'to' => $request->input('to'),
-                        'salary' => $request->input('salary'),
-                        'is_active' => '0',
-                        'contract' => $path,
-                    ];
-                    
-                    $data = EmployeeService::create($input);
-                    
-                    $log = 'Employee '.($data->first_name).' '.($data->last_name). ' Create Service Data';
-                    \LogActivity::addToLog($log);
-                    $notification = array (
-                        'message' => 'Employee '.($data->first_name).' '.($data->last_name). ' Create Service Data',
-                        'alert-type' => 'success'
-                    );
-
-                    return redirect()->back()->with($notification);
-                }
-            } else {
-                if(($request->input('to')) === null) {
-                    $input = [
-                        'employee_id' => $request->input('employee_id'), 
-                        'position' => $request->input('position'),
-                        'report_to' => $request->input('report_to'),
-                        'org_id' => $request->input('org_id'),
-                        'office_id' => $request->input('offices'),
-                        'grade' => $request->input('job_title'),
-                        'from' => $request->input('from'),
-                        'salary' => $request->input('salary'),
-                        'is_active' => '1',
-                    ];
-                    
-                    $data = EmployeeService::create($input);
-
-                    $log = 'Employee '.($data->first_name).' '.($data->last_name). ' Create Service Data';
-                    \LogActivity::addToLog($log);
-                    $notification = array (
-                        'message' => 'Employee '.($data->first_name).' '.($data->last_name). ' Create Service Data',
-                        'alert-type' => 'success'
-                    );
-
-                    return redirect()->back()->with($notification);
-                } else {
-                    $input = [
-                        'employee_id' => $request->input('employee_id'), 
-                        'position' => $request->input('position'),
-                        'report_to' => $request->input('report_to'),
-                        'org_id' => $request->input('org_id'),
-                        'office_id' => $request->input('offices'),
-                        'grade' => $request->input('job_title'),
-                        'from' => $request->input('from'),
-                        'to' => $request->input('to'),
-                        'salary' => $request->input('salary'),
-                        'is_active' => '0',
-                    ];
-                    
-                    $data = EmployeeService::create($input);
-
-                    $log = 'Employee '.($data->first_name).' '.($data->last_name). ' Create Service Data';
-                    \LogActivity::addToLog($log);
-                    $notification = array (
-                        'message' => 'Employee '.($data->first_name).' '.($data->last_name). ' Create Service Data',
-                        'alert-type' => 'success'
-                    );
-
-                    return redirect()->back()->with($notification);
-                }
-            }
-             
-        }
-        
     }
 
     public function familyCreate(Request $request)
@@ -548,10 +361,10 @@ class HumanResourcesController extends Controller
             'gpa' => $request->input('gpa'),
         ]);
 
-        $log = 'Employee '.($data->Employees->first_name).' '.($data->Employees->last_name). ' Create Education Data';
+        $log = 'Education Data For Employee '.($data->Employees->first_name).' '.($data->Employees->last_name). '';
         \LogActivity::addToLog($log);
         $notification = array (
-            'message' => 'Employee '.($data->Employees->first_name).' '.($data->Employees->last_name). ' Create Education Data',
+            'message' => 'Education Data For Employee '.($data->Employees->first_name).' '.($data->Employees->last_name). '',
             'alert-type' => 'success'
         );
 
@@ -587,6 +400,61 @@ class HumanResourcesController extends Controller
         \LogActivity::addToLog($log);
         $notification = array (
             'message' => 'Employee '.($data->first_name).' '.($data->last_name). ' Edited Education Data',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->back()->with($notification);
+    }
+
+    public function trainingCreate(Request $request)
+    {
+        $this->validate($request, [
+            'training_provider' => 'required',
+            'training_title' => 'required',
+            'training_start' => 'required|date',
+            'status' => 'required',
+        ]);
+
+        $data = EmployeeTraining::find($id);
+
+        $certificate = '' ;
+        $reports = '' ;
+        $materials = '' ;
+
+        if($request->hasFile('certificate')) {
+            $uploadedFile = $request->file('certificate');
+            $certificate = $uploadedFile->store('employee_training');
+        }
+        
+
+        if($request->hasFile('reports')) {
+            $uploadedFile = $request->file('reports');
+            $reports = $uploadedFile->store('employee_training');
+        }
+        
+        
+        if($request->hasFile('materials')) {
+            $uploadedFile = $request->file('materials');
+            $materials = $uploadedFile->store('employee_training');
+        }
+        
+        
+        $data = EmployeeTraining::create([
+            'training_provider' => $request->input('training_provider'),
+            'training_title' => $request->input('training_title'),
+            'location' => $request->input('location'),
+            'from' => $request->input('training_start'),
+            'to' => $request->input('training_end'),
+            'status' => $request->input('status'),
+            'certification' => $certificate,
+            'reports' => $reports,
+            'materials' => $materials,
+        ]);
+
+        $log = 'Employee '.($data->first_name).' '.($data->last_name). ' Edited Training Data';
+        \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'Employee '.($data->first_name).' '.($data->last_name). ' Edited Training Data',
             'alert-type' => 'success'
         );
 
@@ -860,7 +728,7 @@ class HumanResourcesController extends Controller
     {
         $current = Carbon::now()->year;
         $data = EmployeeLeave::with('Details')->where('id',$id)->whereYEAR('created_at',$current)->get();
-
+        
         return view('apps.show.employeeLeave',compact('data'));
     }
 
