@@ -41,7 +41,7 @@ Better Work Indonesia | Update My Education Data
 	         		<div class="modal fade" id="family">
 	         			<div class="modal-dialog modal-lg">
 	         				<div class="modal-content">
-	         					{!! Form::open(array('route' => 'myFamily.store','method'=>'POST', 'class' => 'form-horizontal')) !!}
+	         					{!! Form::open(array('route' => 'myEducation.store','method'=>'POST', 'class' => 'form-horizontal')) !!}
 	                			@csrf
 	                			{!! Form::hidden('employee_id',$data->id) !!}
 	         					<div class="modal-header">

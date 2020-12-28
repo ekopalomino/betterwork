@@ -33,6 +33,7 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::get('my-menu/update-profile/family-data','Apps\UserMenuController@familyData')->name('family.data');
 	Route::post('my-menu/update-profile/family-data/store','Apps\HumanResourcesController@familyCreate')->name('myFamily.store');
 	Route::get('my-menu/update-profile/education-data','Apps\UserMenuController@educationData')->name('education.data');
+	Route::post('my-menu/update-profile/education-data/create','Apps\HumanResourcesController@educationCreate')->name('myEducation.store');
 	Route::post('my-menu/attendance-in','Apps\UserMenuController@clockIn')->name('attendanceIn.store');
 	Route::post('my-menu/attendance/task/edit','Apps\UserMenuController@taskEdit')->name('attendanceTask.update');
 	Route::post('my-menu/attendance-out','Apps\UserMenuController@clockOut')->name('attendanceOut.store');

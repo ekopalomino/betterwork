@@ -166,7 +166,7 @@ Better Work Indonesia | Update Employee
          							<div class="modal fade" id="family">
          								<div class="modal-dialog modal-lg">
          									<div class="modal-content">
-         										{!! Form::model($data, ['method' => 'POST','route' => ['employee.update', $data->id]]) !!}
+         										{!! Form::open(array('route' => 'myFamily.store','method'=>'POST', 'class' => 'form-horizontal')) !!}
                   								@csrf
                   								{!! Form::hidden('employee_id',$data->id) !!}
          										<div class="modal-header">
@@ -281,7 +281,7 @@ Better Work Indonesia | Update Employee
          							<div class="modal fade" id="education">
          								<div class="modal-dialog modal-lg">
          									<div class="modal-content">
-         										{!! Form::model($data, ['method' => 'POST','route' => ['employee.update', $data->id]]) !!}
+         										{!! Form::open(array('route' => 'myEducation.store','method'=>'POST', 'class' => 'form-horizontal')) !!}
                   								@csrf
                   								{!! Form::hidden('employee_id',$data->id) !!}
          										<div class="modal-header">

@@ -543,6 +543,7 @@ class HumanResourcesController extends Controller
             'employee_id' => $request->input('employee_id'),
             'institution_name' => $request->input('institution_name'),
             'grade' => $request->input('degree'),
+            'degree' => $request->input('degree'),
             'major' => $request->input('major'),
             'gpa' => $request->input('gpa'),
         ]);
