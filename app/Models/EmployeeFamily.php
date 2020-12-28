@@ -19,5 +19,10 @@ class EmployeeFamily extends Model
     public function Parent()
     {
     	return $this->belongsTo(Employee::class,'employee_id');
+	}
+	
+	public function Employees()
+    {
+        return $this->belongsTo(Employee::class,'employee_id');
     }
 }

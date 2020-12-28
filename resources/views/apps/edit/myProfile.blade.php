@@ -54,7 +54,7 @@ Better Work Indonesia | Update My Data
 			    				</div>
 			    				<div class="form-group">
 			    					<label for="placeOb">Place Of Birth</label>
-			    					{!! Form::select('place_of_birth', $cities,old('place_of_birth'), array('class' => 'form-control')) !!}
+			    					{!! Form::text('place_of_birth', null, array('placeholder' => 'Last Name','class' => 'form-control')) !!}
 			    				</div>
 			    				<div class="form-group">
 			    					<label for="dateOb">Date Of Birth</label>

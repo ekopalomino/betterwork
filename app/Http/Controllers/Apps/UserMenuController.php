@@ -32,14 +32,15 @@ use Auth;
 use DB;
 use PDF;
 use Carbon\Carbon;
+use DateTime;
 
 class UserMenuController extends Controller
 {
     public function index()
     {
         /*Master Query*/
-        $getEmployee = Employee::with('Services')->where('id',Auth()->user()->employee_id)->first();
-        if($getEmployee->from == null) {
+        $getEmployee = Employee::where('id',Auth()->user()->employee_id)->first();
+        if($getEmployee == null) {
             return view('apps.pages.dashboard');
         } else {
             /*Query for Profile Card*/
@@ -164,13 +165,26 @@ class UserMenuController extends Controller
         return $pdf->download(''.$filename.'.pdf');
     }
 
-    public function profileEdit()
+    public function profileData()
     {
         $data = Employee::where('id',auth()->user()->employee_id)->first();
-        $cities = Location::pluck('city','city')->toArray();
+        
+        return view('apps.pages.myProfile',compact('data'));
+    }
+
+    public function familyData()
+    {
+        $data = Employee::where('id',auth()->user()->employee_id)->first();
+
+        return view('apps.pages.myFamily',compact('data'));
+    }
+
+    public function educationData()
+    {
+        $data = Employee::where('id',auth()->user()->employee_id)->first();
         $degrees  = DB::table('education_degree')->pluck('degree_name','degree_name')->toArray();
 
-        return view('apps.edit.myProfile',compact('data','cities','degrees'));
+        return view('apps.pages.myEducation',compact('data','degrees'));
     }
 
     public function leaveIndex()
@@ -186,33 +200,103 @@ class UserMenuController extends Controller
     public function leaveRequest(Request $request)
     {
     	$this->validate($request, [
-            'request_type' => 'required',
-            'request_period' => 'required',
+            'timeoff_type' => 'required',
             'notes' => 'required',
         ]);
-    	$dates = explode('-',$request->input('request_period'));
-        $amount = date_diff(date_create($dates[0]),date_create($dates[1]));
-        $diff = $amount->format('%d.%h');
-        
-        $data = EmployeeLeave::where('employee_id',Auth()->user()->employee_id)->where('period',Carbon::now()->year)->first();
-        $details = LeaveTransaction::create([
-            'leave_id' => $data->id,
-            'leave_type' => $request->input('request_type'),
-            'leave_start' => Carbon::parse($dates[0]),
-            'leave_end' => Carbon::parse($dates[1]),
-            'notes' => $request->input('notes'),
-            'amount_requested' => $diff,
-            'status_id' => 'b0a0c17d-e56a-41a7-bfb0-bd8bdc60a7be',
-        ]);
+        if($request->input('timeoff_type') == '4') {
+            if($request->input('request_type') == '1') {
+                $data = EmployeeLeave::where('employee_id',Auth()->user()->employee_id)->where('period',Carbon::now()->year)->first();
+                $details = LeaveTransaction::create([
+                    'leave_id' => $data->id,
+                    'timeoff_type' => $request->input('timeoff_type'),
+                    'leave_type' => 'After Break',
+                    'leave_start' => $request->input('date'),
+                    'leave_end' => $request->input('date'),
+                    'notes' => $request->input('notes'),
+                    'amount_requested' => '1',
+                    'status_id' => 'b0a0c17d-e56a-41a7-bfb0-bd8bdc60a7be',
+                ]);
 
-        $log = ''.($orig->leave_name).' Updated';
-         \LogActivity::addToLog($log);
-        $notification = array (
-            'message' => ''.($orig->leave_name).' Updated',
-            'alert-type' => 'success'
-        );
-    	
-    	return redirect()->route('myLeave.index')->with($notification);
+                $log = 'Time Off Request For'.($details->leave_start).' Created';
+                \LogActivity::addToLog($log);
+                $notification = array (
+                    'message' => 'Time Off Request For'.($details->leave_start).' Created',
+                    'alert-type' => 'success'
+                );
+                
+                return redirect()->route('myLeave.index')->with($notification);
+            } else {
+                if($request->input('time_before') == null) {
+                    $data = EmployeeLeave::where('employee_id',Auth()->user()->employee_id)->where('period',Carbon::now()->year)->first();
+                    $details = LeaveTransaction::create([
+                        'leave_id' => $data->id,
+                        'timeoff_type' => $request->input('timeoff_type'),
+                        'leave_type' => 'After Break',
+                        'leave_start' => $request->input('date'),
+                        'leave_end' => $request->input('date'),
+                        'schedule_out' => $request->input('time_after'),
+                        'notes' => $request->input('notes'),
+                        'amount_requested' => '0',
+                        'status_id' => 'b0a0c17d-e56a-41a7-bfb0-bd8bdc60a7be',
+                    ]);
+
+                    $log = 'Time Off Request For'.($details->leave_start).' Created';
+                    \LogActivity::addToLog($log);
+                    $notification = array (
+                        'message' => 'Time Off Request For'.($details->leave_start).' Created',
+                        'alert-type' => 'success'
+                    );
+                    
+                    return redirect()->route('myLeave.index')->with($notification);
+                } else {
+                    $data = EmployeeLeave::where('employee_id',Auth()->user()->employee_id)->where('period',Carbon::now()->year)->first();
+                    $details = LeaveTransaction::create([
+                        'leave_id' => $data->id,
+                        'timeoff_type' => $request->input('timeoff_type'),
+                        'leave_type' => 'Before Break',
+                        'leave_start' => $request->input('date'),
+                        'leave_end' => $request->input('date'),
+                        'schedule_in' => $request->input('time_before'),
+                        'notes' => $request->input('notes'),
+                        'amount_requested' => '0',
+                        'status_id' => 'b0a0c17d-e56a-41a7-bfb0-bd8bdc60a7be',
+                    ]);
+
+                    $log = 'Time Off Request For'.($details->leave_start).' Created';
+                    \LogActivity::addToLog($log);
+                    $notification = array (
+                        'message' => 'Time Off Request For'.($details->leave_start).' Created',
+                        'alert-type' => 'success'
+                    );
+                    
+                    return redirect()->route('myLeave.index')->with($notification);
+                }
+            }
+        } else {
+            $start = new DateTime($request->input('date_start'));
+            $end = new DateTime($request->input('date_end'));
+            $long = $start->diff($end);
+            $data = EmployeeLeave::where('employee_id',Auth()->user()->employee_id)->where('period',Carbon::now()->year)->first();
+            $details = LeaveTransaction::create([
+                'leave_id' => $data->id,
+                'timeoff_type' => $request->input('timeoff_type'),
+                'leave_type' => 'Before Break',
+                'leave_start' => $request->input('date_start'),
+                'leave_end' => $request->input('date_end'),
+                'notes' => $request->input('notes'),
+                'amount_requested' => $long->d,
+                'status_id' => 'b0a0c17d-e56a-41a7-bfb0-bd8bdc60a7be',
+            ]);
+
+            $log = 'Time Off Request For '.($details->leave_start).' Created';
+            \LogActivity::addToLog($log);
+            $notification = array (
+                'message' => 'Time Off Request For '.($details->leave_start).' Created',
+                'alert-type' => 'success'
+            );
+                    
+            return redirect()->route('myLeave.index')->with($notification);
+        }
     }
 
     public function reimbursIndex()

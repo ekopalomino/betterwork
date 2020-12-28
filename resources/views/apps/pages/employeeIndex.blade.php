@@ -36,7 +36,7 @@ Better Work Indonesia | Human Resources
 	                  		<div class="row">
 	                    		<div class="col-7">
 	                      			<h2 class="lead"><b>{{$employee->first_name}} {{$employee->last_name}}</b></h2>
-	                      			<p class="text-muted text-sm"><b>Available: 
+	                      			<p class="text-muted text-sm"><b>Branch: 
 	                      				@if(($employee->availability) == '2207ac0e-71a0-41ae-897b-b49efb016d6e')
 	                      					<span class="badge bg-success">{{$employee->Available->name}}</span>
 	                      				@else

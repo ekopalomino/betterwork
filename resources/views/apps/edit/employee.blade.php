@@ -52,10 +52,10 @@ Better Work Indonesia | Update Employee
 		            </div>
 		            <div class="col-10 col-sm-10">
 		            	<div class="tab-content" id="vert-tabs-tabContent">
-		            		<div class="tab-pane text-left fade show active" id="vert-tabs-profile" role="tabpanel" aria-labelledby="vert-tabs-profile-tab">
+		            		<div class="tab-pane text-left fade show active" id="vert-tabs-profile" id="profile" role="tabpanel" aria-labelledby="vert-tabs-profile-tab">
 		            			{!! Form::model($data, ['method' => 'POST','route' => ['employee.update', $data->id],'files'=> 'true']) !!}
                   				@csrf
-		            			<div class="form-group">
+                  				<div class="form-group">
 			    					<label for="employeeID">Employee ID</label>
 			    					{!! Form::text('employee_no', null, array('placeholder' => 'Employee ID','class' => 'form-control')) !!}
 			    				</div>
@@ -166,6 +166,9 @@ Better Work Indonesia | Update Employee
          							<div class="modal fade" id="family">
          								<div class="modal-dialog modal-lg">
          									<div class="modal-content">
+         										{!! Form::model($data, ['method' => 'POST','route' => ['employee.update', $data->id]]) !!}
+                  								@csrf
+                  								{!! Form::hidden('employee_id',$data->id) !!}
          										<div class="modal-header">
 								             		<h4 class="modal-title">New Family Member</h4>
 								              		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -173,9 +176,7 @@ Better Work Indonesia | Update Employee
 								              		</button>
 								            	</div>
 								            	<div class="modal-body">
-								            		{!! Form::model($data, ['method' => 'POST','route' => ['employee.update', $data->id]]) !!}
-                  									@csrf
-                  									{!! Form::hidden('employee_id',$data->id) !!}
+                  									<input type="hidden" name="family" value="">
 								            		<div class="form-group row">
 								                      	<label for="inputEmail" class="col-sm-2 col-form-label">First Name</label>
 								                        <div class="col-sm-10">
@@ -280,6 +281,9 @@ Better Work Indonesia | Update Employee
          							<div class="modal fade" id="education">
          								<div class="modal-dialog modal-lg">
          									<div class="modal-content">
+         										{!! Form::model($data, ['method' => 'POST','route' => ['employee.update', $data->id]]) !!}
+                  								@csrf
+                  								{!! Form::hidden('employee_id',$data->id) !!}
          										<div class="modal-header">
 								             		<h4 class="modal-title">New Education</h4>
 								              		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -287,10 +291,7 @@ Better Work Indonesia | Update Employee
 								              		</button>
 								            	</div>
 								            	<div class="modal-body">
-								            		{!! Form::model($data, ['method' => 'POST','route' => ['employee.update', $data->id]]) !!}
-                  									@csrf
-                  									{!! Form::hidden('employee_id',$data->id) !!}
-								            		<div class="form-group row">
+													<div class="form-group row">
 								                      	<label for="inputEmail" class="col-sm-2 col-form-label">Insitution Name</label>
 								                        <div class="col-sm-10">
 								                          	<input type="text" name="institution_name" placeholder="Insitution Name" class="form-control">
@@ -372,6 +373,9 @@ Better Work Indonesia | Update Employee
          							<div class="modal fade" id="training">
          								<div class="modal-dialog modal-lg">
          									<div class="modal-content">
+         										{!! Form::model($data, ['method' => 'POST','route' => ['employee.update', $data->id],'files'=> true]) !!}
+                  								@csrf
+                  								{!! Form::hidden('employee_id',$data->id) !!}
          										<div class="modal-header">
 								             		<h4 class="modal-title">New Training</h4>
 								              		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -379,10 +383,7 @@ Better Work Indonesia | Update Employee
 								              		</button>
 								            	</div>
 								            	<div class="modal-body">
-								            		{!! Form::model($data, ['method' => 'POST','route' => ['employee.update', $data->id],'files'=> true]) !!}
-                  									@csrf
-                  									{!! Form::hidden('employee_id',$data->id) !!}
-								            		<div class="form-group row">
+								               		<div class="form-group row">
 								                      	<label for="inputEmail" class="col-sm-2 col-form-label">Training Provider</label>
 								                        <div class="col-sm-10">
 								                        	<input type="text" name="training_provider" placeholder="Training Provider" class="form-control">
@@ -481,6 +482,9 @@ Better Work Indonesia | Update Employee
          							<div class="modal fade" id="services">
          								<div class="modal-dialog modal-lg">
          									<div class="modal-content">
+         										{!! Form::model($data, ['method' => 'POST','route' => ['employee.update', $data->id],'files'=> true]) !!}
+                  								@csrf
+                  								{!! Form::hidden('employee_id',$data->id) !!}
          										<div class="modal-header">
 								             		<h4 class="modal-title">New Record</h4>
 								              		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -488,9 +492,6 @@ Better Work Indonesia | Update Employee
 								              		</button>
 								            	</div> 
 								            	<div class="modal-body">
-								            		{!! Form::model($data, ['method' => 'POST','route' => ['employee.update', $data->id],'files'=> true]) !!}
-                  									@csrf
-                  									{!! Form::hidden('employee_id',$data->id) !!}
 								            		<div class="form-group row">
 								                      	<label class="col-sm-2 col-form-label">Position</label>
 								                        <div class="col-sm-10">

@@ -29,7 +29,10 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::get('help','Apps\UserMenuController@helpIndex')->name('help.index');
 	Route::get('report-problem','Apps\UserMenuController@supportIndex')->name('support.index');
 	/*User Sub Menu Route*/
-	Route::get('my-menu/update-profile','Apps\UserMenuController@profileEdit')->name('profile.edit');
+	Route::get('my-menu/update-profile/profile-data','Apps\UserMenuController@profileData')->name('profile.data');
+	Route::get('my-menu/update-profile/family-data','Apps\UserMenuController@familyData')->name('family.data');
+	Route::post('my-menu/update-profile/family-data/store','Apps\HumanResourcesController@familyCreate')->name('myFamily.store');
+	Route::get('my-menu/update-profile/education-data','Apps\UserMenuController@educationData')->name('education.data');
 	Route::post('my-menu/attendance-in','Apps\UserMenuController@clockIn')->name('attendanceIn.store');
 	Route::post('my-menu/attendance/task/edit','Apps\UserMenuController@taskEdit')->name('attendanceTask.update');
 	Route::post('my-menu/attendance-out','Apps\UserMenuController@clockOut')->name('attendanceOut.store');

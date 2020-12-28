@@ -85,8 +85,13 @@ class HumanResourcesController extends Controller
     {
         $grades = EmployeePosition::pluck('position_name','position_name')->toArray();
         $cities = City::orderBy('id','ASC')->pluck('city_name','city_name')->toArray();
+        $employees = User::orderBy('name','ASC')->pluck('name','employee_id')->toArray();
+        $grades = EmployeePosition::pluck('position_name','position_name')->toArray();
+        $organizations = Organization::orderBy('id','ASC')->pluck('name','id')->toArray();
+        $offices = Office::orderBy('id','ASC')->pluck('office_name','id')->toArray();
+
         
-        return view('apps.input.employee',compact('grades','cities'));
+        return view('apps.input.employeeNew',compact('grades','cities','employees','grades','organizations','offices'));
     }
 
     public function searchLocation(Request $request)
@@ -162,7 +167,18 @@ class HumanResourcesController extends Controller
             $leaves = EmployeeLeave::create([
                 'employee_id' => $result->id,
                 'period' => Carbon::now()->year,
-                'leave_amount' => '12',
+                'leave_amount' => '0',
+            ]);
+
+            $services = EmployeeService::create([
+                'employee_id' => $result->id,
+                'position' => $request->input('job_title'),
+                'org_id' => $request->input('org_id'),
+                'office_id' => $request->input('offices'),
+                'grade' => $request->input('position'),
+                'from' => $request->input('join_date'),
+                'salary' => $request->input('salary'),
+                'is_active' => '1'
             ]);
 
             $log = 'Employee '.($result->first_name).' '.($result->last_name). ' Created';
@@ -172,7 +188,7 @@ class HumanResourcesController extends Controller
                 'alert-type' => 'success'
             );
 
-            return redirect()->route('employee.edit',$result->id)->with($notification);
+            return redirect()->route('employee.index')->with($notification);
     }
 
     public function employeeEdit($id)
@@ -343,7 +359,7 @@ class HumanResourcesController extends Controller
                 'job_title' => 'required',
                 'salary' => 'required',
             ]);
-            
+
             if($request->hasFile('contract')) {
                 $uploadedFile = $request->file('contract');
                 $path = $uploadedFile->store('employee_contract');
@@ -451,6 +467,34 @@ class HumanResourcesController extends Controller
         
     }
 
+    public function familyCreate(Request $request)
+    {
+        $this->validate($request, [
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'relations' => 'required',
+            'mobile' => 'required',
+        ]);
+
+        $data = EmployeeFamily::create([
+            'employee_id' => $request->input('employee_id'),
+            'first_name' => $request->input('first_name'),
+            'last_name' => $request->input('last_name'),
+            'address' => $request->input('address'),
+            'relations' => $request->input('relations'),
+            'phone' => $request->input('phone'),
+            'mobile' => $request->input('mobile'),
+        ]);
+        $log = 'Employee '.($data->Employees->first_name).' '.($data->Employees->last_name). ' Create Family Data';
+        \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'Employee '.($data->Employees->first_name).' '.($data->Employees->last_name). ' Create Family Data',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->back()->with($notification);
+    }
+
     public function familyEdit($id) 
     {
         $data = EmployeeFamily::find($id);
@@ -480,6 +524,33 @@ class HumanResourcesController extends Controller
         \LogActivity::addToLog($log);
         $notification = array (
             'message' => 'Employee '.($data->first_name).' '.($data->last_name). ' Edited Family Data',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->back()->with($notification);
+    }
+
+    public function educationCreate(Request $request)
+    {
+        $this->validate($request, [
+            'institution_name' => 'required',
+            'degree' => 'required',
+            'major' => 'required',
+            'gpa' => 'required',
+        ]);
+
+        $data = EmployeeEducation::create([
+            'employee_id' => $request->input('employee_id'),
+            'institution_name' => $request->input('institution_name'),
+            'grade' => $request->input('degree'),
+            'major' => $request->input('major'),
+            'gpa' => $request->input('gpa'),
+        ]);
+
+        $log = 'Employee '.($data->Employees->first_name).' '.($data->Employees->last_name). ' Create Education Data';
+        \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'Employee '.($data->Employees->first_name).' '.($data->Employees->last_name). ' Create Education Data',
             'alert-type' => 'success'
         );
 

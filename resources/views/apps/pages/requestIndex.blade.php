@@ -54,7 +54,7 @@ Better Work Indonesia | Employee Request Approval
 								</td>
 								<td>
 									@if(($value->status_id) == 'b0a0c17d-e56a-41a7-bfb0-bd8bdc60a7be')
-									<a class="btn btn-xs btn-danger btn-sm modalMd" href="#" value="{{ action('Apps\HumanResourcesController@requestShow',['id'=>$value->id]) }}" data-toggle="modal" data-target="#modalMd"><i class="fas fa-search"></i>Show Data</a>
+									<a class="btn btn-xs btn-danger btn-sm modalLg" href="#" value="{{ action('Apps\HumanResourcesController@requestShow',['id'=>$value->id]) }}" title="Approve Time Off" data-toggle="modal" data-target="#modalLg"><i class="fas fa-search"></i></a>
 									@endif
 								</td>
 							</tr>

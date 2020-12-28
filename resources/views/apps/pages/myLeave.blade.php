@@ -1,17 +1,18 @@
 @extends('apps.layouts.main')
 @section('header.title')
-Better Work Indonesia | My Leave Request
+Better Work Indonesia | My Time Off Request
 @endsection
 @section('header.plugins')
 <link rel="stylesheet" href="{{ asset('bower_components/admin-lte/plugins/datatables-bs4/css/dataTables.bootstrap4.css') }}">
 <link rel="stylesheet" href="{{ asset('bower_components/admin-lte/plugins/daterangepicker/daterangepicker.css') }}">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
 @endsection
 @section('content')
 <section class="content-header">
 	<div class="container-fluid">
       	<div class="row mb-2">
        		<div class="col-sm-6">
-          		<h1>My Leave Request</h1>
+          		<h1>My Time Off Request</h1>
        		</div>
        	</div>
     </div>
@@ -37,24 +38,57 @@ Better Work Indonesia | My Leave Request
 									<div class="modal-body">
 										{!! Form::open(array('route' => 'myLeave.store','method'=>'POST', 'class' => 'form-horizontal')) !!}
 										@csrf
-										<label for="inputEmail" class="col-sm-12 col-form-label">Request Type</label>
-										<div class="col-sm-12">
-											{!! Form::select('request_type', [null=>'Please Select'] + $types,[], array('class' => 'form-control')) !!}
-										</div>
-										<label for="inputEmail" class="col-sm-12 col-form-label">Request Period</label>
-										<div class="col-sm-12">
-											<div class="input-group">
-												<div class="input-group-prepend">
-													<span class="input-group-text">
-														<i class="far fa-calendar-alt"></i>
-													</span>
-												</div>
-												<input type="text" name="request_period" class="form-control float-right" id="reservationtime">
+										<div class="form-group">
+											<label class="col-sm-12 col-form-label">Time Off Type</label>
+											<div class="col-sm-12">
+												{!! Form::select('timeoff_type', [null=>'Please Select'] + $types,[], array('class' => 'form-control','id'=>'timeoff_type')) !!}
 											</div>
 										</div>
-										<label for="inputEmail" class="col-sm-12 col-form-label">Reason</label>
-										<div class="col-sm-12">
-											{!! Form::textarea('notes', null, array('placeholder' => 'Leave Reason','class' => 'form-control')) !!}
+										<div class="form-group half-id 4">
+											<label class="col-sm-12 col-form-label">Request Type</label>
+											<div class="col-sm-12" >
+												<select name="request_type" class="form-control" >
+			                          				<option value="">Please Select</option>
+									                <option value="1">Full Day</option>
+									                <option value="2">Half Day</option>
+									            </select>
+									        </div>
+									    </div>
+									    <div class="form-group normal-id 1 2 3 5 6">
+											<label class="col-sm-12 col-form-label">Time Off Start</label>
+											<div class="col-sm-12">
+												{!! Form::date('date_start', '', array('id' => 'datepicker','class' => 'form-control')) !!}
+											</div>
+										</div>
+										<div class="form-group normal-id 1 2 3 5 6">
+											<label class="col-sm-12 col-form-label">Time Off End</label>
+											<div class="col-sm-12">
+												{!! Form::date('date_end', '', array('id' => 'datepicker','class' => 'form-control')) !!}
+											</div>
+										</div>
+										<div class="form-group half-id 4">
+											<label class="col-sm-12 col-form-label">When</label>
+											<div class="col-sm-12">
+												{!! Form::date('date', '', array('id' => 'datepicker','class' => 'form-control')) !!}
+											</div>
+										</div>
+										<div class="form-group half-id 4">
+											<div class="col-sm-12">
+												<label class="col-sm-12 col-form-label" >Schedule In - Half Day Before Break Leave</label>
+												<input class="timepicker form-control" type="text" name="time_before">
+											</div>
+										</div>
+										<div class="form-group half-id 4" >
+											<div class="col-sm-12">
+												<label class="col-sm-12 col-form-label" >Schedule Out - Half Day After Break Leave</label>
+												<input class="timepicker form-control" type="text" name="time_after">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-12 col-form-label">Reason</label>
+											<div class="col-sm-12">
+												{!! Form::textarea('notes', null, array('placeholder' => 'Leave Reason','class' => 'form-control')) !!}
+											</div>
 										</div>
 										{!! Form::hidden('employee_id', $getEmployee->id, array('class' => 'form-control')) !!}
 									</div>
@@ -86,9 +120,11 @@ Better Work Indonesia | My Leave Request
 								<thead>
 									<tr>
 										<th>No</th>
-										<th>Leave Type</th>
+										<th>Time Off Type</th>
 										<th>Leave Start</th>
 										<th>Leave End</th>
+										<th>Schedule In</th>
+										<th>Schedule Out</th>
 										<th>Status</th>
 										<th>Created At</th>
 										<th>Updated At</th>
@@ -98,9 +134,11 @@ Better Work Indonesia | My Leave Request
 									@foreach($details as $key=>$value)
 									<tr>
 										<td>{{ $key+1 }}</td>
-										<td></td>
-										<td>{{date("d F Y H:i",strtotime($value->leave_start)) }}</td>
-										<td>{{date("d F Y H:i",strtotime($value->leave_end)) }}</td>
+										<td>{{ $value->Types->leave_name }}</td>
+										<td>{{date("d F Y",strtotime($value->leave_start)) }}</td>
+										<td>{{date("d F Y",strtotime($value->leave_end)) }}</td>
+										<td>{{ $value->schedule_in}}</td>
+										<td>{{ $value->schedule_out }}</td>
 										<td>
 											@if(($value->status_id) == 'b0a0c17d-e56a-41a7-bfb0-bd8bdc60a7be')
 											<span class="badge badge-info">{{ $value->Statuses->name }}</span>
@@ -129,6 +167,25 @@ Better Work Indonesia | My Leave Request
 <script src="{{ asset('bower_components/admin-lte/plugins/datatables-bs4/js/dataTables.bootstrap4.js') }}"></script>
 <script src="{{ asset('bower_components/admin-lte/plugins/moment/moment.min.js') }}"></script>
 <script src="{{ asset('bower_components/admin-lte/plugins/daterangepicker/daterangepicker.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+<script>
+$('#timeoff_type').change(function() {
+	$("div.half-id").hide();
+  	$("div." + $(this).val()).show();
+});
+
+$(document).ready(function() {
+  	$('#timeoff_type').trigger('change');
+})
+$('#timeoff_type').change(function() {
+	$("div.normal-id").hide();
+  	$("div." + $(this).val()).show();
+});
+
+$(document).ready(function() {
+  	$('#timeoff_type').trigger('change');
+})
+</script>
 <script>
   $(function () {
     $("#example1").DataTable();
@@ -141,13 +198,9 @@ Better Work Indonesia | My Leave Request
       "autoWidth": false,
     });
   });
-  $('#reservationtime').daterangepicker({
-      timePicker: true,
-      timePickerIncrement: 1,
-      locale: {
-        format: 'MM/DD/YYYY HH:mm'
-      }
-    })
+  $('.timepicker').datetimepicker({
+        format: 'HH:mm'
+    }); 
 </script>
 <script>
     function ConfirmDelete()

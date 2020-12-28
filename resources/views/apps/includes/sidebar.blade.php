@@ -7,7 +7,7 @@
     <div class="sidebar">
     	<div class="user-panel mt-3 pb-3 mb-3 d-flex">
 	        <div class="image">
-				<img src="employees/{{Auth::user()->picture}}" class="img-circle elevation-2" alt="User Image">
+				<img src="employees/{{Auth::user()->avatar}}" class="img-circle elevation-2" alt="User Image">
 				<!--<img src="http://betterwork.local/public/employees/{{Auth::user()->avatar}}" class="img-circle elevation-2" alt="User Image">-->
 	        </div>
 	        <div class="info">
@@ -17,7 +17,7 @@
 	    <nav class="mt-2">
 	    	<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 			@if(\Route::is(['userHome.index','myLeave.index','myReimburs.index','myGrievance.index','myGrievance.create','myGrievance.edit','myGrievance.show','myAppraisal.index','myAppraisal.create',
-			'myAppraisal.detail','myDevelopment.create','myAppraisal.show','myAppraisal.edit','myTraining.index','profile.edit','myAttendance.index','myBulletin.index','myKnowledge.index','myAttendance.search','myBulletin.show',
+			'myAppraisal.detail','myDevelopment.create','myAppraisal.show','myAppraisal.edit','myTraining.index','profile.data','family.data','education.data','myAttendance.index','myBulletin.index','myKnowledge.index','myAttendance.search','myBulletin.show',
 			'myGrievancePublished.index','myGrievancePublished.show']))
 			<li class="nav-item {{set_open('userHome.index') }}">
 	    		<a href="{{ route('userHome.index') }}" class="nav-link {{set_active('userHome.index') }}">
@@ -28,26 +28,49 @@
 				</a>
 			</li>
 			<li class="nav-item has-treeview {{set_open(['myLeave.index','myReimburs.index','myGrievance.index','myGrievance.create','myGrievance.edit','myGrievance.show','myAppraisal.index',
-			'myAppraisal.create','myAppraisal.detail','myDevelopment.create','myAppraisal.edit','myAppraisal.show','myAppraisal.edit','myTraining.index','profile.edit']) }}">
+			'myAppraisal.create','myAppraisal.detail','myDevelopment.create','myAppraisal.edit','myAppraisal.show','myAppraisal.edit','myTraining.index','profile.data','family.data','education.data']) }}">
 				<a href="#" class="nav-link {{set_active(['myLeave.index','myReimburs.index','myGrievance.index','myGrievance.create','myGrievance.edit','myGrievance.show','myAppraisal.index',
-				'myAppraisal.create','myAppraisal.detail','myDevelopment.create','myAppraisal.show','myAppraisal.edit','myTraining.index','profile.edit']) }}">
+				'myAppraisal.create','myAppraisal.detail','myDevelopment.create','myAppraisal.show','myAppraisal.edit','myTraining.index','profile.data','family.data','education.data']) }}">
 					<i class="nav-icon fas fa-user"></i>
 					<p>
 						My Menu
 						<i class="right fas fa-angle-left"></i>
 					</p>
 				</a>
-				<ul class="nav nav-treeview ">
-					<li class="nav-item">
-						<a href="{{ route('profile.edit') }}" class="nav-link {{set_active('profile.edit') }}">
+				<ul class="nav nav-treeview">
+					<li class="nav-item has-treeview {{set_open(['profile.data','family.data','education.data']) }}">
+						<a href="#" class="nav-link {{set_active('profile.data') }}">
 							<i class="far fa-circle nav-icon"></i>
-							<p>Update Data</p>
+							<p>
+								Update Data
+								<i class="right fas fa-angle-left"></i>
+							</p>
 						</a>
+						<ul class="nav nav-treeview ">
+							<li class="nav-item">
+								<a href="{{ route('profile.data') }}" class="nav-link {{set_active('profile.data') }}">
+									<i class="far fa-circle nav-icon"></i>
+									<p>Personal Data</p>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="{{ route('family.data') }}" class="nav-link {{set_active('family.data') }}">
+									<i class="far fa-circle nav-icon"></i>
+									<p>Family Data</p>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="{{ route('education.data') }}" class="nav-link {{set_active('education.data') }}">
+									<i class="far fa-circle nav-icon"></i>
+									<p>Education Data</p>
+								</a>
+							</li>
+						</ul>
 					</li>
 					<li class="nav-item">
 						<a href="{{ route('myLeave.index') }}" class="nav-link {{set_active('myLeave.index') }}">
 							<i class="far fa-circle nav-icon"></i>
-							<p>Leave Request</p>
+							<p>Time Off</p>
 						</a>
 					</li>
 					<li class="nav-item">

@@ -49,7 +49,7 @@ Better Work Indonesia | User Dashboard
                     			<b>This Year Leave (Days)</b> <a class="float-right">{{$getBasicProfile->leave_amount}}</a>
                   			</li>
                   			<li class="list-group-item">
-                    			<b>This Year Leave Taken (Days)</b> <a class="float-right">{{$getBasicProfile->leave_usage}}</a>
+                    			<b>This Year Leave Taken (Days)</b> <a class="float-right">{{$getBasicProfile->leave_remaining}}</a>
                   			</li>
                 		</ul>
                 	</div>

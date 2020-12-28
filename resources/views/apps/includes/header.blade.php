@@ -5,7 +5,7 @@
 		</li>
 		<li class="nav-item d-none d-sm-inline-block">
 			<a href="{{route('userHome.index') }}" class="nav-link {{set_active(['userHome.index','myLeave.index','myReimburs.index','myGrievance.index','myGrievance.create','myGrievance.edit','myGrievance.show',
-			'myAppraisal.index','myAppraisal.create','myAppraisal.detail','myDevelopment.create','myAppraisal.show','myAppraisal.edit','myTraining.index','profile.edit','myBulletin.index','myKnowledge.index',
+			'myAppraisal.index','myAppraisal.create','myAppraisal.detail','myDevelopment.create','myAppraisal.show','myAppraisal.edit','myTraining.index','profile.data','family.data','education.data','myBulletin.index','myKnowledge.index',
 			'myAttendance.index','myAttendance.search','myBulletin.show','myGrievancePublished.index','myGrievancePublished.show']) }}">Home</a>
 		</li>
 		@can('Access Configuration')
