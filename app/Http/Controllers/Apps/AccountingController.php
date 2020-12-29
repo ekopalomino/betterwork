@@ -11,7 +11,7 @@ use iteos\Models\CoaCategory;
 use iteos\Models\AccountStatement;
 use iteos\Models\JournalEntry;
 use iteos\Models\AssetCategory;
-use iteos\Models\AssetManagement;
+use iteos\Models\AssetManagements;
 use iteos\Models\AssetDepreciation;
 use iteos\Models\DepreciationMethod;
 use iteos\Models\BudgetPeriod;
@@ -602,8 +602,8 @@ class AccountingController extends Controller
     }
 
     public function assetManagementIndex()
-    {
-        $data = AssetManagement::orderBy('name','ASC')->get();
+    { 
+        $data = AssetManagements::orderBy('name','ASC')->get();
         $categories = AssetCategory::orderBy('category_name','ASC')->pluck('category_name','id')->toArray();
         $depreciations = DepreciationMethod::orderBy('id','ASC')->pluck('name','id')->toArray();
         return view('apps.pages.assetManagement',compact('data','categories','depreciations'));

@@ -23,7 +23,9 @@ Better Work Indonesia | Account Transaction
 		<div class="col-12">
 			<div class="card card-info card-outline">
 				<div class="card-header">
+					@isset($bank->id)
 					<div class="btn-group">
+
 						<button type="button" class="btn btn-sm btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">New</button>
 						<div class="dropdown-menu" role="menu">
 							<a class="dropdown-item" href="{{ route('spend.create') }}">Spend Money</a>
@@ -44,6 +46,7 @@ Better Work Indonesia | Account Transaction
 							<a class="dropdown-item" href="#">Bank Statement</a>
 						</div>
 					</div>
+					@endisset
 				</div>
 				<div class="card-body">
 					<div class="row">

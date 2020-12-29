@@ -21,7 +21,7 @@ Better Work Indonesia | Import Bank Statement
 <section class="content">
     <div class="callout callout-info">
         <h5><i class="fas fa-info"></i> Note:</h5>
-        Use <a class="btn btn-danger btn-xs" href="{{ asset('apps/public/BankStatement.xlsx') }}">This</a> excel file to upload statement data. Only input number into the sheet, not formula.<br>
+        Use <a class="btn btn-danger btn-xs" href="{{ asset('BankStatement.xlsx') }}">This</a> excel file to upload statement data. Only input number into the sheet, not formula.<br>
         Upload maximum of 100 bank statement lines at a time.
     </div>
     <div class="row">

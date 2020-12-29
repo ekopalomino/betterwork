@@ -5,7 +5,7 @@ namespace iteos\Models;
 use iteos\Traits\Uuid;
 use Illuminate\Database\Eloquent\Model;
 
-class AssetManagement extends Model
+class AssetManagements extends Model
 {
     use Uuid;
 

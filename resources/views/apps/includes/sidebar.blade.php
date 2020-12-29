@@ -144,8 +144,8 @@
 			</li>
 			@endif
 			@can('Access Configuration') 
-			@if(\Route::is(['application.index','config.index','position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','assetCat.index','user.index','logs.index','role.index',
-			'role.create','role.edit','bankAcc.index','organization.index','office.index','accSet.index','holiday.index','hrSet.index']))
+			@if(\Route::is(['application.index','config.index','position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','user.index','logs.index','role.index',
+			'role.create','role.edit','organization.index','office.index','accSet.index','holiday.index','hrSet.index']))
 			@can('Disable')
 			<li class="nav-item">
 				<a href="{{ route('application.index') }}" class="nav-link {{set_active('application.index') }}">
@@ -281,73 +281,6 @@
 							</li>
 						</ul>
 					</li>
-				</ul>
-			</li>
-			@endcan
-			@can('Create Accounting Master Data')
-			<li class="nav-item has-treeview {{set_open(['coaCat.index','assetCat.index','bankAcc.index','accSet.index']) }}">
-				<a href="#" class="nav-link {{set_active(['coaCat.index','assetCat.index','bankAcc.index','accSet.index']) }}">
-					<i class="nav-icon fas fa-calculator"></i>
-					<p>
-						Accounting
-						<i class="right fas fa-angle-left"></i>
-					</p>
-				</a>
-				<ul class="nav nav-treeview">
-					<li class="nav-item has-treeview {{set_open(['coaCat.index','assetCat.index','bankAcc.index','accSet.index']) }}">
-						<a href="#" class="nav-link {{set_active(['coaCat.index','assetCat.index','bankAcc.index','accSet.index']) }}">
-							<i class="far fa-circle nav-icon"></i>
-							<p>Master Data <i class="right fas fa-angle-left"></i></p>
-						</a>
-						<ul class="nav nav-treeview">
-							<li class="nav-item">
-								<a href="{{ route('assetCat.index') }}" class="nav-link {{set_active('assetCat.index') }}">
-									<i class="far fa-circle nav-icon"></i>
-									<p>Asset Category</p>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a href="{{ route('bankAcc.index') }}" class="nav-link {{set_active('bankAcc.index') }}">
-									<i class="far fa-circle nav-icon"></i>
-									<p>Bank Account</p>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a href="{{ route('coaCat.index') }}" class="nav-link {{set_active('coaCat.index') }}">
-									<i class="far fa-circle nav-icon"></i>
-									<p>Chart of Account</p>
-								</a>
-							</li>
-						</ul>
-					</li>
-					@can('disable')
-					<li class="nav-item">
-						<a href="{{ route('accSet.index') }}" class="nav-link {{set_active('accSet.index') }}">
-							<i class="far fa-circle nav-icon"></i>
-							<p>Setting <i class="right fas fa-angle-left"></i></p>
-						</a>
-						<ul class="nav nav-treeview">
-							<li class="nav-item">
-								<a href="" class="nav-link ">
-									<i class="far fa-circle nav-icon"></i>
-									<p>Default Account</p>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a href="" class="nav-link ">
-									<i class="far fa-circle nav-icon"></i>
-									<p>Depreciation Method</p>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a href="" class="nav-link ">
-									<i class="far fa-circle nav-icon"></i>
-									<p>Budget Method</p>
-								</a>
-							</li>
-						</ul>
-					</li>
-					@endcan
 				</ul>
 			</li>
 			@endcan
@@ -546,7 +479,7 @@
 			@endcan
 			@can('Access Accounting')
 			@if(\Route::is(['accounting.index','bank.index','accountTransaction.index','accTransaction.index','accTransaction.create','spend.create','receive.create','bankStatement.index','account.show','asset.index',
-			'journal.index','journal.report','budget.index','budgetDetail.create','budgetDetail.edit','statToAcc.index','asset.show','coaCat.index','bankStatement.import','statToAcc.index']))
+			'journal.index','journal.report','budget.index','budgetDetail.create','budgetDetail.edit','statToAcc.index','asset.show','coaCat.index','bankStatement.import','statToAcc.index','bankAcc.index','assetCat.index','asset.index']))
 			<li class="nav-item has-treeview {{set_open(['accountTransaction.index','spend.create','receive.create','bankStatement.import','statToAcc.index']) }}">
 				<a href="#" class="nav-link {{set_active(['accountTransaction.index','spend.create','receive.create','bankStatement.import','statToAcc.index']) }}">
 					<p>
@@ -632,7 +565,7 @@
 					</li>
 				</ul>
 			</li>
-			<li class="nav-item has-treeview {{set_open(['coaCat.index']) }}">
+			<li class="nav-item has-treeview {{set_open(['coaCat.index','bankAcc.index','assetCat.index','asset.index']) }}">
 				<a href="#" class="nav-link">
 					<p>
 						Accounting
@@ -766,14 +699,14 @@
 							</li>
 						</ul>
 					</li>
-					<li class="nav-item has-treeview {{set_open(['coaCat.index']) }}">
+					<li class="nav-item has-treeview {{set_open(['coaCat.index','bankAcc.index','assetCat.index','asset.index']) }}">
 						<a href="" class="nav-link ">
 							<i class="nav-icon fas fa-tools"></i>
 							<p>Advance</p>
 							<i class="right fas fa-angle-left"></i>
 						</a>
 						<ul class="nav nav-treeview">
-							<li class="nav-item ">
+							<li class="nav-item {{set_open(['asset.index']) }}">
 								<a href="" class="nav-link ">
 									<p>Advance Features
 										<i class="right fas fa-angle-left"></i>
@@ -793,7 +726,7 @@
 										</a>
 									</li>
 									<li class="nav-item ">
-										<a href="" class="nav-link ">
+										<a href="{{ route('asset.index') }}" class="nav-link {{set_active('asset.index') }}">
 											<i class="far fa-circle nav-icon"></i>
 											<p>Fixed Assets</p>
 										</a>
@@ -812,7 +745,8 @@
 									</li>
 								</ul>
 							</li>
-							<li class="nav-item has-treeview {{set_open(['coaCat.index']) }}">
+							@can('Create Accounting Master Data')
+							<li class="nav-item has-treeview {{set_open(['coaCat.index','bankAcc.index','assetCat.index']) }}">
 								<a href="" class="nav-link ">
 									<p>Advance Settings
 										<i class="right fas fa-angle-left"></i>
@@ -826,9 +760,21 @@
 										</a>
 									</li>
 									<li class="nav-item ">
+										<a href="{{ route('assetCat.index') }}" class="nav-link {{set_active('assetCat.index') }}">
+											<i class="far fa-circle nav-icon"></i>
+											<p>Asset Category</p>
+										</a>
+									</li>
+									<li class="nav-item ">
 										<a href="{{ route('coaCat.index') }}" class="nav-link {{set_active('coaCat.index') }}">
 											<i class="far fa-circle nav-icon"></i>
 											<p>Chart of Account</p>
+										</a>
+									</li>
+									<li class="nav-item ">
+										<a href="{{ route('bankAcc.index') }}" class="nav-link {{set_active('bankAcc.index') }}">
+											<i class="far fa-circle nav-icon"></i>
+											<p>Bank Account</p>
 										</a>
 									</li>
 									<li class="nav-item ">
@@ -845,6 +791,7 @@
 									</li>
 								</ul>
 							</li>
+							@endcan
 						</ul>
 					</li>
 				</ul>
