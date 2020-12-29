@@ -38,13 +38,13 @@ Better Work Indonesia | Employee Leave Detail
 						</tr>
 					</thead>
 					<tbody>
-						@foreach($data->Details => $detail)
+						@foreach($data as $index => $detail)
 						<tr>
 							<td>{{date("d F Y",strtotime($detail->leave_start)) }}</td>
 							<td>{{date("d F Y",strtotime($detail->leave_end)) }}</td>
 							<td>{{date("d F Y H:i",strtotime($detail->schedule_in)) }}</td>
 							<td>{{date("d F Y H:i",strtotime($detail->schedule_out)) }}</td>
-							<td></td>
+							<td>{{ $detail->Types }}</td>
 							<td>{{ $detail->leave_usage }}</td>
 							<td>{{ $detail->leave_remaining }}</td>
 						</tr>
