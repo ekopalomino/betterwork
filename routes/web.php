@@ -301,6 +301,7 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 
 	Route::get('accounting/reports/journal-report','Apps\ReportsController@journalReportIndex')->name('journal.index');
 	Route::post('accounting/reports/journal-report/show','Apps\ReportsController@journalReportShow')->name('journal.report');
+	Route::get('accounting/reports/trial-balance','Apps\ReportsController@trialBalance')->name('trial.index');
 
 	Route::get('help/user-menu/reset-password','Apps\HelpController@resetPassIndex')->name('resetPass.index');
 	Route::get('help/user-menu/update-profile','Apps\HelpController@updateProfile')->name('updateProfile.index');

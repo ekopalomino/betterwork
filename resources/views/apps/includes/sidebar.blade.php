@@ -485,30 +485,30 @@
 			@endcan
 			@can('Access Accounting')
 			@if(\Route::is(['accounting.index','bank.index','accountTransaction.index','accTransaction.index','accTransaction.create','spend.create','receive.create','bankStatement.index','account.show','asset.index',
-			'journal.index','journal.report','budget.index','budgetDetail.create','budgetDetail.edit','statToAcc.index','asset.show','coaCat.index','bankStatement.import','statToAcc.index','bankAcc.index','assetCat.index','asset.index']))
-			<li class="nav-item has-treeview {{set_open(['accountTransaction.index','spend.create','receive.create','bankStatement.import','statToAcc.index']) }}">
-				<a href="#" class="nav-link {{set_active(['accountTransaction.index','spend.create','receive.create','bankStatement.import','statToAcc.index']) }}">
+			'journal.index','journal.report','budget.index','budgetDetail.create','budgetDetail.edit','statToAcc.index','asset.show','coaCat.index','bankStatement.import','statToAcc.index','bankAcc.index','assetCat.index','asset.index','bankStatement.index','account.show','trial.index']))
+			<li class="nav-item has-treeview {{set_open(['accountTransaction.index','spend.create','receive.create','bankStatement.import','statToAcc.index','bankStatement.index','account.show']) }}">
+				<a href="#" class="nav-link {{set_active(['accountTransaction.index','spend.create','receive.create','bankStatement.import','statToAcc.index','bankStatement.index','account.show']) }}">
 					<p>
 						Bank
 						<i class="right fas fa-angle-left"></i>
 					</p>
 				</a>
 				<ul class="nav nav-treeview">
-					<li class="nav-item {{set_open(['accountTransaction.index']) }}">
+					<li class="nav-item {{set_open(['accountTransaction.index','bankStatement.index','account.show']) }}">
 						<a href="" class="nav-link {{set_active(['accountTransaction.index']) }}">
 							<i class="nav-icon fas fa-search"></i>
 							<p>Find</p>
 							<i class="right fas fa-angle-left"></i>
 						</a>
-						<ul class="nav nav-treeview {{set_open(['accountTransaction.index']) }}">
-							<li class="nav-item {{set_active(['accountTransaction.index']) }}">
-								<a href="{{ route('accountTransaction.index') }}" class="nav-link {{set_active(['accountTransaction.index']) }}">
+						<ul class="nav nav-treeview {{set_open(['accountTransaction.index','account.show']) }}">
+							<li class="nav-item {{set_active(['accountTransaction.index','account.show']) }}">
+								<a href="{{ route('accountTransaction.index') }}" class="nav-link {{set_active(['accountTransaction.index','account.show']) }}">
 									<i class="far fa-circle nav-icon"></i>
 									<p>Account Transactions</p>
 								</a>
 							</li>
-							<li class="nav-item ">
-								<a href="" class="nav-link ">
+							<li class="nav-item {{set_active(['bankStatement.index']) }}">
+								<a href="{{ route('bankStatement.index') }}" class="nav-link {{set_active(['bankStatement.index']) }}">
 									<i class="far fa-circle nav-icon"></i>
 									<p>Bank Statements</p>
 								</a>
@@ -573,7 +573,7 @@
 					</li>
 				</ul>
 			</li>
-			<li class="nav-item has-treeview {{set_open(['coaCat.index','bankAcc.index','assetCat.index','asset.index']) }}">
+			<li class="nav-item has-treeview {{set_open(['coaCat.index','bankAcc.index','assetCat.index','asset.index','journal.index','journal.report','trial.index']) }}">
 				<a href="#" class="nav-link">
 					<p>
 						Accounting
@@ -581,8 +581,8 @@
 					</p>
 				</a>
 				<ul class="nav nav-treeview">
-					<li class="nav-item ">
-						<a href="" class="nav-link ">
+					<li class="nav-item {{set_open(['journal.index','journal.report','trial.index']) }}">
+						<a href="" class="nav-link {{set_active(['journal.index','journal.report','trial.index']) }}">
 							<i class="nav-icon fas fa-table"></i>
 							<p>Reports</p>
 							<i class="right fas fa-angle-left"></i>
@@ -641,8 +641,8 @@
 									@endcan
 								</ul>
 							</li>
-							<li class="nav-item ">
-								<a href="" class="nav-link ">
+							<li class="nav-item {{set_open(['journal.index','journal.report','trial.index']) }}">
+								<a href="" class="nav-link {{set_active(['journal.index','journal.report','trial.index']) }}">
 									<p>Accounting
 										<i class="right fas fa-angle-left"></i>
 									</p>
@@ -654,14 +654,14 @@
 											<p>General Ledger</p>
 										</a>
 									</li>
-									<li class="nav-item ">
-										<a href="" class="nav-link ">
+									<li class="nav-item {{set_open(['journal.index','journal.report','trial.index']) }}">
+										<a href="{{ route('journal.index') }}" class="nav-link {{set_active(['journal.index','journal.report']) }}">
 											<i class="far fa-circle nav-icon"></i>
 											<p>Journal Report</p>
 										</a>
 									</li>
-									<li class="nav-item ">
-										<a href="" class="nav-link ">
+									<li class="nav-item {{set_open(['trial.index']) }}">
+										<a href="{{ route('trial.index') }}" class="nav-link {{set_active(['trial.index']) }}">
 											<i class="far fa-circle nav-icon"></i>
 											<p>Trial Balance</p>
 										</a>

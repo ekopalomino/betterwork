@@ -77,7 +77,7 @@ Better Work Indonesia | Create Receive Money
 										<td>{!! Form::select('account[]', [null=>'Please Select'] + $coas,[], array('class' => 'form-control','required')) !!}</td>
 										<td>{!! Form::number('tax[]', null, array('placeholder' => 'Tax Rate','class' => 'form-control','required')) !!}</td>
 										<td>{!! Form::file('file[]', null, array('placeholder' => 'File','class' => 'form-control')) !!}</td>
-										<td><button type="button" name="add" id="add" class="btn btn-success">Add</button></td>
+										<td><button type="button" name="add" id="add" class="btn btn-sm btn-success">Add</button></td>
 									</tr>
 								</tbody>
 							</table>
@@ -85,7 +85,7 @@ Better Work Indonesia | Create Receive Money
 					</div>
 					<br>
 					<div class="form-group">
-				    	<button type="submit" class="btn btn-sm btn-info">Submit</button>
+				    	<button type="submit" class="btn btn-sm btn-success">Submit</button>
 		                <a button type="button" class="btn btn-sm btn-danger" href="{{ route('accountTransaction.index') }}">Cancel</a>
 		            </div>
 		            {!! Form::close() !!}

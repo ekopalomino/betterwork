@@ -9,6 +9,8 @@ use iteos\Models\EmployeeAttendance;
 use iteos\Models\AttendanceTransaction;
 use iteos\Models\EmployeeSalary;
 use iteos\Models\AccountStatement;
+use iteos\Models\JournalEntry;
+use iteos\Models\CoaCategory;
 use Carbon\Carbon;
 use DB;
 use Route;
@@ -152,6 +154,16 @@ class ReportsController extends Controller
         /*$data = DB::table('account_statements')->where('status_id','f6e41f5d-0f6e-4eca-a141-b6c7ce34cae6')->select('trans_group','transaction_date','account_id','bank_id','payee','amount','trans_type')->groupBy('trans_group','transaction_date','account_id','bank_id','payee','amount','trans_type')->get();*/
         
         return view('apps.reports.journalReport',compact('data','dateStart','dateEnd'));
+    }
+
+    public function trialBalance()
+    {
+        $data = CoaCategory::join('chart_of_accounts','chart_of_accounts.account_category','coa_categories.id')
+                             ->join('journal_entries','journal_entries.account_name','chart_of_accounts.id')
+                             ->orderBy('coa_categories.id')
+                             ->get();
+        
+        return view('apps.reports.trialBalance',compact('data'));
     }
 
 

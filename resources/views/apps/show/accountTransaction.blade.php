@@ -26,7 +26,7 @@ Better Work Indonesia | Transaction Detail
 					<div class="row">
 						<div class="col-12">
 							<h4>
-								<img src="{{ asset('public/assets/img/logo.png') }}" style="opacity: .8">
+								<img src="{{ asset('assets/img/logo.png') }}" style="opacity: .8">
 								<small class="float-right">
 									@if(($data->status_id) == '1f2967a5-9a88-4d44-a66b-5339c771aca0')
 									{!! Form::open(['method' => 'POST','route' => ['accTransaction.checked', $data->id],'style'=>'display:inline','onsubmit' => 'return ConfirmDelete()']) !!}

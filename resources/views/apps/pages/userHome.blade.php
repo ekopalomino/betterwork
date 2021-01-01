@@ -254,7 +254,7 @@ Better Work Indonesia | User Dashboard
 									<thead>
 										<tr>
 											<th style="width: 10px">#</th>
-											<th>Avatar</th>
+											<th>Photo</th>
 											<th>Name</th>
 											<th>Position</th>
 										</tr>
