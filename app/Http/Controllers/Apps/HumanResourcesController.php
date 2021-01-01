@@ -18,6 +18,7 @@ use iteos\Models\EmployeeAttendance;
 use iteos\Models\AttendanceTransaction;
 use iteos\Models\EmployeeReimbursment;
 use iteos\Models\EmployeeLeave;
+use iteos\Models\Division;
 use iteos\Models\LeaveTransaction;
 use iteos\Models\City;
 use iteos\Models\EmployeeSalary;
@@ -89,9 +90,10 @@ class HumanResourcesController extends Controller
         $grades = EmployeePosition::pluck('position_name','position_name')->toArray();
         $organizations = Organization::orderBy('id','ASC')->pluck('name','id')->toArray();
         $offices = Office::orderBy('id','ASC')->pluck('office_name','id')->toArray();
+        $divisions = Division::orderBy('id','ASC')->pluck('division_name','id')->toArray();
 
         
-        return view('apps.input.employeeNew',compact('grades','cities','employees','grades','organizations','offices'));
+        return view('apps.input.employeeNew',compact('grades','cities','employees','grades','organizations','offices','divisions'));
     }
 
     public function searchLocation(Request $request)
@@ -175,6 +177,7 @@ class HumanResourcesController extends Controller
                 'position' => $request->input('job_title'),
                 'org_id' => $request->input('org_id'),
                 'office_id' => $request->input('offices'),
+                'division_id' => $request->input('division_id'),
                 'grade' => $request->input('position'),
                 'from' => $request->input('join_date'),
                 'salary' => $request->input('salary'),
@@ -199,8 +202,9 @@ class HumanResourcesController extends Controller
         $degrees  = DB::table('education_degree')->pluck('degree_name','degree_name')->toArray();
         $organizations = Organization::orderBy('id','ASC')->pluck('name','id')->toArray();
         $offices = Office::orderBy('id','ASC')->pluck('office_name','id')->toArray();
+        $divisions = Division::orderBy('id','ASC')->pluck('division_name','id')->toArray();
         
-        return view('apps.edit.employee',compact('grades','data','employees','degrees','organizations','offices'));
+        return view('apps.edit.employee',compact('grades','data','employees','degrees','organizations','offices','divisions'));
     }
 
     public function employeeUpdate(Request $request,$id)
@@ -523,20 +527,125 @@ class HumanResourcesController extends Controller
         return redirect()->back()->with($notification);
     }
 
+    public function serviceStore(Request $request)
+    {
+        $this->validate($request, [
+            'position' => 'required',
+            'division_id' => 'required',
+            'report_to' => 'required',
+            'grade' => 'required',
+            'from' => 'required|date',
+        ]);
+
+        if($request->hasFile('contract')) {
+            $uploadedFile = $request->file('contract');
+            $path = $uploadedFile->store('employee_contract');
+            if(($request->input('to')) === null) {
+                $EmployeeService->create([
+                    'position' => $request->input('position'),
+                    'division_id' => $request->input('division_id'),
+                    'report_to' => $request->input('report_to'),
+                    'grade' => $request->input('grade'),
+                    'from' => $request->input('from'),
+                    'salary' => $request->input('salary'),
+                    'is_active' => '1',
+                    'contract' => $path,
+                    'employee_id' => $request->input('employee)id'),
+                ]);
+
+                $log = 'Employee Service Data Created';
+                \LogActivity::addToLog($log);
+                $notification = array (
+                    'message' => 'Employee Service Data Created',
+                    'alert-type' => 'success'
+                );
+
+                return redirect()->back()->with($notification);
+            } else {
+                $EmployeeService->create([
+                    'position' => $request->input('position'),
+                    'division_id' => $request->input('division_id'),
+                    'report_to' => $request->input('report_to'),
+                    'grade' => $request->input('grade'),
+                    'from' => $request->input('from'),
+                    'to' => $request->input('to'),
+                    'salary' => $request->input('salary'),
+                    'is_active' => '0',
+                    'contract' => $path,
+                    'employee_id' => $request->input('employee)id'),
+                ]);
+                
+                $log = 'Employee Service Data Created';
+                \LogActivity::addToLog($log);
+                $notification = array (
+                    'message' => 'Employee Service Data Created',
+                    'alert-type' => 'success'
+                );
+
+                return redirect()->back()->with($notification);
+            }
+        } else {
+            if(($request->input('to')) === null) {
+                $EmployeeService->create([
+                    'position' => $request->input('position'),
+                    'division_id' => $request->input('division_id'),
+                    'report_to' => $request->input('report_to'),
+                    'grade' => $request->input('grade'),
+                    'from' => $request->input('from'),
+                    'salary' => $request->input('salary'),
+                    'is_active' => '1',
+                    'employee_id' => $request->input('employee)id'),
+                ]);
+
+                $log = 'Employee Service Data Created';
+                \LogActivity::addToLog($log);
+                $notification = array (
+                    'message' => 'Employee Service Data Created',
+                    'alert-type' => 'success'
+                );
+
+                return redirect()->back()->with($notification);
+            } else {
+                $EmployeeService->create([
+                    'position' => $request->input('position'),
+                    'division_id' => $request->input('division_id'),
+                    'report_to' => $request->input('report_to'),
+                    'grade' => $request->input('grade'),
+                    'from' => $request->input('from'),
+                    'to' => $request->input('to'),
+                    'salary' => $request->input('salary'),
+                    'is_active' => '0',
+                    'employee_id' => $request->input('employee)id'),
+                ]);
+
+                $log = 'Employee Service Data Created';
+                \LogActivity::addToLog($log);
+                $notification = array (
+                    'message' => 'Employee Service Data Created',
+                    'alert-type' => 'success'
+                );
+
+                return redirect()->back()->with($notification);
+            }
+        }
+    }
+
     public function serviceEdit($id) 
     {
         $data = EmployeeService::find($id);
         $grades = EmployeePosition::pluck('position_name','position_name')->toArray();
         $employees = Employee::select(DB::raw("CONCAT(first_name,' ',last_name) AS name"),'id')->pluck('name','id')->toArray();
+        $divisions = Division::orderBy('id','ASC')->pluck('division_name','id')->toArray();
 
-        return view('apps.edit.employeeService',compact('data','grades','employees'))->renderSections()['content'];
+        return view('apps.edit.employeeService',compact('data','grades','employees','divisions'))->renderSections()['content'];
     }
 
     public function serviceUpdate(Request $request,$id)
     {
         $this->validate($request, [
             'position' => 'required',
-            'report_to' => 'required',
+            'division_id' => 'required',
+            'grade' => 'required',
             'from' => 'required|date',
         ]);
 
@@ -547,8 +656,9 @@ class HumanResourcesController extends Controller
             if(($request->input('to')) === null) {
                 $data->update([
                     'position' => $request->input('position'),
+                    'division_id' => $request->input('division_id'),
                     'report_to' => $request->input('report_to'),
-                    'grade' => $request->input('job_title'),
+                    'grade' => $request->input('grade'),
                     'from' => $request->input('from'),
                     'salary' => $request->input('salary'),
                     'is_active' => '1',
@@ -557,8 +667,9 @@ class HumanResourcesController extends Controller
             } else {
                 $data->update([
                     'position' => $request->input('position'),
+                    'division_id' => $request->input('division_id'),
                     'report_to' => $request->input('report_to'),
-                    'grade' => $request->input('job_title'),
+                    'grade' => $request->input('grade'),
                     'from' => $request->input('from'),
                     'to' => $request->input('to'),
                     'salary' => $request->input('salary'),
@@ -571,8 +682,9 @@ class HumanResourcesController extends Controller
             if(($request->input('to')) === null) {
                 $data->update([
                     'position' => $request->input('position'),
+                    'division_id' => $request->input('division_id'),
                     'report_to' => $request->input('report_to'),
-                    'grade' => $request->input('job_title'),
+                    'grade' => $request->input('grade'),
                     'from' => $request->input('from'),
                     'salary' => $request->input('salary'),
                     'is_active' => '1',
@@ -581,8 +693,9 @@ class HumanResourcesController extends Controller
             } else {
                 $data->update([
                     'position' => $request->input('position'),
+                    'division_id' => $request->input('division_id'),
                     'report_to' => $request->input('report_to'),
-                    'grade' => $request->input('job_title'),
+                    'grade' => $request->input('grade'),
                     'from' => $request->input('from'),
                     'to' => $request->input('to'),
                     'salary' => $request->input('salary'),
@@ -592,10 +705,10 @@ class HumanResourcesController extends Controller
             }
         }
 
-        $log = 'Employee '.($data->first_name).' '.($data->last_name). ' Edited Service Data';
+        $log = 'Employee Service Data Updated';
         \LogActivity::addToLog($log);
         $notification = array (
-            'message' => 'Employee '.($data->first_name).' '.($data->last_name). ' Edited Service Data',
+            'message' => 'Employee Service Data Updated',
             'alert-type' => 'success'
         );
 
@@ -652,8 +765,12 @@ class HumanResourcesController extends Controller
 
     public function requestIndex()
     {
-        $data = LeaveTransaction::with('parent')->orderBy('created_at','DESC')->get(); 
-
+        $data = LeaveTransaction::join('employee_leaves','employee_leaves.id','leave_transactions.leave_id')
+                                  ->join('employee_services','employee_services.employee_id','employee_leaves.employee_id')
+                                  ->where('employee_services.report_to',auth()->user()->employee_id)
+                                  ->orWhere('employee_services.division_id','1')
+                                  ->get();
+        
     	return view('apps.pages.requestIndex',compact('data'));
     }
 
@@ -802,8 +919,8 @@ class HumanResourcesController extends Controller
 
     public function softGoalCreate($id)
     {
-        $data = AppraisalTarget::with('Data.Appraisal')->find($id);
-
+        $data = EmployeeAppraisal::find($id);
+        
         return view('apps.input.employeeSoftGoal',compact('data'))->renderSections()['content'];
     }
 
@@ -815,10 +932,10 @@ class HumanResourcesController extends Controller
             'notes' => $request->input('notes'),
         ]);
 
-        $log = 'KPI Target For'.($data->Employees->first_name).' '.($data->Employees->last_name). ' Deleted';
+        $log = 'Soft Goal Added';
         \LogActivity::addToLog($log);
         $notification = array (
-            'message' => 'KPI Target For'.($data->Employees->first_name).' '.($data->Employees->last_name). ' Deleted',
+            'message' => 'Soft Goal Added',
             'alert-type' => 'success'
         );
 
@@ -867,7 +984,7 @@ class HumanResourcesController extends Controller
 
     public function additionalRoleCreate($id)
     {
-        $data = AppraisalTarget::with('Data.Appraisal')->find($id);
+        $data = EmployeeAppraisal::find($id);
 
         return view('apps.input.employeeAdditionalRole',compact('data'))->renderSections()['content'];
     }
@@ -880,7 +997,7 @@ class HumanResourcesController extends Controller
             'details' => $request->input('details'),
         ]);
 
-        $log = 'KPI Target For'.($data->Employees->first_name).' '.($data->Employees->last_name). ' Deleted';
+        $log = 'Additional Role Added';
         \LogActivity::addToLog($log);
         $notification = array (
             'message' => 'KPI Target For'.($data->Employees->first_name).' '.($data->Employees->last_name). ' Deleted',
@@ -1301,7 +1418,7 @@ class HumanResourcesController extends Controller
                 return redirect()->route('salary.index')->with($notification);
             } else {
                 $notification = array (
-                    'message' => 'Please check your salary import file.',
+                    'message' => 'Data error found on your file. Please check your salary import file.',
                     'alert-type' => 'error'
                 );
                 return redirect()->route('salary.index')->with($notification);

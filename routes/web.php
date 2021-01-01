@@ -132,6 +132,11 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::get('configuration/holiday/edit/{id}','Apps\ConfigurationController@holidayEdit')->name('holiday.edit');
 	Route::post('configuration/holiday/update/{id}','Apps\ConfigurationController@holidayUpdate')->name('holiday.update');
 
+	Route::get('configuration/division','Apps\ConfigurationController@divisionIndex')->name('division.index');
+	Route::post('configuration/division/store','Apps\ConfigurationController@divisionStore')->name('division.store');
+	Route::get('configuration/division/edit/{id}','Apps\ConfigurationController@divisionEdit')->name('division.edit');
+	Route::post('configuration/division/update/{id}','Apps\ConfigurationController@divisionUpdate')->name('division.update');
+
 	Route::get('configuration/office','Apps\ConfigurationController@officeIndex')->name('office.index');
 	Route::get('configuration/office/cities/get_by_province', 'Apps\ConfigurationController@get_cities')->name('officeCity.index');
 	Route::post('configuration/office/store','Apps\ConfigurationController@officeStore')->name('office.store');
@@ -178,6 +183,7 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::post('human-resources/employee/training/store','Apps\HumanResourcesController@trainingCreate')->name('employeeTraining.store');
 	Route::get('human-resources/employee/training/edit/{id}','Apps\HumanResourcesController@trainingEdit')->name('employeeTraining.edit');
 	Route::post('human-resources/employee/training/update/{id}','Apps\HumanResourcesController@trainingUpdate')->name('employeeTraining.update');
+	Route::post('human-resources/employee/service/store','Apps\HumanResourcesController@serviceStore')->name('employeeService.store');
 	Route::get('human-resources/employee/service/edit/{id}','Apps\HumanResourcesController@serviceEdit')->name('employeeService.edit');
 	Route::post('human-resources/employee/service/update/{id}','Apps\HumanResourcesController@serviceUpdate')->name('employeeService.update');
 	

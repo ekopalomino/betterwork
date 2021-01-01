@@ -7,7 +7,7 @@
     <div class="sidebar">
     	<div class="user-panel mt-3 pb-3 mb-3 d-flex">
 	        <div class="image">
-				<img src="employees/{{Auth::user()->avatar}}" class="img-circle elevation-2" alt="User Image">
+				<img src="/employees/{{Auth::user()->avatar}}" class="img-circle elevation-2" alt="User Image">
 				<!--<img src="http://betterwork.local/public/employees/{{Auth::user()->avatar}}" class="img-circle elevation-2" alt="User Image">-->
 	        </div>
 	        <div class="info">
@@ -145,7 +145,7 @@
 			@endif
 			@can('Access Configuration') 
 			@if(\Route::is(['application.index','config.index','position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','user.index','logs.index','role.index',
-			'role.create','role.edit','organization.index','office.index','accSet.index','holiday.index','hrSet.index']))
+			'role.create','role.edit','organization.index','office.index','accSet.index','holiday.index','hrSet.index','division.index']))
 			@can('Disable')
 			<li class="nav-item">
 				<a href="{{ route('application.index') }}" class="nav-link {{set_active('application.index') }}">
@@ -190,8 +190,8 @@
 				</ul>
 			</li>
 			@can('Create HR Master Data')
-			<li class="nav-item has-treeview {{set_open(['position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','organization.index','office.index','holiday.index','hrSet.index']) }}">
-				<a href="#" class="nav-link {{set_active(['position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','organization.index','office.index','holiday.index','hrSet.index']) }}">
+			<li class="nav-item has-treeview {{set_open(['position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','organization.index','office.index','holiday.index','hrSet.index','division.index']) }}">
+				<a href="#" class="nav-link {{set_active(['position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','organization.index','office.index','holiday.index','hrSet.index','division.index']) }}">
 					<i class="nav-icon fas fa-users"></i>
 					<p>
 						Human Resources
@@ -199,8 +199,8 @@
 					</p>
 				</a>
 				<ul class="nav nav-treeview ">
-					<li class="nav-item has-treeview {{set_open(['position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','organization.index','office.index','holiday.index']) }}">
-						<a href="#" class="nav-link {{set_active(['position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','organization.index','office.index','holiday.index']) }}">
+					<li class="nav-item has-treeview {{set_open(['position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','organization.index','office.index','holiday.index','division.index']) }}">
+						<a href="#" class="nav-link {{set_active(['position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','organization.index','office.index','holiday.index','division.index']) }}">
 							<i class="far fa-circle nav-icon"></i>
 							<p>Master Data <i class="right fas fa-angle-left"></i></p>
 						</a>
@@ -221,6 +221,12 @@
 								<a href="{{ route('organization.index') }}" class="nav-link {{set_active('organization.index') }}">
 									<i class="far fa-circle nav-icon"></i>
 									<p>Organization Chart</p>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="{{ route('division.index') }}" class="nav-link {{set_active('division.index') }}">
+									<i class="far fa-circle nav-icon"></i>
+									<p>Division</p>
 								</a>
 							</li>
 							<li class="nav-item">
@@ -538,17 +544,19 @@
 						</a>
 						<ul class="nav nav-treeview">
 							<li class="nav-item {{set_open(['statToAcc.index']) }}">
-								<a href="" class="nav-link {{set_active(['statToAcc.index']) }}">
+								<a href="{{ route('statToAcc.index') }}" class="nav-link {{set_active(['statToAcc.index']) }}">
 									<i class="far fa-circle nav-icon"></i>
 									<p>Reconcile Account</p>
 								</a>
 							</li>
+							@can('disable')
 							<li class="nav-item ">
 								<a href="" class="nav-link ">
 									<i class="far fa-circle nav-icon"></i>
 									<p>Bank Rules</p>
 								</a>
 							</li>
+							@endcan
 							<li class="nav-item ">
 								<a href="" class="nav-link ">
 									<i class="far fa-circle nav-icon"></i>
@@ -599,6 +607,7 @@
 											<p>Budget Manager</p>
 										</a>
 									</li>
+									@can('disable')
 									<li class="nav-item ">
 										<a href="" class="nav-link ">
 											<i class="far fa-circle nav-icon"></i>
@@ -629,6 +638,7 @@
 											<p>Statement of Cash Flow</p>
 										</a>
 									</li>
+									@endcan
 								</ul>
 							</li>
 							<li class="nav-item ">
@@ -664,6 +674,7 @@
 									</li>
 								</ul>
 							</li>
+							@can('disable')
 							<li class="nav-item ">
 								<a href="" class="nav-link ">
 									<p>Fixed Assets
@@ -697,6 +708,7 @@
 									</li>
 								</ul>
 							</li>
+							@endcan
 						</ul>
 					</li>
 					<li class="nav-item has-treeview {{set_open(['coaCat.index','bankAcc.index','assetCat.index','asset.index']) }}">
@@ -713,12 +725,14 @@
 									</p>
 								</a>
 								<ul class="nav nav-treeview">
+									@can('disable')
 									<li class="nav-item ">
 										<a href="" class="nav-link ">
 											<i class="far fa-circle nav-icon"></i>
 											<p>Find and Recode</p>
 										</a>
 									</li>
+									@endcan
 									<li class="nav-item ">
 										<a href="" class="nav-link ">
 											<i class="far fa-circle nav-icon"></i>
@@ -731,6 +745,7 @@
 											<p>Fixed Assets</p>
 										</a>
 									</li>
+									@can('disable')
 									<li class="nav-item ">
 										<a href="" class="nav-link ">
 											<i class="far fa-circle nav-icon"></i>
@@ -743,6 +758,7 @@
 											<p>History and Notes</p>
 										</a>
 									</li>
+									@endcan
 								</ul>
 							</li>
 							@can('Create Accounting Master Data')
@@ -753,12 +769,14 @@
 									</p>
 								</a>
 								<ul class="nav nav-treeview">
+									@can('disable')
 									<li class="nav-item ">
 										<a href="" class="nav-link ">
 											<i class="far fa-circle nav-icon"></i>
 											<p>Financial Settings</p>
 										</a>
 									</li>
+									@endcan
 									<li class="nav-item ">
 										<a href="{{ route('assetCat.index') }}" class="nav-link {{set_active('assetCat.index') }}">
 											<i class="far fa-circle nav-icon"></i>
@@ -777,6 +795,7 @@
 											<p>Bank Account</p>
 										</a>
 									</li>
+									@can('disable')
 									<li class="nav-item ">
 										<a href="" class="nav-link ">
 											<i class="far fa-circle nav-icon"></i>
@@ -789,6 +808,7 @@
 											<p>Fixed Assets Settings</p>
 										</a>
 									</li>
+									@endcan
 								</ul>
 							</li>
 							@endcan

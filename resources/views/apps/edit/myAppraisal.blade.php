@@ -42,16 +42,16 @@ Better Work Indonesia | Update Appraisal Target
                 			<thead>
                 				<tr>
                 					<th>Target</th>
-                					<th style="width: 110px;">Job Weight</th>
+                					<th>Job Weight</th>
 									<th>Progress</th>
-									<th style="width: 100px;"></th>
+									<th></th>
                 				</tr>
                 			</thead>
                 			<tbody>
                 				@foreach($detail->Target as $item)
                 				<tr>
                 					<td>{{ $item->target }}</td>
-                					<td style="width: 110px;">{{ $item->job_weight }}</td>
+                					<td>{{ $item->job_weight }}</td>
 									<td>
 										@foreach($item->Child as $real)
 										<ul>
@@ -59,7 +59,7 @@ Better Work Indonesia | Update Appraisal Target
 										</ul>
 										@endforeach
 									</td>
-									<td style="width: 100px;">
+									<td>
 										<button type="button" href="#" value="{{ action('Apps\UserMenuController@targetEdit',['id'=>$item->id]) }}" class="btn btn-xs btn-success modalLg" data-toggle="modal" data-target="#modalLg">
 											<i class="fa fa-edit"></i>
 										</button>

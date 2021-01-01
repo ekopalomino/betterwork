@@ -5,7 +5,7 @@
 		<div class="col-12">
 			{!! Form::open(array('route' => 'softGoal.store','method'=>'POST')) !!}
 			@csrf
-			<label for="inputEmail" class="col-sm-12 col-form-label">Required Competency(s)</label>
+			<label class="col-sm-12 col-form-label">Required Competency(s)</label>
                 <div class="col-sm-12">
                     <select name="competency" class="form-control">
                     	<option value="0">Please Select</option>
@@ -16,14 +16,14 @@
 						<option value="04d751d7-6da3-4a0f-b561-7dd3fefe6915">Collaboration</option>
 					</select>
                 </div>
-            <label for="inputEmail" class="col-sm-12 col-form-label">Notes</label>
+            <label class="col-sm-12 col-form-label">Notes</label>
                 <div class="col-sm-12">
                     {!! Form::textarea('notes', null, array('placeholder' => 'Job Weight','class' => 'form-control')) !!}
-					{!! Form::hidden('appraisal_id', $data->appraisal_id, array('class' => 'form-control','readonly')) !!}
+					{!! Form::hidden('appraisal_id', $data->id, array('class' => 'form-control','readonly')) !!}
                 </div>
-			<div class="modal-footer justify-content-between">
-                <button type="close" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button id="register" type="submit" class="btn btn-primary">Save changes</button>
+			<div class="modal-footer">
+                <button type="close" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+                <button id="register" type="submit" class="btn btn-sm btn-success">Save changes</button>
             </div>
             {!! Form::close() !!}
         </div>

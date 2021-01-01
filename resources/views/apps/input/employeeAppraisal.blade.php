@@ -34,20 +34,18 @@ Better Work Indonesia | Employee Appraisal Data
                 			<thead>
                 				<tr>
                 					<th>Target</th>
-                					<th style="width: 110px;">Job Weight</th>
-									<th style="width:50px;"></th>
+                					<th>Job Weight</th>
+									<th></th>
 								</tr>
                 			</thead>
                 			<tbody>
                 				@foreach($detail->Target as $item)
                 				<tr>
                 					<td>{{ $item->target }}</td>
-                					<td style="width: 110px;">{{ $item->job_weight }}</td>
-									<td style="width:50px;">
-										<button type="button" href="#" value="{{ action('Apps\HumanResourcesController@targetChange',['id'=>$item->id]) }}" class="btn btn-xs btn-success modalLg" data-toggle="modal" data-target="#modalLg">
-											<i class="fa fa-edit"></i>
-										</button>
-										{!! Form::open(['method' => 'POST','route' => ['appraisalTarget.destroy', $item->id],'style'=>'dropdown-item','onsubmit' => 'return ConfirmSuspend()']) !!}
+                					<td>{{ $item->job_weight }}</td>
+									<td>
+										<a class="btn btn-xs btn-info modalLg" href="#" title="Edit Target" value="{{ action('Apps\HumanResourcesController@targetChange',['id'=>$item->id]) }}" data-toggle="modal" data-target="#modalLg"><i class="fa fa-edit"></i></a>
+										{!! Form::open(['method' => 'POST','route' => ['appraisalTarget.destroy', $item->id],'style'=>'display:inline','onsubmit' => 'return ConfirmSuspend()']) !!}
 										{!! Form::button('<i class="fa fa-times-circle"></i>',['type'=>'submit','class' => 'btn btn-xs btn-danger']) !!}
 										{!! Form::close() !!}
 									</td>
@@ -63,18 +61,18 @@ Better Work Indonesia | Employee Appraisal Data
 		<div class="card card-primary card-outline">
 			<div class="card-body">
 				<h5>Soft Goal 
-					<button type="button" href="#" value="{{ action('Apps\HumanResourcesController@softGoalCreate',['id'=>$data->id]) }}" class="btn btn-xs btn-success modalLg" data-toggle="modal" data-target="#modalLg">
+					<button type="button" href="#" title="Add Soft Goal" value="{{ action('Apps\HumanResourcesController@softGoalCreate',['id'=>$data->id]) }}" class="btn btn-xs btn-danger modalLg" data-toggle="modal" data-target="#modalLg">
 						<i class="fa fa-edit"></i>
 					</button>
 				</h5>
-				<div class="row">
+				<div class="row"> 
                 	<div class="col-md-12">
                 		<table id="salary" class="table table-bordered table-hover">
                 			<thead>
                 				<tr>
                 					<th>Required Competency(s)</th>
                 					<th>Notes/Comment</th>
-									<th style="width:50px;"></th>
+									<th></th>
 								</tr>
                 			</thead>
                 			<tbody>
@@ -82,11 +80,9 @@ Better Work Indonesia | Employee Appraisal Data
                 				<tr>
                 					<td>{{ $goal->Competent->name }}</td>
 									<td>{{ $goal->notes }}</td>
-									<td style="width:50px;">
-										<button type="button" href="#" value="{{ action('Apps\HumanResourcesController@softGoalEdit',['id'=>$goal->id]) }}" class="btn btn-xs btn-success modalLg" data-toggle="modal" data-target="#modalLg">
-											<i class="fa fa-edit"></i>
-										</button>
-										{!! Form::open(['method' => 'POST','route' => ['softGoal.destroy', $goal->id],'style'=>'dropdown-item','onsubmit' => 'return ConfirmSuspend()']) !!}
+									<td>
+										<a class="btn btn-xs btn-info modalLg" href="#" title="Edit Soft Goal" value="{{ action('Apps\HumanResourcesController@softGoalEdit',['id'=>$goal->id]) }}" data-toggle="modal" data-target="#modalLg"><i class="fa fa-edit"></i></a>
+										{!! Form::open(['method' => 'POST','route' => ['softGoal.destroy', $goal->id],'style'=>'display:inline','onsubmit' => 'return ConfirmSuspend()']) !!}
 										{!! Form::button('<i class="fa fa-times-circle"></i>',['type'=>'submit','class' => 'btn btn-xs btn-danger']) !!}
 										{!! Form::close() !!}
 									</td>
@@ -101,7 +97,7 @@ Better Work Indonesia | Employee Appraisal Data
 		<div class="card card-primary card-outline">
 			<div class="card-body">
 				<h5>Additional Role
-					<button type="button" href="#" value="{{ action('Apps\HumanResourcesController@additionalRoleCreate',['id'=>$data->id]) }}" class="btn btn-xs btn-success modalLg" data-toggle="modal" data-target="#modalLg">
+					<button type="button" href="#" title="Add Additional Role" value="{{ action('Apps\HumanResourcesController@additionalRoleCreate',['id'=>$data->id]) }}" class="btn btn-xs btn-danger modalLg" data-toggle="modal" data-target="#modalLg">
 						<i class="fa fa-edit"></i>
 					</button>
 				</h5>
@@ -112,7 +108,7 @@ Better Work Indonesia | Employee Appraisal Data
                 				<tr>
                 					<th>Task</th>
                 					<th>Job Detail</th>
-									<th style="width:50px;"></th>
+									<th></th>
 								</tr>
                 			</thead>
                 			<tbody>
@@ -120,11 +116,9 @@ Better Work Indonesia | Employee Appraisal Data
                 				<tr>
                 					<td>{{ $role->task }}</td>
 									<td>{{ $role->details }}</td>
-									<td style="width:50px;">
-										<button type="button" href="#" value="{{ action('Apps\HumanResourcesController@additionalRoleEdit',['id'=>$role->id]) }}" class="btn btn-xs btn-success modalLg" data-toggle="modal" data-target="#modalLg">
-											<i class="fa fa-edit"></i>
-										</button>
-										{!! Form::open(['method' => 'POST','route' => ['additionalRole.destroy', $role->id],'style'=>'dropdown-item','onsubmit' => 'return ConfirmSuspend()']) !!}
+									<td>
+										<a class="btn btn-xs btn-info modalLg" href="#" title="Edit Additional Role" value="{{ action('Apps\HumanResourcesController@additionalRoleEdit',['id'=>$role->id]) }}" data-toggle="modal" data-target="#modalLg"><i class="fa fa-edit"></i></a>
+										{!! Form::open(['method' => 'POST','route' => ['additionalRole.destroy', $role->id],'style'=>'display:inline','onsubmit' => 'return ConfirmSuspend()']) !!}
 										{!! Form::button('<i class="fa fa-times-circle"></i>',['type'=>'submit','class' => 'btn btn-xs btn-danger']) !!}
 										{!! Form::close() !!}
 									</td>

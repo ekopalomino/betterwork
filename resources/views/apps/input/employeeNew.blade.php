@@ -127,16 +127,20 @@ Better Work Indonesia | Create Employee Data
 						   	<div class="custom-file">
 	               				<input type="file" class="custom-file-input" id="picture" name="picture">
 	               				<label class="custom-file-label" for="picture">Choose Photo</label>
-	            			</div>
+	            			</div> 
 	            		</div>
 			    	</div>
 			    	<div class="form-group">
-			    		<label for="maritalStatus">Position *</label>
+			    		<label for="maritalStatus">Grade *</label>
 			    		{!! Form::select('position', [null=>'Please Select'] + $grades,[], array('class' => 'form-control')) !!}
 			    	</div>
 			    	<div class="form-group">
-			    		<label for="maritalStatus">Job Title *</label>
+			    		<label for="maritalStatus">Position *</label>
 			    		{!! Form::text('job_title', null, array('placeholder' => 'Email','class' => 'form-control')) !!}
+			    	</div>
+			    	<div class="form-group">
+			    		<label for="maritalStatus">Division *</label>
+			    		{!! Form::select('division_id', [null=>'Please Select'] + $divisions,[], array('class' => 'form-control')) !!}
 			    	</div>
 			    	<div class="form-group">
 			    		<label for="maritalStatus">Organization *</label>

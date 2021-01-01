@@ -163,12 +163,12 @@ Better Work Indonesia | Employee Appraisal Data
 			<textarea class="textarea" name="comment" placeholder="Place some text here"
 				style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">
 			</textarea>
-			<button type="submit" class="btn btn-info">Submit</button>
+			<button type="submit" class="btn btn-sm btn-success">Submit</button>
 			{!! Form::close() !!}
 		</div>
 		@endif
-		{!! Form::open(['method' => 'POST','route' => ['appraisal.done', $data->id]]) !!}
-        {!! Form::button('<a>Close Appraisal</a>',['type'=>'submit','class' => 'btn btn-danger']) !!}
+		{!! Form::open(['method' => 'POST','route' => ['appraisal.done', $data->id],'style'=>'display:inline']) !!}
+        {!! Form::button('<a>Close Appraisal</a>',['type'=>'submit','class' => 'btn btn-sm btn-danger']) !!}
         {!! Form::close() !!}
 	</div>
 </section>

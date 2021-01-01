@@ -35,21 +35,14 @@ Better Work Indonesia | Employee Appraisal
 						<!--<td><img src="http://betterwork.local/public/employees/{{ $value->Parent->picture }}" class="img-circle elevation-2" title="{{$value->Parent->first_name}} 
 							{{$value->Parent->last_name}}" style="width: 50px; height: 50px;">
 						</td>-->
-						<td><img src="http://betterwork.iteos.tech/public/employees/{{ $value->Parent->picture }}" class="img-circle elevation-2" title="{{$value->Parent->first_name}} 
+						<td><img src="http://betterwork.local/employees/{{ $value->Parent->picture }}" class="img-circle elevation-2" title="{{$value->Parent->first_name}} 
 							{{$value->Parent->last_name}}" style="width: 50px; height: 50px;">
 						</td>
 						<td>{{ $value->Statuses->name }}</td>
 						<td>
-							<div class="btn-group">
-								<button type="button" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									Action
-								</button>
-								<div class="dropdown-menu" role="menu">
-									<a class="dropdown-item" href="{{ route('appraisal.show',$value->id) }}">View Appraisal</a>
-									<a class="dropdown-item" href="{{ route('appraisal.edit',$value->id) }}">Edit Appraisal</a>
-									<a class="dropdown-item" href="{{ route('appraisal.close',$value->id) }}">Close Appraisal</a>
-								</div>
-							</div>
+							<a class="btn btn-xs btn-info" href="{{ route('appraisal.show',$value->id) }}" title="View Data"><i class="fa fa-search"></i></a>
+							<a class="btn btn-xs btn-danger" href="{{ route('appraisal.edit',$value->id) }}" title="Update"><i class="far fa-edit"></i></a>
+							<a class="btn btn-xs btn-danger" href="{{ route('appraisal.close',$value->id) }}" title="Close Appraisal"><i class="far fa-times-circle"></i></a>
 						</td>
 					</tr>
 					@endforeach

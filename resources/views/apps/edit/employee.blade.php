@@ -482,7 +482,7 @@ Better Work Indonesia | Update Employee
          							<div class="modal fade" id="services">
          								<div class="modal-dialog modal-lg">
          									<div class="modal-content">
-         										{!! Form::model($data, ['method' => 'POST','route' => ['employee.update', $data->id],'files'=> true]) !!}
+         										{!! Form::open(array('route' => 'employeeService.store','method'=>'POST', 'class' => 'form-horizontal')) !!}
                   								@csrf
                   								{!! Form::hidden('employee_id',$data->id) !!}
          										<div class="modal-header">
@@ -493,7 +493,7 @@ Better Work Indonesia | Update Employee
 								            	</div> 
 								            	<div class="modal-body">
 								            		<div class="form-group row">
-								                      	<label class="col-sm-2 col-form-label">Position</label>
+								                      	<label class="col-sm-2 col-form-label">Grade</label>
 								                        <div class="col-sm-10">
 								                          {!! Form::select('position', [null=>'Please Select'] + $grades,[], array('class' => 'form-control')) !!}
 								                        </div>
@@ -505,9 +505,15 @@ Better Work Indonesia | Update Employee
 								                        </div>
 								                    </div>
 								                    <div class="form-group row">
-								                      	<label for="inputEmail" class="col-sm-2 col-form-label">Job Title</label>
+								                      	<label for="inputEmail" class="col-sm-2 col-form-label">Position</label>
 								                        <div class="col-sm-10">
 								                          {!! Form::text('job_title', null, array('placeholder' => 'Job Title','class' => 'form-control')) !!}
+								                        </div>
+								                    </div>
+								                    <div class="form-group row">
+								                      	<label for="inputEmail" class="col-sm-2 col-form-label">Division</label>
+								                        <div class="col-sm-10">
+								                          {!! Form::select('division_id', [null=>'Please Select'] + $divisions,[], array('class' => 'form-control')) !!}
 								                        </div>
 								                    </div>
 													<div class="form-group row">
@@ -566,9 +572,10 @@ Better Work Indonesia | Update Employee
 				            		<table id="example2" class="table table-bordered table-hover">
 				            			<thead>
 					            			<tr>
-					            				<th>Position</th>
+					            				<th>Grade</th>
 					            				<th>Report To</th>
-					            				<th>Job Title</th>
+					            				<th>Position</th>
+					            				<th>Division</th>
 					            				<th>From</th>
 					            				<th>To</th>
 					            				<th>Net Salary</th>
@@ -579,13 +586,18 @@ Better Work Indonesia | Update Employee
 					            		<tbody>
 					            			@foreach($data->Services as $value)
 					            			<tr>
-					            				<td>{{$value->position}}</td>
+					            				<td>{{$value->grade}}</td>
 					            				<td>
 					            					@if(!empty($value->report_to))
 					            					{{$value->Reporting->first_name}}
 					            					@endif
 					            				</td>
-					            				<td>{{$value->grade}}</td>
+					            				<td>{{$value->position}}</td>
+					            				<td>
+					            					@if(($value->division_id) != 0)
+					            					{{$value->Divisions->division_name}}
+					            					@endif
+					            				</td>
 					            				<td>{{date("d F Y",strtotime($value->from)) }}</td>
 					            				<td>
 					            					@if(!empty($value->to))

@@ -20,6 +20,7 @@ use iteos\Models\Office;
 use iteos\Models\Province;
 use iteos\Models\City;
 use iteos\Models\Holiday;
+use iteos\Models\Division;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Hash;
@@ -106,6 +107,60 @@ class ConfigurationController extends Controller
         $data->delete();
 
         return redirect()->route('position.index')->with($notification);
+    }
+
+    public function divisionIndex()
+    {
+        $data = Division::orderBy('id','ASC')->get();
+
+    	return view('apps.pages.division',compact('data'));
+    }
+
+    public function divisionStore(Request $request)
+    {
+        $this->validate($request, [
+            'division_name' => 'required',
+        ]);
+
+        $data = Division::create([
+            'division_name' => $request->input('division_name'),
+        ]);
+
+        $log = 'Division '.($data->division_name).' Created';
+         \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'Division '.($data->division_name).' Created',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('division.index')->with($notification);
+    }
+
+    public function divisionEdit($id)
+    {
+        $data = Division::find($id);
+
+        return view('apps.edit.division',compact('data'))->renderSections()['content'];
+    }
+
+    public function divisionUpdate(Request $request,$id)
+    {
+        $this->validate($request, [
+            'division_name' => 'required',
+        ]);
+        $orig = Division::find($id);
+        $data = $orig->update([
+            'division_name' => $request->input('division_name'),
+        ]);
+
+        $log = 'Division '.($orig->division_name).' Updated';
+         \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'Division '.($orig->position_name).' Updated',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('division.index')->with($notification);
     }
 
     public function leaveTypeIndex()

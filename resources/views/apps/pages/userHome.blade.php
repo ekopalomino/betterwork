@@ -84,13 +84,13 @@ Better Work Indonesia | User Dashboard
 												{!! Form::open(array('route' => 'attendanceIn.store','method'=>'POST')) !!}
 												@csrf
 												<div class="form-group">
-													<label for="inputEmail" class="col-sm-2 col-form-label">Task List</label>
+													<label class="col-sm-2 col-form-label">Task List</label>
 													{!! Form::textarea('notes', null, array('placeholder' => 'Plan Task For Today','class' => 'form-control')) !!}
 												</div>
 											</div>
-											<div class="modal-footer justify-content-between">
-												<button type="close" class="btn btn-default" data-dismiss="modal">Close</button>
-												<button type="submit" class="btn btn-primary">Clock In</button>
+											<div class="modal-footer">
+												<button type="close" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+												<button type="submit" class="btn btn-sm btn-success">Clock In</button>
 											</div>
 											{!! Form::close() !!}
 										</div>
@@ -109,7 +109,7 @@ Better Work Indonesia | User Dashboard
 												{!! Form::open(array('route' => 'attendanceOut.store','method'=>'POST')) !!}
 												@csrf
 												<div class="form-group">
-													<label for="inputEmail" class="col-sm-2 col-form-label">Task List</label>
+													<label class="col-sm-2 col-form-label">Task List</label>
 													@if(($getAttendance) != null)
 													@foreach($getAttendance->Activity as $activity)
 														{!! Form::textarea('notes', $activity->notes, array('placeholder' => 'Today Task Outcome','class' => 'form-control')) !!}
@@ -119,9 +119,9 @@ Better Work Indonesia | User Dashboard
 													@endif
 												</div>
 											</div>
-											<div class="modal-footer justify-content-between">
-												<button type="close" class="btn btn-default" data-dismiss="modal">Close</button>
-												<button id="register" type="submit" class="btn btn-primary">Clock Out</button>
+											<div class="modal-footer">
+												<button type="close" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+												<button id="register" type="submit" class="btn btn-sm btn-success">Clock Out</button>
 											</div>
 											{!! Form::close() !!}
 										</div>
@@ -167,7 +167,7 @@ Better Work Indonesia | User Dashboard
 												{!! Form::open(array('route' => 'attendanceTask.update','method'=>'POST', 'class' => 'form-horizontal')) !!}
 												@csrf
 												<div class="form-group row">
-													<label for="inputEmail" class="col-sm-2 col-form-label">Task List</label>
+													<label class="col-sm-2 col-form-label">Task List</label>
 													@if(($getAttendance) != null)
 													{!! Form::textarea('notes', $act->notes , array('placeholder' => 'Attendance Note','class' => 'form-control')) !!}
 													@else
@@ -175,9 +175,9 @@ Better Work Indonesia | User Dashboard
 													@endif
 												</div>
 											</div>
-											<div class="modal-footer justify-content-between">
-												<button type="close" class="btn btn-default" data-dismiss="modal">Close</button>
-												<button type="submit" class="btn btn-primary">Save Change</button>
+											<div class="modal-footer">
+												<button type="close" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+												<button type="submit" class="btn btn-sm btn-success">Submit</button>
 											</div>
 											{!! Form::close() !!}
 										</div>
@@ -193,10 +193,10 @@ Better Work Indonesia | User Dashboard
             		<div class="card-header p-2">
                 		<ul class="nav nav-pills">
                   			<li class="nav-item"><a class="nav-link active" href="#overview" data-toggle="tab">Overview</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#organization" data-toggle="tab">Organization</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#family" data-toggle="tab">Family</a></li>
+                        	<li class="nav-item"><a class="nav-link" href="#organization" data-toggle="tab">Organization</a></li>
+                        	<li class="nav-item"><a class="nav-link" href="#fams" data-toggle="tab">Family</a></li>
                   			<li class="nav-item"><a class="nav-link" href="#salary" data-toggle="tab">Salary Slips</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#historical" data-toggle="tab">Service History</a></li>
+                        	<li class="nav-item"><a class="nav-link" href="#historical" data-toggle="tab">Service History</a></li>
                   			<li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Change Password</a></li>
                 		</ul>
               		</div>
@@ -226,7 +226,6 @@ Better Work Indonesia | User Dashboard
                 				<hr>
 								<strong><i class="fas fa-pencil-alt mr-1"></i> Contract Download</strong>
               				</div>
-
 							<div class="tab-pane" id="organization">
 								<strong><i class="fas fa-id-badge mr-1"></i> Employee ID</strong>
 								<p class="text-muted">
@@ -265,7 +264,7 @@ Better Work Indonesia | User Dashboard
 										<tr>
 											<td>{{ $key+1 }}</td>
 											<td>
-												<img src="http://betterwork.iteos.tech/public/employees/{{ $value->Parent->picture }}" class="img-circle elevation-2" alt="User Image" style="width: 50px; height: 50px;">
+												<img src="http://betterwork.local/employees/{{ $value->Parent->picture }}" class="img-circle elevation-2" alt="User Image" style="width: 50px; height: 50px;">
 											</td>
 											<!--<td>
 												<img src="http://betterwork.local/public/employees/{{ $value->Parent->picture }}" class="img-circle elevation-2" alt="User Image" style="width: 50px; height: 50px;">
@@ -277,116 +276,89 @@ Better Work Indonesia | User Dashboard
 									</tbody>
 								</table>
 							</div>
-							<div class="tab-pane" id="family">
-								<table class="table table-bordered">
-									<thead>
-										<tr>
-											<th>Name</th>
-											<th>Relation</th>
-											<th>Address</th>
-											<th>Phone</th>
-											<th>Mobile</th>
-										</tr>
-									</thead>
-									<tbody>
-										@foreach($getBasicProfile->Child as $family)
-										<tr>
-											<td>{{ $family->first_name }} {{ $family->last_name }}</td>
-											<td>
-												@if($family->relation == '1')
+							<div class="tab-pane" id="organization">
+		                        <strong><i class="fas fa-id-badge mr-1"></i> Employee ID</strong>
+		                        <p class="text-muted">
+		                            {{ $getEmployee->employee_no }}
+		                        </p>
+		                        <strong><i class="fas fa-calendar-check mr-1"></i> Join Date</strong>
+		                        <p class="text-muted">
+		                            {{date("d F Y",strtotime($getBasicProfile->from)) }}
+		                        </p>
+		                        <strong><i class="fas fa-file-signature mr-1"></i> Employment Type</strong>
+		                        <p class="text-muted">
+		                            {{ $getEmployee->Contracts->name }}
+		                        </p>
+		                        <strong><i class="fas fa-clipboard-check mr-1"></i> Current Position</strong>
+		                        <p class="text-muted">
+		                            {{ $getServices->grade}}
+		                        </p>
+		                        <strong><i class="fas fa-user-tie mr-1"></i> Direct Supervisor</strong>
+		                        <p class="text-muted">
+		                          @isset($getServices->report_to)
+		                          {{ $getServices->Reporting->first_name}} {{ $getServices->Reporting->last_name}}
+		                          @endisset
+		                        </p>
+		                        <strong><i class="fas fa-user-friends mr-1"></i> Direct Subordinate</strong>
+                        		<table class="table table-bordered">
+	                          		<thead>
+			                            <tr>
+			                              <th style="width: 10px">#</th>
+			                              <th>Avatar</th>
+			                              <th>Name</th>
+			                              <th>Position</th>
+			                            </tr>
+	                          		</thead>
+	                          		<tbody>
+	                            		@foreach($getSubordinate as $key=>$value)
+			                            <tr>
+			                              	<td>{{ $key+1 }}</td>
+			                              	<td>
+												<img src="http://betterwork.iteos.tech/public/employees/{{ $value->Parent->picture }}" class="img-circle elevation-2" alt="User Image" style="width: 50px; height: 50px;">
+											</td>
+											<td>{{ $value->Parent->first_name}} {{ $value->Parent->last_name}}</td>
+			                              	<td>{{ $value->grade }}</td>
+			                            </tr>
+	                            		@endforeach
+	                          		</tbody>
+                        		</table>
+                      		</div>
+                      		<div class="tab-pane" id="fams">
+                      			<table class="table table-bordered">
+                          			<thead>
+                            			<tr>
+			                              	<th style="width: 10px">#</th>
+			                              	<th>Name</th>
+			                              	<th>Relation</th>
+			                              	<th>Address</th>
+			                              	<th>Phone</th>
+			                              	<th>Mobile</th>
+                            			</tr>
+                          			</thead>
+                          			<tbody>
+                          				@foreach($getFamily as $key => $family)
+                            			<tr>
+			                              	<td>{{ $key+1 }}</td>
+			                              	<td>{{ $family->first_name }} {{ $family->last_name }}</td>
+			                              	<td>
+			                              		@if($family->relations == '1')
 													Husband
-												@elseif($family->relation == '2')
+												@elseif($family->relations == '2')
 													Wife
-												@elseif($family->relation == '3')
+												@elseif($family->relations == '3')
 													Parent
 												@else
 													Sibling
 												@endif
-											</td>
-											<td>{{ $family->address }}</td>
-											<td>{{ $family->phone }}</td>
-											<td>{{ $family->mobile }}</td>
-										</tr>
-										@endforeach
-									</tbody>
-								</table>
-							</div>
-
-                      <div class="tab-pane" id="organization">
-                        <strong><i class="fas fa-id-badge mr-1"></i> Employee ID</strong>
-                        <p class="text-muted">
-                            {{ $getEmployee->employee_no }}
-                        </p>
-                        <strong><i class="fas fa-calendar-check mr-1"></i> Join Date</strong>
-                        <p class="text-muted">
-                            {{date("d F Y",strtotime($getBasicProfile->from)) }}
-                        </p>
-                        <strong><i class="fas fa-file-signature mr-1"></i> Employment Type</strong>
-                        <p class="text-muted">
-                            {{ $getEmployee->Contracts->name }}
-                        </p>
-                        <strong><i class="fas fa-clipboard-check mr-1"></i> Current Position</strong>
-                        <p class="text-muted">
-                            {{ $getServices->grade}}
-                        </p>
-                        <strong><i class="fas fa-user-tie mr-1"></i> Direct Supervisor</strong>
-                        <p class="text-muted">
-                          @isset($getServices->report_to)
-                          {{ $getServices->Reporting->first_name}} {{ $getServices->Reporting->last_name}}
-                          @endisset
-                        </p>
-                        <strong><i class="fas fa-user-friends mr-1"></i> Direct Subordinate</strong>
-                        <table class="table table-bordered">
-                          <thead>
-                            <tr>
-                              <th style="width: 10px">#</th>
-                              <th>Avatar</th>
-                              <th>Name</th>
-                              <th>Position</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            @foreach($getSubordinate as $key=>$value)
-                            <tr>
-                              <td>{{ $key+1 }}</td>
-                              <td>
-								<img src="http://betterwork.iteos.tech/public/employees/{{ $value->Parent->picture }}" class="img-circle elevation-2" alt="User Image" style="width: 50px; height: 50px;">
-								</td>
-							<!--<td>
-								<img src="http://betterwork.local/public/employees/{{ $value->Parent->picture }}" class="img-circle elevation-2" alt="User Image" style="width: 50px; height: 50px;">
-								</td>-->
-                              <td>{{ $value->Parent->first_name}} {{ $value->Parent->last_name}}</td>
-                              <td>{{ $value->grade }}</td>
-                            </tr>
-                            @endforeach
-                          </tbody>
-                        </table>
-                      </div>
-                      <div class="tab-pane" id="family">
-                        <table class="table table-bordered">
-                          <thead>
-                            <tr>
-                              <th style="width: 10px">#</th>
-                              <th>Name</th>
-                              <th>Relation</th>
-                              <th>Address</th>
-                              <th>Phone</th>
-                              <th>Mobile</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-
+			                              	</td>
+			                              	<td>{{ $family->address }}</td>
+			                              	<td>{{ $family->phone }}</td>
+			                              	<td>{{ $family->mobile }}</td>
+                            			</tr>
+                            			@endforeach
+                          			</tbody>
+                        		</table>
+                      		</div>
               				<div class="tab-pane" id="salary">
               					<table class="table table-bordered">
               						<thead>
@@ -459,7 +431,7 @@ Better Work Indonesia | User Dashboard
 									{!! Form::password('confirm-password', array('placeholder' => 'Confirm Password','class' => 'form-control')) !!}
 								</div>
 								<div class="form-group row">
-									<button type="submit" class="btn btn-danger">Reset</button>
+									<button type="submit" class="btn btn-sm btn-success">Reset</button>
 								</div>
 								{!! Form::close() !!}
 							</div>

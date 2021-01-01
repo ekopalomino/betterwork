@@ -10,7 +10,7 @@
 		</li>
 		@can('Access Configuration')
 		<li class="nav-item d-none d-sm-inline-block">
-			<a href="{{route('config.index') }}" class="nav-link {{set_active(['application.index','config.index','position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','user.index','logs.index','role.index','role.create','role.edit','organization.index','office.index','accSet.index','holiday.index','hrSet.index']) }}">Configuration</a>
+			<a href="{{route('config.index') }}" class="nav-link {{set_active(['application.index','config.index','position.index','leaveType.index','reimbursType.index','docCat.index','grievCat.index','user.index','logs.index','role.index','role.create','role.edit','organization.index','office.index','accSet.index','holiday.index','hrSet.index','division.index']) }}">Configuration</a>
 		</li>
 		@endcan
 		@can('Access Human Resources')

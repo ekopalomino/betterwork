@@ -27,6 +27,7 @@ use iteos\Models\AppraisalAdditionalRole;
 use iteos\Models\Bulletin;
 use iteos\Models\KnowledgeBase;
 use iteos\Models\EmployeeSalary;
+use iteos\Models\EmployeeFamily;
 use iteos\Models\TargetData;
 use Auth;
 use DB;
@@ -59,6 +60,7 @@ class UserMenuController extends Controller
             $getLastEdu = EmployeeEducation::where('employee_id',auth()->user()->employee_id)->orderBy('date_of_graduate','DESC')->first();
             $getTraining = EmployeeTraining::where('employee_id',auth()->user()->employee_id)->where('status','caf3f6a0-3aef-4984-8a87-1684579c5e45')->get();
             $getSubordinate = EmployeeService::with('Parent')->where('report_to',auth()->user()->employee_id)->get();
+            $getFamily = EmployeeFamily::where('employee_id',auth()->user()->employee_id)->get();
             $getSalary = EmployeeSalary::where('employee_no',$getEmployee->employee_no)->where('status_id','ca52a2ce-5c37-48ce-a7f2-0fd5311860c2')
                     ->orderBy('payroll_period','DESC')->get();
             $getServices = EmployeeService::where('employee_id',$getEmployee->id)->orderBy('from','ASC')->first();
@@ -68,13 +70,14 @@ class UserMenuController extends Controller
             /*Query for Birthday Card*/
             $getBirthday = Employee::whereMonth('date_of_birth',Carbon::now()->month)->get();
 
-            return view('apps.pages.userHome',compact('getBasicProfile','getEmployee','getAttendance','totalDays','getLastEdu','getSubordinate','getBulletin','getKnowledge','getCurPos','getBirthday','getSalary','getServices'));
+            return view('apps.pages.userHome',compact('getBasicProfile','getEmployee','getAttendance','totalDays','getLastEdu','getSubordinate','getBulletin','getKnowledge','getCurPos','getBirthday','getSalary','getServices',
+            'getFamily'));
         }  
     }
     public function clockIn(Request $request)
     {
         $this->validate($request, [
-            'notes' => 'required|min:100',
+            'notes' => 'required|min:20',
         ]);
 
     	$clockIn = EmployeeAttendance::create([
@@ -600,6 +603,11 @@ class UserMenuController extends Controller
                 'target' => $request->input('target'),
                 'job_weight' => $request->input('weight'), 
             ]);
+
+            $notification = array (
+                'message' => 'Your Target Job Created',
+                'alert-type' => 'success'
+            );
         } else {
             $notification = array (
                 'message' => 'Your total job weight exceed 100%, please reduce one or more job weight',

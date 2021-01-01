@@ -2,13 +2,13 @@
 @section('content')
 <section class="content">
 	<div class="row">
-		<div class="col-12"> 
+		<div class="col-12">  
 			{!! Form::model($data, ['method' => 'POST','route' => ['employeeService.update', $data->id],'files'=>'true']) !!}
             @csrf
 			<div class="form-group row">
-			   	<label class="col-sm-2 col-form-label">Position</label>
+			   	<label class="col-sm-2 col-form-label">Grade</label>
 			    <div class="col-sm-10">
-			        {!! Form::select('position', [null=>'Please Select'] + $grades,old('position'), array('class' => 'form-control')) !!}
+			        {!! Form::select('grade', [null=>'Please Select'] + $grades,old('grade'), array('class' => 'form-control')) !!}
 			    </div>
 			</div>
 			<div class="form-group row">
@@ -18,9 +18,15 @@
 			    </div>
 			</div>
             <div class="form-group row">
-			   	<label class="col-sm-2 col-form-label">Job Title</label>
+			   	<label class="col-sm-2 col-form-label">Position</label>
 			    <div class="col-sm-10">
-			        {!! Form::text('grade', null, array('placeholder' => 'Job Title','class' => 'form-control')) !!}
+			        {!! Form::text('position', null, array('placeholder' => 'Job Title','class' => 'form-control')) !!}
+			    </div>
+			</div>
+			<div class="form-group row">
+			   	<label class="col-sm-2 col-form-label">Division</label>
+			    <div class="col-sm-10">
+			        {!! Form::select('division_id', [null=>'Please Select'] + $divisions,old('division_id'), array('class' => 'form-control')) !!}
 			    </div>
 			</div>
             <div class="form-group row">
