@@ -53,6 +53,11 @@ class Employee extends Model
         return $this->hasMany(EmployeeEducation::class,'employee_id');
     }
 
+    public function Leaves()
+    {
+        return $this->hasMany(EmployeeLeave::class,'employee_id');
+    }
+
     public function Available()
     {
         return $this->belongsTo(Status::class,'availability');

@@ -159,7 +159,7 @@ Better Work Indonesia | Create Employee Data
 			    		{!! Form::number('salary', null, array('placeholder' => 'Salary','class' => 'form-control')) !!}
 			    	</div>
 			    	<div class="form-group">
-			    		<button name="profile" type="submit" class="btn btn-sm btn-success">Save changes</button>
+			    		<button name="profile" type="submit" class="btn btn-sm btn-success">Save</button>
 	            		<a button type="button" class="btn btn-sm btn-danger" href="{{ route('employee.index') }}">Cancel</a>
 	            	</div>
 	            	{!! Form::close() !!}

@@ -61,7 +61,7 @@ Better Work Indonesia | Human Resources
 								@can('Edit Employee')
 	                  			<a class="btn btn-xs btn-success" href="{{ route('employee.edit',$employee->id) }}" title="Edit Employee" ><i class="fa fa-edit"></i></a>
 								@endcan
-								@can('Remove Employee')
+								@can('Disable')
 	                  			{!! Form::open(['method' => 'POST','route' => ['employee.destroy', $employee->id],'style'=>'display:inline','onsubmit' => 'return ConfirmDelete()']) !!}
                                 {!! Form::button('<i class="fas fa-user-slash"></i>',['type'=>'submit','class' => 'btn btn-xs btn-danger','title'=>'Delete Employee']) !!}
                                 {!! Form::close() !!}

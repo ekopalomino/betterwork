@@ -48,7 +48,7 @@ class AccountingController extends Controller
     public function bankStatementIndex()
     {
         $data = BankStatement::orderBy('updated_at','DESC')->get();
-
+        
         return view('apps.pages.statementIndex',compact('data'));
     }
 
@@ -68,8 +68,8 @@ class AccountingController extends Controller
         $input = $request->all();
         
         $data = Excel::toArray(new BankTransactionImport, $request->file('statement'))[0];
-        
-        foreach($data as $value) {
+       
+        foreach($data as $index=> $value) {
             if(isset($value['date'])) {
                 $result = BankStatement::create([
                     'bank_account_id' => $request->input('bank_id'),
@@ -81,23 +81,18 @@ class AccountingController extends Controller
                     'balance' => $value['balance'],
                     'status_id' => 'e6cb9165-131e-406c-81c8-c2ba9a2c567e',
                 ]);
-
-                $log = 'Bank Statement Successfully Import';
-                \LogActivity::addToLog($log);
-                $notification = array (
-                    'message' => 'Bank Statement Successfully Import, Please reconcile with current account transaction',
-                    'alert-type' => 'success'
-                );
-                return redirect()->route('statToAcc.index')->with($notification);
-            } else {
-                $notification = array (
-                    'message' => 'Please check your statement file, it appears some or all transaction is empty',
-                    'alert-type' => 'error'
-                );
-                return redirect()->route('bank.index')->with($notification);
             }
         }
-    }
+
+        $log = 'Bank Statement Successfully Import';
+        \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'Bank Statement Successfully Import, Please reconcile with current account transaction',
+            'alert-type' => 'success'
+        );
+        
+        return redirect()->route('statToAcc.index')->with($notification);
+    } 
 
     public function statementToAccount()
     {
@@ -109,9 +104,20 @@ class AccountingController extends Controller
     public function findTransactionByDate($id)
     {
         $filter = BankStatement::find($id);
-        $data = AccountStatement::with('Child')->where('transaction_date',$filter->transaction_date)->where('status_id','e6cb9165-131e-406c-81c8-c2ba9a2c567e')->get();
-        
-        return view('apps.input.bankToAccount',compact('data','filter'))->renderSections()['content'];
+        /* $data = AccountStatement::with('Child')
+                                ->where('payee',$filter->payee)
+                                ->where('transaction_date',$filter->transaction_date)
+                                ->where('status_id','e6cb9165-131e-406c-81c8-c2ba9a2c567e')
+                                ->first(); */
+        $data = AccountStatement::with(['Child' => function($query) {
+                                    $query->where('source','User');
+                                }])
+                                ->where('payee',$filter->payee)
+                                ->where('transaction_date',$filter->transaction_date)
+                                ->where('status_id','e6cb9165-131e-406c-81c8-c2ba9a2c567e')
+                                ->first();
+        return view('apps.input.bankToAccountRev',compact('data','filter'));
+        /* return view('apps.input.bankToAccount',compact('data','filter'))->renderSections()['content']; */
     }
 
     public function bankStatementMatch(Request $request,$id)

@@ -65,10 +65,11 @@ Better Work Indonesia | Update Employee
                           				<option value="0" {{ old('contract_status',$data->contract_status)=='0' ? 'selected' : ''  }}>Please Select</option>
 						                <option value="c0bfb25c-b965-4972-95fd-ed5803318d93" {{ old('contract_status',$data->contract_status)=='c0bfb25c-b965-4972-95fd-ed5803318d93' ? 'selected' : ''  }}>Contract</option>
 						                <option value="2e9731fd-6544-44a1-b832-aab293e8804a" {{ old('contract_status',$data->contract_status)=='2e9731fd-6544-44a1-b832-aab293e8804a' ? 'selected' : ''  }}>Permanent</option>
+						                <option value="1f698ac5-9340-4223-a870-a79e6562fb5b" {{ old('contract_status',$data->contract_status)=='1f698ac5-9340-4223-a870-a79e6562fb5b' ? 'selected' : ''  }}>Resign</option>
 						            </select>
 			    				</div>
 			    				<div class="form-group">
-			    					<label for="lastName">Leave Amount</label>
+			    					<label>Leave Amount</label>
 			    					{!! Form::number('leave_amount', null, array('placeholder' => 'Leave','class' => 'form-control')) !!}
 			    				</div>
 			    				<div class="form-group">
@@ -153,7 +154,7 @@ Better Work Indonesia | Update Employee
 	                      			</div>
 			    				</div>
 			    				<div class="form-group">
-			    					<button name="profile" type="submit" class="btn btn-sm btn-primary">Save changes</button>
+			    					<button name="profile" type="submit" class="btn btn-sm btn-success">Save changes</button>
 	                  				<a button type="button" class="btn btn-sm btn-danger" href="{{ route('employee.index') }}">Cancel</a>
 	                  			</div>
 	                  			{!! Form::close() !!}

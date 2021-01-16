@@ -29,14 +29,11 @@
 		@can('Access Accounting')
 		<li class="nav-item d-none d-sm-inline-block">
 			<a href="{{route('accounting.index') }}" class="nav-link {{set_active(['accounting.index','bank.index','accountTransaction.index','accTransaction.index','accTransaction.create','spend.create','receive.create',
-			'bankStatement.index','account.show','asset.index','journal.index','journal.report','budget.index','budgetDetail.create','budgetDetail.edit','statToAcc.index','asset.show','coaCat.index','bankAcc.index','assetCat.index','bankStatement.import','asset.index','account.show','trial.index']) }}">Finance</a>
+			'bankStatement.index','account.show','asset.index','journal.index','journal.report','budget.index','budgetDetail.create','budgetDetail.edit','statToAcc.index','asset.show','coaCat.index','bankAcc.index','assetCat.index','bankStatement.import','asset.index','account.show','trial.index','findAcc.find']) }}">Finance</a>
 		</li>
 		@endcan
 		<li class="nav-item d-none d-sm-inline-block">
 			<a href="{{route('help.index') }}" class="nav-link {{set_active(['help.index']) }}">Help</a>
-		</li>
-		<li class="nav-item d-none d-sm-inline-block">
-			<a href="{{route('support.index') }}" class="nav-link {{set_active(['support.index']) }}">Report Problem</a>
 		</li>
 	</ul>
 	<ul class="navbar-nav ml-auto">

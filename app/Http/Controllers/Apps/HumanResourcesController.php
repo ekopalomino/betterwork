@@ -243,6 +243,11 @@ class HumanResourcesController extends Controller
 
             $updateEmployee = $data->update($input);
 
+            $leaves = EmployeeLeave::where('employee_id',$id)->update([
+                'period' => Carbon::now()->year,
+                'leave_amount' => $request->input('leave_amount'),
+            ]);
+
             $log = 'Employee '.($data->first_name).' '.($data->last_name). ' Edited';
             \LogActivity::addToLog($log);
             $notification = array (
@@ -273,6 +278,11 @@ class HumanResourcesController extends Controller
             ];
 
             $updateEmployee = $data->update($input);
+
+            $leaves = EmployeeLeave::where('employee_id',$id)->update([
+                'period' => Carbon::now()->year,
+                'leave_amount' => $request->input('leave_amount'),
+            ]);
 
             $log = 'Employee '.($data->first_name).' '.($data->last_name). ' Edited';
             \LogActivity::addToLog($log);
@@ -1406,24 +1416,18 @@ class HumanResourcesController extends Controller
                     'dplk' => $value['pay_dplk'],
                     'income_tax' => $value['tax_month'],
                     'receive_payroll' => $value['thp'],
-                    'created_by' => auth()->user()->employee_id,
+                    'created_by' => auth()->user()->id,
                 ]);
-
-                $log = 'File'.($salaries->payroll_period). ' Uploaded';
-                \LogActivity::addToLog($log);
-                $notification = array (
-                    'message' => 'File'.($salaries->payroll_period). ' Uploaded',
-                    'alert-type' => 'success'
-                );
-                return redirect()->route('salary.index')->with($notification);
-            } else {
-                $notification = array (
-                    'message' => 'Data error found on your file. Please check your salary import file.',
-                    'alert-type' => 'error'
-                );
-                return redirect()->route('salary.index')->with($notification);
-            }
+            } 
         }
+
+        $log = 'File'.($salaries->payroll_period). ' Uploaded';
+        \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'File'.($salaries->payroll_period). ' Uploaded',
+            'alert-type' => 'success'
+        );
+        return redirect()->route('salary.index')->with($notification);
     }
 
     public function salaryShow($period)

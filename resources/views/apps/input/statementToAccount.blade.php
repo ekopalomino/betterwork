@@ -56,15 +56,15 @@ Better Work Indonesia | Bank Statement Reconciliation
 								<td>{{ $value->Statuses->name }}</td>
 								<td>
 									<div class="btn-group">
-										<a class="btn btn-sm btn-warning modalLg" title="Find Matching Transaction" href="#" value="{{ action('Apps\AccountingController@findTransactionByDate',['id'=>$value->id]) }}" data-toggle="modal" data-target="#modalLg">Match</a>
-									</div>
+										<a class="btn btn-xs btn-danger" href="{{ route('findAcc.find',$value->id) }}" >Find</a>
+									</div> 
 									@if(($value->type) == 'Receive')
 									<div class="btn-group">
-										<a class="btn btn-sm btn-danger" href="{{ route('receive.create',$value->bank_account_id) }}" >Create</a>
+										<a class="btn btn-xs btn-success" href="{{ route('receive.create',$value->bank_account_id) }}" >Create</a>
 									</div>
 									@elseif(($value->type) == 'Spend')
 									<div class="btn-group">
-										<a class="btn btn-sm btn-danger" href="{{ route('spend.create',$value->bank_account_id) }}" >Create</a>
+										<a class="btn btn-xs btn-success" href="{{ route('spend.create',$value->bank_account_id) }}" >Create</a>
 									</div>
 									@endif
 								</td>

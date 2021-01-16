@@ -65,8 +65,8 @@ Better Work Indonesia | Asset Management
 									</div>
                         		</div>
 				            	<div class="modal-footer">
-				              		<button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
-				              		<button type="submit" class="btn btn-sm btn-primary">Save changes</button>
+				              		<button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+				              		<button type="submit" class="btn btn-sm btn-success">Save</button>
 				            	</div>
 								{!! Form::close() !!}
 				          	</div>

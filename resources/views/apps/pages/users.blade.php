@@ -68,9 +68,9 @@ Better Work Indonesia | User Database
 										</div>
 									</div>
 								</div>
-				            	<div class="modal-footer justify-content-between">
-				              		<button type="close" class="btn btn-default" data-dismiss="modal">Close</button>
-				              		<button id="register" type="submit" class="btn btn-primary">Save changes</button>
+				            	<div class="modal-footer">
+				              		<button type="close" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+				              		<button id="register" type="submit" class="btn btn-sm btn-success">Save</button>
 				            	</div>
 				          	</div>
 							{!! Form::close() !!}
@@ -135,7 +135,7 @@ Better Work Indonesia | User Database
 								</td>
 								<td>{{date("d F Y H:i",strtotime($user->created_at)) }}</td>
 								<td>
-									<a class="btn btn-xs btn-info modalMd" href="#" title="View User" value="{{ action('Apps\ConfigurationController@userEdit',['id'=>$user->id]) }}" data-toggle="modal" data-target="#modalMd"><i class="fa fa-search"></i></a>
+									<a class="btn btn-xs btn-info modalMd" href="#" title="View & Edit User" value="{{ action('Apps\ConfigurationController@userEdit',['id'=>$user->id]) }}" data-toggle="modal" data-target="#modalMd"><i class="fa fa-search"></i></a>
 									@if(($user->status_id) == 'bca5aaf9-c7ff-4359-9d6c-28768981b416' )
 									{!! Form::open(['method' => 'POST','route' => ['user.reactivate', $user->id],'style'=>'display:inline','onsubmit' => 'return ConfirmActive()']) !!}
 									{!! Form::button('<i class="fas fa-user"></i>',['type'=>'submit','class' => 'btn btn-xs btn-warning']) !!}

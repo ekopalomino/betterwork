@@ -94,7 +94,7 @@ Better Work Indonesia | Salary Process
 								<td>{{ number_format($value->bpjs,0,',','.')}}</td>
 								<td>{{ number_format($value->tax,0,',','.')}}</td>
 								<td>{{ $value->Statuses->name }}</td>
-								<td>{{ $value->Uploader->first_name }} {{ $value->Uploader->last_name }}</td>
+								<td></td>
 								<td>
 									@isset($value->approved_by)
 									{{ $value->Approval->first_name }} {{ $value->Approval->last_name }}

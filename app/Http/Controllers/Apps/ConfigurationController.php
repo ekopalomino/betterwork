@@ -564,6 +564,8 @@ class ConfigurationController extends Controller
             'transaction_date' => $data->opening_date,
             'amount' => $data->opening_balance,
             'balance' => $data->opening_balance,
+            'type' => 'Debit',
+            'description' => 'Saldo Awal',
             'status_id' => 'f6e41f5d-0f6e-4eca-a141-b6c7ce34cae6',
         ]);
 
