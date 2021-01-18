@@ -122,7 +122,6 @@ class AccountingController extends Controller
 
     public function bankStatementMatch(Request $request,$id)
     {
-        $input = $request->all();
         $data = BankStatement::where('id',$request->input('statement_id'))->first();
         $source = AccountStatement::with('Child')->where('id',$request->input('account_id'))->first();
         $changes = $data->update([
@@ -135,7 +134,7 @@ class AccountingController extends Controller
             'statement_id' => $data->id,
             'status_id' => 'f6e41f5d-0f6e-4eca-a141-b6c7ce34cae6'
         ]);
-        $returnState = AccountStatement::with('Child')->where('id',$request->input('account_id'))->first();
+        /* $returnState = AccountStatement::with('Child')->where('id',$request->input('account_id'))->first();
         foreach($returnState->Child as $Child) {
             if(($data->type) == 'Receive') {
                 $bankJournal = JournalEntry::create([
@@ -160,7 +159,7 @@ class AccountingController extends Controller
                     'amount' => ($Child->quantity)*($Child->unit_price),
                 ]);
             }
-        }
+        } */
         
         
         /*$sources = AccountStatement::where('id',$request->input('account_id'))->first();

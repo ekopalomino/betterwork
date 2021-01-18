@@ -29,8 +29,10 @@ Better Work Indonesia | Transaction Detail
 							<h4>
 								<img src="{{ asset('assets/img/logo.png') }}" style="opacity: .8">
 								<small class="float-right">
-									{!! Form::open(['method' => 'POST','route' => ['accTransaction.reconcile', $data->id],'style'=>'display:inline','onsubmit' => 'return ConfirmDelete()']) !!}
-									{!! Form::button('Reconcile',['type'=>'submit','class' => 'btn btn-sm btn-danger','title'=>'Checked']) !!}
+									{!! Form::open(['method' => 'POST','route' => ['statToAcc.store', $filter->id],'style'=>'display:inline','onsubmit' => 'return ConfirmDelete()']) !!}
+									{!! Form::hidden('statement_id', $filter->id, array('class' => 'form-control')) !!}
+									{!! Form::hidden('account_id', $data->id, array('class' => 'form-control')) !!}
+									{!! Form::button('Reconcile',['type'=>'submit','class' => 'btn btn-sm btn-danger','title'=>'Reconcile']) !!}
 									{!! Form::close() !!}
 								</small>
 							</h4>

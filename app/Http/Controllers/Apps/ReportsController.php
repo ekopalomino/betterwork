@@ -11,6 +11,7 @@ use iteos\Models\EmployeeSalary;
 use iteos\Models\AccountStatement;
 use iteos\Models\JournalEntry;
 use iteos\Models\CoaCategory;
+use iteos\Models\ChartOfAccount;
 use Carbon\Carbon;
 use DB;
 use Route;
@@ -156,14 +157,40 @@ class ReportsController extends Controller
         return view('apps.reports.journalReport',compact('data','dateStart','dateEnd'));
     }
 
-    public function trialBalance()
+    public function trialBalanceIndex()
     {
-        $data = CoaCategory::join('chart_of_accounts','chart_of_accounts.account_category','coa_categories.id')
+        return view('apps.pages.trialBalance');
+    }
+
+    public function trialBalanceShow(Request $request)
+    {
+        $dateStart = $request->input('start');
+        $dateEnd = $request->input('end');
+        $data = ChartOfAccount::join('journal_entries','journal_entries.account_name','chart_of_accounts.id')
+                                ->select(DB::raw('chart_of_accounts.account_id as ID, chart_of_accounts.account_name as Name, sum(journal_entries.amount) as Total, journal_entries.trans_type as Type'))
+                                ->where('transaction_date','>=',$dateStart)->where('transaction_date','<=',$dateEnd)
+                                ->orderBy('chart_of_accounts.account_id')
+                                ->groupBy('chart_of_accounts.account_id','chart_of_accounts.account_name','journal_entries.trans_type')
+                                ->get();
+        $debit = DB::table('journal_entries')
+                        ->where('trans_type','Debit')
+                        ->groupBy('trans_type')
+                        ->sum('amount');
+        $credit = DB::table('journal_entries')
+                        ->where('trans_type','Credit')
+                        ->groupBy('trans_type')
+                        ->sum('amount');
+        /* $data = CoaCategory::join('chart_of_accounts','chart_of_accounts.account_category','coa_categories.id')
                              ->join('journal_entries','journal_entries.account_name','chart_of_accounts.id')
                              ->orderBy('coa_categories.id')
-                             ->get();
+                             ->get(); */
         
-        return view('apps.reports.trialBalance',compact('data'));
+        return view('apps.reports.trialBalance',compact('data','debit','credit','dateStart','dateEnd'));
+    }
+
+    public function generalLedgerIndex()
+    {
+        return view('apps.pages.generalLedger');
     }
 
 

@@ -11,7 +11,7 @@ Better Work Indonesia | Trial Balance
        		</div>
 			<div class="col-sm-6">
 				<ol class="breadcrumb float-sm-right">
-					<li class="breadcrumb-item"><a href="{{ route('journal.index') }}">Trial Balance</a></li>
+					<li class="breadcrumb-item"><a href="{{ route('trial.index') }}">Trial Balance</a></li>
 					<li class="breadcrumb-item active">Trial Balance Show</li>
 				</ol>
 			</div>
@@ -25,6 +25,7 @@ Better Work Indonesia | Trial Balance
 				<div class="card-body">
 					<h3 style="text-align:center;">Trial Balance</h3><span>
 					<h4 style="text-align:center;">Better Work Indonesia</h4><span>
+					<h4 style="text-align:center;">From {{date("d F Y",strtotime($dateStart)) }} to {{date("d F Y",strtotime($dateEnd)) }}</h4>
 					<br>
 					<div class="row">
 						
@@ -32,6 +33,7 @@ Better Work Indonesia | Trial Balance
 							<table class="table">
 								<thead>
 									<tr>
+										<th>Account ID</th>
 										<th>Account</th>
 										<th>Debit</th>
 										<th>Credit</th>
@@ -40,20 +42,21 @@ Better Work Indonesia | Trial Balance
 								<tbody>
 									@foreach($data as $key => $value)
 									<tr>
-										<td>{{ $value->category_name }}</td>
-										@if(($value->trans_type) == 'Debit')
-										<td>{{ number_format($value->amount,2,',','.')}}</td>
+										<td>{{ $value->ID }}</td>
+										<td>{{ $value->Name }}</td>
+										@if(($value->Type) == 'Debit')
+										<td>{{ number_format($value->Total,2,',','.')}}</td>
 											<td></td>
 										@else
 										<td></td>
-											<td>{{ number_format($value->amount,2,',','.')}}</td>
+											<td>{{ number_format($value->Total,2,',','.')}}</td>
 										@endif
 									</tr>
 									@endforeach
 									<tr>
-										<td></td>
-										<td></td>
-										<td>total</td>
+										<td colspan="2"><strong>TOTAL</strong></td>
+										<td><strong>{{ number_format($debit,2,',','.')}}</strong></td>
+										<td><strong>{{ number_format($credit,2,',','.')}}</strong></td>
 									</tr>
 								</tbody>	
 							</table>

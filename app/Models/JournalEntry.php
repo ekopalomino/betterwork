@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class JournalEntry extends Model
 {
     protected $fillable = [
-    	'account_statement_id',
+        'account_statement_id',
+        'transaction_date',
     	'item',
     	'description',
     	'quantity',
