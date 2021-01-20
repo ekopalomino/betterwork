@@ -41,9 +41,14 @@ Better Work Indonesia | Salary Process
 				              		</button>
 				            	</div>
 				            	<div class="modal-body">
-				              		<label for="inputName">Salary File</label>
+				              		<label>Salary File</label>
 			    					<div class="input-group">
 									   	{!! Form::file('salary', null, array('placeholder' => 'Employee Photo','class' => 'form-control')) !!}
+	                      			</div>
+	                      			<br>
+	                      			<label>COA Name</label>
+			    					<div class="input-group">
+									   	{!! Form::select('bank_id', [null=>'Please Select'] + $coas,[], array('class' => 'form-control')) !!}
 	                      			</div>
                         		</div>
 				            	<div class="modal-footer">
@@ -94,7 +99,7 @@ Better Work Indonesia | Salary Process
 								<td>{{ number_format($value->bpjs,0,',','.')}}</td>
 								<td>{{ number_format($value->tax,0,',','.')}}</td>
 								<td>{{ $value->Statuses->name }}</td>
-								<td></td>
+								<td>{{ $value->Uploader->first_name }} {{ $value->Uploader->last_name }}</td>
 								<td>
 									@isset($value->approved_by)
 									{{ $value->Approval->first_name }} {{ $value->Approval->last_name }}

@@ -174,10 +174,12 @@ class ReportsController extends Controller
                                 ->get();
         $debit = DB::table('journal_entries')
                         ->where('trans_type','Debit')
+                        ->where('transaction_date','>=',$dateStart)->where('transaction_date','<=',$dateEnd)
                         ->groupBy('trans_type')
                         ->sum('amount');
         $credit = DB::table('journal_entries')
                         ->where('trans_type','Credit')
+                        ->where('transaction_date','>=',$dateStart)->where('transaction_date','<=',$dateEnd)
                         ->groupBy('trans_type')
                         ->sum('amount');
         /* $data = CoaCategory::join('chart_of_accounts','chart_of_accounts.account_category','coa_categories.id')

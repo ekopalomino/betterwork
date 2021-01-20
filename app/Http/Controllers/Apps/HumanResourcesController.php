@@ -33,6 +33,7 @@ use iteos\Models\AppraisalComment;
 use iteos\Models\AppraisalAdditionalRole;
 use iteos\Models\AccountStatement;
 use iteos\Models\JournalEntry;
+use iteos\Models\ChartOfAccount;
 use iteos\Imports\SalaryImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Hash;
@@ -1384,7 +1385,9 @@ class HumanResourcesController extends Controller
                     ->groupBy(DB::raw('date(payroll_period)'),'created_at','status_id','created_by','approved_by')
                     ->get();
         
-        return view('apps.pages.salaryIndex',compact('data'));
+        $coas = ChartOfAccount::where('account_category','5')->pluck('account_name','id')->toArray();
+        
+        return view('apps.pages.salaryIndex',compact('data','coas'));
     }
 
     public function salaryProcess(Request $request)
@@ -1392,12 +1395,13 @@ class HumanResourcesController extends Controller
         $request->validate([
             'salary' => 'required|file|mimes:xlsx,xls,XLSX,XLS'
         ]);
-  
         $input = $request->all();
+        
         $data = Excel::toArray(new SalaryImport, $request->file('salary'))[0];
         foreach($data as $value) {
             if(isset($value['period'])) {
                 $salaries = EmployeeSalary::create([
+                    'coa_id' => $request->input('bank_id'),
                     'payroll_period' => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($value['period']),
                     'employee_no' => $value['id'],
                     'employee_name' => $value['name'],
@@ -1416,15 +1420,15 @@ class HumanResourcesController extends Controller
                     'dplk' => $value['pay_dplk'],
                     'income_tax' => $value['tax_month'],
                     'receive_payroll' => $value['thp'],
-                    'created_by' => auth()->user()->id,
+                    'created_by' => auth()->user()->employee_id,
                 ]);
             } 
         }
 
-        $log = 'File'.($salaries->payroll_period). ' Uploaded';
+        $log = 'Salary File Successfully Uploaded';
         \LogActivity::addToLog($log);
         $notification = array (
-            'message' => 'File'.($salaries->payroll_period). ' Uploaded',
+            'message' => 'Salary File Successfully Uploaded',
             'alert-type' => 'success'
         );
         return redirect()->route('salary.index')->with($notification);
@@ -1459,10 +1463,47 @@ class HumanResourcesController extends Controller
     public function salaryApproval($period)
     {
         $data = EmployeeSalary::where('payroll_period',$period)->get();
+        $curDate = Carbon::now()->toDateString();
+        $prevData = AccountStatement::where('transaction_date','<=',$curDate)->first();
         foreach($data as $value) {
             $approve = $value->update([
                 'status_id' => 'ca52a2ce-5c37-48ce-a7f2-0fd5311860c2',
                 'approved_by' => auth()->user()->employee_id,
+            ]);
+
+            $statement = AccountStatement::create([
+                'transaction_date' => $curDate,
+                'reference_no' => $value->employee_no,
+                'payee' => $value->employee_name,
+                'tax_reference' => '0',
+                'total' => $value->receive_payroll,
+                'balance' => ($prevData->balance) - $value->receive_payroll,
+                'status_id' => '1f2967a5-9a88-4d44-a66b-5339c771aca0',
+                'created_by' => auth()->user()->employee_id,
+            ]);
+
+            $journalEx = JournalEntry::create([
+                'account_statement_id' => $statement->id,
+                'transaction_date' => $curDate,
+                'item' => 'Pembayaran Gaji '.$value->employee_name,
+                'description' => 'Pembayaran Gaji '.$value->employee_name.' Bulan'.$value->payroll_period,
+                'quantity' => '1',
+                'unit_price' => $value->receive_payroll,
+                'account_name' => $value->coa_id,
+                'trans_type' => 'Debit',
+                'amount' => $value->receive_payroll,
+            ]);
+
+            $journalBank = JournalEntry::create([
+                'account_statement_id' => $statement->id,
+                'transaction_date' => $curDate,
+                'item' => 'Pembayaran Gaji '.$value->employee_name,
+                'description' => 'Pembayaran Gaji '.$value->employee_name.' Bulan'.$value->payroll_period,
+                'quantity' => '1',
+                'unit_price' => $value->receive_payroll,
+                'account_name' => '3e9cd125-8012-4ff7-972f-de5ab2c9adec',
+                'trans_type' => 'Credit',
+                'amount' => $value->receive_payroll,
             ]);
         }
 
@@ -1492,7 +1533,7 @@ class HumanResourcesController extends Controller
     public function reimbursApprove(Request $request,$id)
     {
         $data = EmployeeReimbursment::find($id);
-
+        
         $approve = $data->update([
             'status_id' => 'ca52a2ce-5c37-48ce-a7f2-0fd5311860c2',
         ]);
