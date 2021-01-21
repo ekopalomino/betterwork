@@ -3,7 +3,7 @@
 Better Work Indonesia | Reimbursment Type
 @endsection
 @section('header.plugins')
-<link rel="stylesheet" href="{{ asset('public/bower_components/admin-lte/plugins/datatables-bs4/css/dataTables.bootstrap4.css') }}">
+<link rel="stylesheet" href="{{ asset('bower_components/admin-lte/plugins/datatables-bs4/css/dataTables.bootstrap4.css') }}">
 @endsection
 @section('content')
 <section class="content-header">
@@ -20,90 +20,84 @@ Better Work Indonesia | Reimbursment Type
 		<div class="col-12">
 			<div class="card card-info card-outline">
 				<div class="card-header"> 
-              		<button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modal-default">
-                  		Add New
-                	</button>
-                	<div class="modal fade" id="modal-default">
-				        <div class="modal-dialog">
-				          	<div class="modal-content">
-				            	<div class="modal-header">
-				             		<h4 class="modal-title">New Type</h4>
-				              		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				                		<span aria-hidden="true">&times;</span>
-				              		</button>
-				            	</div>
-				            	<div class="modal-body">
-									{!! Form::open(array('route' => 'reimbursType.store','method'=>'POST', 'class' => 'form-horizontal')) !!}
-									@csrf
-				              		<label for="inputEmail" class="col-sm-12 col-form-label">Reimburs Type Name</label>
-                        				<div class="col-sm-12">
-                          					{!! Form::text('reimburs_name', null, array('placeholder' => 'Position Name','class' => 'form-control')) !!}
-                        				</div>
-				            	</div>
-				            	<div class="modal-footer">
-				              		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				              		<button id="register" type="submit" class="btn btn-primary">Save</button>
-				            	</div>
+       		<button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modal-default">
+         		Add New
+        	</button>
+         	<div class="modal fade" id="modal-default">
+		        <div class="modal-dialog">
+	          	<div class="modal-content">
+	            	<div class="modal-header">
+	             		<h4 class="modal-title">New Type</h4>
+              		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                		<span aria-hidden="true">&times;</span>
+              		</button>
+	            	</div>
+	            	<div class="modal-body">
+								{!! Form::open(array('route' => 'reimbursType.store','method'=>'POST', 'class' => 'form-horizontal')) !!}
+								@csrf
+                  <div class="form-group">
+              		  <label>Reimburs Type Name</label>
+             				{!! Form::text('reimburs_name', null, array('placeholder' => 'Position Name','class' => 'form-control')) !!}
+                  </div>
+	            	</div>
+	            	<div class="modal-footer">
+              		<button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+              		<button id="register" type="submit" class="btn btn-sm btn-success">Save</button>
+	            	</div>
 								{!! Form::close() !!}
-				          	</div>
-				        </div>
-				    </div>
-            	</div>
-            	<div class="card-body">
-                @if (count($errors) > 0) 
-                <div class="alert alert-danger alert-dismissible">
-					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-					<h5><i class="icon fas fa-ban"></i> Alert!</h5>
-					<ul>
-						@foreach ($errors->all() as $error)
-						<li>{{ $error }}</li>
-						@endforeach
-					</ul>
-                </div>
-                @endif
-            		<table id="example1" class="table table-bordered table-hover">
-            			<thead>
-            				<tr>
-            					<th>No</th>
-            					<th>Leave Type Name</th>
+	          	</div>
+		        </div>
+			    </div>
+       	</div>
+       	<div class="card-body">
+          @if (count($errors) > 0) 
+          <div class="alert alert-danger alert-dismissible">
+  					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+	   				<h5><i class="icon fas fa-ban"></i> Alert!</h5>
+		  			<ul>
+			   			@foreach ($errors->all() as $error)
+				  		<li>{{ $error }}</li>
+					   	@endforeach
+					  </ul>
+          </div>
+          @endif
+       		<table id="example1" class="table table-bordered table-hover">
+       			<thead>
+       				<tr>
+       					<th>No</th>
+       					<th>Leave Type Name</th>
 								<th>Created By</th>
-            					<th>Created At</th>
-            					<th></th>
-            				</tr>
-            			</thead>
-            			<tbody>
+       					<th>Created At</th>
+       					<th></th>
+       				</tr>
+       			</thead>
+       			<tbody>
 							@foreach($data as $key=>$value)
-            				<tr>
-            					<td>{{ $key+1 }}</td>
-            					<td>{{ $value->reimburs_name }}</td>
-            					<td>{{ $value->Author->name }}</td>
-            					<td>{{date("d F Y H:i",strtotime($value->created_at)) }}</td>
+       				<tr>
+       					<td>{{ $key+1 }}</td>
+       					<td>{{ $value->reimburs_name }}</td>
+       					<td>{{ $value->Author->name }}</td>
+       					<td>{{date("d F Y H:i",strtotime($value->created_at)) }}</td>
 								<td>
-									<div class="btn-group">
-										<button type="button" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-											Action
-										</button>
-										<div class="dropdown-menu" role="menu">
-											<a class="dropdown-item modalMd" href="#" value="{{ action('Apps\ConfigurationController@reimbursTypeEdit',['id'=>$value->id]) }}" data-toggle="modal" data-target="#modalMd">Edit Data</a>
-											{!! Form::open(['method' => 'POST','route' => ['reimbursType.destroy', $value->id],'style'=>'dropdown-item','onsubmit' => 'return ConfirmDelete()']) !!}
-											{!! Form::button('<a>Delete Data</a>',['type'=>'submit','class' => 'dropdown-item']) !!}
-											{!! Form::close() !!}
-										</div>
-									</div>
+                  <a class="btn btn-xs btn-warning modalMd" href="#" title="Edit Data" value="{{ action('Apps\ConfigurationController@reimbursTypeEdit',['id'=>$value->id]) }}" data-toggle="modal" data-target="#modalMd"><i class="fa fa-edit"></i>
+                  </a>
+                  {!! Form::open(['method' => 'POST','route' => ['reimbursType.destroy', $value->id],'style'=>'display:inline','onsubmit' => 'return ConfirmDelete()']) !!}
+                  {!! Form::button('<i class="fas fa-trash-alt"></i>',['type'=>'submit','class' => 'btn btn-xs btn-danger']) !!}
+                  {!! Form::close() !!}
 								</td>
-            				</tr>
+       				</tr>
 							@endforeach
-            			</tbody>
-            		</table>
-            	</div>
-            </div>
-        </div>
+       			</tbody>
+       		</table>
+       	</div>
+      </div>
     </div>
+  </div>
 </section>
 @endsection
 @section('footer.scripts')
-<script src="{{ asset('public/bower_components/admin-lte/plugins/datatables/jquery.dataTables.js') }}"></script>
-<script src="{{ asset('public/bower_components/admin-lte/plugins/datatables-bs4/js/dataTables.bootstrap4.js') }}"></script><script>
+<script src="{{ asset('bower_components/admin-lte/plugins/datatables/jquery.dataTables.js') }}"></script>
+<script src="{{ asset('bower_components/admin-lte/plugins/datatables-bs4/js/dataTables.bootstrap4.js') }}"></script><script>
   $(function () {
     $("#example1").DataTable();
     $('#example2').DataTable({
