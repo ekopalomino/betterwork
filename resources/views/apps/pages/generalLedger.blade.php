@@ -25,7 +25,7 @@ Better Work Indonesia | General Ledger
 					@csrf
 					<div class="row">
 						<div class="col-3">
-							<label for="employeeID">From</label>
+							<label>From</label>
 							<div class="input-group">
 								<div class="input-group-prepend">
 									<span class="input-group-text">
@@ -36,7 +36,7 @@ Better Work Indonesia | General Ledger
 							</div>
 						</div>
 						<div class="col-3">
-							<label for="employeeID">To</label>
+							<label>To</label>
 							<div class="input-group">
 								<div class="input-group-prepend">
 									<span class="input-group-text">
@@ -44,6 +44,17 @@ Better Work Indonesia | General Ledger
 									</span>
 								</div>
 								{!! Form::date('end', '', array('id' => 'datepicker','class' => 'form-control')) !!}
+							</div>
+						</div>
+						<div class="col-3">
+							<label>Chart of Account</label>
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text">
+										<i class="far fa-calendar-alt"></i>
+									</span>
+								</div>
+								{!! Form::select('coa_id', [null=>'Please Select'] + $coas,[], array('class' => 'form-control')) !!}
 							</div>
 						</div>
 					</div>

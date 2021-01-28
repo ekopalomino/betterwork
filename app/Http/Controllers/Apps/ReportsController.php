@@ -192,7 +192,14 @@ class ReportsController extends Controller
 
     public function generalLedgerIndex()
     {
-        return view('apps.pages.generalLedger');
+        $coas = ChartOfAccount::orderBy('account_id')->pluck('account_name','id')->toArray();
+
+        return view('apps.pages.generalLedger',compact('coas'));
+    }
+
+    public function generalLedgerShow(Request $request)
+    {
+
     }
 
 
