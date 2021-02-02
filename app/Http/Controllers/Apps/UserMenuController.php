@@ -69,7 +69,7 @@ class UserMenuController extends Controller
             $getKnowledge = KnowledgeBase::orderBy('updated_at','DESC')->get();
             /*Query for Birthday Card*/
             $getBirthday = Employee::whereMonth('date_of_birth',Carbon::now()->month)->get();
-
+            
             return view('apps.pages.userHome',compact('getBasicProfile','getEmployee','getAttendance','totalDays','getLastEdu','getSubordinate','getBulletin','getKnowledge','getCurPos','getBirthday','getSalary','getServices',
             'getFamily'));
         }  

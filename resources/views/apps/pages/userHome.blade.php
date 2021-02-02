@@ -485,11 +485,12 @@ Better Work Indonesia | User Dashboard
 											</tr>
 										</thead>
 										<tbody>
+											@foreach($getBirthday as $key=>$birthday)
 											<tr>
-												<td></td>
-												<td></td>
+												<td>{{date("d F",strtotime($birthday->date_of_birth)) }}</td>
+												<td>{{ $birthday->first_name }} {{ $birthday->last_name }}</td>
 											</tr>
-											
+											@endforeach
 										</tbody>
 									</table>
 								</div>
