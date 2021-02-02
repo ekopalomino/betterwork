@@ -6,7 +6,7 @@
   	<meta http-equiv="x-ua-compatible" content="ie=edge">
 </head>
 <body>
-	<img src="{{ asset('public/assets/img/logo.png') }}" style="opacity: .8"></img>
+	<img src="{{ asset('assets/img/logo.png') }}" style="opacity: .8"></img>
 	<p style="text-align: center;"><strong>Salary Slip</strong></p>
 	<p style="text-align: justify;"><strong>Employee Name : {{$data->first_name}} {{$data->last_name}}</strong></p>
 	<p style="text-align: justify;"><strong>Employee ID : {{$data->employee_no}}</strong></p>

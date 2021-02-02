@@ -39,7 +39,7 @@ Better Work Indonesia | Employee Payroll Reports
 					<br>
 					<div class="row">
 						<div class="col-3">
-							<button type="submit" class="btn btn-sm btn-primary">Search</button>
+							<button type="submit" class="btn btn-sm btn-success">Search</button>
 							<a button type="button" class="btn btn-sm btn-danger" href="{{ route('attReport.index') }}">Cancel</a>
 						</div>
 					</div>

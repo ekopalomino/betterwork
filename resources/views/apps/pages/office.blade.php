@@ -3,7 +3,7 @@
 Better Work Indonesia | Office Location
 @endsection
 @section('header.plugins')
-<link rel="stylesheet" href="{{ asset('public/bower_components/admin-lte/plugins/datatables-bs4/css/dataTables.bootstrap4.css') }}">
+<link rel="stylesheet" href="{{ asset('bower_components/admin-lte/plugins/datatables-bs4/css/dataTables.bootstrap4.css') }}">
 @endsection
 @section('content')
 <section class="content-header">
@@ -47,8 +47,8 @@ Better Work Indonesia | Office Location
 									</select>
 				            	</div>
 				            	<div class="modal-footer">
-				              		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				              		<button id="register" type="submit" class="btn btn-primary">Save changes</button>
+				              		<button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+				              		<button id="register" type="submit" class="btn btn-sm btn-success">Submit</button>
 				            	</div>
 								{!! Form::close() !!}
 				          	</div>
@@ -87,7 +87,8 @@ Better Work Indonesia | Office Location
 								<td>{{ $value->Cities->city_name }}</td>
 								<td></td>
             					<td>
-									<a class="btn btn-sm btn-warning modalLg" href="#" value="{{ action('Apps\ConfigurationController@officeEdit',['id'=>$value->id]) }}" data-toggle="modal" data-target="#modalLg">Edit Data</a>
+                        <a class="btn btn-xs btn-info modalLg" href="#" title="Edit Data" value="{{ action('Apps\ConfigurationController@officeEdit',['id'=>$value->id]) }}" data-toggle="modal" data-target="#modalMd"><i class="fa fa-edit"></i>
+                  </a>
 								</td>
             				</tr>
 							@endforeach
@@ -100,8 +101,8 @@ Better Work Indonesia | Office Location
 </section>
 @endsection
 @section('footer.scripts')
-<script src="{{ asset('public/bower_components/admin-lte/plugins/datatables/jquery.dataTables.js') }}"></script>
-<script src="{{ asset('public/bower_components/admin-lte/plugins/datatables-bs4/js/dataTables.bootstrap4.js') }}"></script>
+<script src="{{ asset('bower_components/admin-lte/plugins/datatables/jquery.dataTables.js') }}"></script>
+<script src="{{ asset('bower_components/admin-lte/plugins/datatables-bs4/js/dataTables.bootstrap4.js') }}"></script>
 <script type="text/javascript">
         $("#province").change(function(){
             $.ajax({

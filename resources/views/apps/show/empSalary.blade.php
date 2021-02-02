@@ -20,7 +20,7 @@ Better Work Indonesia | Employee Payroll Slip
 					<div class="row">
 						<div class="col-12">
 							<h4>
-								<img src="{{ asset('public/assets/img/logo.png') }}" style="opacity: .8">
+								<img src="{{ asset('assets/img/logo.png') }}" style="opacity: .8">
 								<small class="float-right">Salary Slip: {{date("F Y",strtotime($data->payroll_period)) }}</small>
 							</h4>
 						</div>

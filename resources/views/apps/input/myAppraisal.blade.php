@@ -62,15 +62,15 @@ Better Work Indonesia | Create New Appraisal
 			        		<tbody>
 			        			<tr>
 			        				<td>{!! Form::text('kpi[]', null, array('id'=>'kpi','placeholder' => 'KPI','class' => 'form-control')) !!}</td>
-			        				<td><button type="button" name="add" id="add" class="btn btn-success">Add</button></td>
+			        				<td><button type="button" name="add" id="add" class="btn btn-sm btn-danger">Add</button></td>
 			        			</tr>
 			        		</tbody>
 			        	</table>
 			        </div>
 			    </div>
 			    <div class="form-group">
-			    	<button type="submit" name="profile" class="btn btn-info">Save</button>
-	            	<a button type="button" class="btn btn-danger" href="{{ route('myAppraisal.index') }}">Cancel</a>
+			    	<button type="submit" name="profile" class="btn btn-sm btn-success">Submit</button>
+	            	<a button type="button" class="btn btn-sm btn-danger" href="{{ route('myAppraisal.index') }}">Cancel</a>
 	            </div>
 	            {!! Form::close() !!}	
 		    </div>

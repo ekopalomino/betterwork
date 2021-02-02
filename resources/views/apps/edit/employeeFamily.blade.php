@@ -37,7 +37,7 @@
                 </div>
             <div class="modal-footer">
                 <button type="close" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
-                <button id="register" type="submit" class="btn btn-sm btn-primary">Save changes</button>
+                <button id="register" type="submit" class="btn btn-sm btn-primary">Update</button>
             </div>
             {!! Form::close() !!}
         </div>

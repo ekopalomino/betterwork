@@ -41,8 +41,8 @@ Better Work Indonesia | Document Category
                         				</div>
 				            	</div>
 				            	<div class="modal-footer">
-				              		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				              		<button id="register" type="submit" class="btn btn-primary">Save</button>
+				              		<button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+				              		<button id="register" type="submit" class="btn btn-sm btn-success">Submit</button>
 				            	</div>
 								{!! Form::close() !!}
 				          	</div>
@@ -79,17 +79,12 @@ Better Work Indonesia | Document Category
             					<td>{{ $value->Author->name }}</td>
             					<td>{{date("d F Y H:i",strtotime($value->created_at)) }}</td>
 								<td>
-									<div class="btn-group">
-										<button type="button" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-											Action
-										</button>
-										<div class="dropdown-menu" role="menu">
-											<a class="dropdown-item modalMd" href="#" value="{{ action('Apps\ConfigurationController@documentCategoryEdit',['id'=>$value->id]) }}" data-toggle="modal" data-target="#modalMd">Edit Data</a>
-											{!! Form::open(['method' => 'POST','route' => ['docCat.destroy', $value->id],'style'=>'dropdown-item','onsubmit' => 'return ConfirmDelete()']) !!}
-											{!! Form::button('<a>Delete Data</a>',['type'=>'submit','class' => 'dropdown-item']) !!}
-											{!! Form::close() !!}
-										</div>
-									</div>
+                  <a class="btn btn-xs btn-info modalMd" href="#" title="Edit Data" value="{{ action('Apps\ConfigurationController@documentCategoryEdit',['id'=>$value->id]) }}" data-toggle="modal" data-target="#modalMd"><i class="fa fa-edit"></i>
+                  </a>
+                  {!! Form::open(['method' => 'POST','route' => ['docCat.destroy', $value->id],'style'=>'display:inline','onsubmit' => 'return ConfirmDelete()']) !!}
+                  {!! Form::button('<i class="fas fa-trash-alt"></i>',['type'=>'submit','class' => 'btn btn-xs btn-danger','title'=>'Delete Data']) !!}
+                  {!! Form::close() !!}
+									
 								</td>
             				</tr>
 							@endforeach

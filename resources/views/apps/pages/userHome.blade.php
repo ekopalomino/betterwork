@@ -62,13 +62,13 @@ Better Work Indonesia | User Dashboard
               			<div class="row">
 	              			<div class="col-md-4">
 								@if(($getAttendance) == null)
-									<a class="btn" data-toggle="modal" data-target="#clock-in"><img src="https://img.icons8.com/flat_round/64/000000/youtube-play.png">Clock In</a>
+									<a class="btn" data-toggle="modal" data-target="#clock-in"><img src="https://img.icons8.com/carbon-copy/100/000000/circled-play.png"/>Clock In</a>
 								@endif
 								@if(($getAttendance) != null)
 									@if(($getAttendance->status_id) != 'f4f23f41-0588-4111-a881-a043cf355831')
-										<a class="btn" data-toggle="modal" data-target="#clock-in"><img src="https://img.icons8.com/flat_round/64/000000/youtube-play.png">Clock In</a>
+										<a class="btn" data-toggle="modal" data-target="#clock-in"><img src="https://img.icons8.com/carbon-copy/100/000000/circled-play.png"/>Clock In</a>
 									@else
-										<a class="btn" data-toggle="modal" data-target="#clock-out"><img src="https://img.icons8.com/dotty/80/000000/home-button.png">Clock Out</a>
+										<a class="btn" data-toggle="modal" data-target="#clock-out"><img src="https://img.icons8.com/dotty/80/000000/stop-circled.png"/>Clock Out</a>
 									@endif
 								@endif
 								<div class="modal fade" id="clock-in">
@@ -375,8 +375,8 @@ Better Work Indonesia | User Dashboard
               								<td>{{ $key+1 }}</td>
               								<td>{{date("F Y",strtotime($value->payroll_period)) }}</td>
               								<td>
-												<a href="{{ route('mySalary.export',['empNo'=>$value->employee_no]) }}" class="btn btn-sm btn-app"><i class="fas fa-file-pdf"></i> Save as PDF</a>
-												<a href="{{ route('mySalary.print',['empNo'=>$value->employee_no]) }}" target="blank" class="btn btn-sm btn-app"><i class="fas fa-print"></i> Print</a>
+												<a href="{{ route('mySalary.export',['empNo'=>$value->employee_no]) }}" class="btn btn-sm btn-info"><i class="fas fa-file-pdf"></i></a>
+												<a href="{{ route('mySalary.print',['empNo'=>$value->employee_no]) }}" target="blank" class="btn btn-sm btn-info"><i class="fas fa-print"></i></a>
 											</td>
               							</tr>
 										@endforeach
@@ -501,4 +501,7 @@ Better Work Indonesia | User Dashboard
         </div>
     </div>
 </section>
+@endsection
+@section('footer.scripts')
+<script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
 @endsection

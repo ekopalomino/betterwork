@@ -4,11 +4,11 @@
 	<meta charset="utf-8">
   	<meta name="viewport" content="width=device-width, initial-scale=1">
   	<meta http-equiv="x-ua-compatible" content="ie=edge">
-  	<link rel="stylesheet" href="{{ asset('public/bower_components/admin-lte/plugins/fontawesome-free/css/all.min.css') }}">
-  	<link rel="stylesheet" href="{{ asset('public/bower_components/admin-lte/dist/css/adminlte.min.css') }}">
+  	<link rel="stylesheet" href="{{ asset('bower_components/admin-lte/plugins/fontawesome-free/css/all.min.css') }}">
+  	<link rel="stylesheet" href="{{ asset('bower_components/admin-lte/dist/css/adminlte.min.css') }}">
   	<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-  	<link rel="stylesheet" href="{{ asset('public/bower_components/admin-lte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
-  	<link rel="stylesheet" href="{{ asset('public/bower_components/admin-lte/plugins/toastr/toastr.min.css') }}">
+  	<link rel="stylesheet" href="{{ asset('bower_components/admin-lte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
+  	<link rel="stylesheet" href="{{ asset('bower_components/admin-lte/plugins/toastr/toastr.min.css') }}">
 </head>
 <body class="hold-transition sidebar-mini">
 	<div class="wrapper">
@@ -20,7 +20,7 @@
 							<div class="row">
 								<div class="col-12">
 									<h4>
-										<img src="{{ asset('public/assets/img/logo.png') }}" style="opacity: .8">
+										<img src="{{ asset('assets/img/logo.png') }}" style="opacity: .8">
 										<small class="float-right">Salary Slip: {{date("F Y",strtotime($data->payroll_period)) }}</small>
 									</h4>
 								</div>
@@ -126,9 +126,9 @@
 			</section>
 		</div>
 	</div>
-	<script src="{{ asset('public/bower_components/admin-lte/plugins/jquery/jquery.min.js') }}"></script>
-	<script src="{{ asset('public/bower_components/admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-	<script src="{{ asset('public/bower_components/admin-lte/dist/js/adminlte.min.js') }}"></script>
+	<script src="{{ asset('bower_components/admin-lte/plugins/jquery/jquery.min.js') }}"></script>
+	<script src="{{ asset('bower_components/admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+	<script src="{{ asset('bower_components/admin-lte/dist/js/adminlte.min.js') }}"></script>
 	<script type="text/javascript"> 
 		window.addEventListener("load", window.print());
 	</script>

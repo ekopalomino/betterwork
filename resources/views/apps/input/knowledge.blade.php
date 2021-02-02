@@ -62,8 +62,8 @@ Better Work Indonesia | Create Knowledge Base
 							</div>
 						</div>
 						<br>
-						<button type="submit" class="btn btn-info">Submit</button>
-	                  	<a button type="button" class="btn btn-danger" href="{{ route('knowledge.index') }}">Cancel</a>
+						<button type="submit" class="btn btn-sm btn-success">Submit</button>
+	                  	<a button type="button" class="btn btn-sm btn-danger" href="{{ route('knowledge.index') }}">Cancel</a>
 	                </div>
 	            {!! Form::close() !!}
 	        </div>

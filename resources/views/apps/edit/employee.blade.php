@@ -154,7 +154,7 @@ Better Work Indonesia | Update Employee
 	                      			</div>
 			    				</div>
 			    				<div class="form-group">
-			    					<button name="profile" type="submit" class="btn btn-sm btn-success">Save changes</button>
+			    					<button name="profile" type="submit" class="btn btn-sm btn-success">Update</button>
 	                  				<a button type="button" class="btn btn-sm btn-danger" href="{{ route('employee.index') }}">Cancel</a>
 	                  			</div>
 	                  			{!! Form::close() !!}
@@ -223,7 +223,7 @@ Better Work Indonesia | Update Employee
 								                </div>
 								                <div class="modal-footer">
 								              		<button type="close" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
-								              		<button name="family" type="submit" class="btn btn-sm btn-success">Save changes</button>
+								              		<button name="family" type="submit" class="btn btn-sm btn-success">Submit</button>
 								            	</div>
 								            	{!! Form::close() !!}
 								            </div>
@@ -325,7 +325,7 @@ Better Work Indonesia | Update Employee
 								                </div>
 								                <div class="modal-footer">
 								              		<button type="close" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
-								              		<button name="family" type="submit" class="btn btn-sm btn-success">Save changes</button>
+								              		<button name="family" type="submit" class="btn btn-sm btn-success">Submit</button>
 								            	</div>
 								            	{!! Form::close() !!}
 								            </div>
@@ -428,7 +428,7 @@ Better Work Indonesia | Update Employee
 								                </div>
 								                <div class="modal-footer">
 								              		<button type="close" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
-								              		<button name="family" type="submit" class="btn btn-sm btn-primary">Save changes</button>
+								              		<button name="family" type="submit" class="btn btn-sm btn-primary">Submit</button>
 								            	</div>
 								            	{!! Form::close() !!}
 								            </div>
@@ -561,7 +561,7 @@ Better Work Indonesia | Update Employee
 								                </div>
 								                <div class="modal-footer">
 								              		<button type="close" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
-								              		<button name="family" type="submit" class="btn btn-sm btn-success">Save changes</button>
+								              		<button name="family" type="submit" class="btn btn-sm btn-success">Submit</button>
 								            	</div>
 								            	{!! Form::close() !!}
 								            </div>

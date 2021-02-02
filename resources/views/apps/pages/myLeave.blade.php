@@ -30,7 +30,7 @@ Better Work Indonesia | My Time Off Request
 							<div class="modal-dialog modal-lg">
 								<div class="modal-content">
 									<div class="modal-header">
-										<h4 class="modal-title">New Request</h4>
+										<h4 class="modal-title">New Time Off Request</h4>
 										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 											<span aria-hidden="true">&times;</span>
 										</button>
@@ -93,8 +93,8 @@ Better Work Indonesia | My Time Off Request
 										{!! Form::hidden('employee_id', $getEmployee->id, array('class' => 'form-control')) !!}
 									</div>
 									<div class="modal-footer">
-										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-										<button id="register" type="submit" class="btn btn-primary">Submit</button>
+										<button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+										<button id="register" type="submit" class="btn btn-sm btn-success">Submit</button>
 									</div>
 									{!! Form::close() !!}
 								</div>

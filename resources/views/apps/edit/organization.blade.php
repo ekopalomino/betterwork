@@ -10,8 +10,8 @@
             <label class="col-sm-12 col-form-label">Parent</label>
 			{!! Form::select('parent', $parents,old('parent'), array('class' => 'form-control')) !!}
 			<div class="modal-footer">
-                <button type="close" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button id="register" type="submit" class="btn btn-primary">Save changes</button>
+                <button type="close" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+                <button id="register" type="submit" class="btn btn-sm btn-success">Submit</button>
             </div>
             {!! Form::close() !!}
         </div>

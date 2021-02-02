@@ -58,8 +58,8 @@ Better Work Indonesia | Create Bulletin
                           		</textarea>
                           	</div>
 						</div>
-						<button type="submit" class="btn btn-info">Submit</button>
-	                  	<a button type="button" class="btn btn-danger" href="{{ route('bulletin.index') }}">Cancel</a>
+						<button type="submit" class="btn btn-sm btn-success">Submit</button>
+	                  	<a button type="button" class="btn btn-sm btn-danger" href="{{ route('bulletin.index') }}">Cancel</a>
 	                </div>
 	            {!! Form::close() !!}
 	        </div>

@@ -42,7 +42,7 @@ Better Work Indonesia | Reimbursment Type
 	            	</div>
 	            	<div class="modal-footer">
               		<button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
-              		<button id="register" type="submit" class="btn btn-sm btn-success">Save</button>
+              		<button id="register" type="submit" class="btn btn-sm btn-success">Submit</button>
 	            	</div>
 								{!! Form::close() !!}
 	          	</div>
@@ -79,7 +79,7 @@ Better Work Indonesia | Reimbursment Type
        					<td>{{ $value->Author->name }}</td>
        					<td>{{date("d F Y H:i",strtotime($value->created_at)) }}</td>
 								<td>
-                  <a class="btn btn-xs btn-warning modalMd" href="#" title="Edit Data" value="{{ action('Apps\ConfigurationController@reimbursTypeEdit',['id'=>$value->id]) }}" data-toggle="modal" data-target="#modalMd"><i class="fa fa-edit"></i>
+                  <a class="btn btn-xs btn-info modalMd" href="#" title="Edit Data" value="{{ action('Apps\ConfigurationController@reimbursTypeEdit',['id'=>$value->id]) }}" data-toggle="modal" data-target="#modalMd"><i class="fa fa-edit"></i>
                   </a>
                   {!! Form::open(['method' => 'POST','route' => ['reimbursType.destroy', $value->id],'style'=>'display:inline','onsubmit' => 'return ConfirmDelete()']) !!}
                   {!! Form::button('<i class="fas fa-trash-alt"></i>',['type'=>'submit','class' => 'btn btn-xs btn-danger']) !!}

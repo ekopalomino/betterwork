@@ -211,12 +211,14 @@
 									<p>Employee Position</p>
 								</a>
 							</li>
+							@can('disable')
 							<li class="nav-item">
 								<a href="" class="nav-link ">
 									<i class="far fa-circle nav-icon"></i>
 									<p>Job Title</p>
 								</a>
 							</li>
+							@endcan
 							<li class="nav-item">
 								<a href="{{ route('organization.index') }}" class="nav-link {{set_active('organization.index') }}">
 									<i class="far fa-circle nav-icon"></i>
@@ -235,6 +237,7 @@
 									<p>Office Location</p>
 								</a>
 							</li>
+							@can('disable')
 							<li class="nav-item">
 								<a href="{{ route('leaveType.index') }}" class="nav-link {{set_active('leaveType.index') }}">
 									<i class="far fa-circle nav-icon"></i>
@@ -247,6 +250,7 @@
 									<p>Holiday</p>
 								</a>
 							</li>
+							@endcan
 							<li class="nav-item">
 								<a href="{{ route('reimbursType.index') }}" class="nav-link {{set_active('reimbursType.index') }}">
 									<i class="far fa-circle nav-icon"></i>
@@ -267,6 +271,7 @@
 							</li>
 						</ul>
 					</li>
+					@can('disable')
 					<li class="nav-item">
 						<a href="{{ route('hrSet.index') }}" class="nav-link {{set_active('hrSet.index') }}">
 							<i class="far fa-circle nav-icon"></i>
@@ -287,6 +292,7 @@
 							</li>
 						</ul>
 					</li>
+					@endcan
 				</ul>
 			</li>
 			@endcan
