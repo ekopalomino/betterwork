@@ -3,7 +3,7 @@
 namespace iteos\Console\Commands;
 
 use Illuminate\Console\Command;
-use iteos\Models\AssetManagement;
+use iteos\Models\AssetManagements;
 use iteos\Models\AssetDepreciation;
 use iteos\Models\AccountStatement;
 use iteos\Models\JournalEntry;
@@ -43,10 +43,10 @@ class Depreciation extends Command
      */
     public function handle()
     {
-        $assets = AssetManagement::where('status_id','81828ad9-fea7-41ff-b6d2-769fbc47c3fa')->get();
+        $assets = AssetManagements::where('status_id','81828ad9-fea7-41ff-b6d2-769fbc47c3fa')->get();
         foreach($assets as $asset) {
             $getCurRecord = AssetDepreciation::where('asset_id',$asset->id)->orderBy('updated_at','DESC')->first();
-            $getCurItem = AssetManagement::where('id',$asset->id)->first();
+            $getCurItem = AssetManagements::where('id',$asset->id)->first();
             $getCategory = AssetCategory::where('id',$getCurItem->category_name)->first();
             if(($asset->method_id) == '1') {
                 $yearValue = ($asset->purchase_price - $asset->residual_value)/$asset->estimate_time;

@@ -627,7 +627,7 @@ class AccountingController extends Controller
             'residual_value' => 'required',
         ]);
 
-        $data = AssetManagement::create([
+        $data = AssetManagements::create([
             'asset_code' => $request->input('asset_code'),
             'name' => $request->input('asset_name'),
             'category_name' => $request->input('category_name'),
@@ -647,7 +647,7 @@ class AccountingController extends Controller
 
     public function assetManagementShow($id)
     {
-        $data = AssetManagement::find($id);
+        $data = AssetManagements::find($id);
         $details = AssetDepreciation::where('asset_id',$id)->orderBy('created_at','ASC')->get();
 
         return view('apps.show.assetDepreciation',compact('data','details'));
@@ -759,6 +759,23 @@ class AccountingController extends Controller
         }
 
         return redirect()->route('budget.index');
+    }
+
+    public function journalIndex()
+    {
+        return view('apps.pages.manualJournal');
+    }
+
+    public function journalCreate()
+    {
+        $coas = ChartOfAccount::orderBy('account_id')->pluck('account_name','id')->toArray();
+
+        return view('apps.input.manualJournal',compact('coas'));
+    }
+
+    public function journalStore(Request $request)
+    {
+
     }
 
 }

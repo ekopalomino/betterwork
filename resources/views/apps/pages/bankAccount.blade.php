@@ -47,8 +47,8 @@ Better Work Indonesia | Bank Account
                         			{!! Form::date('opening_date', '', array('id' => 'datepicker','class' => 'form-control')) !!}
 				            	</div>
 				            	<div class="modal-footer">
-				              		<button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
-				              		<button type="submit" class="btn btn-sm btn-primary">Save changes</button>
+				              		<button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+				              		<button type="submit" class="btn btn-sm btn-success">Submit</button>
 				            	</div>
 							{!! Form::close() !!}
 				          	</div>

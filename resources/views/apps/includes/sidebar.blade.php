@@ -491,7 +491,7 @@
 			@endcan
 			@can('Access Accounting')
 			@if(\Route::is(['accounting.index','bank.index','accountTransaction.index','accTransaction.index','accTransaction.create','spend.create','receive.create','bankStatement.index','account.show','asset.index',
-			'journal.index','journal.report','budget.index','budgetDetail.create','budgetDetail.edit','statToAcc.index','asset.show','coaCat.index','bankStatement.import','statToAcc.index','bankAcc.index','assetCat.index','asset.index','bankStatement.index','account.show','trial.index','findAcc.find','trial.report','ledger.index','budget.index']))
+			'journal.index','journal.report','budget.index','budgetDetail.create','budgetDetail.edit','statToAcc.index','asset.show','coaCat.index','bankStatement.import','statToAcc.index','bankAcc.index','assetCat.index','asset.index','bankStatement.index','account.show','trial.index','findAcc.find','trial.report','ledger.index','budget.index','manualJournal.index','manualJournal.create']))
 			<li class="nav-item has-treeview {{set_open(['accountTransaction.index','spend.create','receive.create','bankStatement.import','statToAcc.index','bankStatement.index','account.show','findAcc.find']) }}">
 				<a href="#" class="nav-link {{set_active(['accountTransaction.index','spend.create','receive.create','bankStatement.import','statToAcc.index','bankStatement.index','account.show','findAcc.find']) }}">
 					<p>
@@ -579,7 +579,7 @@
 					</li>
 				</ul>
 			</li>
-			<li class="nav-item has-treeview {{set_open(['coaCat.index','bankAcc.index','assetCat.index','asset.index','journal.index','journal.report','trial.index','trial.report','ledger.index','budget.index']) }}">
+			<li class="nav-item has-treeview {{set_open(['coaCat.index','bankAcc.index','assetCat.index','asset.index','journal.index','journal.report','trial.index','trial.report','ledger.index','budget.index','manualJournal.index','manualJournal.create']) }}">
 				<a href="#" class="nav-link">
 					<p>
 						Accounting
@@ -587,7 +587,7 @@
 					</p>
 				</a>
 				<ul class="nav nav-treeview">
-					<li class="nav-item {{set_open(['journal.index','journal.report','trial.index','trial.report','ledger.index','budget.index']) }}">
+					<li class="nav-item {{set_open(['journal.index','journal.report','trial.index','trial.report','ledger.index','budget.index','manualJournal.index','manualJournal.create']) }}">
 						<a href="" class="nav-link {{set_active(['journal.index','journal.report','trial.index','trial.report','ledger.index','budget.index']) }}">
 							<i class="nav-icon fas fa-table"></i>
 							<p>Reports</p>
@@ -717,14 +717,14 @@
 							@endcan
 						</ul>
 					</li>
-					<li class="nav-item has-treeview {{set_open(['coaCat.index','bankAcc.index','assetCat.index','asset.index']) }}">
+					<li class="nav-item has-treeview {{set_open(['coaCat.index','bankAcc.index','assetCat.index','asset.index','manualJournal.index','manualJournal.create']) }}">
 						<a href="" class="nav-link ">
 							<i class="nav-icon fas fa-tools"></i>
 							<p>Advance</p>
 							<i class="right fas fa-angle-left"></i>
 						</a>
 						<ul class="nav nav-treeview">
-							<li class="nav-item {{set_open(['asset.index']) }}">
+							<li class="nav-item {{set_open(['asset.index','manualJournal.index','manualJournal.create']) }}">
 								<a href="" class="nav-link ">
 									<p>Advance Features
 										<i class="right fas fa-angle-left"></i>
@@ -740,7 +740,7 @@
 									</li>
 									@endcan
 									<li class="nav-item ">
-										<a href="" class="nav-link ">
+										<a href="{{ route('manualJournal.index') }}" class="nav-link {{set_active(['manualJournal.index','manualJournal.create']) }}">
 											<i class="far fa-circle nav-icon"></i>
 											<p>Manual Journals</p>
 										</a>

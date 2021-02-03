@@ -21,6 +21,7 @@ use iteos\Models\Province;
 use iteos\Models\City;
 use iteos\Models\Holiday;
 use iteos\Models\Division;
+use iteos\Imports\CoaImport;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Hash;
@@ -485,6 +486,35 @@ class ConfigurationController extends Controller
             'alert-type' => 'success'
         );
 
+        return redirect()->route('coaCat.index')->with($notification);
+    }
+
+    public function coaImport(Request $request)
+    {
+        $request->validate([
+            'coa' => 'required|file|mimes:xlsx,xls,XLSX,XLS'
+        ]);
+
+        $input = $request->all();
+        
+        $data = Excel::toArray(new CoaImport, $request->file('coa'))[0];
+       
+        foreach($data as $index=> $value) {
+            $result = BankStatement::create([
+                'account_id' => $row['account_id'],
+                'account_name' => $row['account_name'],
+                'account_category' => $row['account_category'],
+                'opening_balance' => $row['opening_balance'],
+            ]);
+        }
+        
+        $log = 'Chart Of Account Successfully Import';
+        \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'Chart Of Account Successfully Import',
+            'alert-type' => 'success'
+        );
+        
         return redirect()->route('coaCat.index')->with($notification);
     }
 

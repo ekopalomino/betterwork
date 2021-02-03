@@ -284,6 +284,11 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::post('accounting/asset-management/store','Apps\AccountingController@assetManagementStore')->name('asset.store');
 	Route::get('accounting/asset-management/depreciation-record/{id}','Apps\AccountingController@assetManagementShow')->name('asset.show');
 
+	Route::get('accounting/manual-journal','Apps\AccountingController@journalIndex')->name('manualJournal.index');
+	Route::get('accounting/manual-journal/create','Apps\AccountingController@journalCreate')->name('manualJournal.create');
+	Route::post('accounting/manual-journal/store','Apps\AccountingController@journalStore')->name('manualJournal.store');
+	
+
 	Route::get('accounting/budget-manager','Apps\AccountingController@budgetManagerIndex')->name('budget.index');
 	Route::post('accounting/budget-manager/store','Apps\AccountingController@budgetNewStore')->name('budget.store');
 	Route::get('accounting/budget-manager/detail/{id}','Apps\AccountingController@budgetDetailCreate')->name('budgetDetail.create');
