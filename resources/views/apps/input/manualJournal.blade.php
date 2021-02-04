@@ -34,7 +34,7 @@ Better Work Indonesia | Create Manual Journal
 							<label>Transaction Date</label>
 							{!! Form::date('transaction_date', '', array('id' => 'datepicker','class' => 'form-control')) !!}
 						</div>
-						<div class="col-8">
+						<div class="col-5">
 							<label>Narration</label>
 							<input type="text" class="form-control" id="reference" name="reference" placeholder="Reference">
 						</div>
@@ -46,7 +46,8 @@ Better Work Indonesia | Create Manual Journal
 								<thead>
 									<tr>
 										<th>Item</th>
-										<th>Account</th>
+										<th>Debit Account</th>
+										<th>Credit Account</th>
 										<th>Debit</th>
 										<th>Credit</th>
 										<th></th>
@@ -55,7 +56,8 @@ Better Work Indonesia | Create Manual Journal
 								<tbody>
 									<tr>
 										<td>{!! Form::text('item[]', null, array('id' => 'item', 'class' => 'form-control','required')) !!}</td>
-										<td>{!! Form::select('account[]', [null=>'Please Select'] + $coas,[], array('class' => 'form-control','required')) !!}</td>
+										<td>{!! Form::select('debit_account[]', [null=>'Please Select'] + $coas,[], array('class' => 'form-control','required')) !!}</td>
+										<td>{!! Form::select('credit_account[]', [null=>'Please Select'] + $coas,[], array('class' => 'form-control','required')) !!}</td>
 										<td>{!! Form::number('debit[]', null, array('placeholder' => 'Unit Price','class' => 'form-control','required')) !!}</td>
 										<td>{!! Form::number('credit[]', null, array('placeholder' => 'Unit Price','class' => 'form-control','required')) !!}</td>
 										<td><button type="button" name="add" id="add" class="btn btn-sm btn-success">Add</button></td>
@@ -83,7 +85,7 @@ Better Work Indonesia | Create Manual Journal
       	$('#add').click(function(){  
            	i++;  
            	$('#salary').append(
-			'<tr id="row'+i+'" class="dynamic-added"><td>{!! Form::text('item[]', null, array('id' => 'item','class' => 'form-control','required')) !!}</td><td>{!! Form::select('account[]', [null=>'Please Select'] + $coas,[], array('class' => 'form-control','required')) !!}</td><td>{!! Form::number('debit[]', null, array('placeholder' => 'Unit Price','class' => 'form-control','required')) !!}</td><td>{!! Form::number('credit[]', null, array('placeholder' => 'Unit Price','class' => 'form-control','required')) !!}</td><td><button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove">X</button></td></tr>')
+			'<tr id="row'+i+'" class="dynamic-added"><td>{!! Form::text('item[]', null, array('id' => 'item','class' => 'form-control','required')) !!}</td><td>{!! Form::select('debit_account[]', [null=>'Please Select'] + $coas,[], array('class' => 'form-control','required')) !!}</td><td>{!! Form::select('credit_account[]', [null=>'Please Select'] + $coas,[], array('class' => 'form-control','required')) !!}</td><td>{!! Form::number('debit[]', null, array('placeholder' => 'Unit Price','class' => 'form-control','required')) !!}</td><td>{!! Form::number('credit[]', null, array('placeholder' => 'Unit Price','class' => 'form-control','required')) !!}</td><td><button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove">X</button></td></tr>')
             });
         });  
       

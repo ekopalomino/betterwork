@@ -15,6 +15,7 @@ use iteos\Models\CoaCategory;
 use iteos\Models\AssetCategory;
 use iteos\Models\BankAccount;
 use iteos\Models\BankStatement;
+use iteos\Models\AccountStatement;
 use iteos\Models\Organization;
 use iteos\Models\Office;
 use iteos\Models\Province;
@@ -597,6 +598,14 @@ class ConfigurationController extends Controller
             'type' => 'Debit',
             'description' => 'Saldo Awal',
             'status_id' => 'f6e41f5d-0f6e-4eca-a141-b6c7ce34cae6',
+        ]);
+
+        $accounts = AccountStatement::create([
+            'transaction_date' => $data->opening_date,
+            'total' => $data->opening_balance,
+            'balance' => $data->opening_balance,
+            'status_id' => 'f6e41f5d-0f6e-4eca-a141-b6c7ce34cae6',
+            'created_by' => auth()->user()->employee_id,
         ]);
 
         $updateBalance = ChartOfAccount::where('id',$data->chart_id)->update([

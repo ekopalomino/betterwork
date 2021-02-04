@@ -775,6 +775,13 @@ class AccountingController extends Controller
 
     public function journalStore(Request $request)
     {
+        $prevData = AccountStatement::where('transaction_date','<=',$request->input('transaction_date'))->first();
+        if(!empty($prevData)) {
+            $savePrev = $prevData->balance;
+        } else {
+            $savePrev = '0';
+        }
+
         $statements = AccountStatement::create([
             'transaction_date' => $request->input('transaction_date'),
             'reference_no' => $request->input('reference'),
@@ -787,7 +794,8 @@ class AccountingController extends Controller
         $items = $request->item;
         $debits = $request->debit;
         $credits = $request->credit;
-        $accounts = $request->account;
+        $debaccounts = $request->debit_account;
+        $creaccounts = $request->credit_account;
         $total = 0;
 
         foreach($items as $index=>$item) {
@@ -795,19 +803,26 @@ class AccountingController extends Controller
                 'account_statement_id' => $statements->id,
                 'item' => $item,
                 'unit_price' => $debits[$index],
-                'account_name' => $accounts[$index],
+                'account_name' => $debaccounts[$index],
                 'trans_type' => 'Debit',
                 'amount' => $debits[$index],
             ]);
             $credit = JournalEntry::create([
-                'account_statement_id' => $dataM->id,
+                'account_statement_id' => $statements->id,
                 'item' => $item,
                 'unit_price' => $credits[$index],
-                'account_name' => $accounts[$index],
+                'account_name' => $creaccounts[$index],
                 'trans_type' => 'Credit',
                 'amount' => $credits[$index],
             ]);
         }
+        $total+=$debit->amount;
+
+        $sum = AccountStatement::where('id',$statements->id)->first();
+        $updateSum = $sum->update([
+            'balance' => ($savePrev) - ($total),
+            'total' => $total,
+        ]);
 
         $log = 'Manual Journal Created';
         \LogActivity::addToLog($log);
