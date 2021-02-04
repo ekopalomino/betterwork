@@ -775,6 +775,48 @@ class AccountingController extends Controller
 
     public function journalStore(Request $request)
     {
+        $statements = AccountStatement::create([
+            'transaction_date' => $request->input('transaction_date'),
+            'reference_no' => $request->input('reference'),
+            'payee' => $request->input('payee'),
+            'tax_reference' => $request->input('tax_reference'),
+            'status_id' => '1f2967a5-9a88-4d44-a66b-5339c771aca0',
+            'created_by' => auth()->user()->employee_id,
+        ]);
+
+        $items = $request->item;
+        $debits = $request->debit;
+        $credits = $request->credit;
+        $accounts = $request->account;
+        $total = 0;
+
+        foreach($items as $index=>$item) {
+            $debit = JournalEntry::create([
+                'account_statement_id' => $statements->id,
+                'item' => $item,
+                'unit_price' => $debits[$index],
+                'account_name' => $accounts[$index],
+                'trans_type' => 'Debit',
+                'amount' => $debits[$index],
+            ]);
+            $credit = JournalEntry::create([
+                'account_statement_id' => $dataM->id,
+                'item' => $item,
+                'unit_price' => $credits[$index],
+                'account_name' => $accounts[$index],
+                'trans_type' => 'Credit',
+                'amount' => $credits[$index],
+            ]);
+        }
+
+        $log = 'Manual Journal Created';
+        \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'Manual Journal Created',
+            'alert-type' => 'success'
+        );
+        
+        return redirect()->route('manualJournal.index')->with($notification);
 
     }
 

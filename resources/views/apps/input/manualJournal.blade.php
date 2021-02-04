@@ -23,7 +23,7 @@ Better Work Indonesia | Create Manual Journal
 		<div class="col-12">
 			<div class="card card-danger card-outline">
 				<div class="card-body">
-					{!! Form::open(array('route' => 'spend.store','method'=>'POST')) !!}
+					{!! Form::open(array('route' => 'manualJournal.store','method'=>'POST')) !!}
             		@csrf
 					<div class="row">
 						<div class="col-2">
@@ -34,8 +34,8 @@ Better Work Indonesia | Create Manual Journal
 							<label>Transaction Date</label>
 							{!! Form::date('transaction_date', '', array('id' => 'datepicker','class' => 'form-control')) !!}
 						</div>
-						<div class="col-2">
-							<label>Naration</label>
+						<div class="col-8">
+							<label>Narration</label>
 							<input type="text" class="form-control" id="reference" name="reference" placeholder="Reference">
 						</div>
 					</div>
