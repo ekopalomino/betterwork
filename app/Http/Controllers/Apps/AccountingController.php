@@ -262,7 +262,7 @@ class AccountingController extends Controller
     {
         $data = AccountStatement::find($id);
         $posted = $data->update([
-            'status_id' => 'e6cb9165-131e-406c-81c8-c2ba9a2c567e',
+            'status_id' => 'dc664dfb-4895-4e4a-9517-b0446f0d9846',
             'posted_by' => auth()->user()->employee_id,
         ]);
 

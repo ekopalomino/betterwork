@@ -522,19 +522,20 @@ class ConfigurationController extends Controller
     public function coaCategoryEdit($id)
     {
         $data = ChartOfAccount::find($id);
-        $parents = ChartOfAccount::pluck('account_name','account_name')->toArray();
+        $categories = CoaCategory::orderBy('id','ASC')->pluck('category_name','id')->toArray();
 
-        return view('apps.edit.coaCategory',compact('data','parents'))->renderSections()['content'];
+        return view('apps.edit.coaCategory',compact('data','categories'))->renderSections()['content'];
     }
 
     public function coaCategoryUpdate(Request $request,$id)
     {
         $this->validate($request, [
-            'category_name' => 'required',
+            'account_name' => 'required',
         ]);
-        $orig = GrievanceCategory::find($id);
+        $orig = ChartOfAccount::find($id);
         $data = $orig->update([
-            'category_name' => $request->input('category_name'),
+            'account_name' => $request->input('account_name'),
+            'account_category' => $request->input('account_category'),
             'updated_by' => auth()->user()->id,
         ]);
 
@@ -550,7 +551,7 @@ class ConfigurationController extends Controller
 
     public function coaCategoryDestroy($id)
     {
-        $data = GrievanceCategory::find($id);
+        $data = ChartOfAccount::find($id);
         $log = 'Category '.($data->category_name).' Deleted';
          \LogActivity::addToLog($log);
         $notification = array (
