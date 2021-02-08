@@ -269,6 +269,15 @@ class AccountingController extends Controller
         return redirect()->back();
     }
 
+    public function AccountPrint($id)
+    {
+        $data = AccountStatement::with(['Child' => function($query) {
+            $query->where('source','User');
+        }])->where('id',$id)->first();
+        
+        return view('apps.print.accountTransaction',compact('data'));
+    }
+
     public function AccountReconcile(Request $request,$id)
     {
 

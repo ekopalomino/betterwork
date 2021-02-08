@@ -279,6 +279,7 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::post('accounting/account-statement/checked/{id}','Apps\AccountingController@AccountChecked')->name('accTransaction.checked');
 	Route::post('accounting/account-statement/approved/{id}','Apps\AccountingController@AccountApprove')->name('accTransaction.approve');
 	Route::post('accounting/account-statement/posted/{id}','Apps\AccountingController@AccountPosted')->name('accTransaction.posted');
+	Route::get('accounting/account-statement/print/{id}','Apps\AccountingController@AccountPrint')->name('accTransaction.print');
 	Route::post('accounting/account-statement/reconcile/{id}','Apps\AccountingController@AccountReconcile')->name('accTransaction.reconcile');
 	Route::get('accounting/asset-management','Apps\AccountingController@assetManagementIndex')->name('asset.index');
 	Route::post('accounting/asset-management/store','Apps\AccountingController@assetManagementStore')->name('asset.store');

@@ -145,8 +145,7 @@ Better Work Indonesia | Transaction Detail
 						</table>
 					</div>
 					<div class="row">
-						<a href="" class="btn btn-sm btn-app"><i class="fas fa-file-pdf"></i> Save as PDF</a>
-						<a href="" target="blank" class="btn btn-sm btn-app"><i class="fas fa-print"></i> Print</a>
+						<a href="{{ route('accTransaction.print',['id'=>$data->id]) }}" target="blank" class="btn btn-sm btn-app"><i class="fas fa-print"></i> Print</a>
 					</div>
 				</div>
 			</div>
