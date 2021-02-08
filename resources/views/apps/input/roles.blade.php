@@ -254,11 +254,96 @@ Better Work Indonesia | Create Role
 												<td style="text-align:center"><input type="checkbox" value="1" name="permission[]" disabled /></td>
 												<td style="text-align:center"><input type="checkbox" value="1" name="permission[]" disabled /></td>
 											</tr>
+											<tr style="text-align:center">
+												<td style="font-size:16px;" colspan="7"><strong>Finance Sub Menu</strong></td>
+											</tr>
+											<tr>
+												<td><strong>1</strong></td>
+												<td>Transaction</td>
+												<td style="text-align:center"><input type="checkbox" value="51" name="permission[]" /></td>
+												<td style="text-align:center"><input type="checkbox" value="52" name="permission[]" /></td>
+												<td style="text-align:center"><input type="checkbox" value="53" name="permission[]" /></td>
+												<td style="text-align:center"><input type="checkbox" value="1" name="permission[]" disabled /></td>
+												<td style="text-align:center"><input type="checkbox" value="54" name="permission[]" /></td>
+											</tr>
+											<tr>
+												<td><strong>2</strong></td>
+												<td>Import Bank Statement</td>
+												<td style="text-align:center"><input type="checkbox" value="51" name="permission[]" disabled /></td>
+												<td style="text-align:center"><input type="checkbox" value="55" name="permission[]" /></td>
+												<td style="text-align:center"><input type="checkbox" value="53" name="permission[]" disabled /></td>
+												<td style="text-align:center"><input type="checkbox" value="1" name="permission[]" disabled /></td>
+												<td style="text-align:center"><input type="checkbox" value="54" name="permission[]" disabled /></td>
+											</tr>
+											<tr>
+												<td><strong>3</strong></td>
+												<td>Manual Journal</td>
+												<td style="text-align:center"><input type="checkbox" value="70" name="permission[]" /></td>
+												<td style="text-align:center"><input type="checkbox" value="56" name="permission[]" /></td>
+												<td style="text-align:center"><input type="checkbox" value="53" name="permission[]"  disabled /></td>
+												<td style="text-align:center"><input type="checkbox" value="1" name="permission[]" disabled /></td>
+												<td style="text-align:center"><input type="checkbox" value="54" name="permission[]" disabled /></td>
+											</tr>
+											<tr>
+												<td><strong>4</strong></td>
+												<td>Asset Management</td>
+												<td style="text-align:center"><input type="checkbox" value="57" name="permission[]" /></td>
+												<td style="text-align:center"><input type="checkbox" value="58" name="permission[]" /></td>
+												<td style="text-align:center"><input type="checkbox" value="59" name="permission[]" /></td>
+												<td style="text-align:center"><input type="checkbox" value="1" name="permission[]" disabled /></td>
+												<td style="text-align:center"><input type="checkbox" value="54" name="permission[]" disabled /></td>
+											</tr>
+											<tr>
+												<td><strong>5</strong></td>
+												<td>Budget Management</td>
+												<td style="text-align:center"><input type="checkbox" value="60" name="permission[]" /></td>
+												<td style="text-align:center"><input type="checkbox" value="61" name="permission[]" /></td>
+												<td style="text-align:center"><input type="checkbox" value="62" name="permission[]" /></td>
+												<td style="text-align:center"><input type="checkbox" value="1" name="permission[]" disabled /></td>
+												<td style="text-align:center"><input type="checkbox" value="54" name="permission[]" disabled /></td>
+											</tr>
+											<tr>
+												<td><strong>6</strong></td>
+												<td>Reports</td>
+												<td style="text-align:center"><input type="checkbox" value="63" name="permission[]" /></td>
+												<td style="text-align:center"><input type="checkbox" value="61" name="permission[]" disabled /></td>
+												<td style="text-align:center"><input type="checkbox" value="62" name="permission[]" disabled /></td>
+												<td style="text-align:center"><input type="checkbox" value="1" name="permission[]" disabled /></td>
+												<td style="text-align:center"><input type="checkbox" value="54" name="permission[]" disabled /></td>
+											</tr>
+											<tr>
+												<td><strong>7</strong></td>
+												<td>Chart of Account</td>
+												<td style="text-align:center"><input type="checkbox" value="64" name="permission[]" /></td>
+												<td style="text-align:center"><input type="checkbox" value="65" name="permission[]" /></td>
+												<td style="text-align:center"><input type="checkbox" value="62" name="permission[]" disabled /></td>
+												<td style="text-align:center"><input type="checkbox" value="1" name="permission[]" disabled /></td>
+												<td style="text-align:center"><input type="checkbox" value="54" name="permission[]" disabled /></td>
+											</tr>
+											<tr>
+												<td><strong>8</strong></td>
+												<td>Asset Category</td>
+												<td style="text-align:center"><input type="checkbox" value="66" name="permission[]" /></td>
+												<td style="text-align:center"><input type="checkbox" value="67" name="permission[]" /></td>
+												<td style="text-align:center"><input type="checkbox" value="62" name="permission[]" disabled /></td>
+												<td style="text-align:center"><input type="checkbox" value="1" name="permission[]" disabled /></td>
+												<td style="text-align:center"><input type="checkbox" value="54" name="permission[]" disabled /></td>
+											</tr>
+											<tr>
+												<td><strong>9</strong></td>
+												<td>Bank Account</td>
+												<td style="text-align:center"><input type="checkbox" value="68" name="permission[]" /></td>
+												<td style="text-align:center"><input type="checkbox" value="69" name="permission[]" /></td>
+												<td style="text-align:center"><input type="checkbox" value="62" name="permission[]" disabled /></td>
+												<td style="text-align:center"><input type="checkbox" value="1" name="permission[]" disabled /></td>
+												<td style="text-align:center"><input type="checkbox" value="54" name="permission[]" disabled /></td>
+											</tr>
 										</tbody>
 									</table>
 								</div>
 							</div>
 						</div>
+						<br>
 	                  	<button type="submit" class="btn btn-sm btn-info">Submit</button>
 	                  	<a button type="button" class="btn btn-sm btn-danger" href="{{ route('role.index') }}">Cancel</a>
 	                </div>

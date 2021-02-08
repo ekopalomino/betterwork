@@ -13,18 +13,7 @@ class PermissionTableSeeder extends Seeder
     public function run()
     {
         $permissions = [
-            'Edit Application Setting',
-            'Create Grievance Master Data',
-            'Edit Grievance Master Data',
-            'Delete Grievance Master Data',
-            'Create Bulletin Board',
-            'Edit Bulletin Board',
-            'Delete Bulletin Board',
-            'Create Manual Grievance',
-            'Edit Grievance',
-            'Process Grievance',
-            'Comment Grievance',
-            'Create Reports',
+            'View Manual Journal',
         ];
 
         foreach($permissions as $permission) {
