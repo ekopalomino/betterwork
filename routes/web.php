@@ -310,6 +310,7 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::get('accounting/reports/trial-balance','Apps\ReportsController@trialBalanceIndex')->name('trial.index');
 	Route::post('accounting/reports/trial-balance/show','Apps\ReportsController@trialBalanceShow')->name('trial.report');
 	Route::get('accounting/reports/general-ledger','Apps\ReportsController@generalLedgerIndex')->name('ledger.index');
+	Route::post('accounting/reports/general-ledger/show','Apps\ReportsController@generalLedgerShow')->name('ledger.report');
 
 	Route::get('help/user-menu/reset-password','Apps\HelpController@resetPassIndex')->name('resetPass.index');
 	Route::get('help/user-menu/update-profile','Apps\HelpController@updateProfile')->name('updateProfile.index');

@@ -150,7 +150,7 @@ class ReportsController extends Controller
     {
         $dateStart = $request->input('start');
         $dateEnd = $request->input('end');
-        $data = AccountStatement::with('Child')->where('transaction_date','>=',$dateStart)->where('transaction_date','<=',$dateEnd)->get();
+        $data = AccountStatement::with('Child')->whereBetween('transaction_date',[$dateStart,$dateEnd])->orderBy('transaction_date','ASC')->get();
         /*$data = DB::table('account_statements')->join('bank_statements','bank_statements.trans_group','account_statements.trans_group')->where('account_statements.status_id','f6e41f5d-0f6e-4eca-a141-b6c7ce34cae6')->get();*/
         /*$data = DB::table('account_statements')->where('status_id','f6e41f5d-0f6e-4eca-a141-b6c7ce34cae6')->select('trans_group','transaction_date','account_id','bank_id','payee','amount','trans_type')->groupBy('trans_group','transaction_date','account_id','bank_id','payee','amount','trans_type')->get();*/
         
@@ -168,7 +168,7 @@ class ReportsController extends Controller
         $dateEnd = $request->input('end');
         $data = ChartOfAccount::join('journal_entries','journal_entries.account_name','chart_of_accounts.id')
                                 ->select(DB::raw('chart_of_accounts.account_id as ID, chart_of_accounts.account_name as Name, sum(journal_entries.amount) as Total, journal_entries.trans_type as Type'))
-                                ->where('transaction_date','>=',$dateStart)->where('transaction_date','<=',$dateEnd)
+                                ->whereBetween('journal_entries.transaction_date',[$dateStart,$dateEnd])
                                 ->orderBy('chart_of_accounts.account_id')
                                 ->groupBy('chart_of_accounts.account_id','chart_of_accounts.account_name','journal_entries.trans_type')
                                 ->get();
@@ -186,20 +186,38 @@ class ReportsController extends Controller
                              ->join('journal_entries','journal_entries.account_name','chart_of_accounts.id')
                              ->orderBy('coa_categories.id')
                              ->get(); */
-        
+       
         return view('apps.reports.trialBalance',compact('data','debit','credit','dateStart','dateEnd'));
     }
 
     public function generalLedgerIndex()
     {
-        $coas = ChartOfAccount::orderBy('account_id')->pluck('account_name','id')->toArray();
-
-        return view('apps.pages.generalLedger',compact('coas'));
+        return view('apps.pages.generalLedger');
     }
 
     public function generalLedgerShow(Request $request)
     {
+        $dateStart = $request->input('start');
+        $dateEnd = $request->input('end');
+        $data = ChartOfAccount::join('journal_entries','journal_entries.account_name','chart_of_accounts.id')
+                                ->select(DB::raw('chart_of_accounts.account_id as ID, chart_of_accounts.account_name as Name, sum(chart_of_accounts.opening_balance) as Opening,sum(journal_entries.amount) as Total, 
+                                journal_entries.trans_type as Type'))
+                                ->whereBetween('journal_entries.transaction_date',[$dateStart,$dateEnd])
+                                ->orderBy('chart_of_accounts.account_id')
+                                ->groupBy('chart_of_accounts.account_id','chart_of_accounts.account_name','journal_entries.trans_type')
+                                ->get();
+        $debit = DB::table('journal_entries')
+                        ->where('trans_type','Debit')
+                        ->where('transaction_date','>=',$dateStart)->where('transaction_date','<=',$dateEnd)
+                        ->groupBy('trans_type')
+                        ->sum('amount');
+        $credit = DB::table('journal_entries')
+                        ->where('trans_type','Credit')
+                        ->where('transaction_date','>=',$dateStart)->where('transaction_date','<=',$dateEnd)
+                        ->groupBy('trans_type')
+                        ->sum('amount');
 
+        return view('apps.reports.generalLedger',compact('data','debit','credit','dateStart','dateEnd'));
     }
 
 

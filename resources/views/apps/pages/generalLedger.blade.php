@@ -21,7 +21,7 @@ Better Work Indonesia | General Ledger
 		<div class="col-12">
 			<div class="card card-danger card-outline">
 				<div class="card-body">
-					{!! Form::open(array('route' => 'trial.report','method'=>'POST')) !!}
+					{!! Form::open(array('route' => 'ledger.report','method'=>'POST')) !!}
 					@csrf
 					<div class="row">
 						<div class="col-3">
@@ -44,17 +44,6 @@ Better Work Indonesia | General Ledger
 									</span>
 								</div>
 								{!! Form::date('end', '', array('id' => 'datepicker','class' => 'form-control')) !!}
-							</div>
-						</div>
-						<div class="col-3">
-							<label>Chart of Account</label>
-							<div class="input-group">
-								<div class="input-group-prepend">
-									<span class="input-group-text">
-										<i class="far fa-calendar-alt"></i>
-									</span>
-								</div>
-								{!! Form::select('coa_id', [null=>'Please Select'] + $coas,[], array('class' => 'form-control')) !!}
 							</div>
 						</div>
 					</div>

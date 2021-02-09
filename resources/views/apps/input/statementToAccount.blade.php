@@ -30,7 +30,7 @@ Better Work Indonesia | Bank Statement Reconciliation
 							@endforeach
 						</ul>
 					</div>
-					@endif
+					@endif 
 					<table id="example1" class="table table-bordered table-hover">
 						<thead>
 							<tr>
@@ -57,7 +57,7 @@ Better Work Indonesia | Bank Statement Reconciliation
 								<td>
 									<div class="btn-group">
 										<a class="btn btn-xs btn-danger" href="{{ route('findAcc.find',$value->id) }}" >Find</a>
-									</div> 
+									</div>
 									@if(($value->type) == 'Receive')
 									<div class="btn-group">
 										<a class="btn btn-xs btn-success" href="{{ route('receive.create',$value->bank_account_id) }}" >Create</a>

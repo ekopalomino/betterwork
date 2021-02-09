@@ -113,9 +113,10 @@ class AccountingController extends Controller
                                     $query->where('source','User');
                                 }])
                                 ->where('payee',$filter->payee)
-                                ->where('transaction_date',$filter->transaction_date)
+                                ->orWhere('transaction_date',$filter->transaction_date)
                                 ->where('status_id','e6cb9165-131e-406c-81c8-c2ba9a2c567e')
                                 ->first();
+        
         return view('apps.input.bankToAccountRev',compact('data','filter'));
         /* return view('apps.input.bankToAccount',compact('data','filter'))->renderSections()['content']; */
     }
@@ -330,6 +331,7 @@ class AccountingController extends Controller
                 if(empty($taxes[$index])) {
                     $dataE = JournalEntry::create([
                         'account_statement_id' => $dataM->id,
+                        'transaction_date' => $dataM->transaction_date,
                         'item' => $item,
                         'description' => $descriptions[$index],
                         'quantity' => $quantities[$index],
@@ -341,6 +343,7 @@ class AccountingController extends Controller
                     ]);
                     $dataB = JournalEntry::create([
                         'account_statement_id' => $dataM->id,
+                        'transaction_date' => $dataM->transaction_date,
                         'item' => $item,
                         'description' => $descriptions[$index],
                         'quantity' => $quantities[$index],
@@ -354,6 +357,7 @@ class AccountingController extends Controller
                 } else {
                     $dataE = JournalEntry::create([
                         'account_statement_id' => $dataM->id,
+                        'transaction_date' => $dataM->transaction_date,
                         'item' => $item,
                         'description' => $descriptions[$index],
                         'quantity' => $quantities[$index],
@@ -367,6 +371,7 @@ class AccountingController extends Controller
                     ]);
                     $dataB = JournalEntry::create([
                         'account_statement_id' => $dataM->id,
+                        'transaction_date' => $dataM->transaction_date,
                         'item' => $item,
                         'description' => $descriptions[$index],
                         'quantity' => $quantities[$index],
@@ -385,6 +390,7 @@ class AccountingController extends Controller
                 if(empty($taxes[$index])) {
                     $dataE = JournalEntry::create([
                         'account_statement_id' => $dataM->id,
+                        'transaction_date' => $dataM->transaction_date,
                         'item' => $item,
                         'description' => $descriptions[$index],
                         'quantity' => $quantities[$index],
@@ -395,6 +401,7 @@ class AccountingController extends Controller
                     ]);
                     $dataB = JournalEntry::create([
                         'account_statement_id' => $dataM->id,
+                        'transaction_date' => $dataM->transaction_date,
                         'item' => $item,
                         'description' => $descriptions[$index],
                         'quantity' => $quantities[$index],
@@ -407,6 +414,7 @@ class AccountingController extends Controller
                 } else {
                     $dataE = JournalEntry::create([
                         'account_statement_id' => $dataM->id,
+                        'transaction_date' => $dataM->transaction_date,
                         'item' => $item,
                         'description' => $descriptions[$index],
                         'quantity' => $quantities[$index],
@@ -419,6 +427,7 @@ class AccountingController extends Controller
                     ]);
                     $dataB = JournalEntry::create([
                         'account_statement_id' => $dataM->id,
+                        'transaction_date' => $dataM->transaction_date,
                         'item' => $item,
                         'description' => $descriptions[$index],
                         'quantity' => $quantities[$index],
@@ -491,6 +500,7 @@ class AccountingController extends Controller
                 if(empty($taxes[$index])) {
                     $dataE = JournalEntry::create([
                         'account_statement_id' => $dataM->id,
+                        'transaction_date' => $dataM->transaction_date,
                         'item' => $item,
                         'description' => $descriptions[$index],
                         'quantity' => $quantities[$index],
@@ -502,6 +512,7 @@ class AccountingController extends Controller
                     ]);
                     $dataB = JournalEntry::create([
                         'account_statement_id' => $dataM->id,
+                        'transaction_date' => $dataM->transaction_date,
                         'item' => $item,
                         'description' => $descriptions[$index],
                         'quantity' => $quantities[$index],
@@ -515,6 +526,7 @@ class AccountingController extends Controller
                 } else {
                     $dataE = JournalEntry::create([
                         'account_statement_id' => $dataM->id,
+                        'transaction_date' => $dataM->transaction_date,
                         'item' => $item,
                         'description' => $descriptions[$index],
                         'quantity' => $quantities[$index],
@@ -527,6 +539,7 @@ class AccountingController extends Controller
                     ]);
                     $dataB = JournalEntry::create([
                         'account_statement_id' => $dataM->id,
+                        'transaction_date' => $dataM->transaction_date,
                         'item' => $item,
                         'description' => $descriptions[$index],
                         'quantity' => $quantities[$index],
@@ -543,6 +556,7 @@ class AccountingController extends Controller
                 if(empty($taxes[$index])) {
                     $dataE = JournalEntry::create([
                         'account_statement_id' => $dataM->id,
+                        'transaction_date' => $dataM->transaction_date,
                         'item' => $item,
                         'description' => $descriptions[$index],
                         'quantity' => $quantities[$index],
@@ -553,6 +567,7 @@ class AccountingController extends Controller
                     ]);
                     $dataB = JournalEntry::create([
                         'account_statement_id' => $dataM->id,
+                        'transaction_date' => $dataM->transaction_date,
                         'item' => $item,
                         'description' => $descriptions[$index],
                         'quantity' => $quantities[$index],
@@ -565,6 +580,7 @@ class AccountingController extends Controller
                 } else {
                     $dataE = JournalEntry::create([
                         'account_statement_id' => $dataM->id,
+                        'transaction_date' => $dataM->transaction_date,
                         'item' => $item,
                         'description' => $descriptions[$index],
                         'quantity' => $quantities[$index],
@@ -576,6 +592,7 @@ class AccountingController extends Controller
                     ]);
                     $dataB = JournalEntry::create([
                         'account_statement_id' => $dataM->id,
+                        'transaction_date' => $dataM->transaction_date,
                         'item' => $item,
                         'description' => $descriptions[$index],
                         'quantity' => $quantities[$index],
@@ -653,6 +670,7 @@ class AccountingController extends Controller
                     if(empty($taxes[$index])) {
                         $dataE = JournalEntry::create([
                             'account_statement_id' => $data->id,
+                            'transaction_date' => $data->transaction_date,
                             'item' => $item,
                             'description' => $descriptions[$index],
                             'quantity' => $quantities[$index],
@@ -664,6 +682,7 @@ class AccountingController extends Controller
                         ]);
                         $dataB = JournalEntry::create([
                             'account_statement_id' => $data->id,
+                            'transaction_date' => $data->transaction_date,
                             'item' => $item,
                             'description' => $descriptions[$index],
                             'quantity' => $quantities[$index],
@@ -677,6 +696,7 @@ class AccountingController extends Controller
                     } else {
                         $dataE = JournalEntry::create([
                             'account_statement_id' => $data->id,
+                            'transaction_date' => $data->transaction_date,
                             'item' => $item,
                             'description' => $descriptions[$index],
                             'quantity' => $quantities[$index],
@@ -689,6 +709,7 @@ class AccountingController extends Controller
                         ]);
                         $dataB = JournalEntry::create([
                             'account_statement_id' => $data->id,
+                            'transaction_date' => $data->transaction_date,
                             'item' => $item,
                             'description' => $descriptions[$index],
                             'quantity' => $quantities[$index],
@@ -705,6 +726,7 @@ class AccountingController extends Controller
                     if(empty($taxes[$index])) {
                         $dataE = JournalEntry::create([
                             'account_statement_id' => $data->id,
+                            'transaction_date' => $data->transaction_date,
                             'item' => $item,
                             'description' => $descriptions[$index],
                             'quantity' => $quantities[$index],
@@ -715,6 +737,7 @@ class AccountingController extends Controller
                         ]);
                         $dataB = JournalEntry::create([
                             'account_statement_id' => $data->id,
+                            'transaction_date' => $data->transaction_date,
                             'item' => $item,
                             'description' => $descriptions[$index],
                             'quantity' => $quantities[$index],
@@ -727,6 +750,7 @@ class AccountingController extends Controller
                     } else {
                         $dataE = JournalEntry::create([
                             'account_statement_id' => $data->id,
+                            'transaction_date' => $data->transaction_date,
                             'item' => $item,
                             'description' => $descriptions[$index],
                             'quantity' => $quantities[$index],
@@ -738,6 +762,7 @@ class AccountingController extends Controller
                         ]);
                         $dataB = JournalEntry::create([
                             'account_statement_id' => $data->id,
+                            'transaction_date' => $data->transaction_date,
                             'item' => $item,
                             'description' => $descriptions[$index],
                             'quantity' => $quantities[$index],
@@ -765,6 +790,7 @@ class AccountingController extends Controller
                     if(empty($taxes[$index])) {
                         $dataE = JournalEntry::create([
                             'account_statement_id' => $data->id,
+                            'transaction_date' => $data->transaction_date,
                             'item' => $item,
                             'description' => $descriptions[$index],
                             'quantity' => $quantities[$index],
@@ -776,6 +802,7 @@ class AccountingController extends Controller
                         ]);
                         $dataB = JournalEntry::create([
                             'account_statement_id' => $data->id,
+                            'transaction_date' => $data->transaction_date,
                             'item' => $item,
                             'description' => $descriptions[$index],
                             'quantity' => $quantities[$index],
@@ -789,6 +816,7 @@ class AccountingController extends Controller
                     } else {
                         $dataE = JournalEntry::create([
                             'account_statement_id' => $data->id,
+                            'transaction_date' => $data->transaction_date,
                             'item' => $item,
                             'description' => $descriptions[$index],
                             'quantity' => $quantities[$index],
@@ -802,6 +830,7 @@ class AccountingController extends Controller
                         ]);
                         $dataB = JournalEntry::create([
                             'account_statement_id' => $data->id,
+                            'transaction_date' => $data->transaction_date,
                             'item' => $item,
                             'description' => $descriptions[$index],
                             'quantity' => $quantities[$index],
@@ -820,6 +849,7 @@ class AccountingController extends Controller
                     if(empty($taxes[$index])) {
                         $dataE = JournalEntry::create([
                             'account_statement_id' => $data->id,
+                            'transaction_date' => $data->transaction_date,
                             'item' => $item,
                             'description' => $descriptions[$index],
                             'quantity' => $quantities[$index],
@@ -830,6 +860,7 @@ class AccountingController extends Controller
                         ]);
                         $dataB = JournalEntry::create([
                             'account_statement_id' => $data->id,
+                            'transaction_date' => $data->transaction_date,
                             'item' => $item,
                             'description' => $descriptions[$index],
                             'quantity' => $quantities[$index],
@@ -842,6 +873,7 @@ class AccountingController extends Controller
                     } else {
                         $dataE = JournalEntry::create([
                             'account_statement_id' => $data->id,
+                            'transaction_date' => $data->transaction_date,
                             'item' => $item,
                             'description' => $descriptions[$index],
                             'quantity' => $quantities[$index],
@@ -854,6 +886,7 @@ class AccountingController extends Controller
                         ]);
                         $dataB = JournalEntry::create([
                             'account_statement_id' => $data->id,
+                            'transaction_date' => $data->transaction_date,
                             'item' => $item,
                             'description' => $descriptions[$index],
                             'quantity' => $quantities[$index],
