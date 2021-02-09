@@ -7,7 +7,7 @@ Better Work Indonesia | General Ledger
 	<div class="container-fluid">
       	<div class="row mb-2">
        		<div class="col-sm-6">
-          		<h1>Trial Balance</h1>
+          		<h1>General Ledger</h1>
        		</div>
 			<div class="col-sm-6">
 				<ol class="breadcrumb float-sm-right">
@@ -50,9 +50,9 @@ Better Work Indonesia | General Ledger
 										<td>{{ number_format($value->Opening,2,',','.')}}</td>
 										@if(($value->Type) == 'Debit')
 										<td>{{ number_format($value->Total,2,',','.')}}</td>
-										<td></td>
+										<td>{{ number_format(0,2,',','.')}}</td>
 										@else
-										<td></td>
+										<td>{{ number_format(0,2,',','.')}}</td>
 										<td>{{ number_format($value->Total,2,',','.')}}</td>
 										@endif
 										<td>{{ number_format(($value->Opening)-($value->Total),2,',','.')}}</td>
