@@ -534,6 +534,7 @@ class ConfigurationController extends Controller
         ]);
         $orig = ChartOfAccount::find($id);
         $data = $orig->update([
+            'account_id' => $request['account_id'],
             'account_name' => $request->input('account_name'),
             'account_category' => $request->input('account_category'),
             'updated_by' => auth()->user()->id,

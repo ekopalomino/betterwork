@@ -43,8 +43,8 @@ Better Work Indonesia | Budget Manager
                         			{!! Form::date('budget_end', '', array('id' => 'datepicker','class' => 'form-control')) !!}
 								</div>
 				            	<div class="modal-footer">
-				              		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				              		<button type="submit" class="btn btn-primary">Submit</button>
+				              		<button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+				              		<button type="submit" class="btn btn-sm btn-success">Submit</button>
 				            	</div>
 								{!! Form::close() !!}
 				          	</div>

@@ -110,12 +110,16 @@ Better Work Indonesia | Account Transaction
 											<font color="red">{{ $value->Statuses->name }}</font>
 											@elseif(($value->status_id) == 'e6cb9165-131e-406c-81c8-c2ba9a2c567e')
 											<font color="red">{{ $value->Statuses->name }}</font>
+											@elseif(($value->status_id) == 'dc664dfb-4895-4e4a-9517-b0446f0d9846')
+											<font color="blue">{{ $value->Statuses->name }}</font>
 											@else
 											<font color="green">{{ $value->Statuses->name }}</font>
 											@endif
 										</td>
 										<td>
+											@isset($value->payee)
 											<a class="btn btn-xs btn-success" href="{{ route('account.show',['bank'=>$bank->id,'id'=>$value->id]) }} " title="Show Transaction" ><i class="fa fa-search"></i></a>
+											@endisset
 											@if(($value->status_id)== '1f2967a5-9a88-4d44-a66b-5339c771aca0')<a class="btn btn-xs btn-warning" href="{{ route('accTransaction.edit',['id'=>$value->id]) }} " title="Edit Transaction" ><i class="fa fa-edit"></i></a>@endif
 										</td>
 									</tr>

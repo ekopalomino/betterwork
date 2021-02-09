@@ -606,12 +606,279 @@ class AccountingController extends Controller
         $data = AccountStatement::find($id);
         $detail = JournalEntry::where('account_statement_id',$data->id)->where('source','User')->get();
         $coas = ChartOfAccount::pluck('account_name','id')->toArray();
+        $bank = BankAccount::where('active','1')->pluck('bank_name','id')->toArray();
 
-        return view('apps.edit.accountTransaction',compact('data','detail','coas'));
+        return view('apps.edit.accountTransaction',compact('data','detail','coas','bank'));
     } 
 
     public function transactionUpdate(Request $request,$id)
     {
+        $bank = BankAccount::where('id',$request->input('bank'))->first();
+        $prevData = AccountStatement::where('transaction_date','<=',$request->input('transaction_date'))->first();
+
+        if(!empty($prevData)) {
+            $savePrev = $prevData->balance;
+        } else {
+            $savePrev = '0';
+        }
+
+        $data = AccountStatement::find($id);
+        $dataM = $data->update([
+            'transaction_date' => $request->input('transaction_date'),
+            'reference_no' => $request->input('reference_no'),
+            'payee' => $request->input('payee'),
+            'tax_reference' => $request->input('tax_reference'),
+            'status_id' => '1f2967a5-9a88-4d44-a66b-5339c771aca0',
+            'updated_by' => auth()->user()->employee_id,
+        ]);
+
+        $entries = JournalEntry::where('account_statement_id',$id)->delete();
+        
+        $items = $request->item;
+        $descriptions = $request->description;
+        $quantities = $request->quantity;
+        $prices = $request->unit_price;
+        $accounts = $request->account;
+        $taxes = $request->tax;
+        $files = $request->file;
+        $types = $request->trans_type;
+        $total = 0;
+        
+        
+        foreach($items as $index=>$item) {
+            if(($types[$index]) == 'Credit') {
+                if($request->hasFile('file')) {
+                    $uploadedFile = $request->file('file');
+                    $path = $uploadedFile->store('transaction_receive');
+                    if(empty($taxes[$index])) {
+                        $dataE = JournalEntry::create([
+                            'account_statement_id' => $data->id,
+                            'item' => $item,
+                            'description' => $descriptions[$index],
+                            'quantity' => $quantities[$index],
+                            'unit_price' => $prices[$index],
+                            'account_name' => $accounts[$index],
+                            'trans_type' => 'Credit',
+                            'file' => $path,
+                            'amount' => ($quantities[$index])*($prices[$index]),
+                        ]);
+                        $dataB = JournalEntry::create([
+                            'account_statement_id' => $data->id,
+                            'item' => $item,
+                            'description' => $descriptions[$index],
+                            'quantity' => $quantities[$index],
+                            'unit_price' => $prices[$index],
+                            'account_name' => $bank->chart_id,
+                            'trans_type' => 'Debit',
+                            'file' => $path,
+                            'amount' => ($quantities[$index])*($prices[$index]),
+                            'source' => 'Bank',
+                        ]);
+                    } else {
+                        $dataE = JournalEntry::create([
+                            'account_statement_id' => $data->id,
+                            'item' => $item,
+                            'description' => $descriptions[$index],
+                            'quantity' => $quantities[$index],
+                            'unit_price' => $prices[$index],
+                            'account_name' => $bank->chart_id,
+                            'account_name' => $accounts[$index],
+                            'trans_type' => 'Credit',
+                            'file' => $path,
+                            'amount' => ($quantities[$index])*($prices[$index]),
+                        ]);
+                        $dataB = JournalEntry::create([
+                            'account_statement_id' => $data->id,
+                            'item' => $item,
+                            'description' => $descriptions[$index],
+                            'quantity' => $quantities[$index],
+                            'unit_price' => $prices[$index],
+                            'account_name' => $bank->chart_id,
+                            'trans_type' => 'Debit',
+                            'file' => $path,
+                            'amount' => ($quantities[$index])*($prices[$index]),
+                            'source' => 'Bank',
+                        ]);
+                    }
+                    
+                } else {
+                    if(empty($taxes[$index])) {
+                        $dataE = JournalEntry::create([
+                            'account_statement_id' => $data->id,
+                            'item' => $item,
+                            'description' => $descriptions[$index],
+                            'quantity' => $quantities[$index],
+                            'unit_price' => $prices[$index],
+                            'account_name' => $accounts[$index],
+                            'trans_type' => 'Credit',
+                            'amount' => ($quantities[$index])*($prices[$index]),
+                        ]);
+                        $dataB = JournalEntry::create([
+                            'account_statement_id' => $data->id,
+                            'item' => $item,
+                            'description' => $descriptions[$index],
+                            'quantity' => $quantities[$index],
+                            'unit_price' => $prices[$index],
+                            'account_name' => $bank->chart_id,
+                            'trans_type' => 'Debit',
+                            'amount' => ($quantities[$index])*($prices[$index]),
+                            'source' => 'Bank',
+                        ]);
+                    } else {
+                        $dataE = JournalEntry::create([
+                            'account_statement_id' => $data->id,
+                            'item' => $item,
+                            'description' => $descriptions[$index],
+                            'quantity' => $quantities[$index],
+                            'unit_price' => $prices[$index],
+                            'account_name' => $accounts[$index],
+                            'trans_type' => 'Credit',
+                            'tax_rate' => $taxes[$index],
+                            'amount' => ($quantities[$index])*($prices[$index]),
+                        ]);
+                        $dataB = JournalEntry::create([
+                            'account_statement_id' => $data->id,
+                            'item' => $item,
+                            'description' => $descriptions[$index],
+                            'quantity' => $quantities[$index],
+                            'unit_price' => $prices[$index],
+                            'account_name' => $bank->chart_id,
+                            'trans_type' => 'Debit',
+                            'tax_rate' => $taxes[$index],
+                            'amount' => ($quantities[$index])*($prices[$index]),
+                            'source' => 'Bank',
+                        ]);
+                    }
+                }
+                $total+=$dataE->amount;
+
+                $sum = AccountStatement::where('id',$data->id)->first();
+
+                $updateSum = $sum->update([
+                    'balance' => ($savePrev) + ($total),
+                    'total' => $total,
+                ]);
+            } else {
+                if($request->hasFile('file')) {
+                    $uploadedFile = $request->file('file');
+                    $path = $uploadedFile->store('transaction_receive');
+                    if(empty($taxes[$index])) {
+                        $dataE = JournalEntry::create([
+                            'account_statement_id' => $data->id,
+                            'item' => $item,
+                            'description' => $descriptions[$index],
+                            'quantity' => $quantities[$index],
+                            'unit_price' => $prices[$index],
+                            'account_name' => $accounts[$index],
+                            'trans_type' => 'Debit',
+                            'file' => $path,
+                            'amount' => ($quantities[$index])*($prices[$index]),
+                        ]);
+                        $dataB = JournalEntry::create([
+                            'account_statement_id' => $data->id,
+                            'item' => $item,
+                            'description' => $descriptions[$index],
+                            'quantity' => $quantities[$index],
+                            'unit_price' => $prices[$index],
+                            'account_name' => $bank->chart_id,
+                            'trans_type' => 'Credit',
+                            'file' => $path,
+                            'amount' => ($quantities[$index])*($prices[$index]),
+                            'source' => 'Bank',
+                        ]);
+                    } else {
+                        $dataE = JournalEntry::create([
+                            'account_statement_id' => $data->id,
+                            'item' => $item,
+                            'description' => $descriptions[$index],
+                            'quantity' => $quantities[$index],
+                            'unit_price' => $prices[$index],
+                            'account_name' => $accounts[$index],
+                            'trans_type' => 'Debit',
+                            'tax_rate' => $taxes[$index],
+                            'tax_amount' => ($quantities[$index]*$prices[$index])*$taxes[$index]/100,
+                            'file' => $path,
+                            'amount' => (($quantities[$index])*($prices[$index]))+((($quantities[$index])*($prices[$index]))*($taxes[$index])/100),
+                        ]);
+                        $dataB = JournalEntry::create([
+                            'account_statement_id' => $data->id,
+                            'item' => $item,
+                            'description' => $descriptions[$index],
+                            'quantity' => $quantities[$index],
+                            'unit_price' => $prices[$index],
+                            'account_name' => $bank->chart_id,
+                            'trans_type' => 'Credit',
+                            'tax_rate' => $taxes[$index],
+                            'tax_amount' => ($quantities[$index]*$prices[$index])*$taxes[$index]/100,
+                            'file' => $path,
+                            'amount' => (($quantities[$index])*($prices[$index]))+((($quantities[$index])*($prices[$index]))*($taxes[$index])/100),
+                            'source' => 'Bank',
+                        ]);
+                    }
+                    
+                } else {
+                    if(empty($taxes[$index])) {
+                        $dataE = JournalEntry::create([
+                            'account_statement_id' => $data->id,
+                            'item' => $item,
+                            'description' => $descriptions[$index],
+                            'quantity' => $quantities[$index],
+                            'unit_price' => $prices[$index],
+                            'account_name' => $accounts[$index],
+                            'trans_type' => 'Debit',
+                            'amount' => ($quantities[$index])*($prices[$index]),
+                        ]);
+                        $dataB = JournalEntry::create([
+                            'account_statement_id' => $data->id,
+                            'item' => $item,
+                            'description' => $descriptions[$index],
+                            'quantity' => $quantities[$index],
+                            'unit_price' => $prices[$index],
+                            'account_name' => $bank->chart_id,
+                            'trans_type' => 'Credit',
+                            'amount' => ($quantities[$index])*($prices[$index]),
+                            'source' => 'Bank',
+                        ]);
+                    } else {
+                        $dataE = JournalEntry::create([
+                            'account_statement_id' => $data->id,
+                            'item' => $item,
+                            'description' => $descriptions[$index],
+                            'quantity' => $quantities[$index],
+                            'unit_price' => $prices[$index],
+                            'account_name' => $accounts[$index],
+                            'trans_type' => 'Debit',
+                            'tax_rate' => $taxes[$index],
+                            'tax_amount' => ($quantities[$index]*$prices[$index])*$taxes[$index]/100,
+                            'amount' => (($quantities[$index])*($prices[$index]))+((($quantities[$index])*($prices[$index]))*($taxes[$index])/100),
+                        ]);
+                        $dataB = JournalEntry::create([
+                            'account_statement_id' => $data->id,
+                            'item' => $item,
+                            'description' => $descriptions[$index],
+                            'quantity' => $quantities[$index],
+                            'unit_price' => $prices[$index],
+                            'account_name' => $bank->chart_id,
+                            'trans_type' => 'Credit',
+                            'tax_rate' => $taxes[$index],
+                            'tax_amount' => ($quantities[$index]*$prices[$index])*$taxes[$index]/100,
+                            'amount' => (($quantities[$index])*($prices[$index]))+((($quantities[$index])*($prices[$index]))*($taxes[$index])/100),
+                            'source' => 'Bank',
+                        ]);
+                    }
+                }
+                $total+=$dataE->amount;
+
+                $sum = AccountStatement::where('id',$data->id)->first();
+
+                $updateSum = $sum->update([
+                    'balance' => ($savePrev) - ($total),
+                    'total' => $total,
+                ]);
+            }
+            
+        }
+        return redirect()->route('accountTransaction.index',$bank->id);
 
     }
 

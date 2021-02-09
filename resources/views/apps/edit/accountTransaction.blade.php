@@ -30,16 +30,11 @@ Better Work Indonesia | Edit Account Transaction
 						</div>
 						<div class="col-2">
 							<label>Reference</label>
-							{!! Form::text('reference', null, array('class' => 'form-control')) !!}
+							{!! Form::text('reference_no', null, array('class' => 'form-control')) !!}
 						</div>
 						<div class="col-2">
-							<label>Amounts Are</label>
-							<select name="tax_reference" class="form-control">
-								<option value="0" {{ old('tax_reference',$data->tax_reference)=='0' ? 'selected' : ''  }}>Please Select</option>
-						        <option value="1" {{ old('tax_reference',$data->tax_reference)=='1' ? 'selected' : ''  }}>Tax Inclusive</option>
-						        <option value="2" {{ old('tax_reference',$data->tax_reference)=='2' ? 'selected' : ''  }}>Tax Exclusive</option>
-								<option value="3" {{ old('tax_reference',$data->tax_reference)=='3' ? 'selected' : ''  }}>No Tax</option>
-						    </select>
+							<label>Bank Account</label>
+							{!! Form::select('bank', [null=>'Please Select'] + $bank,[], array('class' => 'form-control')) !!}
 						</div>
 					</div>
 					<br>
@@ -70,11 +65,12 @@ Better Work Indonesia | Edit Account Transaction
 										<td>{!! Form::file('file[]', null, array('placeholder' => 'File','class' => 'form-control')) !!}</td>
 										<td>
 											{{ Form::hidden('id', $key+1) }}
+											{{ Form::hidden('type', $value->trans_type) }}
 											<input type="button" value="Delete" class="btn btn-danger" onclick="deleteRow(this)">
 										</td>
 									</tr>
 									@endforeach
-									<tr>
+									<!-- <tr>
 										<td>{!! Form::text('item[]', null, array('id' => 'item', 'class' => 'form-control','required')) !!}</td>
 										<td>{!! Form::text('description[]', null, array('class' => 'form-control','required')) !!}</td>
 										<td>{!! Form::number('quantity[]', null, array('placeholder' => 'Quantity','class' => 'form-control','required')) !!}</td>
@@ -133,14 +129,14 @@ Better Work Indonesia | Edit Account Transaction
 										<td>
 											<input type="button" value="Delete" class="btn btn-danger" onclick="deleteRow(this)">
 										</td>
-									</tr>
+									</tr> -->
 								</tbody>
 							</table>
 						</div>
 					</div>
 					<br>
 					<div class="form-group">
-				    	<button type="submit" class="btn btn-sm btn-info">Submit</button>
+				    	<button type="submit" class="btn btn-sm btn-success">Update</button>
 		                <a button type="button" class="btn btn-sm btn-danger" href="{{ url()->previous() }}">Cancel</a>
 		            </div>
 		            {!! Form::close() !!}
