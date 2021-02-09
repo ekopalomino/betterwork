@@ -614,8 +614,8 @@ class AccountingController extends Controller
     public function transactionUpdate(Request $request,$id)
     {
         $bank = BankAccount::where('id',$request->input('bank'))->first();
-        $prevData = AccountStatement::where('transaction_date','<=',$request->input('transaction_date'))->first();
-
+        $prevData = AccountStatement::where('transaction_date','<=',$request->input('transaction_date'))->where('id','!=',$id)->first();
+        
         if(!empty($prevData)) {
             $savePrev = $prevData->balance;
         } else {
