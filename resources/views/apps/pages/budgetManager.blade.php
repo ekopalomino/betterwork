@@ -103,9 +103,11 @@ Better Work Indonesia | Budget Manager
 									<a button id="search" type="submit" class="btn btn-xs btn-info" href="{{ route('budgetDetail.edit',$value->id) }}">
 										<i class="fa fa-edit"></i>
 									</a>
+									@if(($value->status_id) == '1f2967a5-9a88-4d44-a66b-5339c771aca0' )
 									{!! Form::open(['method' => 'POST','route' => ['budget.approve', $value->id],'style'=>'display:inline','onsubmit' => 'return ConfirmApprove()']) !!}
 									{!! Form::button('<i class="fas fa-check"></i>',['type'=>'submit','class' => 'btn btn-xs btn-success']) !!}
 									{!! Form::close() !!}
+									@endif
 								</td>
 							</tr>
 							@endforeach
