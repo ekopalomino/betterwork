@@ -613,13 +613,13 @@
 											<p>Budget Manager</p>
 										</a>
 									</li>
-									@can('disable')
 									<li class="nav-item ">
 										<a href="" class="nav-link ">
 											<i class="far fa-circle nav-icon"></i>
 											<p>Budget Variance</p>
 										</a>
 									</li>
+									@can('disable')
 									<li class="nav-item ">
 										<a href="" class="nav-link ">
 											<i class="far fa-circle nav-icon"></i>

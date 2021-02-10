@@ -1035,6 +1035,18 @@ class AccountingController extends Controller
         return redirect()->route('budget.index');
     }
 
+    public function budgetApproval(Request $request,$id)
+    {
+        $data = BudgetPeriod::find($id);
+        $data->update([
+            'status_id' => 'ca52a2ce-5c37-48ce-a7f2-0fd5311860c2',
+            'updated_by' => auth()->user()->employee_id,
+            'approved_by' => auth()->user()->employee_id
+        ]);
+
+        return redirect()->route('budget.index');
+    }
+
     public function budgetDetailEdit($id)
     {
         $parent = BudgetPeriod::find($id);

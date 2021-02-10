@@ -103,6 +103,9 @@ Better Work Indonesia | Budget Manager
 									<a button id="search" type="submit" class="btn btn-xs btn-info" href="{{ route('budgetDetail.edit',$value->id) }}">
 										<i class="fa fa-edit"></i>
 									</a>
+									{!! Form::open(['method' => 'POST','route' => ['budget.approve', $value->id],'style'=>'display:inline','onsubmit' => 'return ConfirmApprove()']) !!}
+									{!! Form::button('<i class="fas fa-check"></i>',['type'=>'submit','class' => 'btn btn-xs btn-success']) !!}
+									{!! Form::close() !!}
 								</td>
 							</tr>
 							@endforeach
@@ -133,17 +136,7 @@ Better Work Indonesia | Budget Manager
 <script>
     function ConfirmApprove()
     {
-    var x = confirm("Payroll Approve?");
-    if (x)
-        return true;
-    else
-        return false;
-    }
-</script>
-<script>
-    function ConfirmReject()
-    {
-    var x = confirm("Payroll Reject?");
+    var x = confirm("Budget Approve?");
     if (x)
         return true;
     else

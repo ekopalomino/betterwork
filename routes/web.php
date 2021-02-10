@@ -294,6 +294,7 @@ Route::group(['prefix' => 'apps', 'middleware' => ['auth']], function() {
 	Route::post('accounting/budget-manager/store','Apps\AccountingController@budgetNewStore')->name('budget.store');
 	Route::get('accounting/budget-manager/detail/{id}','Apps\AccountingController@budgetDetailCreate')->name('budgetDetail.create');
 	Route::post('accounting/budget-manager/detail/store','Apps\AccountingController@budgetDetailStore')->name('budgetDetail.store');
+	Route::post('accounting/budget-manager/approve/{id}','Apps\AccountingController@budgetApproval')->name('budget.approve');
 	Route::get('accounting/budget-manager/detail/edit/{id}','Apps\AccountingController@budgetDetailEdit')->name('budgetDetail.edit');
 	Route::post('accounting/budget-manager/detail/update/{id}','Apps\AccountingController@budgetDetailUpdate')->name('budgetDetail.update');
 
