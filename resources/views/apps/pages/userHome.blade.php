@@ -374,7 +374,7 @@ Better Work Indonesia | User Dashboard
               							<tr>
               								<td>{{ $key+1 }}</td>
               								<td>{{date("F Y",strtotime($value->payroll_period)) }}</td>
-              								<td>
+              								<td> 
 												<a href="{{ route('mySalary.export',['empNo'=>$value->employee_no]) }}" class="btn btn-sm btn-info"><i class="fas fa-file-pdf"></i></a>
 												<a href="{{ route('mySalary.print',['empNo'=>$value->employee_no]) }}" target="blank" class="btn btn-sm btn-info"><i class="fas fa-print"></i></a>
 											</td>

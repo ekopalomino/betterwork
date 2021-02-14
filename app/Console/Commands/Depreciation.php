@@ -48,6 +48,12 @@ class Depreciation extends Command
             $getCurRecord = AssetDepreciation::where('asset_id',$asset->id)->orderBy('updated_at','DESC')->first();
             $getCurItem = AssetManagements::where('id',$asset->id)->first();
             $getCategory = AssetCategory::where('id',$getCurItem->category_name)->first();
+            $prevData = AccountStatement::where('transaction_date','<=',Carbon::now())->first(); 
+            if(!empty($prevData)) {
+                $savePrev = $prevData->balance;
+            } else {
+                $savePrev = '0';
+            }
             if(($asset->method_id) == '1') {
                 $yearValue = ($asset->purchase_price - $asset->residual_value)/$asset->estimate_time;
                 $monthValue = $yearValue/12;
@@ -64,9 +70,12 @@ class Depreciation extends Command
                     $accStatement = AccountStatement::create([
                         'transaction_date' => $depValue->depreciate_period,
                         'status_id' => 'f6e41f5d-0f6e-4eca-a141-b6c7ce34cae6',
+                        'balance' => ($savePrev) - ($monthValue),
+                        'total' => $monthValue,
                     ]);
                     $journalDb = JournalEntry::create([
                         'account_statement_id' => $accStatement->id,
+                        'transaction_date' => Carbon::now()->toDateTimeString(),
                         'item' => $getCurItem->name,
                         'quantity' => '1',
                         'unit_price' => $getCurItem->purchase_price,
@@ -76,6 +85,7 @@ class Depreciation extends Command
                     ]);
                     $journalCr = JournalEntry::create([
                         'account_statement_id' => $accStatement->id,
+                        'transaction_date' => Carbon::now()->toDateTimeString(),
                         'item' => $getCurItem->name,
                         'quantity' => '1',
                         'unit_price' => $getCurItem->purchase_price,
@@ -83,8 +93,13 @@ class Depreciation extends Command
                         'trans_type' => 'Credit',
                         'amount' => $monthValue,
                     ]);
+
+                    $bookVal = AssetManagements::where('id',$asset->id)->update([
+                        'book_value' => $depValue->closing_value
+                    ]);
+                    
                     if(($depValue->closing_value) == '0') {
-                        $update = $getCurItem->update([
+                        $update = AssetManagements::where('id',$asset->id)->update([
                             'status_id' => '99d1e6f4-51be-4fef-a82f-16b86ca9f086',
                         ]);
                     }
@@ -100,9 +115,12 @@ class Depreciation extends Command
                     $accStatement = AccountStatement::create([
                         'transaction_date' => $depValue->depreciate_period,
                         'status_id' => 'f6e41f5d-0f6e-4eca-a141-b6c7ce34cae6',
+                        'balance' => ($savePrev) - ($monthValue),
+                        'total' => $monthValue,
                     ]);
                     $journalDb = JournalEntry::create([
                         'account_statement_id' => $accStatement->id,
+                        'transaction_date' => Carbon::now()->toDateTimeString(),
                         'item' => $getCurItem->name,
                         'quantity' => '1',
                         'unit_price' => $getCurItem->purchase_price,
@@ -112,6 +130,7 @@ class Depreciation extends Command
                     ]);
                     $journalCr = JournalEntry::create([
                         'account_statement_id' => $accStatement->id,
+                        'transaction_date' => Carbon::now()->toDateTimeString(),
                         'item' => $getCurItem->name,
                         'quantity' => '1',
                         'unit_price' => $getCurItem->purchase_price,
@@ -119,8 +138,13 @@ class Depreciation extends Command
                         'trans_type' => 'Credit',
                         'amount' => $monthValue,
                     ]);
+
+                    $bookVal = AssetManagements::where('id',$asset->id)->update([
+                        'book_value' => $depValue->closing_value
+                    ]);
+
                     if(($depValue->closing_value) == '0') {
-                        $update = $getCurItem->update([
+                        $update = AssetManagements::where('id',$asset->id)->update([
                             'status_id' => '99d1e6f4-51be-4fef-a82f-16b86ca9f086',
                         ]);
                     }
@@ -143,9 +167,12 @@ class Depreciation extends Command
                     $accStatement = AccountStatement::create([
                         'transaction_date' => $depValue->depreciate_period,
                         'status_id' => 'f6e41f5d-0f6e-4eca-a141-b6c7ce34cae6',
+                        'balance' => ($savePrev) - ($monthValue),
+                        'total' => $monthValue,
                     ]);
                     $journalDb = JournalEntry::create([
                         'account_statement_id' => $accStatement->id,
+                        'transaction_date' => Carbon::now()->toDateTimeString(),
                         'item' => $getCurItem->name,
                         'quantity' => '1',
                         'unit_price' => $getCurItem->purchase_price,
@@ -155,6 +182,7 @@ class Depreciation extends Command
                     ]);
                     $journalCr = JournalEntry::create([
                         'account_statement_id' => $accStatement->id,
+                        'transaction_date' => Carbon::now()->toDateTimeString(),
                         'item' => $getCurItem->name,
                         'quantity' => '1',
                         'unit_price' => $getCurItem->purchase_price,
@@ -162,8 +190,13 @@ class Depreciation extends Command
                         'trans_type' => 'Credit',
                         'amount' => $monthValue,
                     ]);
+
+                    $bookVal = AssetManagements::where('id',$asset->id)->update([
+                        'book_value' => $depValue->closing_value
+                    ]);
+
                     if(($depValue->closing_value) == '0') {
-                        $update = $getCurItem->update([
+                        $update = AssetManagements::where('id',$asset->id)->update([
                             'status_id' => '99d1e6f4-51be-4fef-a82f-16b86ca9f086',
                         ]);
                     }
@@ -179,9 +212,12 @@ class Depreciation extends Command
                     $accStatement = AccountStatement::create([
                         'transaction_date' => $depValue->depreciate_period,
                         'status_id' => 'f6e41f5d-0f6e-4eca-a141-b6c7ce34cae6',
+                        'balance' => ($savePrev) - ($monthValue),
+                        'total' => $monthValue,
                     ]);
                     $journalDb = JournalEntry::create([
                         'account_statement_id' => $accStatement->id,
+                        'transaction_date' => Carbon::now()->toDateTimeString(),
                         'item' => $getCurItem->name,
                         'quantity' => '1',
                         'unit_price' => $getCurItem->purchase_price,
@@ -191,6 +227,7 @@ class Depreciation extends Command
                     ]);
                     $journalCr = JournalEntry::create([
                         'account_statement_id' => $accStatement->id,
+                        'transaction_date' => Carbon::now()->toDateTimeString(),
                         'item' => $getCurItem->name,
                         'quantity' => '1',
                         'unit_price' => $getCurItem->purchase_price,
@@ -198,8 +235,13 @@ class Depreciation extends Command
                         'trans_type' => 'Credit',
                         'amount' => $monthValue,
                     ]);
+
+                    $bookVal = AssetManagements::where('id',$asset->id)->update([
+                        'book_value' => $depValue->closing_value
+                    ]);
+
                     if(($depValue->closing_value) == '0') {
-                        $update = $getCurItem->update([
+                        $update = AssetManagements::where('id',$asset->id)->update([
                             'status_id' => '99d1e6f4-51be-4fef-a82f-16b86ca9f086',
                         ]);
                     }
@@ -221,9 +263,12 @@ class Depreciation extends Command
                     $accStatement = AccountStatement::create([
                         'transaction_date' => $depValue->depreciate_period,
                         'status_id' => 'f6e41f5d-0f6e-4eca-a141-b6c7ce34cae6',
+                        'balance' => ($savePrev) - ($monthValue),
+                        'total' => $monthValue,
                     ]);
                     $journalDb = JournalEntry::create([
                         'account_statement_id' => $accStatement->id,
+                        'transaction_date' => Carbon::now()->toDateTimeString(),
                         'item' => $getCurItem->name,
                         'quantity' => '1',
                         'unit_price' => $getCurItem->purchase_price,
@@ -233,6 +278,7 @@ class Depreciation extends Command
                     ]);
                     $journalCr = JournalEntry::create([
                         'account_statement_id' => $accStatement->id,
+                        'transaction_date' => Carbon::now()->toDateTimeString(),
                         'item' => $getCurItem->name,
                         'quantity' => '1',
                         'unit_price' => $getCurItem->purchase_price,
@@ -240,8 +286,13 @@ class Depreciation extends Command
                         'trans_type' => 'Credit',
                         'amount' => $monthValue,
                     ]);
+
+                    $bookVal = AssetManagements::where('id',$asset->id)->update([
+                        'book_value' => $depValue->closing_value
+                    ]);
+
                     if(($depValue->closing_value) == '0') {
-                        $update = $getCurItem->update([
+                        $update = AssetManagements::where('id',$asset->id)->update([
                             'status_id' => '99d1e6f4-51be-4fef-a82f-16b86ca9f086',
                         ]);
                     }
@@ -257,9 +308,12 @@ class Depreciation extends Command
                     $accStatement = AccountStatement::create([
                         'transaction_date' => $depValue->depreciate_period,
                         'status_id' => 'f6e41f5d-0f6e-4eca-a141-b6c7ce34cae6',
+                        'balance' => ($savePrev) - ($monthValue),
+                        'total' => $monthValue,
                     ]);
                     $journalDb = JournalEntry::create([
                         'account_statement_id' => $accStatement->id,
+                        'transaction_date' => Carbon::now()->toDateTimeString(),
                         'item' => $getCurItem->name,
                         'quantity' => '1',
                         'unit_price' => $getCurItem->purchase_price,
@@ -269,6 +323,7 @@ class Depreciation extends Command
                     ]);
                     $journalCr = JournalEntry::create([
                         'account_statement_id' => $accStatement->id,
+                        'transaction_date' => Carbon::now()->toDateTimeString(),
                         'item' => $getCurItem->name,
                         'quantity' => '1',
                         'unit_price' => $getCurItem->purchase_price,
@@ -276,8 +331,13 @@ class Depreciation extends Command
                         'trans_type' => 'Credit',
                         'amount' => $monthValue,
                     ]);
+
+                    $bookVal = AssetManagements::where('id',$asset->id)->update([
+                        'book_value' => $depValue->closing_value
+                    ]);
+
                     if(($depValue->closing_value) == '0') {
-                        $update = $getCurItem->update([
+                        $update = AssetManagements::where('id',$asset->id)->update([
                             'status_id' => '99d1e6f4-51be-4fef-a82f-16b86ca9f086',
                         ]);
                     }
@@ -294,9 +354,12 @@ class Depreciation extends Command
                 $accStatement = AccountStatement::create([
                         'transaction_date' => $depValue->depreciate_period,
                         'status_id' => 'f6e41f5d-0f6e-4eca-a141-b6c7ce34cae6',
+                        'balance' => ($savePrev) - ($monthValue),
+                        'total' => $monthValue,
                     ]);
                     $journalDb = JournalEntry::create([
                         'account_statement_id' => $accStatement->id,
+                        'transaction_date' => Carbon::now()->toDateTimeString(),
                         'item' => $getCurItem->name,
                         'quantity' => '1',
                         'unit_price' => $getCurItem->purchase_price,
@@ -306,6 +369,7 @@ class Depreciation extends Command
                     ]);
                     $journalCr = JournalEntry::create([
                         'account_statement_id' => $accStatement->id,
+                        'transaction_date' => Carbon::now()->toDateTimeString(),
                         'item' => $getCurItem->name,
                         'quantity' => '1',
                         'unit_price' => $getCurItem->purchase_price,
@@ -313,7 +377,12 @@ class Depreciation extends Command
                         'trans_type' => 'Credit',
                         'amount' => $getCurRecord->purchase_price,
                     ]);
-                $update = $getCurItem->update([
+
+                    $bookVal = AssetManagements::where('id',$asset->id)->update([
+                        'book_value' => $depValue->closing_value
+                    ]);
+
+                $update = AssetManagements::where('id',$asset->id)->update([
                     'status_id' => '99d1e6f4-51be-4fef-a82f-16b86ca9f086',
                 ]);
             }

@@ -53,8 +53,6 @@ Better Work Indonesia | Asset Management
 										<div class="col-6">
 											<label class="col-sm-12 col-form-label">Purchase From</label>
 											{!! Form::text('purchase_from', null, array('placeholder' => 'Purchase From','class' => 'form-control')) !!}
-											<label class="col-sm-12 col-form-label">Depreciation Start Date</label>
-											{!! Form::date('depreciation_start', '', array('id' => 'datepicker','class' => 'form-control')) !!}
 											<label class="col-sm-12 col-form-label">Economical Lifespan</label>
 											{!! Form::number('estimate_time', null, array('placeholder' => 'Economical Lifespan','class' => 'form-control')) !!}
 											<label class="col-sm-12 col-form-label">Residual Value</label>
@@ -96,6 +94,7 @@ Better Work Indonesia | Asset Management
 								<th>Purchase Price</th>
 								<th>Current Value</th>
 								<th>Created At</th>
+								<th>Updated At</th>
 								<th>Status</th>
 								<th></th>
 							</tr>
@@ -109,8 +108,9 @@ Better Work Indonesia | Asset Management
 								<td>{{ $value->Categories->category_name }}</td>
 								<td>{{date("d F Y",strtotime($value->purchase_date)) }}</td>
 								<td>{{ number_format($value->purchase_price,0,',','.')}}</td>
-								<td></td>
+								<td>{{ number_format($value->book_value,0,',','.')}}</td>
 								<td>{{date("d F Y H:i",strtotime($value->created_at)) }}</td>
+								<td>{{date("d F Y H:i",strtotime($value->updated_at)) }}</td>
 								<td>{{ $value->Statuses->name }}</td>
 								<td>
 									<a button id="search" type="submit" class="btn btn-xs btn-info" href="{{ route('asset.show',$value->id) }}">

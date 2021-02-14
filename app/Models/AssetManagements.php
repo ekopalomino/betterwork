@@ -35,4 +35,9 @@ class AssetManagements extends Model
     {
         return $this->belongsTo(Status::class,'status_id');
     }
+
+    public function Child()
+    {
+        return $this->hasMany(AssetDepreciation::class,'asset_id');
+    }
 }

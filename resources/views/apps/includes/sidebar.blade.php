@@ -579,7 +579,7 @@
 					</li>
 				</ul>
 			</li>
-			<li class="nav-item has-treeview {{set_open(['coaCat.index','bankAcc.index','assetCat.index','asset.index','journal.index','journal.report','trial.index','trial.report','ledger.index','budget.index','manualJournal.index','manualJournal.create','ledger.report']) }}">
+			<li class="nav-item has-treeview {{set_open(['coaCat.index','bankAcc.index','assetCat.index','asset.index','journal.index','journal.report','trial.index','trial.report','ledger.index','budget.index','manualJournal.index','manualJournal.create','ledger.report','asset.show']) }}">
 				<a href="#" class="nav-link">
 					<p>
 						Accounting
@@ -717,14 +717,14 @@
 							@endcan
 						</ul>
 					</li>
-					<li class="nav-item has-treeview {{set_open(['coaCat.index','bankAcc.index','assetCat.index','asset.index','manualJournal.index','manualJournal.create']) }}">
+					<li class="nav-item has-treeview {{set_open(['coaCat.index','bankAcc.index','assetCat.index','asset.index','manualJournal.index','manualJournal.create','asset.show']) }}">
 						<a href="" class="nav-link ">
 							<i class="nav-icon fas fa-tools"></i>
 							<p>Advance</p>
 							<i class="right fas fa-angle-left"></i>
 						</a>
 						<ul class="nav nav-treeview">
-							<li class="nav-item {{set_open(['asset.index','manualJournal.index','manualJournal.create']) }}">
+							<li class="nav-item {{set_open(['asset.index','manualJournal.index','manualJournal.create','asset.show']) }}">
 								<a href="" class="nav-link ">
 									<p>Advance Features
 										<i class="right fas fa-angle-left"></i>
@@ -746,7 +746,7 @@
 										</a>
 									</li>
 									<li class="nav-item ">
-										<a href="{{ route('asset.index') }}" class="nav-link {{set_active('asset.index') }}">
+										<a href="{{ route('asset.index') }}" class="nav-link {{set_active(['asset.index','asset.show']) }}">
 											<i class="far fa-circle nav-icon"></i>
 											<p>Fixed Assets</p>
 										</a>

@@ -34,7 +34,6 @@ Better Work Indonesia | Asset Depreciation Details
 								<th>Depreciation Expense</th>
 								<th>Depreciation Accumulation</th>
 								<th>Book Value</th>
-								<th>Account</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -45,7 +44,6 @@ Better Work Indonesia | Asset Depreciation Details
 								<td>{{ number_format($value->depreciate_value,0,',','.')}}</td>
 								<td>{{ number_format($value->accumulate_value,0,',','.')}}</td>
 								<td>{{ number_format($value->closing_value,0,',','.')}}</td>
-								<td></td>
 							</tr>
 							@endforeach
 						</tbody>

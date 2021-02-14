@@ -944,7 +944,6 @@ class AccountingController extends Controller
             'warranty_expire' => $request->input('warranty_expire'),
             'purchase_price' => $request->input('purchase_price'),
             'purchase_from' => $request->input('purchase_from'),
-            'depreciation_start' => $request->input('depreciation_start'),
             'estimate_time' => $request->input('estimate_time'),
             'residual_value' => $request->input('residual_value'),
             'method_id' => $request->input('method_id'),
