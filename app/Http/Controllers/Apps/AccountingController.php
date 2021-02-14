@@ -947,10 +947,17 @@ class AccountingController extends Controller
             'estimate_time' => $request->input('estimate_time'),
             'residual_value' => $request->input('residual_value'),
             'method_id' => $request->input('method_id'),
-            'status_id' => '81828ad9-fea7-41ff-b6d2-769fbc47c3fa',
+            'status_id' => '49e185eb-bba9-4ef2-bb9e-dbbd650a10cc',
         ]);
 
-        return redirect()->route('asset.index');
+        $log = 'Asset'.($data->name).' Created';
+        \LogActivity::addToLog($log);
+        $notification = array (
+            'message' => 'Asset'.($data->name).' Created',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('asset.index')->with($notification);
     }
 
     public function assetManagementShow($id)

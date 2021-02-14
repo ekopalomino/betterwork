@@ -48,12 +48,7 @@ class Depreciation extends Command
             $getCurRecord = AssetDepreciation::where('asset_id',$asset->id)->orderBy('updated_at','DESC')->first();
             $getCurItem = AssetManagements::where('id',$asset->id)->first();
             $getCategory = AssetCategory::where('id',$getCurItem->category_name)->first();
-            $prevData = AccountStatement::where('transaction_date','<=',Carbon::now())->first(); 
-            if(!empty($prevData)) {
-                $savePrev = $prevData->balance;
-            } else {
-                $savePrev = '0';
-            }
+            
             if(($asset->method_id) == '1') {
                 $yearValue = ($asset->purchase_price - $asset->residual_value)/$asset->estimate_time;
                 $monthValue = $yearValue/12;
@@ -70,8 +65,6 @@ class Depreciation extends Command
                     $accStatement = AccountStatement::create([
                         'transaction_date' => $depValue->depreciate_period,
                         'status_id' => 'f6e41f5d-0f6e-4eca-a141-b6c7ce34cae6',
-                        'balance' => ($savePrev) - ($monthValue),
-                        'total' => $monthValue,
                     ]);
                     $journalDb = JournalEntry::create([
                         'account_statement_id' => $accStatement->id,
@@ -115,8 +108,6 @@ class Depreciation extends Command
                     $accStatement = AccountStatement::create([
                         'transaction_date' => $depValue->depreciate_period,
                         'status_id' => 'f6e41f5d-0f6e-4eca-a141-b6c7ce34cae6',
-                        'balance' => ($savePrev) - ($monthValue),
-                        'total' => $monthValue,
                     ]);
                     $journalDb = JournalEntry::create([
                         'account_statement_id' => $accStatement->id,
@@ -167,8 +158,6 @@ class Depreciation extends Command
                     $accStatement = AccountStatement::create([
                         'transaction_date' => $depValue->depreciate_period,
                         'status_id' => 'f6e41f5d-0f6e-4eca-a141-b6c7ce34cae6',
-                        'balance' => ($savePrev) - ($monthValue),
-                        'total' => $monthValue,
                     ]);
                     $journalDb = JournalEntry::create([
                         'account_statement_id' => $accStatement->id,
@@ -212,8 +201,6 @@ class Depreciation extends Command
                     $accStatement = AccountStatement::create([
                         'transaction_date' => $depValue->depreciate_period,
                         'status_id' => 'f6e41f5d-0f6e-4eca-a141-b6c7ce34cae6',
-                        'balance' => ($savePrev) - ($monthValue),
-                        'total' => $monthValue,
                     ]);
                     $journalDb = JournalEntry::create([
                         'account_statement_id' => $accStatement->id,
@@ -263,8 +250,6 @@ class Depreciation extends Command
                     $accStatement = AccountStatement::create([
                         'transaction_date' => $depValue->depreciate_period,
                         'status_id' => 'f6e41f5d-0f6e-4eca-a141-b6c7ce34cae6',
-                        'balance' => ($savePrev) - ($monthValue),
-                        'total' => $monthValue,
                     ]);
                     $journalDb = JournalEntry::create([
                         'account_statement_id' => $accStatement->id,
@@ -308,8 +293,6 @@ class Depreciation extends Command
                     $accStatement = AccountStatement::create([
                         'transaction_date' => $depValue->depreciate_period,
                         'status_id' => 'f6e41f5d-0f6e-4eca-a141-b6c7ce34cae6',
-                        'balance' => ($savePrev) - ($monthValue),
-                        'total' => $monthValue,
                     ]);
                     $journalDb = JournalEntry::create([
                         'account_statement_id' => $accStatement->id,
@@ -354,8 +337,6 @@ class Depreciation extends Command
                 $accStatement = AccountStatement::create([
                         'transaction_date' => $depValue->depreciate_period,
                         'status_id' => 'f6e41f5d-0f6e-4eca-a141-b6c7ce34cae6',
-                        'balance' => ($savePrev) - ($monthValue),
-                        'total' => $monthValue,
                     ]);
                     $journalDb = JournalEntry::create([
                         'account_statement_id' => $accStatement->id,
