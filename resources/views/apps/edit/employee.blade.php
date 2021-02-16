@@ -142,7 +142,7 @@ Better Work Indonesia | Update Employee
 			    				</div>
 			    				<div class="form-group">
 			    					<label for="inputName">Email</label>
-			    					{!! Form::text('email', null, array('placeholder' => 'Email','class' => 'form-control')) !!}
+			    					{!! Form::text('email', null, array('placeholder' => 'Email','class' => 'form-control','readonly')) !!}
 			    				</div>
 			    				<div class="form-group">
 			    					<label for="inputName">Photo</label>
