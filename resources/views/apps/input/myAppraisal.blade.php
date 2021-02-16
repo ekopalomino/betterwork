@@ -84,7 +84,7 @@ Better Work Indonesia | Create New Appraisal
       	var i=1;  
       	$('#add').click(function(){  
            	i++;  
-           	$('#one').append('<tr id="row'+i+'" class="dynamic-added"><td>{!! Form::text('kpi[]', null, array('id'=>'kpi','placeholder' => 'Leave','class' => 'form-control')) !!}</td><td><button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove">X</button></td></tr>')
+           	$('#one').append('<tr id="row'+i+'" class="dynamic-added"><td>{!! Form::text('kpi[]', null, array('id'=>'kpi','placeholder' => 'KPI','class' => 'form-control')) !!}</td><td><button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove">X</button></td></tr>')
             });
         });  
       
