@@ -65,7 +65,7 @@ Better Work Indonesia | Update My Education Data
 									</div>
 									<div class="form-group row">
 									  	<label class="col-sm-2 col-form-label">Major</label>
-									   	{!! Form::text('address', null, array('placeholder' => 'Major','class' => 'form-control')) !!}
+									   	{!! Form::text('major', null, array('placeholder' => 'Major','class' => 'form-control')) !!}
 									</div>
 									<div class="form-group row">
 									   	<label class="col-sm-2 col-form-label">GPA</label>
