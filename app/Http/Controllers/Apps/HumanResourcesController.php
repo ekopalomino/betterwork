@@ -360,7 +360,7 @@ class HumanResourcesController extends Controller
 
     public function educationCreate(Request $request)
     {
-        $data = $request->input->all();
+        $data = $request->all();
         dd($data);
         $this->validate($request, [
             'institution_name' => 'required',
