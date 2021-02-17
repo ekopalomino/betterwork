@@ -168,7 +168,7 @@ class UserMenuController extends Controller
         return $pdf->download(''.$filename.'.pdf');
     }
 
-    public function profileData()
+    public function profileData() 
     {
         $data = Employee::where('id',auth()->user()->employee_id)->first();
         
