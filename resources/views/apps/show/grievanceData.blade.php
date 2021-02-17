@@ -3,7 +3,7 @@
 Better Work Indonesia | Grievance Database Show
 @endsection
 @section('header.styles')
-<link rel="stylesheet" href="{{ asset('public/bower_components/admin-lte/plugins/summernote/summernote-bs4.css') }}">
+<link rel="stylesheet" href="{{ asset('bower_components/admin-lte/plugins/summernote/summernote-bs4.css') }}">
 @endsection
 @section('content')
 <section class="content-header">
@@ -43,7 +43,7 @@ Better Work Indonesia | Grievance Database Show
          	<p><strong>Comments and Response</strong></p>
           @foreach($data->Child as $child)
          	<div class="card-comment">
-            <img class="img-circle img-sm" src="{{ asset('public/bower_components/admin-lte/dist/img/avatar.png') }}" alt="User Image">
+            <img class="img-circle img-sm" src="{{ asset('bower_components/admin-lte/dist/img/avatar.png') }}" alt="User Image">
             <div class="comment-text">
               <span class="username">
                 @if(($child->comment_by) == ($data->employee_id))
@@ -75,7 +75,7 @@ Better Work Indonesia | Grievance Database Show
 </section>
 @endsection
 @section('footer.scripts')
-<script src="{{ asset('public/bower_components/admin-lte/plugins/summernote/summernote-bs4.min.js') }}"></script>
+<script src="{{ asset('bower_components/admin-lte/plugins/summernote/summernote-bs4.min.js') }}"></script>
 <script>
   $(function () {
     // Summernote
