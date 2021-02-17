@@ -136,7 +136,7 @@ Better Work Indonesia | Create Employee Data
 			    	</div>
 			    	<div class="form-group">
 			    		<label for="maritalStatus">Position *</label>
-			    		{!! Form::text('job_title', null, array('placeholder' => 'Email','class' => 'form-control')) !!}
+			    		{!! Form::text('job_title', null, array('placeholder' => 'Position','class' => 'form-control')) !!}
 			    	</div>
 			    	<div class="form-group">
 			    		<label for="maritalStatus">Division *</label>
