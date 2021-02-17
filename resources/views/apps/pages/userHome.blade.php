@@ -31,7 +31,7 @@ Better Work Indonesia | User Dashboard
 					<div class="card-body box-profile">
 						<div class="text-center">
 							<img class="profile-user-img img-fluid img-circle"
-                       			src="http://betterwork.local/employees/{{$getBasicProfile->picture}}"
+                       			src="http://betterwork.iteos.tech/employees/{{$getBasicProfile->picture}}"
                        			alt="User profile picture">
                   			<!--<img class="profile-user-img img-fluid img-circle"
                        			src="http://betterwork.local/public/employees/{{$getBasicProfile->picture}}"
