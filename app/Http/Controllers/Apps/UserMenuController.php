@@ -200,7 +200,7 @@ class UserMenuController extends Controller
     	return view('apps.pages.myLeave',compact('getEmployee','details','types'));
     }
 
-    public function leaveRequest(Request $request)
+    public function leaveRequest(Request $request) 
     {
     	$this->validate($request, [
             'timeoff_type' => 'required',
