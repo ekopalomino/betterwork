@@ -48,12 +48,16 @@ Better Work Indonesia | Employee Bulletin Data
 								<td>{{date("d F Y H:i",strtotime($value->created_at)) }}</td>
 								<td>
 									<div class="btn-group">
+										@can('Edit Bulletin Board')
 										<a button id="search" type="submit" class="btn btn-xs btn-info" href="{{ route('bulletin.edit',$value->id) }}">
 											<i class="fa fa-edit"></i>
 										</a>
+										@endcan
+										@can('Delete Bulletin Board')
 										{!! Form::open(['method' => 'POST','route' => ['bulletin.destroy', $value->id],'style'=>'display:inline','onsubmit' => 'return ConfirmDelete()']) !!}
 										{!! Form::button('<i class="fas fa-check"></i>',['type'=>'submit','class' => 'btn btn-xs btn-danger','title'=>'Delete Data']) !!}
 										{!! Form::close() !!}
+										@endcan
 									</div>
 								</td>
 							</tr>
