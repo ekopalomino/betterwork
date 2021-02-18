@@ -264,7 +264,7 @@ Better Work Indonesia | User Dashboard
 										<tr>
 											<td>{{ $key+1 }}</td>
 											<td>
-												<img src="http://betterwork.local/employees/{{ $value->Parent->picture }}" class="img-circle elevation-2" alt="User Image" style="width: 50px; height: 50px;">
+												<img src="http://betterwork.iteos.tech/employees/{{ $value->Parent->picture }}" class="img-circle elevation-2" alt="User Image" style="width: 50px; height: 50px;">
 											</td>
 											<!--<td>
 												<img src="http://betterwork.local/public/employees/{{ $value->Parent->picture }}" class="img-circle elevation-2" alt="User Image" style="width: 50px; height: 50px;">
