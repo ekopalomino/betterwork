@@ -17,8 +17,19 @@ Better Work Indonesia | Grievance Database Edit
 </section>
 <section class="content">
 	<div class="row">
+    @if (count($errors) > 0) 
+        <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h5><i class="icon fas fa-ban"></i> Alert!</h5>
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
 		<div class="col-md-12">
-			<div class="card card-widget">
+			<div class="card card-widget"> 
         {!! Form::model($data, ['method' => 'POST','route' => ['grievanceData.update', $data->id]]) !!}
         @csrf
 				<div class="card-header">
@@ -38,8 +49,8 @@ Better Work Indonesia | Grievance Database Edit
                 </div>
               </p>
               <p>Approval :
-                <select name="status_id" class="form-control">
-                  <option value="0">Please Select</option>
+                <select name="status_id" class="form-control required">
+                  <option value="">Please Select</option>
                   <option value="ca52a2ce-5c37-48ce-a7f2-0fd5311860c2">Yes</option>
                   <option value="6840ffe5-600b-4109-8abf-819bf77b24cf">No</option>
                 </select>
