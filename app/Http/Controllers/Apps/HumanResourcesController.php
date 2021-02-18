@@ -783,7 +783,7 @@ class HumanResourcesController extends Controller
                                   ->where('employee_services.report_to',auth()->user()->employee_id)
                                   ->orWhere('employee_services.division_id','1')
                                   ->get();
-        dd($data);
+        
     	return view('apps.pages.requestIndex',compact('data'));
     }
 
@@ -799,7 +799,7 @@ class HumanResourcesController extends Controller
         } else {
             $remaining = $getLeaveParent->leave_remaining;
         }
-        dd($data);
+        
         return view('apps.show.employeeRequest',compact('data','remaining'))->renderSections()['content'];
     }
 
