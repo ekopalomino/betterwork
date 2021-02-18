@@ -49,7 +49,7 @@ Better Work Indonesia | Grievance Database Edit
                 </div>
               </p>
               <p>Approval :
-                <select name="status_id" class="form-control required">
+                <select name="status_id" class="form-control">
                   <option value="">Please Select</option>
                   <option value="ca52a2ce-5c37-48ce-a7f2-0fd5311860c2">Yes</option>
                   <option value="6840ffe5-600b-4109-8abf-819bf77b24cf">No</option>
