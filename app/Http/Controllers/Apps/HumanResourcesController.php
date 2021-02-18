@@ -799,7 +799,7 @@ class HumanResourcesController extends Controller
         } else {
             $remaining = $getLeaveParent->leave_remaining;
         }
-        
+        dd($data);
         return view('apps.show.employeeRequest',compact('data','remaining'))->renderSections()['content'];
     }
 
