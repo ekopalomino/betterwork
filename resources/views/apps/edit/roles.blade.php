@@ -97,15 +97,6 @@ Better Work Indonesia | Edit Role
 											</tr>
 											<tr>
 												<td><strong>1</strong></td>
-												<td>Application Setting</td>
-												<td style="text-align:center"><input type="checkbox" value="1" name="permission[]" disabled /></td>
-												<td style="text-align:center"><input type="checkbox" value="33" name="permission[]" @foreach($roles as $rolePermissions) @if($rolePermissions->permission_id == '33')checked @endif @endforeach /></td>
-												<td style="text-align:center"><input type="checkbox" value="36" name="permission[]" @foreach($roles as $rolePermissions) @if($rolePermissions->permission_id == '36')checked @endif @endforeach /></td>
-												<td style="text-align:center"><input type="checkbox" value="1" name="permission[]" disabled /></td>
-												<td style="text-align:center"><input type="checkbox" value="1" name="permission[]" disabled /></td>
-											</tr>
-											<tr>
-												<td><strong>2</strong></td>
 												<td>User Database</td>
 												<td style="text-align:center"><input type="checkbox" value="1" name="permission[]" disabled /></td>
 												<td style="text-align:center"><input type="checkbox" value="5" name="permission[]" @foreach($roles as $rolePermissions) @if($rolePermissions->permission_id == '5')checked @endif @endforeach /></td>
@@ -114,7 +105,7 @@ Better Work Indonesia | Edit Role
 												<td style="text-align:center"><input type="checkbox" value="1" name="permission[]" disabled /></td>
 											</tr>
 											<tr>
-												<td><strong>3</strong></td>
+												<td><strong>2</strong></td>
 												<td>Access Roles</td>
 												<td style="text-align:center"><input type="checkbox" value="1" name="permission[]" disabled /></td>
 												<td style="text-align:center"><input type="checkbox" value="8" name="permission[]" @foreach($roles as $rolePermissions) @if($rolePermissions->permission_id == '8')checked @endif @endforeach /></td>
@@ -123,7 +114,7 @@ Better Work Indonesia | Edit Role
 												<td style="text-align:center"><input type="checkbox" value="1" name="permission[]" disabled /></td>
 											</tr>
 											<tr>
-												<td><strong>4</strong></td>
+												<td><strong>3</strong></td>
 												<td>Human Resources Master Data</td>
 												<td style="text-align:center"><input type="checkbox" value="1" name="permission[]" disabled /></td>
 												<td style="text-align:center"><input type="checkbox" value="10" name="permission[]" @foreach($roles as $rolePermissions) @if($rolePermissions->permission_id == '10')checked @endif @endforeach /></td>
@@ -132,7 +123,7 @@ Better Work Indonesia | Edit Role
 												<td style="text-align:center"><input type="checkbox" value="1" name="permission[]" disabled /></td>
 											</tr>
 											<tr>
-												<td><strong>5</strong></td>
+												<td><strong>4</strong></td>
 												<td>Accounting Master Data</td>
 												<td style="text-align:center"><input type="checkbox" value="1" name="permission[]" disabled /></td>
 												<td style="text-align:center"><input type="checkbox" value="13" name="permission[]" @foreach($roles as $rolePermissions) @if($rolePermissions->permission_id == '13')checked @endif @endforeach /></td>
@@ -141,7 +132,7 @@ Better Work Indonesia | Edit Role
 												<td style="text-align:center"><input type="checkbox" value="1" name="permission[]" disabled /></td>
 											</tr>
 											<tr>
-												<td><strong>6</strong></td>
+												<td><strong>5</strong></td>
 												<td>Grievance Master Data</td>
 												<td style="text-align:center"><input type="checkbox" value="1" name="permission[]" disabled /></td>
 												<td style="text-align:center"><input type="checkbox" value="37" name="permission[]" @foreach($roles as $rolePermissions) @if($rolePermissions->permission_id == '37')checked @endif @endforeach /></td>
@@ -194,23 +185,23 @@ Better Work Indonesia | Edit Role
 												<td style="text-align:center"><input type="checkbox" value="1" name="permission[]" disabled /></td>
 												<td style="text-align:center"><input type="checkbox" value="20" name="permission[]" @foreach($roles as $rolePermissions) @if($rolePermissions->permission_id == '20')checked @endif @endforeach /></td>
 												<td style="text-align:center"><input type="checkbox" value="21" name="permission[]" @foreach($roles as $rolePermissions) @if($rolePermissions->permission_id == '21')checked @endif @endforeach /></td>
-												<td style="text-align:center"><input type="checkbox" value="23" name="permission[]" @foreach($roles as $rolePermissions) @if($rolePermissions->permission_id == '23')checked @endif @endforeach /></td>
+												<td style="text-align:center"><input type="checkbox" value="1" name="permission[]" disabled /></td>
 												<td style="text-align:center"><input type="checkbox" value="22" name="permission[]" @foreach($roles as $rolePermissions) @if($rolePermissions->permission_id == '22')checked @endif @endforeach /></td>
 											</tr>
 											<tr>
 												<td><strong>6</strong></td>
-												<td>Bulletin Board</td>
+												<td>Bulletin Board</td> 
 												<td style="text-align:center"><input type="checkbox" value="1" name="permission[]" disabled /></td>
-												<td style="text-align:center"><input type="checkbox" value="40" name="permission[]" @foreach($roles as $rolePermissions) @if($rolePermissions->permission_id == '40')checked @endif @endforeach /></td>
-												<td style="text-align:center"><input type="checkbox" value="41" name="permission[]" @foreach($roles as $rolePermissions) @if($rolePermissions->permission_id == '41')checked @endif @endforeach /></td>
-												<td style="text-align:center"><input type="checkbox" value="42" name="permission[]" @foreach($roles as $rolePermissions) @if($rolePermissions->permission_id == '42')checked @endif @endforeach /></td>
+												<td style="text-align:center"><input type="checkbox" value="43" name="permission[]" @foreach($roles as $rolePermissions) @if($rolePermissions->permission_id == '43')checked @endif @endforeach /></td>
+												<td style="text-align:center"><input type="checkbox" value="44" name="permission[]" @foreach($roles as $rolePermissions) @if($rolePermissions->permission_id == '44')checked @endif @endforeach /></td>
+												<td style="text-align:center"><input type="checkbox" value="45" name="permission[]" @foreach($roles as $rolePermissions) @if($rolePermissions->permission_id == '45')checked @endif @endforeach /></td>
 												<td style="text-align:center"><input type="checkbox" value="1" name="permission[]" disabled /></td>
 											</tr>
 											<tr>
 												<td><strong>7</strong></td>
 												<td>Reports</td>
 												<td style="text-align:center"><input type="checkbox" value="1" name="permission[]" disabled /></td>
-												<td style="text-align:center"><input type="checkbox" value="47" name="permission[]" @foreach($roles as $rolePermissions) @if($rolePermissions->permission_id == '47')checked @endif @endforeach /></td>
+												<td style="text-align:center"><input type="checkbox" value="50" name="permission[]" @foreach($roles as $rolePermissions) @if($rolePermissions->permission_id == '50')checked @endif @endforeach /></td>
 												<td style="text-align:center"><input type="checkbox" value="1" name="permission[]" disabled /></td>
 												<td style="text-align:center"><input type="checkbox" value="1" name="permission[]" disabled /></td>
 												<td style="text-align:center"><input type="checkbox" value="1" name="permission[]" disabled /></td>
@@ -222,9 +213,9 @@ Better Work Indonesia | Edit Role
 												<td><strong>1</strong></td>
 												<td>Manual Input</td>
 												<td style="text-align:center"><input type="checkbox" value="1" name="permission[]" disabled /></td>
-												<td style="text-align:center"><input type="checkbox" value="43" name="permission[]" @foreach($roles as $rolePermissions) @if($rolePermissions->permission_id == '43')checked @endif @endforeach /></td>
-												<td style="text-align:center"><input type="checkbox" value="44" name="permission[]" @foreach($roles as $rolePermissions) @if($rolePermissions->permission_id == '44')checked @endif @endforeach /></td>
-												<td style="text-align:center"><input type="checkbox" value="49" name="permission[]" @foreach($roles as $rolePermissions) @if($rolePermissions->permission_id == '49')checked @endif @endforeach /></td>
+												<td style="text-align:center"><input type="checkbox" value="46" name="permission[]" @foreach($roles as $rolePermissions) @if($rolePermissions->permission_id == '46')checked @endif @endforeach /></td>
+												<td style="text-align:center"><input type="checkbox" value="47" name="permission[]" @foreach($roles as $rolePermissions) @if($rolePermissions->permission_id == '47')checked @endif @endforeach /></td>
+												<td style="text-align:center"><input type="checkbox" value="1" name="permission[]" disabled /></td>
 												<td style="text-align:center"><input type="checkbox" value="1" name="permission[]" disabled /></td>
 											</tr>
 											<tr>
@@ -232,15 +223,15 @@ Better Work Indonesia | Edit Role
 												<td>Moderate Grievance</td>
 												<td style="text-align:center"><input type="checkbox" value="1" name="permission[]" disabled /></td>
 												<td style="text-align:center"><input type="checkbox" value="1" name="permission[]" disabled /></td>
-												<td style="text-align:center"><input type="checkbox" value="48" name="permission[]" @foreach($roles as $rolePermissions) @if($rolePermissions->permission_id == '48')checked @endif @endforeach /></td>
+												<td style="text-align:center"><input type="checkbox" value="47" name="permission[]" @foreach($roles as $rolePermissions) @if($rolePermissions->permission_id == '47')checked @endif @endforeach /></td>
 												<td style="text-align:center"><input type="checkbox" value="1" name="permission[]" disabled /></td>
-												<td style="text-align:center"><input type="checkbox" value="45" name="permission[]" @foreach($roles as $rolePermissions) @if($rolePermissions->permission_id == '45')checked @endif @endforeach /></td>
+												<td style="text-align:center"><input type="checkbox" value="48" name="permission[]" @foreach($roles as $rolePermissions) @if($rolePermissions->permission_id == '48')checked @endif @endforeach /></td>
 											</tr>
 											<tr>
 												<td><strong>3</strong></td>
 												<td>Management Response</td>
 												<td style="text-align:center"><input type="checkbox" value="1" name="permission[]" disabled /></td>
-												<td style="text-align:center"><input type="checkbox" value="46" name="permission[]" @foreach($roles as $rolePermissions) @if($rolePermissions->permission_id == '46')checked @endif @endforeach /></td>
+												<td style="text-align:center"><input type="checkbox" value="49" name="permission[]" @foreach($roles as $rolePermissions) @if($rolePermissions->permission_id == '49')checked @endif @endforeach /></td>
 												<td style="text-align:center"><input type="checkbox" value="1" name="permission[]" disabled /></td>
 												<td style="text-align:center"><input type="checkbox" value="1" name="permission[]" disabled /></td>
 												<td style="text-align:center"><input type="checkbox" value="1" name="permission[]" disabled /></td>
