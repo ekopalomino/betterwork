@@ -53,7 +53,7 @@ Better Work Indonesia | Employee Reimbursment Approval
 									@endif
 								</td>
 								<td>
-									@can('Process Reimburs')
+									@can('Process Payroll')
 									@if(($value->status_id) == 'b0a0c17d-e56a-41a7-bfb0-bd8bdc60a7be')
 									{!! Form::open(['method' => 'POST','route' => ['reimburs.approve', $value->id],'style'=>'display:inline','onsubmit' => 'return ConfirmApprove()']) !!}
                                     {!! Form::button('<i class="fas fa-check"></i>',['type'=>'submit','class' => 'btn btn-xs btn-success','title'=>'Approve']) !!}

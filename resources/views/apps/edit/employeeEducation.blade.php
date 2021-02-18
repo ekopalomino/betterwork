@@ -30,7 +30,7 @@
                 <button id="register" type="submit" class="btn btn-sm btn-success">Update</button>
             </div>
             {!! Form::close() !!}
-        </div>
+        </div> 
     </div>
 </section>
 @endsection
