@@ -305,7 +305,7 @@ class UserMenuController extends Controller
     public function reimbursIndex()
     {
     	$getEmployee = Employee::where('email',Auth()->user()->email)->first();
-    	$data = EmployeeReimbursment::orderBy('created_at','DESC')->get();
+    	$data = EmployeeReimbursment::where('employee_id',auth()->user()->employee_id)->orderBy('created_at','DESC')->get();
     	$types = ReimbursType::pluck('reimburs_name','id')->toArray();
 
     	return view('apps.pages.myReimburs',compact('getEmployee','data','types'));
