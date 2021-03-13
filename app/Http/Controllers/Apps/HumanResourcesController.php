@@ -432,8 +432,6 @@ class HumanResourcesController extends Controller
             'status' => 'required',
         ]);
 
-        $data = EmployeeTraining::find($id);
-
         $certificate = '' ;
         $reports = '' ;
         $materials = '' ;
@@ -460,8 +458,8 @@ class HumanResourcesController extends Controller
             'training_provider' => $request->input('training_provider'),
             'training_title' => $request->input('training_title'),
             'location' => $request->input('location'),
-            'from' => $request->input('training_start'),
-            'to' => $request->input('training_end'),
+            'training_from' => $request->input('training_start'),
+            'training_to' => $request->input('training_end'),
             'status' => $request->input('status'),
             'certification' => $certificate,
             'reports' => $reports,
