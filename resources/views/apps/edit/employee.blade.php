@@ -508,7 +508,7 @@ Better Work Indonesia | Update Employee
 								                    <div class="form-group row">
 								                      	<label for="inputEmail" class="col-sm-2 col-form-label">Position</label>
 								                        <div class="col-sm-10">
-								                          {!! Form::text('job_title', null, array('placeholder' => 'Job Title','class' => 'form-control')) !!}
+								                          {!! Form::text('position', null, array('placeholder' => 'Job Title','class' => 'form-control')) !!}
 								                        </div>
 								                    </div>
 								                    <div class="form-group row">
