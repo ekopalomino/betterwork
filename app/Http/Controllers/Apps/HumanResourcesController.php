@@ -1525,8 +1525,8 @@ class HumanResourcesController extends Controller
 
     public function reimbursIndex()
     {
-        $data = EmployeeReimbursment::where('employee_id',auth()->user()->employee_id)->orderBy('created_at','DESC')->get();
-        dd($data);
+        $data = EmployeeReimbursment::orderBy('created_at','DESC')->get();
+        
         return view('apps.pages.reimbursIndex',compact('data'));
     }
 
