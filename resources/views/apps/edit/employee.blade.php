@@ -496,7 +496,7 @@ Better Work Indonesia | Update Employee
 								            		<div class="form-group row">
 								                      	<label class="col-sm-2 col-form-label">Grade</label>
 								                        <div class="col-sm-10">
-								                          {!! Form::select('position', [null=>'Please Select'] + $grades,[], array('class' => 'form-control')) !!}
+								                          {!! Form::select('grade', [null=>'Please Select'] + $grades,[], array('class' => 'form-control')) !!}
 								                        </div>
 								                    </div>
 								                    <div class="form-group row">
