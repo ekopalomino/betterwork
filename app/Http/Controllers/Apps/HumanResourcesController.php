@@ -552,7 +552,7 @@ class HumanResourcesController extends Controller
             $uploadedFile = $request->file('contract');
             $path = $uploadedFile->store('employee_contract');
             if(($request->input('to')) === null) {
-                $EmployeeService->create([
+                EmployeeService::create([
                     'position' => $request->input('position'),
                     'division_id' => $request->input('division_id'),
                     'report_to' => $request->input('report_to'),
@@ -573,7 +573,7 @@ class HumanResourcesController extends Controller
 
                 return redirect()->back()->with($notification);
             } else {
-                $EmployeeService->create([
+                EmployeeService::create([
                     'position' => $request->input('position'),
                     'division_id' => $request->input('division_id'),
                     'report_to' => $request->input('report_to'),
@@ -597,7 +597,7 @@ class HumanResourcesController extends Controller
             }
         } else {
             if(($request->input('to')) === null) {
-                $EmployeeService->create([
+                EmployeeService::create([
                     'position' => $request->input('position'),
                     'division_id' => $request->input('division_id'),
                     'report_to' => $request->input('report_to'),
@@ -617,7 +617,7 @@ class HumanResourcesController extends Controller
 
                 return redirect()->back()->with($notification);
             } else {
-                $EmployeeService->create([
+                EmployeeService::create([
                     'position' => $request->input('position'),
                     'division_id' => $request->input('division_id'),
                     'report_to' => $request->input('report_to'),
