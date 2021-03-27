@@ -562,13 +562,14 @@
 									<p>Bank Rules</p>
 								</a>
 							</li>
-							@endcan
+							
 							<li class="nav-item ">
 								<a href="" class="nav-link ">
 									<i class="far fa-circle nav-icon"></i>
 									<p>Reconciliation Report</p>
 								</a>
 							</li>
+							@endcan
 							<li class="nav-item {{set_active(['bankStatement.import']) }}">
 								<a href="{{ route('bankStatement.import') }}" class="nav-link {{set_active(['bankStatement.import']) }}">
 									<i class="far fa-circle nav-icon"></i>
@@ -613,12 +614,14 @@
 											<p>Budget Manager</p>
 										</a>
 									</li>
+									@can('disable')
 									<li class="nav-item ">
 										<a href="" class="nav-link ">
 											<i class="far fa-circle nav-icon"></i>
 											<p>Budget Variance</p>
 										</a>
 									</li>
+									@endcan
 									@can('disable')
 									<li class="nav-item ">
 										<a href="" class="nav-link ">
@@ -672,12 +675,14 @@
 											<p>Trial Balance</p>
 										</a>
 									</li>
+									@can('Disable')
 									<li class="nav-item ">
 										<a href="" class="nav-link ">
 											<i class="far fa-circle nav-icon"></i>
 											<p>Detail Account Transaction</p>
 										</a>
 									</li>
+									@endcan
 								</ul>
 							</li>
 							@can('disable')
