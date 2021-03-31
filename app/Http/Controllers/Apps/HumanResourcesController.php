@@ -561,7 +561,7 @@ class HumanResourcesController extends Controller
                     'salary' => $request->input('salary'),
                     'is_active' => '1',
                     'contract' => $path,
-                    'employee_id' => $request->input('employee)id'),
+                    'employee_id' => $request->input('employee_id'),
                 ]);
 
                 $log = 'Employee Service Data Created';
@@ -583,7 +583,7 @@ class HumanResourcesController extends Controller
                     'salary' => $request->input('salary'),
                     'is_active' => '0',
                     'contract' => $path,
-                    'employee_id' => $request->input('employee)id'),
+                    'employee_id' => $request->input('employee_id'),
                 ]);
                 
                 $log = 'Employee Service Data Created';
@@ -605,7 +605,7 @@ class HumanResourcesController extends Controller
                     'from' => $request->input('from'),
                     'salary' => $request->input('salary'),
                     'is_active' => '1',
-                    'employee_id' => $request->input('employee)id'),
+                    'employee_id' => $request->input('employee_id'),
                 ]);
 
                 $log = 'Employee Service Data Created';
@@ -626,7 +626,7 @@ class HumanResourcesController extends Controller
                     'to' => $request->input('to'),
                     'salary' => $request->input('salary'),
                     'is_active' => '0',
-                    'employee_id' => $request->input('employee)id'),
+                    'employee_id' => $request->input('employee_id'),
                 ]);
 
                 $log = 'Employee Service Data Created';
