@@ -461,7 +461,7 @@ Better Work Indonesia | Update Employee
 					            				<td>{{ $value->Statuses->name }}</td>
 					            				<td>
 					            					<ul>
-					            						<li>Certificate : <a href="http://betterwork.local/public/storage/{{$value->certification}}">{{$value->certification}}</a></li>
+					            						<li>Certificate : <a href="http://betterwork.iteos.tech/public/storage/{{$value->certification}}">{{$value->certification}}</a></li>
 					            						<li><a href="">Reports : <a href="http://betterwork.local/public/storage/{{$value->reports}}">{{$value->reports}}</a></li>
 					            						<li><a href="">Materials : <a href="http://betterwork.local/public/storage/{{$value->materials}}">{{$value->materials}}</a></li>
 					            					</ul>

@@ -555,6 +555,7 @@ class HumanResourcesController extends Controller
                 EmployeeService::create([
                     'position' => $request->input('position'),
                     'division_id' => $request->input('division_id'),
+                    'org_id' => $request->input('org_id'),
                     'report_to' => $request->input('report_to'),
                     'grade' => $request->input('grade'),
                     'from' => $request->input('from'),
@@ -576,6 +577,7 @@ class HumanResourcesController extends Controller
                 EmployeeService::create([
                     'position' => $request->input('position'),
                     'division_id' => $request->input('division_id'),
+                    'org_id' => $request->input('org_id'),
                     'report_to' => $request->input('report_to'),
                     'grade' => $request->input('grade'),
                     'from' => $request->input('from'),
@@ -600,6 +602,7 @@ class HumanResourcesController extends Controller
                 EmployeeService::create([
                     'position' => $request->input('position'),
                     'division_id' => $request->input('division_id'),
+                    'org_id' => $request->input('org_id'),
                     'report_to' => $request->input('report_to'),
                     'grade' => $request->input('grade'),
                     'from' => $request->input('from'),
@@ -620,6 +623,7 @@ class HumanResourcesController extends Controller
                 EmployeeService::create([
                     'position' => $request->input('position'),
                     'division_id' => $request->input('division_id'),
+                    'org_id' => $request->input('org_id'),
                     'report_to' => $request->input('report_to'),
                     'grade' => $request->input('grade'),
                     'from' => $request->input('from'),
